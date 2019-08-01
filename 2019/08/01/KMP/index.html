@@ -37,8 +37,6 @@
 
 
 
-<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-
 <script src="/js/iconfont.js?v=1.0.1"></script>
 
 </head>
@@ -221,17 +219,6 @@
         
         
         
-        <span class="top-comment" title="跳转至评论区">
-            <a href="#comments">
-                评论:<span class="count-comment">
-                    <span class="spinner">
-                      <div class="cube1"></div>
-                      <div class="cube2"></div>
-                    </span>
-                </span>
-            </a>
-        </span>
-        
     </div>
     
     <div class="toc-ref">
@@ -316,27 +303,6 @@
     </p>
 </div>
 
-
-
-    <div id="comments"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-
-<script type="text/javascript">
-    $.getScript('/js/gitalk.js', function () {
-        var gitalk = new Gitalk({
-            clientID: '',
-            clientSecret: '',
-            repo: 'https://github.com/Sanctorum003/sanctorum003.github.io.git',
-            owner: 'Sanctorum003',
-            admin: [''],
-            id: decodeURI(location.pathname),
-            distractionFreeMode: 'true',
-            language: 'zh-CN',
-            perPage: parseInt('10',10)
-        })
-        gitalk.render('comments')
-    })
-</script>
 
 
 
