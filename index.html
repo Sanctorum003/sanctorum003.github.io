@@ -113,7 +113,7 @@
     <div></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="1">
-
+<input type="hidden" id="yelog_site_word_count" value="73">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -232,6 +232,8 @@
     function initArticle() {
         /*渲染对应的表格样式*/
         
+            $(".post .pjax table").addClass("green_title");
+        
 
         /*渲染打赏样式*/
         
@@ -254,8 +256,6 @@
         
 
         /*访问数量*/
-        
-        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
         
 
         /*代码高亮，行号对齐*/
@@ -323,24 +323,6 @@
     
 
     /*列表样式*/
-    
-    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
-        border: #e2dede solid 1px;
-        border-radius: 10px;
-        padding: 10px 32px 10px 56px;
-    }
-    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
-        margin-bottom: auto;
-        margin-left: auto;
-    }
-    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
-        margin-bottom: auto;
-        margin-left: auto;
-    }
     
 
     /* 背景图样式 */
