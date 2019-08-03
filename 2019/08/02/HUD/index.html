@@ -102,7 +102,7 @@
     
         
             
-            <li><div data-rel="UE4">UE4<small>(1)</small></div>
+            <li><div data-rel="UE4">UE4<small>(2)</small></div>
                 
             </li>
             
@@ -196,15 +196,15 @@
            href="/2019/08/01/KMP/"
            data-tag="algorithm"
            data-author="" >
-            <span class="post-title" title="虚幻4之Slate学习二 —— Widget">虚幻4之Slate学习二 —— Widget</span>
+            <span class="post-title" title="KMP">KMP</span>
             <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
         </a>
         
-        <a  class=""
-           href="/2019/08/03/Widget/"
-           data-tag=""
+        <a  class="UE4 "
+           href="/2019/08/03/WidgetStyle/"
+           data-tag="ue4,slate"
            data-author="" >
-            <span class="post-title" title="Widget">Widget</span>
+            <span class="post-title" title="虚幻4之Slate学习二 —— WidgetStyle">虚幻4之Slate学习二 —— WidgetStyle</span>
             <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
         </a>
         
@@ -246,7 +246,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-08-03 16:39:07'>2019-08-02 10:07</time>
+        创建时间:<time class="date" title='更新时间: 2019-08-03 17:10:27'>2019-08-02 10:07</time>
         
     </div>
     <div class="article-meta">
@@ -311,11 +311,11 @@ AMySlateGameModeBase::AMySlateGameModeBase()
 <p>这样在在初始化游戏时，就会默认调用自定义的HUD</p>
 <h1 id="将自定义Widget添加到视口"><a href="#将自定义Widget添加到视口" class="headerlink" title="将自定义Widget添加到视口"></a>将自定义Widget添加到视口</h1><ul>
 <li>先创建自定义Widget的C++类，起名为MyHUDWidget</li>
-<li>在MyHUD的构建函数中将MyHUDWidget添加到视口，这样在开始游戏时将自动调用<pre><code class="cpp">/** MyHUD.h **/
-private:
-  TSharedPtr&lt;class SMyHUDWidget&gt; HUDWidget;</code></pre>
-</li>
+<li>在MyHUD的构建函数中将MyHUDWidget添加到视口，这样在开始游戏时将自动调用</li>
 </ul>
+<pre><code class="cpp">/** MyHUD.h **/
+private:
+    TSharedPtr&lt;class SMyHUDWidget&gt; HUDWidget;</code></pre>
 <pre><code class="cpp">/** MyHUD.cpp **/
 AMyHUD::AMyHUD()
 {
@@ -368,12 +368,12 @@ void SMyHUDWidget::Construct(const FArguments&amp; InArgs)
 }
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 </code></pre>
-<p>这样你将看到屏幕中一个全屏填满的按钮<br><img src="HUD/Button.png" alt></p>
+<p>这样你将看到屏幕中一个全屏填满的按钮<br><img src="Button.png" alt></p>
 <blockquote>
 <p>如果无法编译,尝试在SMyHUDWidget中添加#include “DeclarativeSyntaxSupport.h”头文件</p>
 </blockquote>
 <h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul>
-<li>下章链接<br><a href="https://sanctorum003.github.io/2019/08/02/Widget/" target="_blank" rel="noopener">虚幻4之Slate学习二 —— Widget</a></li>
+<li>下章链接<br><a href="https://sanctorum003.github.io/2019/08/02/WidgetStyle/" target="_blank" rel="noopener">虚幻4之Slate学习二 —— WidgetStyle</a></li>
 </ul>
 
       
@@ -388,7 +388,7 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-08-02, 10:07:12</p>
-    <p><span class="copy-title">最后更新:</span>2019-08-03, 16:39:07</p>
+    <p><span class="copy-title">最后更新:</span>2019-08-03, 17:10:27</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/02/HUD/" title="虚幻4之Slate学习一 —— HUD">https://sanctorum.github.io/2019/08/02/HUD/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
