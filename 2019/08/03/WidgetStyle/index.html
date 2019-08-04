@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://sanctorum.github.io/2019/08/03/WidgetStyle/Menu.png">
 <meta property="og:image" content="https://sanctorum.github.io/2019/08/03/WidgetStyle/SlateStyle.png">
 <meta property="og:image" content="https://sanctorum.github.io/2019/08/03/WidgetStyle/Brush.png">
-<meta property="og:updated_time" content="2019-08-04T02:36:58.670Z">
+<meta property="og:updated_time" content="2019-08-04T03:24:42.110Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="虚幻4之Slate学习二 —— WidgetStyle">
 <meta name="twitter:description" content="内容简介 自定义控件样式 生成样式集合，用于加载和引用我们的样式  简单梳理为了能够在控件上显示自定义的各类属性，使用我们要使用自定义的控件样式。使用我们需要创建一个基于SlateWidgetSytle的C++类。在这里可以定义许多的自定义样式。比如最常用的FSlateBrush用于显示图片，FSlateFontInfo用于表示字体信息。接着我们思考的是怎么指定这些相关属性，即怎么指定图片等信息。">
@@ -254,7 +254,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-08-04 10:36:58'>2019-08-03 15:49</time>
+        创建时间:<time class="date" title='更新时间: 2019-08-04 11:24:42'>2019-08-03 15:49</time>
         
     </div>
     <div class="article-meta">
@@ -265,7 +265,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#内容简介"><span class="toc-text">内容简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单梳理"><span class="toc-text">简单梳理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定义自定义Slate控件样式"><span class="toc-text">定义自定义Slate控件样式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义单例类"><span class="toc-text">自定义单例类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注册和注销"><span class="toc-text">注册和注销</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FSlateStyleSet"><span class="toc-text">FSlateStyleSet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#共享指针和共享引用"><span class="toc-text">共享指针和共享引用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建单例实例"><span class="toc-text">创建单例实例</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#内容简介"><span class="toc-text">内容简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单梳理"><span class="toc-text">简单梳理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定义自定义Slate控件样式"><span class="toc-text">定义自定义Slate控件样式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义单例类"><span class="toc-text">自定义单例类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注册和注销"><span class="toc-text">注册和注销</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FSlateStyleSet"><span class="toc-text">FSlateStyleSet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#共享指针和共享引用"><span class="toc-text">共享指针和共享引用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建单例实例"><span class="toc-text">创建单例实例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -396,7 +396,68 @@ TSharedRef&lt;class FSlateStyleSet&gt; MyStyle::Create()
 <li>一个Slate样式块，包含一组指定Slate外观的命名属性。</li>
 </ul>
 <h2 id="共享指针和共享引用"><a href="#共享指针和共享引用" class="headerlink" title="共享指针和共享引用"></a>共享指针和共享引用</h2><p>注意的是这两个都是指针，主要区别是TSharedRef&lt;&gt;不能指向空，且TSharedPtr&lt;&gt;可以隐式转换成TSharedRef&lt;&gt;，所有这里声明时用的是TSharedPtr&lt;&gt;</p>
-<h1 id="创建单例实例"><a href="#创建单例实例" class="headerlink" title="创建单例实例"></a>创建单例实例</h1>
+<h1 id="创建单例实例"><a href="#创建单例实例" class="headerlink" title="创建单例实例"></a>创建单例实例</h1><ul>
+<li>FDefaultGameModuleImpl中的StartupModule()和ShutdownModule()这两个函数会在加载(卸载)dll和模块后立刻调用,我们可以利用来生成实例。在MySlate中写如下代码:<pre><code class="cpp">/**  MySlate.h **/
+class FMySlateModule : public FDefaultGameModuleImpl
+{
+public:
+     virtual void StartupModule() override;
+     virtual void ShutdownModule() override;
+};</code></pre>
+</li>
+<li>FDefaultGameModuleImpl:Default minimal module class for gameplay modules. Does nothing at startup and shutdown.</li>
+<li>所以上述其实就是自定义了一个模块</li>
+</ul>
+<pre><code class="cpp">#include &quot;MySlate.h&quot;
+#include &quot;Modules/ModuleManager.h&quot;
+#include &quot;Public/UI/MyStyle.h&quot;
+#include &quot;SlateStyleRegistry.h&quot;
+
+IMPLEMENT_PRIMARY_GAME_MODULE(FMySlateModule, MySlate, &quot;MySlate&quot; );
+
+void FMySlateModule::StartupModule()
+{
+    //先取消注册，保证不会重复注册
+    FSlateStyleRegistry::UnRegisterSlateStyle(MyStyle::GetStyleSetName());
+    MyStyle::Initialze();
+}
+
+void FMySlateModule::ShutdownModule()
+{
+    MyStyle::ShutDown();
+}
+</code></pre>
+<ul>
+<li>在您的游戏中，至少要使用IMPLEMENT_PRIMARY_GAME_MODULE注册一个模块。其他模块可以使用另一个可选的IMPLEMENT_GAME_MODULE方法进行注册。</li>
+<li>所要使用的模组，注意默认是FDefaultGameModuleImpl,所以这里我们改为FMySlateModule</li>
+<li><a href="https://docs.unrealengine.com/zh-CN/Programming/Modules/Gameplay/index.html" target="_blank" rel="noopener">更多关于Module可以看官方手册</a></li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这样我们就定义好了我们的控件样式，我们来测试一下是否成功</p>
+<pre><code class="cpp">/** SMyHUDWidget.h 部分代码**/
+private:
+    const FMySlateStyle *MySlateStyle;</code></pre>
+<pre><code class="cpp">/** SMyHUDWidget.cpp **/
+#include &quot;SMyHUDWidget.h&quot;
+#include &quot;SlateOptMacros.h&quot;
+#include &quot;SButton.h&quot;
+#include &quot;SImage.h&quot;
+#include &quot;MyStyle.h&quot;
+
+BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
+void SMyHUDWidget::Construct(const FArguments&amp; InArgs)
+{
+    MySlateStyle = &amp;MyStyle::Get().GetWidgetStyle&lt;FMySlateStyle&gt;(&quot;BP_MySlateWidgetStyle&quot;);
+
+    ChildSlot
+    [
+        SNew(SImage)
+        .Image(&amp;MySlateStyle-&gt;BackGroupBrush)
+
+    ];
+
+}
+END_SLATE_FUNCTION_BUILD_OPTIMIZATION</code></pre>
+
       
        
     </div>
@@ -409,7 +470,7 @@ TSharedRef&lt;class FSlateStyleSet&gt; MyStyle::Create()
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-08-03, 15:49:36</p>
-    <p><span class="copy-title">最后更新:</span>2019-08-04, 10:36:58</p>
+    <p><span class="copy-title">最后更新:</span>2019-08-04, 11:24:42</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/03/WidgetStyle/" title="虚幻4之Slate学习二 —— WidgetStyle">https://sanctorum.github.io/2019/08/03/WidgetStyle/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
