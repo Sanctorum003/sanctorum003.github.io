@@ -102,7 +102,7 @@
     
         
             
-            <li><div data-rel="UE4">UE4<small>(2)</small></div>
+            <li><div data-rel="Algorithm">Algorithm<small>(1)</small></div>
                 
             </li>
             
@@ -110,7 +110,7 @@
     
         
             
-            <li><div data-rel="Algorithm">Algorithm<small>(1)</small></div>
+            <li><div data-rel="UE4">UE4<small>(2)</small></div>
                 
             </li>
             
@@ -163,15 +163,15 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
+        <a href="javascript:" class="color5">algorithm</a>
+    </li>
+    
+    <li class="article-tag-list-item">
         <a href="javascript:" class="color4">ue4</a>
     </li>
     
     <li class="article-tag-list-item">
         <a href="javascript:" class="color1">slate</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">algorithm</a>
     </li>
     
     <div class="clearfix"></div>
@@ -183,6 +183,14 @@
     </div>
     
     <nav id="title-list-nav">
+        
+        <a  class="Algorithm "
+           href="/2019/08/01/KMP/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="KMP">KMP</span>
+            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
+        </a>
         
         <a  class="UE4 "
            href="/2019/08/02/HUD/"
@@ -198,14 +206,6 @@
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习二 —— WidgetStyle">虚幻4之Slate学习二 —— WidgetStyle</span>
             <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
-        </a>
-        
-        <a  class="Algorithm "
-           href="/2019/08/01/KMP/"
-           data-tag="algorithm"
-           data-author="" >
-            <span class="post-title" title="KMP">KMP</span>
-            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
         </a>
         
     </nav>
@@ -246,7 +246,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-08-04 20:15:40'>2019-08-03 15:49</time>
+        创建时间:<time class="date" title='更新时间: 2019-08-04 20:18:10'>2019-08-03 15:49</time>
         
     </div>
     <div class="article-meta">
@@ -400,7 +400,8 @@ public:
 <li>FDefaultGameModuleImpl:Default minimal module class for gameplay modules. Does nothing at startup and shutdown.</li>
 <li>所以上述其实就是自定义了一个模块</li>
 </ul>
-<pre><code class="cpp">#include &quot;MySlate.h&quot;
+<pre><code class="cpp">/** MySlate.cpp **/
+#include &quot;MySlate.h&quot;
 #include &quot;Modules/ModuleManager.h&quot;
 #include &quot;Public/UI/MyStyle.h&quot;
 #include &quot;SlateStyleRegistry.h&quot;
@@ -424,7 +425,7 @@ void FMySlateModule::ShutdownModule()
 <li>所要使用的模组，注意默认是FDefaultGameModuleImpl,所以这里我们改为FMySlateModule</li>
 <li><a href="https://docs.unrealengine.com/zh-CN/Programming/Modules/Gameplay/index.html" target="_blank" rel="noopener">更多关于Module可以看官方手册</a></li>
 </ul>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这样我们就定义好了我们的控件样式，我们来测试一下是否成功，在样式蓝图中选择一张图片，并添加如下代码<br><img src="Style.png" alt></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这样我们就定义好了我们的控件样式，我们来测试一下是否成功，在样式蓝图中选择一张图片，并添加如下代码<br><img src="Sytle.png" alt></p>
 <pre><code class="cpp">/** SMyHUDWidget.h 部分代码**/
 #include &quot;MySlateWidgetStyle.h&quot;
 
@@ -468,7 +469,7 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION</code></pre>
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-08-03, 15:49:36</p>
-    <p><span class="copy-title">最后更新:</span>2019-08-04, 20:15:40</p>
+    <p><span class="copy-title">最后更新:</span>2019-08-04, 20:18:10</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/03/WidgetStyle/" title="虚幻4之Slate学习二 —— WidgetStyle">https://sanctorum.github.io/2019/08/03/WidgetStyle/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
@@ -512,7 +513,7 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION</code></pre>
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#ue4','#slate','#algorithm',],
+            'data': ['#algorithm','#ue4','#slate',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
