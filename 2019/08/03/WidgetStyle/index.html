@@ -6,14 +6,22 @@
   <meta name="keywords" content=" ue4 , slate ">
   <meta name="description" content="虚幻4之Slate学习二 —— WidgetStyle | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="内容简介 自定义控件样式 生成样式集合，用于加载和引用我们的样式  简单梳理为了能够在控件上显示自定义的各类属性，使用我们要使用自定义的控件样式。使用我们需要创建一个基于SlateWidgetSytle的C++类。在这里可以定义许多的自定义样式。比如最常用的FSlateBrush用于显示图片，FSlateFontInfo用于表示字体信息。接着我们思考的是怎么指定这些相关属性，即怎么指定图片等信息。">
+<meta name="keywords" content="ue4,slate">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虚幻4之Slate学习二 —— WidgetStyle">
+<meta property="og:url" content="https://sanctorum.github.io/2019/08/03/WidgetStyle/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="内容简介 自定义控件样式 生成样式集合，用于加载和引用我们的样式  简单梳理为了能够在控件上显示自定义的各类属性，使用我们要使用自定义的控件样式。使用我们需要创建一个基于SlateWidgetSytle的C++类。在这里可以定义许多的自定义样式。比如最常用的FSlateBrush用于显示图片，FSlateFontInfo用于表示字体信息。接着我们思考的是怎么指定这些相关属性，即怎么指定图片等信息。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:image" content="https://sanctorum.github.io/2019/08/03/WidgetStyle/Menu.png">
+<meta property="og:image" content="https://sanctorum.github.io/2019/08/03/WidgetStyle/SlateStyle.png">
+<meta property="og:image" content="https://sanctorum.github.io/2019/08/03/WidgetStyle/Brush.png">
+<meta property="og:updated_time" content="2019-08-04T02:36:58.670Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="虚幻4之Slate学习二 —— WidgetStyle">
+<meta name="twitter:description" content="内容简介 自定义控件样式 生成样式集合，用于加载和引用我们的样式  简单梳理为了能够在控件上显示自定义的各类属性，使用我们要使用自定义的控件样式。使用我们需要创建一个基于SlateWidgetSytle的C++类。在这里可以定义许多的自定义样式。比如最常用的FSlateBrush用于显示图片，FSlateFontInfo用于表示字体信息。接着我们思考的是怎么指定这些相关属性，即怎么指定图片等信息。">
+<meta name="twitter:image" content="https://sanctorum.github.io/2019/08/03/WidgetStyle/Menu.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -192,20 +200,20 @@
             <span class="post-date" title="2019-08-02 10:07:12">2019/08/02</span>
         </a>
         
-        <a  class="Algorithm "
-           href="/2019/08/01/KMP/"
-           data-tag="algorithm"
-           data-author="" >
-            <span class="post-title" title="KMP">KMP</span>
-            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
-        </a>
-        
         <a  class="UE4 "
            href="/2019/08/03/WidgetStyle/"
            data-tag="ue4,slate"
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习二 —— WidgetStyle">虚幻4之Slate学习二 —— WidgetStyle</span>
             <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
+        </a>
+        
+        <a  class="Algorithm "
+           href="/2019/08/01/KMP/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="KMP">KMP</span>
+            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
         </a>
         
     </nav>
@@ -246,7 +254,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-08-03 23:01:27'>2019-08-03 15:49</time>
+        创建时间:<time class="date" title='更新时间: 2019-08-04 10:36:58'>2019-08-03 15:49</time>
         
     </div>
     <div class="article-meta">
@@ -257,7 +265,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#内容简介"><span class="toc-text">内容简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单梳理"><span class="toc-text">简单梳理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定义自定义Slate控件样式"><span class="toc-text">定义自定义Slate控件样式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义单例类"><span class="toc-text">自定义单例类</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#内容简介"><span class="toc-text">内容简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单梳理"><span class="toc-text">简单梳理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定义自定义Slate控件样式"><span class="toc-text">定义自定义Slate控件样式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义单例类"><span class="toc-text">自定义单例类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注册和注销"><span class="toc-text">注册和注销</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FSlateStyleSet"><span class="toc-text">FSlateStyleSet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#共享指针和共享引用"><span class="toc-text">共享指针和共享引用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建单例实例"><span class="toc-text">创建单例实例</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -314,7 +322,81 @@ struct MYSLATE_API FMySlateStyle : public FSlateWidgetStyle
     FSlateBrush BackGroupBrush;
 };</code></pre>
 <p>这样在BP_MySlateWidgetStyle中产生如下效果<br><img src="Brush.png" alt></p>
-<h1 id="自定义单例类"><a href="#自定义单例类" class="headerlink" title="自定义单例类"></a>自定义单例类</h1>
+<h1 id="自定义单例类"><a href="#自定义单例类" class="headerlink" title="自定义单例类"></a>自定义单例类</h1><p>接下来再来捋一下接下来的思路，我们需要在MyHUDWidget中获取到我们蓝图类中的样式。这里我们可以通过<a href="https://api.unrealengine.com/INT/API/Runtime/SlateCore/Styling/ISlateStyle/GetWidgetStyle/index.html" target="_blank" rel="noopener">ISlateStyle::GetWidgetStyle</a>。所以我们需要有一个ISlateStyle，这里我们可以通过得到FSlateStyleSet，它是继承于ISlateStyle的，可以直接隐式转换。接着我们<a href="https://api.unrealengine.com/INT/API/Runtime/Engine/Slate/FSlateGameResources/New/index.html" target="_blank" rel="noopener">FSlateGameResources::New</a>函数来获取蓝图类中的所有样式生成FSlateStyleSet。而这一些列操作需要一个单列来实现，而单例也需要在某个地方实例化。</p>
+<hr>
+<p>创建一个不继承任何类的类，命名为MyStyle。单例模式大同小异，可以按照如下进行模仿</p>
+<pre><code class="cpp">/** MyStyle.h **/
+#pragma once
+
+#include &quot;CoreMinimal.h&quot;
+#include &quot;ISlateStyle.h&quot;
+
+/**
+ * 
+ */
+class MYSLATE_API MyStyle
+{
+public:
+    static void Initialze();
+    static FName GetStyleSetName();
+    static void ShutDown();
+    static const ISlateStyle&amp; Get();
+
+private:
+    static TSharedRef&lt;class FSlateStyleSet&gt; Create();
+    static TSharedPtr&lt;class FSlateStyleSet&gt; MytyleInstance;
+};</code></pre>
+<pre><code class="cpp">/** MyStyle.cpp **/
+#include &quot;MyStyle.h&quot;
+#include &quot;SlateStyleRegistry.h&quot;
+#include &quot;SlateGameResources.h&quot;
+
+//由于此单例不用构造函数，所以成员初始化写在这里
+TSharedPtr&lt;FSlateStyleSet&gt; MyStyle::MyStyleInstance = NULL;
+
+void MyStyle::Initialze()
+{
+    if (!MyStyleInstance.IsValid())
+    {
+        MyStyleInstance = Create();
+        FSlateStyleRegistry::RegisterSlateStyle(*MyStyleInstance);
+
+    }
+}
+
+FName MyStyle::GetStyleSetName()
+{
+    const static FName MyStyleName(TEXT(&quot;BP_MySlateWidgetStyle&quot;));
+    return MyStyleName;
+}
+
+void MyStyle::ShutDown()
+{
+    FSlateStyleRegistry::UnRegisterSlateStyle(*MyStyleInstance);
+    ensure(MyStyleInstance.IsUnique());
+    MyStyleInstance.Reset();
+}
+
+const ISlateStyle&amp; MyStyle::Get()
+{
+    return *MyStyleInstance;
+}
+
+TSharedRef&lt;class FSlateStyleSet&gt; MyStyle::Create()
+{
+    TSharedRef&lt;FSlateStyleSet&gt; StyleRef = FSlateGameResources::New(GetStyleSetName(), &quot;/Game/&quot; , &quot;/Game/&quot;);
+    return StyleRef;
+}</code></pre>
+<h2 id="注册和注销"><a href="#注册和注销" class="headerlink" title="注册和注销"></a>注册和注销</h2><ul>
+<li>RegisterSlateStyle:Add a slate style to the repository.</li>
+<li>UnRegisterSlateStyle:Removes a slate style from the repository.</li>
+</ul>
+<p>猜测:用于在 Static initialization时预加载我们需要的样式</p>
+<h2 id="FSlateStyleSet"><a href="#FSlateStyleSet" class="headerlink" title="FSlateStyleSet"></a>FSlateStyleSet</h2><ul>
+<li>一个Slate样式块，包含一组指定Slate外观的命名属性。</li>
+</ul>
+<h2 id="共享指针和共享引用"><a href="#共享指针和共享引用" class="headerlink" title="共享指针和共享引用"></a>共享指针和共享引用</h2><p>注意的是这两个都是指针，主要区别是TSharedRef&lt;&gt;不能指向空，且TSharedPtr&lt;&gt;可以隐式转换成TSharedRef&lt;&gt;，所有这里声明时用的是TSharedPtr&lt;&gt;</p>
+<h1 id="创建单例实例"><a href="#创建单例实例" class="headerlink" title="创建单例实例"></a>创建单例实例</h1>
       
        
     </div>
@@ -327,7 +409,7 @@ struct MYSLATE_API FMySlateStyle : public FSlateWidgetStyle
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-08-03, 15:49:36</p>
-    <p><span class="copy-title">最后更新:</span>2019-08-03, 23:01:27</p>
+    <p><span class="copy-title">最后更新:</span>2019-08-04, 10:36:58</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/03/WidgetStyle/" title="虚幻4之Slate学习二 —— WidgetStyle">https://sanctorum.github.io/2019/08/03/WidgetStyle/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
