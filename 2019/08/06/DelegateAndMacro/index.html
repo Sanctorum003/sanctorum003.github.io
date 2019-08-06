@@ -192,20 +192,20 @@
             <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
         </a>
         
-        <a  class="UE4 "
-           href="/2019/08/02/HUD/"
-           data-tag="ue4,slate"
-           data-author="" >
-            <span class="post-title" title="虚幻4之Slate学习一 —— HUD">虚幻4之Slate学习一 —— HUD</span>
-            <span class="post-date" title="2019-08-02 10:07:12">2019/08/02</span>
-        </a>
-        
         <a  class="Algorithm "
            href="/2019/08/01/KMP/"
            data-tag="algorithm"
            data-author="" >
             <span class="post-title" title="KMP">KMP</span>
             <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
+        </a>
+        
+        <a  class="UE4 "
+           href="/2019/08/02/HUD/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习一 —— HUD">虚幻4之Slate学习一 —— HUD</span>
+            <span class="post-date" title="2019-08-02 10:07:12">2019/08/02</span>
         </a>
         
         <a  class="UE4 "
@@ -262,7 +262,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-08-06 15:34:37'>2019-08-06 14:47</time>
+        创建时间:<time class="date" title='更新时间: 2019-08-06 15:42:48'>2019-08-06 14:47</time>
         
     </div>
     <div class="article-meta">
@@ -273,7 +273,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本章简介"><span class="toc-text">本章简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#虚幻4委托"><span class="toc-text">虚幻4委托</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Delegate宏"><span class="toc-text">Delegate宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#声明Delegate变量"><span class="toc-text">声明Delegate变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绑定"><span class="toc-text">绑定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用代理方法"><span class="toc-text">调用代理方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Slate宏（macro）"><span class="toc-text">Slate宏（macro）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-BEGIN-ARGS-WidgetType"><span class="toc-text">SLATE_BEGIN_ARGS(WidgetType)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-ATTRIBUTE（AttrType-AttrName）"><span class="toc-text">SLATE_ATTRIBUTE（AttrType,AttrName）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-ARGUMENT-ArgType-ArgName"><span class="toc-text">SLATE_ARGUMENT(ArgType, ArgName)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-EVENT-DelegateName-EventName"><span class="toc-text">SLATE_EVENT(DelegateName,EventName)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FORCEINLINE"><span class="toc-text">FORCEINLINE</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用Slate控件函数"><span class="toc-text">常用Slate控件函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OnClicked"><span class="toc-text">OnClicked</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SOverlay-Expose"><span class="toc-text">SOverlay::Expose</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本章简介"><span class="toc-text">本章简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#虚幻4委托"><span class="toc-text">虚幻4委托</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Delegate宏"><span class="toc-text">Delegate宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#声明Delegate变量"><span class="toc-text">声明Delegate变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绑定"><span class="toc-text">绑定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用代理方法"><span class="toc-text">调用代理方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Slate宏（macro）"><span class="toc-text">Slate宏（macro）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-BEGIN-ARGS-WidgetType"><span class="toc-text">SLATE_BEGIN_ARGS(WidgetType)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-ATTRIBUTE（AttrType-AttrName）"><span class="toc-text">SLATE_ATTRIBUTE（AttrType,AttrName）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-ARGUMENT-ArgType-ArgName"><span class="toc-text">SLATE_ARGUMENT(ArgType, ArgName)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-EVENT-DelegateName-EventName"><span class="toc-text">SLATE_EVENT(DelegateName,EventName)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FORCEINLINE"><span class="toc-text">FORCEINLINE</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用Slate控件函数"><span class="toc-text">常用Slate控件函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OnClicked"><span class="toc-text">OnClicked</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SOverlay-Expose和SOverlay-FOverlaySlot"><span class="toc-text">SOverlay::Expose和SOverlay::FOverlaySlot</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -517,8 +517,35 @@ FReply SMyHUDWidget::addImage()
 {
     MyImage-&gt;SetImage(&amp;MySlateStyle-&gt;BackGroupBrush);
     return FReply::Handled();
-}</code></pre><p>效果如下图<br>![](onClick.png 点击前)<br>![](onClicked.png 点击后)</p>
-<h2 id="SOverlay-Expose"><a href="#SOverlay-Expose" class="headerlink" title="SOverlay::Expose"></a>SOverlay::Expose</h2>
+}</code></pre><p>效果如下图<br>![](onClick.png 点击前)<br>![](onClicked.png 点击后生成图片)</p>
+<h2 id="SOverlay-Expose和SOverlay-FOverlaySlot"><a href="#SOverlay-Expose和SOverlay-FOverlaySlot" class="headerlink" title="SOverlay::Expose和SOverlay::FOverlaySlot"></a>SOverlay::Expose和SOverlay::FOverlaySlot</h2><ul>
+<li><p>上述两个结合使用可以获取SOverlay的插槽作为变量使用</p>
+</li>
+<li><p>在OnClicked的例子中修改</p>
+<pre><code class="cpp">/** SMyHUDWidget.h **/
+public:
+  //注意SOverlay::FOverlaySlot 是内部类
+  SOverlay::FOverlaySlot* MySlot;</code></pre>
+</li>
+</ul>
+<pre><code class="cpp">/** SMyHUDWidget.cpp **/
++ SOverlay::Slot()
+.HAlign(HAlign_Center)//这些属性设计是应用于插槽
+.VAlign(VAlign_Center)
+.Expose(MySlot)
+[
+    SNew(SButton)
+    .OnClicked(this,&amp;SMyHUDWidget::addImage)
+]</code></pre>
+<pre><code class="cpp">/** SMyHUDWidget.cpp **/
+FReply SMyHUDWidget::addImage()
+{
+    MyImage-&gt;SetImage(&amp;MySlateStyle-&gt;BackGroupBrush);
+    MySlot-&gt;HAlign(HAlign_Left);
+    return FReply::Handled();
+}</code></pre>
+<p>![](FOverlaySlot.png 点击后按钮到最左侧)</p>
+
       
        
     </div>
@@ -531,7 +558,7 @@ FReply SMyHUDWidget::addImage()
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-08-06, 14:47:37</p>
-    <p><span class="copy-title">最后更新:</span>2019-08-06, 15:34:37</p>
+    <p><span class="copy-title">最后更新:</span>2019-08-06, 15:42:48</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/06/DelegateAndMacro/" title="虚幻4之Slate学习四 —— 委托与宏">https://sanctorum.github.io/2019/08/06/DelegateAndMacro/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
