@@ -6,14 +6,18 @@
   <meta name="keywords" content=" ue4 , slate ">
   <meta name="description" content="虚幻4之Slate学习四 —— 委托与宏 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="本章简介 了解虚幻4委托 了解Slate相关宏 了解Slate控件的相关回调函数  虚幻4委托 委托用于将方法作为参数传递给其他方法。 事件处理程序就是通过委托调用的方法。 你可以创建一个自定义方法，当发生特定事件时，某个类（如 Windows 控件）就可以调用你的方法。 简单来说，delegate实现了将一个方法传递给其他类，使得其他的类在编译时期内不需要了解具体是什么方法被调用，而只是知道这个">
+<meta name="keywords" content="ue4,slate">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虚幻4之Slate学习四 —— 委托与宏">
+<meta property="og:url" content="https://sanctorum.github.io/2019/08/06/DelegateAndMacro/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="本章简介 了解虚幻4委托 了解Slate相关宏 了解Slate控件的相关回调函数  虚幻4委托 委托用于将方法作为参数传递给其他方法。 事件处理程序就是通过委托调用的方法。 你可以创建一个自定义方法，当发生特定事件时，某个类（如 Windows 控件）就可以调用你的方法。 简单来说，delegate实现了将一个方法传递给其他类，使得其他的类在编译时期内不需要了解具体是什么方法被调用，而只是知道这个">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:updated_time" content="2019-08-06T07:33:00.410Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="虚幻4之Slate学习四 —— 委托与宏">
+<meta name="twitter:description" content="本章简介 了解虚幻4委托 了解Slate相关宏 了解Slate控件的相关回调函数  虚幻4委托 委托用于将方法作为参数传递给其他方法。 事件处理程序就是通过委托调用的方法。 你可以创建一个自定义方法，当发生特定事件时，某个类（如 Windows 控件）就可以调用你的方法。 简单来说，delegate实现了将一个方法传递给其他类，使得其他的类在编译时期内不需要了解具体是什么方法被调用，而只是知道这个">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -192,20 +196,20 @@
             <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
         </a>
         
-        <a  class="Algorithm "
-           href="/2019/08/01/KMP/"
-           data-tag="algorithm"
-           data-author="" >
-            <span class="post-title" title="KMP">KMP</span>
-            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
-        </a>
-        
         <a  class="UE4 "
            href="/2019/08/02/HUD/"
            data-tag="ue4,slate"
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习一 —— HUD">虚幻4之Slate学习一 —— HUD</span>
             <span class="post-date" title="2019-08-02 10:07:12">2019/08/02</span>
+        </a>
+        
+        <a  class="Algorithm "
+           href="/2019/08/01/KMP/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="KMP">KMP</span>
+            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
         </a>
         
         <a  class="UE4 "
@@ -262,7 +266,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-08-06 15:30:12'>2019-08-06 14:47</time>
+        创建时间:<time class="date" title='更新时间: 2019-08-06 15:33:00'>2019-08-06 14:47</time>
         
     </div>
     <div class="article-meta">
@@ -273,7 +277,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本章简介"><span class="toc-text">本章简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#虚幻4委托"><span class="toc-text">虚幻4委托</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Delegate宏"><span class="toc-text">Delegate宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#声明Delegate变量"><span class="toc-text">声明Delegate变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绑定"><span class="toc-text">绑定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用代理方法"><span class="toc-text">调用代理方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Slate宏（macro）"><span class="toc-text">Slate宏（macro）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-BEGIN-ARGS-WidgetType"><span class="toc-text">SLATE_BEGIN_ARGS(WidgetType)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-ATTRIBUTE（AttrType-AttrName）"><span class="toc-text">SLATE_ATTRIBUTE（AttrType,AttrName）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-ARGUMENT-ArgType-ArgName"><span class="toc-text">SLATE_ARGUMENT(ArgType, ArgName)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-EVENT-DelegateName-EventName"><span class="toc-text">SLATE_EVENT(DelegateName,EventName)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FORCEINLINE"><span class="toc-text">FORCEINLINE</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用回调函数"><span class="toc-text">常用回调函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OnClicked"><span class="toc-text">OnClicked</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本章简介"><span class="toc-text">本章简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#虚幻4委托"><span class="toc-text">虚幻4委托</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Delegate宏"><span class="toc-text">Delegate宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#声明Delegate变量"><span class="toc-text">声明Delegate变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绑定"><span class="toc-text">绑定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用代理方法"><span class="toc-text">调用代理方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Slate宏（macro）"><span class="toc-text">Slate宏（macro）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-BEGIN-ARGS-WidgetType"><span class="toc-text">SLATE_BEGIN_ARGS(WidgetType)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-ATTRIBUTE（AttrType-AttrName）"><span class="toc-text">SLATE_ATTRIBUTE（AttrType,AttrName）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-ARGUMENT-ArgType-ArgName"><span class="toc-text">SLATE_ARGUMENT(ArgType, ArgName)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SLATE-EVENT-DelegateName-EventName"><span class="toc-text">SLATE_EVENT(DelegateName,EventName)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FORCEINLINE"><span class="toc-text">FORCEINLINE</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用Slate控件函数"><span class="toc-text">常用Slate控件函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OnClicked"><span class="toc-text">OnClicked</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SOverlay-Expose"><span class="toc-text">SOverlay::Expose</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -429,7 +433,7 @@ SLATE_END_ARGS()</code></pre>
 </blockquote>
 </li>
 </ul>
-<h1 id="常用回调函数"><a href="#常用回调函数" class="headerlink" title="常用回调函数"></a>常用回调函数</h1><h2 id="OnClicked"><a href="#OnClicked" class="headerlink" title="OnClicked"></a>OnClicked</h2><ul>
+<h1 id="常用Slate控件函数"><a href="#常用Slate控件函数" class="headerlink" title="常用Slate控件函数"></a>常用Slate控件函数</h1><h2 id="OnClicked"><a href="#OnClicked" class="headerlink" title="OnClicked"></a>OnClicked</h2><ul>
 <li><p>事件原型</p>
 <pre><code class="cpp">/** Called when the button is clicked */
 SLATE_EVENT( FOnClicked, OnClicked )</code></pre>
@@ -456,8 +460,9 @@ DECLARE_DELEGATE_RetVal(
 <p>An event should return a FReply::Handled() to let the system know that an event was handled.</p>
 </blockquote>
 </li>
-<li><p>下面举一个例子</p>
-<pre><code class="cpp">/** SMyHUDWidget.h **/
+</ul>
+<ul>
+<li>下面举一个例子<pre><code class="cpp">/** SMyHUDWidget.h **/
 #pragma once
 </code></pre>
 </li>
@@ -467,17 +472,15 @@ DECLARE_DELEGATE_RetVal(
 <p>#include “DeclarativeSyntaxSupport.h”</p>
 <p>#include “MySlateWidgetStyle.h”</p>
 <p>#include “SImage.h”</p>
-<p>/**</p>
-<ul>
-<li></li>
-<li><p>/<br>class MYSLATE_API SMyHUDWidget : public SCompoundWidget<br>{<br>public:<br>  SLATE_BEGIN_ARGS(SMyHUDWidget)<br>  {}<br>  SLATE_END_ARGS()</p>
-<p>  /** Constructs this widget with InArgs */<br>  void Construct(const FArguments&amp; InArgs);</p>
-<p>  //注意SAssignNew需要使用共享指针<br>  TSharedPtr<simage> MyImage;</simage></p>
-</li>
-</ul>
-<p>private:<br>    const FMySlateStyle *MySlateStyle;</p>
+<p>class MYSLATE_API SMyHUDWidget : public SCompoundWidget<br>{<br>public:<br>    SLATE_BEGIN_ARGS(SMyHUDWidget)<br>    {}<br>    SLATE_END_ARGS()</p>
+<pre><code>/** Constructs this widget with InArgs */
+void Construct(const FArguments&amp; InArgs);
+
+//注意SAssignNew需要使用共享指针
+TSharedPtr&lt;SImage&gt; MyImage;</code></pre><p>private:<br>    const FMySlateStyle *MySlateStyle;</p>
 <pre><code>FReply addImage();</code></pre><p>};</p>
-<pre><code>```cpp
+<pre><code>
+```cpp
 /** SMyHUDWidget.cpp **/
 #include &quot;SMyHUDWidget.h&quot;
 #include &quot;SlateOptMacros.h&quot;
@@ -519,7 +522,7 @@ FReply SMyHUDWidget::addImage()
     MyImage-&gt;SetImage(&amp;MySlateStyle-&gt;BackGroupBrush);
     return FReply::Handled();
 }</code></pre><p>效果如下图<br>![](onclick.png 点击前)<br>![](onclicked.png 点击后)</p>
-
+<h2 id="SOverlay-Expose"><a href="#SOverlay-Expose" class="headerlink" title="SOverlay::Expose"></a>SOverlay::Expose</h2>
       
        
     </div>
@@ -532,7 +535,7 @@ FReply SMyHUDWidget::addImage()
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-08-06, 14:47:37</p>
-    <p><span class="copy-title">最后更新:</span>2019-08-06, 15:30:12</p>
+    <p><span class="copy-title">最后更新:</span>2019-08-06, 15:33:00</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/06/DelegateAndMacro/" title="虚幻4之Slate学习四 —— 委托与宏">https://sanctorum.github.io/2019/08/06/DelegateAndMacro/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。

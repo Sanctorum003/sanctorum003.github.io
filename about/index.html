@@ -6,14 +6,18 @@
   <meta name="keywords" content>
   <meta name="description" content="about | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="本章简介 了解虚幻4委托 了解Slate相关宏 了解Slate控件的相关回调函数  虚幻4委托 委托用于将方法作为参数传递给其他方法。 事件处理程序就是通过委托调用的方法。 你可以创建一个自定义方法，当发生特定事件时，某个类（如 Windows 控件）就可以调用你的方法。 简单来说，delegate实现了将一个方法传递给其他类，使得其他的类在编译时期内不需要了解具体是什么方法被调用，而只是知道这个">
+<meta name="keywords" content="ue4,slate">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虚幻4之Slate学习四 —— 委托与宏">
+<meta property="og:url" content="https://sanctorum.github.io/2019/08/06/DelegateAndMacro/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="本章简介 了解虚幻4委托 了解Slate相关宏 了解Slate控件的相关回调函数  虚幻4委托 委托用于将方法作为参数传递给其他方法。 事件处理程序就是通过委托调用的方法。 你可以创建一个自定义方法，当发生特定事件时，某个类（如 Windows 控件）就可以调用你的方法。 简单来说，delegate实现了将一个方法传递给其他类，使得其他的类在编译时期内不需要了解具体是什么方法被调用，而只是知道这个">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:updated_time" content="2019-08-06T07:33:00.410Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="虚幻4之Slate学习四 —— 委托与宏">
+<meta name="twitter:description" content="本章简介 了解虚幻4委托 了解Slate相关宏 了解Slate控件的相关回调函数  虚幻4委托 委托用于将方法作为参数传递给其他方法。 事件处理程序就是通过委托调用的方法。 你可以创建一个自定义方法，当发生特定事件时，某个类（如 Windows 控件）就可以调用你的方法。 简单来说，delegate实现了将一个方法传递给其他类，使得其他的类在编译时期内不需要了解具体是什么方法被调用，而只是知道这个">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -192,20 +196,20 @@
             <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
         </a>
         
-        <a  class="Algorithm "
-           href="/2019/08/01/KMP/"
-           data-tag="algorithm"
-           data-author="" >
-            <span class="post-title" title="KMP">KMP</span>
-            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
-        </a>
-        
         <a  class="UE4 "
            href="/2019/08/02/HUD/"
            data-tag="ue4,slate"
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习一 —— HUD">虚幻4之Slate学习一 —— HUD</span>
             <span class="post-date" title="2019-08-02 10:07:12">2019/08/02</span>
+        </a>
+        
+        <a  class="Algorithm "
+           href="/2019/08/01/KMP/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="KMP">KMP</span>
+            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
         </a>
         
         <a  class="UE4 "
