@@ -262,7 +262,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-08-06 15:54:35'>2019-08-06 14:47</time>
+        创建时间:<time class="date" title='更新时间: 2019-08-06 15:59:22'>2019-08-06 14:47</time>
         
     </div>
     <div class="article-meta">
@@ -457,26 +457,35 @@ DECLARE_DELEGATE_RetVal(
 </li>
 </ul>
 <ul>
-<li>下面举一个例子<pre><code class="cpp">/** SMyHUDWidget.h **/
-#pragma once
-</code></pre>
-</li>
+<li>下面举一个例子</li>
 </ul>
-<p>#include “CoreMinimal.h”</p>
-<p>#include “Widgets/SCompoundWidget.h”</p>
-<p>#include “DeclarativeSyntaxSupport.h”</p>
-<p>#include “MySlateWidgetStyle.h”</p>
-<p>#include “SImage.h”</p>
-<p>class MYSLATE_API SMyHUDWidget : public SCompoundWidget<br>{<br>public:<br>    SLATE_BEGIN_ARGS(SMyHUDWidget)<br>    {}<br>    SLATE_END_ARGS()</p>
-<pre><code>/** Constructs this widget with InArgs */
-void Construct(const FArguments&amp; InArgs);
+<pre><code class="cpp">/** SMyHUDWidget.h **/
+#pragma once
 
-//注意SAssignNew需要使用共享指针
-TSharedPtr&lt;SImage&gt; MyImage;</code></pre><p>private:<br>    const FMySlateStyle *MySlateStyle;</p>
-<pre><code>FReply addImage();</code></pre><p>};</p>
-<pre><code>
-```cpp
-/** SMyHUDWidget.cpp **/
+#include &quot;CoreMinimal.h&quot;
+#include &quot;Widgets/SCompoundWidget.h&quot;
+#include &quot;DeclarativeSyntaxSupport.h&quot;
+#include &quot;MySlateWidgetStyle.h&quot;
+#include &quot;SImage.h&quot;
+
+class MYSLATE_API SMyHUDWidget : public SCompoundWidget
+{
+public:
+    SLATE_BEGIN_ARGS(SMyHUDWidget)
+    {}
+    SLATE_END_ARGS()
+
+    // Constructs this widget with InArgs 
+    void Construct(const FArguments&amp; InArgs);
+
+    //注意SAssignNew需要使用共享指针
+    TSharedPtr&lt;SImage&gt; MyImage;
+private:
+    const FMySlateStyle *MySlateStyle;
+
+    FReply addImage();
+};</code></pre>
+<pre><code class="cpp">/** SMyHUDWidget.cpp **/
 #include &quot;SMyHUDWidget.h&quot;
 #include &quot;SlateOptMacros.h&quot;
 #include &quot;SButton.h&quot;
@@ -516,7 +525,8 @@ FReply SMyHUDWidget::addImage()
 {
     MyImage-&gt;SetImage(&amp;MySlateStyle-&gt;BackGroupBrush);
     return FReply::Handled();
-}</code></pre><p>效果如下图<br>![](onClick.png 点击前)<br>![](onClicked.png 点击后生成图片)</p>
+}</code></pre>
+<p>效果如下图<br><img src="onClick.png" alt><br><img src="onClicked.png" alt></p>
 <h2 id="SOverlay-Expose和SOverlay-FOverlaySlot"><a href="#SOverlay-Expose和SOverlay-FOverlaySlot" class="headerlink" title="SOverlay::Expose和SOverlay::FOverlaySlot"></a>SOverlay::Expose和SOverlay::FOverlaySlot</h2><ul>
 <li><p>上述两个结合使用可以获取SOverlay的插槽作为变量使用</p>
 </li>
@@ -543,7 +553,7 @@ FReply SMyHUDWidget::addImage()
     MySlot-&gt;HAlign(HAlign_Left);
     return FReply::Handled();
 }</code></pre>
-<p>![](FOverlaySlot.png 点击后按钮到最左侧)</p>
+<p>点击后按钮到最左侧<br><img src="FOverlaySlot.png" alt></p>
 
       
        
@@ -557,7 +567,7 @@ FReply SMyHUDWidget::addImage()
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-08-06, 14:47:37</p>
-    <p><span class="copy-title">最后更新:</span>2019-08-06, 15:54:35</p>
+    <p><span class="copy-title">最后更新:</span>2019-08-06, 15:59:22</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/06/DelegateAndMacro/" title="虚幻4之Slate学习四 —— 委托与宏">https://sanctorum.github.io/2019/08/06/DelegateAndMacro/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
