@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>虚幻4之JSON学习 | Blog</title>
-  <meta name="keywords" content=" ue4 , json ">
-  <meta name="description" content="虚幻4之JSON学习 | Blog">
+  <title>渲染管线 | Blog</title>
+  <meta name="keywords" content=" computer graphics , directx11 ">
+  <meta name="description" content="渲染管线 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
@@ -304,9 +304,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JSON" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-渲染管线" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">虚幻4之JSON学习</h1>
+        <h1 class="article-title">渲染管线</h1>
     
     <div class="article-meta">
         
@@ -314,23 +314,23 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="UE4">UE4</a>
+                <a href="javascript:" data-rel="CG">CG</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color4">ue4</a>
+            <a href="javascript:" class="color3">computer graphics</a>
             
-            <a href="javascript:" class="color5">json</a>
+            <a href="javascript:" class="color5">directx11</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-08-08 20:51:41'>2019-08-07 20:07</time>
+        创建时间:<time class="date" title='更新时间: 2019-08-19 17:28:19'>2019-08-19 10:56</time>
         
     </div>
     <div class="article-meta">
@@ -341,7 +341,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本章简介"><span class="toc-text">本章简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JSON格式"><span class="toc-text">JSON格式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解析JSON文件"><span class="toc-text">解析JSON文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修改JSON文件"><span class="toc-text">修改JSON文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#设置单个属性"><span class="toc-text">设置单个属性</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#三维视觉"><span class="toc-text">三维视觉</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -356,121 +356,14 @@
 </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="本章简介"><a href="#本章简介" class="headerlink" title="本章简介"></a>本章简介</h1><ul>
-<li>JSON格式</li>
-<li>解析JSON文件</li>
-<li>修改JSON文件</li>
-</ul>
-<h1 id="JSON格式"><a href="#JSON格式" class="headerlink" title="JSON格式"></a>JSON格式</h1><ul>
-<li><a href="https://zhuanlan.zhihu.com/p/29119549" target="_blank" rel="noopener">十分钟搞定JSON和JSON对象</a></li>
-</ul>
-<p>想要使用JSO相关工具，必须在<strong>ProjectName.Build.cs</strong>，在其中添加</p>
-<pre><code class="cs">PublicDependencyModuleNames.AddRange
-(
-    new string[] 
-    {
-         &quot;Core&quot;, 
-         &quot;CoreUObject&quot;, 
-         &quot;Engine&quot;, 
-         &quot;InputCore&quot;,
-         &quot;Slate&quot;,
-         &quot;SlateCore&quot;,
-         &quot;Json&quot;,
-         &quot;JsonUtilities&quot;
-    }
-);</code></pre>
-<h1 id="解析JSON文件"><a href="#解析JSON文件" class="headerlink" title="解析JSON文件"></a>解析JSON文件</h1><ul>
-<li>我们在 \Content\Res\Data.json中天下如下测试例子</li>
-</ul>
-<pre><code class="json">/** Data.json **/
-[
-    {
-        &quot;1-1&quot;:&quot;1-1&quot;,
-        &quot;1-2&quot;:&quot;1-2&quot;
-    },
-    {
-        &quot;2-1&quot;:&quot;2-1&quot;
-    },
-    {
-        &quot;3-1&quot;:
-        [
-            {
-                &quot;1&quot;:&quot;3-1-1&quot;
-            },
-            {
-                &quot;2&quot;:&quot;3-1-2&quot;
-            }
-        ]
-    }
-]</code></pre>
-<ul>
-<li>我们要首先得将他以字符串的形式读入<blockquote>
-<p>FPaths::GameContentDir() 能获取 */Content/ 的位置<br>FFileHelper::LoadFileToString() Load a text file to an FString.</p>
+        <h1 id="三维视觉"><a href="#三维视觉" class="headerlink" title="三维视觉"></a>三维视觉</h1><ul>
+<li>渲染管线:在给定一个3D场景的几何描述及一架已确定位置和方向的虚拟摄像机（virtual camera）时，根据虚拟摄像机的视角生成2D图像的一系列步骤。<br><img src="5-1.jpg" alt><br>##</li>
+<li>线性透视（linear perspective）:在2d画布上两条平行的线不断向远处延伸，最终会相交到一点。这个点是零点（vanishing point）<br><img src="5-2.jpg" alt></li>
+<li>景深现象（depth phenomenon）:物体的大小会随着深度的增加而减小<br><img src="5-3.jpg" alt></li>
+<li>物体重叠（object overlap）:一个不透明的物体会挡住它后面的其他物体的一部分（或全部）<br><img src="5-4.jpg" alt></li>
+<li>光照（lighting）和阴影（shading）:表现物体立体感和体积感<br><img src="5-5.jpg" alt><blockquote>
+<p>阴影具有两个关键作用：一是告诉我们场景中的光源位置，二是告诉我们飞船距离地面的高度。<br><img src="5-6.jpg" alt></p>
 </blockquote>
-</li>
-</ul>
-<pre><code class="cpp">
-bool MyJsonHandle::LoadStringFromFile(FString &amp; RelativePathName, FString &amp; FileName, FString &amp; ResultString)
-{
-    if (!FileName.IsEmpty())
-    {
-        FString AbsloutePathName = FPaths::GameContentDir() + RelativePathName + FileName;
-        if (FPaths::FileExists(AbsloutePathName))
-        {
-            if (FFileHelper::LoadFileToString(ResultString, *AbsloutePathName))
-            {
-                return true;
-            }
-        }
-    }
-    return false;
-}</code></pre>
-<ul>
-<li>接下来我们来解析我们所获取到的FString</li>
-</ul>
-<pre><code class="cpp">/** MyJsonHandle.cpp **/
-bool MyJsonHandle::RecordDataJsonRead()
-{
-    FString result;
-    //这是我们上面自定义的函数
-    LoadStringFromFile(RelativePathName, DataFileName, result);
-
-    TArray&lt;TSharedPtr&lt;FJsonValue&gt;&gt; JsonParse;
-    TSharedRef&lt;TJsonReader&lt;TCHAR&gt;&gt; JsonReader = TJsonReaderFactory&lt;TCHAR&gt;::Create(result);
-
-    if (FJsonSerializer::Deserialize(JsonReader, JsonParse))
-    { //这样解析后的节点全部存在JsonParse中
-        UE_LOG(LogTemp, Warning, TEXT(&quot;%s&quot;), *JsonParse[0]-&gt;AsObject()-&gt;GetStringField(FString(&quot;1-1&quot;)));
-        UE_LOG(LogTemp, Warning, TEXT(&quot;%s&quot;), *JsonParse[0]-&gt;AsObject()-&gt;GetStringField(FString(&quot;1-2&quot;)));
-        UE_LOG(LogTemp, Warning, TEXT(&quot;%s&quot;), *JsonParse[1]-&gt;AsObject()-&gt;GetStringField(FString(&quot;2-1&quot;)));
-        //如果对象是嵌套的，则需要再声明一次TArray&lt;TSharedPtr&lt;FJsonValue&gt;&gt;来获取
-        TArray&lt;TSharedPtr&lt;FJsonValue&gt;&gt; JsonParse3 = JsonParse[2]-&gt;AsObject()-&gt;GetArrayField(FString(&quot;3-1&quot;));
-        if (JsonParse3.IsValidIndex(0))
-        {
-            for (int cnt = 1; cnt &lt;= JsonParse3.Num(); ++cnt)
-            {
-                UE_LOG(LogTemp, Warning, TEXT(&quot;%s&quot;), *JsonParse3[cnt-1]-&gt;AsObject()-&gt;GetStringField(FString::FromInt(cnt)));
-            }
-        }
-        else
-        {
-            UE_LOG(LogTemp, Warning, TEXT(&quot;error JsonParse3&quot;));
-        }
-
-        return true;
-    }
-
-    return false;
-}</code></pre>
-<h1 id="修改JSON文件"><a href="#修改JSON文件" class="headerlink" title="修改JSON文件"></a>修改JSON文件</h1><h2 id="设置单个属性"><a href="#设置单个属性" class="headerlink" title="设置单个属性"></a>设置单个属性</h2><ul>
-<li>通过下面的代码生成一个<pre><code class="cpp">/**
-* A Json Object is a structure holding an unordered set of name/value pairs.
-* In a Json file, it is represented by everything between curly braces {}.
-*/
-TSharedPtr&lt;FJsonObject&gt; Object1 = MakeShareable(new FJsonObject);
-Object1-&gt;SetStringField(&quot;1-1&quot;, &quot;1--1&quot;);
-Object1-&gt;SetStringField(&quot;1-2&quot;, &quot;1--2&quot;);
-TSharedPtr&lt;FJsonValueObject&gt; CultureValue = MakeShareable(new FJsonValueObject(CultureObject));</code></pre>
 </li>
 </ul>
 
@@ -482,12 +375,12 @@ TSharedPtr&lt;FJsonValueObject&gt; CultureValue = MakeShareable(new FJsonValueOb
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>虚幻4之JSON学习</p>
+    <p><span class="copy-title">文章标题:</span>渲染管线</p>
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-08-07, 20:07:01</p>
-    <p><span class="copy-title">最后更新:</span>2019-08-08, 20:51:41</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/07/JSON/" title="虚幻4之JSON学习">https://sanctorum.github.io/2019/08/07/JSON/</a>
+    <p><span class="copy-title">发布时间:</span>2019-08-19, 10:56:43</p>
+    <p><span class="copy-title">最后更新:</span>2019-08-19, 17:28:19</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/19/渲染管线/" title="渲染管线">https://sanctorum.github.io/2019/08/19/渲染管线/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
