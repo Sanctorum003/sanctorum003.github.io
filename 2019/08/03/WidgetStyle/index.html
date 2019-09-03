@@ -110,14 +110,6 @@
     
         
             
-            <li><div data-rel="Algorithm">Algorithm<small>(1)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
             <li><div data-rel="Menu"><i class="fold iconfont icon-right"></i>Menu<small>(1)</small></div>
                 
                     <ul class="sub hide">
@@ -127,6 +119,14 @@
                         </li>
                             
                     </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Algorithm">Algorithm<small>(1)</small></div>
                 
             </li>
             
@@ -199,15 +199,15 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">algorithm</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a href="javascript:" class="color5">json</a>
     </li>
     
     <li class="article-tag-list-item">
         <a href="javascript:" class="color5">menu</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color5">algorithm</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -236,14 +236,6 @@
             <span class="post-date" title="2019-08-02 10:07:12">2019/08/02</span>
         </a>
         
-        <a  class="Algorithm "
-           href="/2019/08/01/KMP/"
-           data-tag="algorithm"
-           data-author="" >
-            <span class="post-title" title="KMP">KMP</span>
-            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
-        </a>
-        
         <a  class="UE4 "
            href="/2019/08/04/SlateWidget/"
            data-tag="ue4,slate"
@@ -268,12 +260,12 @@
             <span class="post-date" title="2019-08-07 16:58:06">2019/08/07</span>
         </a>
         
-        <a  class="CG "
-           href="/2019/08/19/渲染管线/"
-           data-tag="computer graphics,directx11"
+        <a  class="Algorithm "
+           href="/2019/08/01/KMP/"
+           data-tag="algorithm"
            data-author="" >
-            <span class="post-title" title="渲染管线">渲染管线</span>
-            <span class="post-date" title="2019-08-19 10:56:43">2019/08/19</span>
+            <span class="post-title" title="KMP">KMP</span>
+            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
         </a>
         
         <a  class="UE4 "
@@ -282,6 +274,14 @@
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习二 —— Slate控件样式">虚幻4之Slate学习二 —— Slate控件样式</span>
             <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
+        </a>
+        
+        <a  class="CG "
+           href="/2019/08/19/渲染管线/"
+           data-tag="computer graphics,directx11"
+           data-author="" >
+            <span class="post-title" title="DirectX11龙书-第五章:渲染管线">DirectX11龙书-第五章:渲染管线</span>
+            <span class="post-date" title="2019-08-19 10:56:43">2019/08/19</span>
         </a>
         
         <a  class="UE4 "
@@ -601,7 +601,7 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION</code></pre>
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#ue4','#slate','#algorithm','#json','#menu','#computer graphics','#directx11',],
+            'data': ['#ue4','#slate','#json','#menu','#algorithm','#computer graphics','#directx11',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
