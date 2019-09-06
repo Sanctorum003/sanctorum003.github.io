@@ -173,6 +173,8 @@
             
             <li><a target="_blank" href="https://naruto-zhao.github.io/">赵果</a></li>
             
+            <li><a target="_blank" href="https://github.com/solthx/leetcode">程子丰</a></li>
+            
         </ul>
     </div>
 </div>
@@ -340,7 +342,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-09-05 09:31:26'>2019-09-05 09:30</time>
+        创建时间:<time class="date" title='更新时间: 2019-09-05 11:43:32'>2019-09-05 09:30</time>
         
     </div>
     <div class="article-meta">
@@ -351,7 +353,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#UE4场景和场景管理-Scene-、SceneManager"><span class="toc-text">UE4场景和场景管理(Scene 、SceneManager)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Scene与UWorld和FScene"><span class="toc-text">Scene与UWorld和FScene</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UWorld和ULevel和ULevelStraming"><span class="toc-text">UWorld和ULevel和ULevelStraming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FScene"><span class="toc-text">FScene</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SceneObject"><span class="toc-text">SceneObject</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UE4渲染API封装"><span class="toc-text">UE4渲染API封装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UE4的材质系统"><span class="toc-text">UE4的材质系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#材质"><span class="toc-text">材质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FMaterialResource"><span class="toc-text">FMaterialResource</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FMaterialRenderProxy"><span class="toc-text">FMaterialRenderProxy</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UE4中Shader生成"><span class="toc-text">UE4中Shader生成</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -366,7 +368,62 @@
 </div>
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>原文:<a href="https://zhuanlan.zhihu.com/p/72509370" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/72509370</a></p>
+<h1 id="UE4场景和场景管理-Scene-、SceneManager"><a href="#UE4场景和场景管理-Scene-、SceneManager" class="headerlink" title="UE4场景和场景管理(Scene 、SceneManager)"></a>UE4场景和场景管理(Scene 、SceneManager)</h1><h2 id="Scene与UWorld和FScene"><a href="#Scene与UWorld和FScene" class="headerlink" title="Scene与UWorld和FScene"></a>Scene与UWorld和FScene</h2><ul>
+<li>UE4 Scene有UWorld和FScene组成  </li>
+<li>UWorld用于游戏线程，包括用户的主动行为，如物体的创建和删除。</li>
+<li>FScene用于渲染线程，包括物体的被动行为。</li>
+<li>UWorld和FScene一一对应</li>
+</ul>
+<h2 id="UWorld和ULevel和ULevelStraming"><a href="#UWorld和ULevel和ULevelStraming" class="headerlink" title="UWorld和ULevel和ULevelStraming"></a>UWorld和ULevel和ULevelStraming</h2><ul>
+<li>UWorld由持久关卡(ULevel)和子关卡组成。子关卡可以动态加卸载，也被称为流关卡(ULevelStreaming)</li>
+<li>流关卡(ULevelStreaming)加载和卸载由UWorldComposition负责。由基于视点距离和流关卡卡包围盒的简单的加载策略实现</li>
+<li>具体物体放置在关卡活流关卡中，而不是在UWorld中</li>
+</ul>
+<h2 id="FScene"><a href="#FScene" class="headerlink" title="FScene"></a>FScene</h2><ul>
+<li>FScene不具备复杂的场景管理功能</li>
+<li>FScene有以下结构<blockquote>
+<p>数组:用于管理各种可渲染对象和灯光<br>Octree:用于灯光和可渲染对象的快速查找<br>DrawList:用于Cache各个渲染指令</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="SceneObject"><a href="#SceneObject" class="headerlink" title="SceneObject"></a>SceneObject</h1><ul>
+<li>将具体物体放入场景(即关卡和流关卡)中的时候，各个独立物体是由AActor及其子类的对象实例来建模表达</li>
+<li>AActor和其子类不直接持有渲染数据，具体的渲染相关的数据均在UActorComponent及其子类的实例中。</li>
+<li>渲染相关的主要Component类结构层次如下<br><img src="ComponentClassLevel.jpg" alt></li>
+</ul>
+<h1 id="UE4渲染API封装"><a href="#UE4渲染API封装" class="headerlink" title="UE4渲染API封装"></a>UE4渲染API封装</h1><ul>
+<li>UE4中的渲染API封装是个独立的模块(Module)，他们把它命名为RHI（Render Hardware Interface）</li>
+<li>RHI的转发实现在RHICommandList.h文件里，除了基本的条件判断，大都是直接 转调渲染API实现的RHI子模块里的渲染指令。</li>
+</ul>
+<h1 id="UE4的材质系统"><a href="#UE4的材质系统" class="headerlink" title="UE4的材质系统"></a>UE4的材质系统</h1><ul>
+<li>UE4对材质系统的封装可以理解为RenderPipeline输入的所有数据中除了几何体数据之外的所有其它数据。</li>
+</ul>
+<h2 id="材质"><a href="#材质" class="headerlink" title="材质"></a>材质</h2><ul>
+<li>材质分为材质模块(UMaterial)和材质实例(UMaterialInstance),两者继承自UMaterialInterface</li>
+<li>UMaterial材质模板带有可编辑的节点图并可据此生成对应的Shader组合</li>
+<li>UMaterialInstance材质实例则只需要引用UMaterial对应的Shader且只能修改材质模板暴露出来的材质参数。</li>
+</ul>
+<h2 id="FMaterialResource"><a href="#FMaterialResource" class="headerlink" title="FMaterialResource"></a>FMaterialResource</h2><ul>
+<li>没关UMaterial中含有多个FMaterialResource，其继承自FMateriale。其负责为各个渲染API和材质所支持的各种质量等级生成对应的Shader组合</li>
+</ul>
+<h2 id="FMaterialRenderProxy"><a href="#FMaterialRenderProxy" class="headerlink" title="FMaterialRenderProxy"></a>FMaterialRenderProxy</h2><ul>
+<li>FMaterialRenderProxy是FMaterial用于渲染线程的代理,它可以透过FMaterail和UMaterialInterface访问到Shader、渲染状态，光照模型等所有用户设置好的材质参数。</li>
+</ul>
+<hr>
+<ul>
+<li>UE4的材质中光照模型是不可定制的，除非修改源码</li>
+</ul>
+<h1 id="UE4中Shader生成"><a href="#UE4中Shader生成" class="headerlink" title="UE4中Shader生成"></a>UE4中Shader生成</h1><ul>
+<li>UE4的shader基类为FShader,其有两个主要的子类FGlobalShader和FMaterialShader</li>
+<li>FGlobalShader:全局Shader,会自动注册到全局ShaderCache中</li>
+<li>FMaterialShader:用于材质(编辑器）的Shader，所有的后处理、UI、用于模型渲染的Shader都是它的子类。 </li>
+<li>UE4 Shader生成分两部分<blockquote>
+<p>第一部分是把材质编辑器中的节点图编译成HLSL代码，这一部分是通过FHLSLMaterialTranslator来完成的。<br>第二部分是把HLSL生成多平台的Shader代码，如Windows上的HLSL,Android上的GLSL,IOS上的MetalShader。</p>
+</blockquote>
+</li>
+</ul>
+
       
        
     </div>
@@ -379,7 +436,7 @@
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-09-05, 09:30:06</p>
-    <p><span class="copy-title">最后更新:</span>2019-09-05, 09:31:26</p>
+    <p><span class="copy-title">最后更新:</span>2019-09-05, 11:43:32</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/09/05/UE4RenderModule/" title="虚幻4渲染模块">https://sanctorum.github.io/2019/09/05/UE4RenderModule/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
