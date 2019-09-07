@@ -6,20 +6,28 @@
   <meta name="keywords" content=" algorithm ">
   <meta name="description" content="KMP | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="原文:https://zhuanlan.zhihu.com/p/72509370 UE4场景和场景管理(Scene 、SceneManager)Scene与UWorld和FScene UE4 Scene有UWorld和FScene组成   UWorld用于游戏线程，包括用户的主动行为，如物体的创建和删除。 FScene用于渲染线程，包括物体的被动行为。 UWorld和FScene一一对应  UWo">
-<meta name="keywords" content="ue4,render">
+<meta name="description" content="三维视觉 渲染管线:在给定一个3D场景的几何描述及一架已确定位置和方向的虚拟摄像机时，根据虚拟摄像机的视角生成2D图像的一系列步骤 渲染管线由许多步骤组成，每个步骤称为一个阶段      线性透视（linear perspective）:在2d画布上两条平行的线不断向远处延伸，最终会相交到一点。这个点是零点（vanishing point） 景深现象（depth phenomenon）:物体的大小">
+<meta name="keywords" content="computer graphics,directx11">
 <meta property="og:type" content="article">
-<meta property="og:title" content="虚幻4渲染模块">
-<meta property="og:url" content="https://sanctorum.github.io/2019/09/05/UE4RenderModule/index.html">
+<meta property="og:title" content="DirectX11龙书-第五章:渲染管线">
+<meta property="og:url" content="https://sanctorum.github.io/2019/08/19/渲染管线/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="原文:https://zhuanlan.zhihu.com/p/72509370 UE4场景和场景管理(Scene 、SceneManager)Scene与UWorld和FScene UE4 Scene有UWorld和FScene组成   UWorld用于游戏线程，包括用户的主动行为，如物体的创建和删除。 FScene用于渲染线程，包括物体的被动行为。 UWorld和FScene一一对应  UWo">
+<meta property="og:description" content="三维视觉 渲染管线:在给定一个3D场景的几何描述及一架已确定位置和方向的虚拟摄像机时，根据虚拟摄像机的视角生成2D图像的一系列步骤 渲染管线由许多步骤组成，每个步骤称为一个阶段      线性透视（linear perspective）:在2d画布上两条平行的线不断向远处延伸，最终会相交到一点。这个点是零点（vanishing point） 景深现象（depth phenomenon）:物体的大小">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://sanctorum.github.io/2019/09/05/UE4RenderModule/ComponentClassLevel.jpg">
-<meta property="og:updated_time" content="2019-09-05T03:43:32.877Z">
+<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-1.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-2.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-3.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-4.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-5.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-6.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-7.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-8.png">
+<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-9.png">
+<meta property="og:updated_time" content="2019-09-05T03:43:44.061Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="虚幻4渲染模块">
-<meta name="twitter:description" content="原文:https://zhuanlan.zhihu.com/p/72509370 UE4场景和场景管理(Scene 、SceneManager)Scene与UWorld和FScene UE4 Scene有UWorld和FScene组成   UWorld用于游戏线程，包括用户的主动行为，如物体的创建和删除。 FScene用于渲染线程，包括物体的被动行为。 UWorld和FScene一一对应  UWo">
-<meta name="twitter:image" content="https://sanctorum.github.io/2019/09/05/UE4RenderModule/ComponentClassLevel.jpg">
+<meta name="twitter:title" content="DirectX11龙书-第五章:渲染管线">
+<meta name="twitter:description" content="三维视觉 渲染管线:在给定一个3D场景的几何描述及一架已确定位置和方向的虚拟摄像机时，根据虚拟摄像机的视角生成2D图像的一系列步骤 渲染管线由许多步骤组成，每个步骤称为一个阶段      线性透视（linear perspective）:在2d画布上两条平行的线不断向远处延伸，最终会相交到一点。这个点是零点（vanishing point） 景深现象（depth phenomenon）:物体的大小">
+<meta name="twitter:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-1.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
