@@ -6,14 +6,20 @@
   <meta name="keywords" content>
   <meta name="description" content="about | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="原文:https://zhuanlan.zhihu.com/p/72509370 UE4场景和场景管理(Scene 、SceneManager)Scene与UWorld和FScene UE4 Scene有UWorld和FScene组成   UWorld用于游戏线程，包括用户的主动行为，如物体的创建和删除。 FScene用于渲染线程，包括物体的被动行为。 UWorld和FScene一一对应  UWo">
+<meta name="keywords" content="ue4,render">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虚幻4渲染模块">
+<meta property="og:url" content="https://sanctorum.github.io/2019/09/05/UE4RenderModule/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="原文:https://zhuanlan.zhihu.com/p/72509370 UE4场景和场景管理(Scene 、SceneManager)Scene与UWorld和FScene UE4 Scene有UWorld和FScene组成   UWorld用于游戏线程，包括用户的主动行为，如物体的创建和删除。 FScene用于渲染线程，包括物体的被动行为。 UWorld和FScene一一对应  UWo">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:image" content="https://sanctorum.github.io/2019/09/05/UE4RenderModule/ComponentClassLevel.jpg">
+<meta property="og:updated_time" content="2019-09-05T03:43:32.877Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="虚幻4渲染模块">
+<meta name="twitter:description" content="原文:https://zhuanlan.zhihu.com/p/72509370 UE4场景和场景管理(Scene 、SceneManager)Scene与UWorld和FScene UE4 Scene有UWorld和FScene组成   UWorld用于游戏线程，包括用户的主动行为，如物体的创建和删除。 FScene用于渲染线程，包括物体的被动行为。 UWorld和FScene一一对应  UWo">
+<meta name="twitter:image" content="https://sanctorum.github.io/2019/09/05/UE4RenderModule/ComponentClassLevel.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -199,19 +205,15 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">json</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a href="javascript:" class="color5">algorithm</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">menu</a>
+        <a href="javascript:" class="color5">json</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color2">render</a>
+        <a href="javascript:" class="color5">menu</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -220,6 +222,10 @@
     
     <li class="article-tag-list-item">
         <a href="javascript:" class="color5">directx11</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color2">render</a>
     </li>
     
     <div class="clearfix"></div>
@@ -240,6 +246,14 @@
             <span class="post-date" title="2019-08-02 10:07:12">2019/08/02</span>
         </a>
         
+        <a  class="Algorithm "
+           href="/2019/08/01/KMP/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="KMP">KMP</span>
+            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
+        </a>
+        
         <a  class="UE4 "
            href="/2019/08/07/JSON/"
            data-tag="ue4,json"
@@ -248,12 +262,12 @@
             <span class="post-date" title="2019-08-07 20:07:01">2019/08/07</span>
         </a>
         
-        <a  class="Algorithm "
-           href="/2019/08/01/KMP/"
-           data-tag="algorithm"
+        <a  class="Menu UE4 "
+           href="/2019/08/07/UE4Menu/"
+           data-tag="ue4,slate,json,menu"
            data-author="" >
-            <span class="post-title" title="KMP">KMP</span>
-            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
+            <span class="post-title" title="虚幻4学习">虚幻4学习</span>
+            <span class="post-date" title="2019-08-07 16:58:06">2019/08/07</span>
         </a>
         
         <a  class="UE4 "
@@ -264,12 +278,12 @@
             <span class="post-date" title="2019-08-04 20:20:05">2019/08/04</span>
         </a>
         
-        <a  class="Menu UE4 "
-           href="/2019/08/07/UE4Menu/"
-           data-tag="ue4,slate,json,menu"
+        <a  class="CG "
+           href="/2019/08/19/渲染管线/"
+           data-tag="computer graphics,directx11"
            data-author="" >
-            <span class="post-title" title="虚幻4学习">虚幻4学习</span>
-            <span class="post-date" title="2019-08-07 16:58:06">2019/08/07</span>
+            <span class="post-title" title="DirectX11龙书-第五章:渲染管线">DirectX11龙书-第五章:渲染管线</span>
+            <span class="post-date" title="2019-08-19 10:56:43">2019/08/19</span>
         </a>
         
         <a  class="UE4 "
@@ -286,14 +300,6 @@
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习二 —— Slate控件样式">虚幻4之Slate学习二 —— Slate控件样式</span>
             <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
-        </a>
-        
-        <a  class="CG "
-           href="/2019/08/19/渲染管线/"
-           data-tag="computer graphics,directx11"
-           data-author="" >
-            <span class="post-title" title="DirectX11龙书-第五章:渲染管线">DirectX11龙书-第五章:渲染管线</span>
-            <span class="post-date" title="2019-08-19 10:56:43">2019/08/19</span>
         </a>
         
         <a  class="UE4 "
@@ -399,7 +405,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#ue4','#slate','#json','#algorithm','#menu','#render','#computer graphics','#directx11',],
+            'data': ['#ue4','#slate','#algorithm','#json','#menu','#computer graphics','#directx11','#render',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
