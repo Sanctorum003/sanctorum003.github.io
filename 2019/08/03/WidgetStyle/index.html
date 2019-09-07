@@ -110,6 +110,14 @@
     
         
             
+            <li><div data-rel="Algorithm">Algorithm<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
             <li><div data-rel="Menu"><i class="fold iconfont icon-right"></i>Menu<small>(1)</small></div>
                 
                     <ul class="sub hide">
@@ -119,14 +127,6 @@
                         </li>
                             
                     </ul>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="Algorithm">Algorithm<small>(1)</small></div>
                 
             </li>
             
@@ -199,15 +199,15 @@
     </li>
     
     <li class="article-tag-list-item">
+        <a href="javascript:" class="color5">algorithm</a>
+    </li>
+    
+    <li class="article-tag-list-item">
         <a href="javascript:" class="color5">json</a>
     </li>
     
     <li class="article-tag-list-item">
         <a href="javascript:" class="color5">menu</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">algorithm</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -240,6 +240,14 @@
             <span class="post-date" title="2019-08-02 10:07:12">2019/08/02</span>
         </a>
         
+        <a  class="Algorithm "
+           href="/2019/08/01/KMP/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="KMP">KMP</span>
+            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
+        </a>
+        
         <a  class="UE4 "
            href="/2019/08/07/JSON/"
            data-tag="ue4,json"
@@ -257,27 +265,19 @@
         </a>
         
         <a  class="UE4 "
-           href="/2019/08/04/SlateWidget/"
-           data-tag="ue4,slate"
-           data-author="" >
-            <span class="post-title" title="虚幻4之Slate学习三 —— 创建Slate控件">虚幻4之Slate学习三 —— 创建Slate控件</span>
-            <span class="post-date" title="2019-08-04 20:20:05">2019/08/04</span>
-        </a>
-        
-        <a  class="Algorithm "
-           href="/2019/08/01/KMP/"
-           data-tag="algorithm"
-           data-author="" >
-            <span class="post-title" title="KMP">KMP</span>
-            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
-        </a>
-        
-        <a  class="UE4 "
            href="/2019/09/05/UE4RenderModule/"
            data-tag="ue4,render"
            data-author="" >
             <span class="post-title" title="虚幻4渲染模块">虚幻4渲染模块</span>
             <span class="post-date" title="2019-09-05 09:30:06">2019/09/05</span>
+        </a>
+        
+        <a  class="UE4 "
+           href="/2019/08/04/SlateWidget/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习三 —— 创建Slate控件">虚幻4之Slate学习三 —— 创建Slate控件</span>
+            <span class="post-date" title="2019-08-04 20:20:05">2019/08/04</span>
         </a>
         
         <a  class="UE4 "
@@ -613,7 +613,7 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION</code></pre>
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#ue4','#slate','#json','#menu','#algorithm','#render','#computer graphics','#directx11',],
+            'data': ['#ue4','#slate','#algorithm','#json','#menu','#render','#computer graphics','#directx11',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
