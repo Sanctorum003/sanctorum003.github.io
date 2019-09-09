@@ -6,28 +6,14 @@
   <meta name="keywords" content=" algorithm ">
   <meta name="description" content="KMP | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="三维视觉 渲染管线:在给定一个3D场景的几何描述及一架已确定位置和方向的虚拟摄像机时，根据虚拟摄像机的视角生成2D图像的一系列步骤 渲染管线由许多步骤组成，每个步骤称为一个阶段      线性透视（linear perspective）:在2d画布上两条平行的线不断向远处延伸，最终会相交到一点。这个点是零点（vanishing point） 景深现象（depth phenomenon）:物体的大小">
-<meta name="keywords" content="computer graphics,directx11">
-<meta property="og:type" content="article">
-<meta property="og:title" content="DirectX11龙书-第五章:渲染管线">
-<meta property="og:url" content="https://sanctorum.github.io/2019/08/19/渲染管线/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="about">
+<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="三维视觉 渲染管线:在给定一个3D场景的几何描述及一架已确定位置和方向的虚拟摄像机时，根据虚拟摄像机的视角生成2D图像的一系列步骤 渲染管线由许多步骤组成，每个步骤称为一个阶段      线性透视（linear perspective）:在2d画布上两条平行的线不断向远处延伸，最终会相交到一点。这个点是零点（vanishing point） 景深现象（depth phenomenon）:物体的大小">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-1.jpg">
-<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-2.jpg">
-<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-3.jpg">
-<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-4.jpg">
-<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-5.jpg">
-<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-6.jpg">
-<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-7.jpg">
-<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-8.png">
-<meta property="og:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-9.png">
-<meta property="og:updated_time" content="2019-09-05T03:43:44.061Z">
+<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DirectX11龙书-第五章:渲染管线">
-<meta name="twitter:description" content="三维视觉 渲染管线:在给定一个3D场景的几何描述及一架已确定位置和方向的虚拟摄像机时，根据虚拟摄像机的视角生成2D图像的一系列步骤 渲染管线由许多步骤组成，每个步骤称为一个阶段      线性透视（linear perspective）:在2d画布上两条平行的线不断向远处延伸，最终会相交到一点。这个点是零点（vanishing point） 景深现象（depth phenomenon）:物体的大小">
-<meta name="twitter:image" content="https://sanctorum.github.io/2019/08/19/渲染管线/5-1.jpg">
+<meta name="twitter:title" content="about">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -217,11 +203,15 @@
     </li>
     
     <li class="article-tag-list-item">
+        <a href="javascript:" class="color5">menu</a>
+    </li>
+    
+    <li class="article-tag-list-item">
         <a href="javascript:" class="color5">json</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">menu</a>
+        <a href="javascript:" class="color2">render</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -230,10 +220,6 @@
     
     <li class="article-tag-list-item">
         <a href="javascript:" class="color5">directx11</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color2">render</a>
     </li>
     
     <div class="clearfix"></div>
@@ -262,6 +248,14 @@
             <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
         </a>
         
+        <a  class="Menu UE4 "
+           href="/2019/08/07/UE4Menu/"
+           data-tag="ue4,slate,menu,json"
+           data-author="" >
+            <span class="post-title" title="虚幻4学习">虚幻4学习</span>
+            <span class="post-date" title="2019-08-07 16:58:06">2019/08/07</span>
+        </a>
+        
         <a  class="UE4 "
            href="/2019/08/07/JSON/"
            data-tag="ue4,json"
@@ -270,28 +264,12 @@
             <span class="post-date" title="2019-08-07 20:07:01">2019/08/07</span>
         </a>
         
-        <a  class="Menu UE4 "
-           href="/2019/08/07/UE4Menu/"
-           data-tag="ue4,slate,json,menu"
-           data-author="" >
-            <span class="post-title" title="虚幻4学习">虚幻4学习</span>
-            <span class="post-date" title="2019-08-07 16:58:06">2019/08/07</span>
-        </a>
-        
         <a  class="UE4 "
            href="/2019/08/04/SlateWidget/"
            data-tag="ue4,slate"
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习三 —— 创建Slate控件">虚幻4之Slate学习三 —— 创建Slate控件</span>
             <span class="post-date" title="2019-08-04 20:20:05">2019/08/04</span>
-        </a>
-        
-        <a  class="CG "
-           href="/2019/08/19/渲染管线/"
-           data-tag="computer graphics,directx11"
-           data-author="" >
-            <span class="post-title" title="DirectX11龙书-第五章:渲染管线">DirectX11龙书-第五章:渲染管线</span>
-            <span class="post-date" title="2019-08-19 10:56:43">2019/08/19</span>
         </a>
         
         <a  class="UE4 "
@@ -308,6 +286,14 @@
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习二 —— Slate控件样式">虚幻4之Slate学习二 —— Slate控件样式</span>
             <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
+        </a>
+        
+        <a  class="CG "
+           href="/2019/08/19/渲染管线/"
+           data-tag="computer graphics,directx11"
+           data-author="" >
+            <span class="post-title" title="DirectX11龙书-第五章:渲染管线">DirectX11龙书-第五章:渲染管线</span>
+            <span class="post-date" title="2019-08-19 10:56:43">2019/08/19</span>
         </a>
         
         <a  class="UE4 "
@@ -482,7 +468,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#ue4','#slate','#algorithm','#json','#menu','#computer graphics','#directx11','#render',],
+            'data': ['#ue4','#slate','#algorithm','#menu','#json','#render','#computer graphics','#directx11',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
