@@ -35,7 +35,7 @@
       <link href="/2019/09/09/D3DInit/"/>
       <url>/2019/09/09/D3DInit/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<h1 id="COM"><a href="#COM" class="headerlink" title="COM"></a>COM</h1><ul><li>我们必须使用特定的函数活其他的COM接口方法来获取指向COM接口的指针,而不能用<strong>new</strong></li><li>释放用其基类IUnkown的Release,而不能用<strong>delete</strong></li><li>COM接口都以<strong>I</strong>为前缀,例如ID3D11Texture2D</li></ul>]]></content>
       
       
       <categories>
