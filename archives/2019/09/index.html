@@ -102,7 +102,7 @@
     
         
             
-            <li><div data-rel="UE4">UE4<small>(6)</small></div>
+            <li><div data-rel="CG">CG<small>(3)</small></div>
                 
             </li>
             
@@ -110,7 +110,7 @@
     
         
             
-            <li><div data-rel="CG">CG<small>(3)</small></div>
+            <li><div data-rel="UE4">UE4<small>(6)</small></div>
                 
             </li>
             
@@ -191,19 +191,19 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color4">ue4</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color1">slate</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a href="javascript:" class="color3">computer graphics</a>
     </li>
     
     <li class="article-tag-list-item">
         <a href="javascript:" class="color5">directx11</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color4">ue4</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color1">slate</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -232,12 +232,12 @@
     
     <nav id="title-list-nav">
         
-        <a  class="UE4 "
-           href="/2019/08/02/HUD/"
-           data-tag="ue4,slate"
+        <a  class="CG "
+           href="/2019/09/09/D3DTransform/"
+           data-tag="computer graphics,directx11"
            data-author="" >
-            <span class="post-title" title="虚幻4之Slate学习一 —— HUD">虚幻4之Slate学习一 —— HUD</span>
-            <span class="post-date" title="2019-08-02 10:07:12">2019/08/02</span>
+            <span class="post-title" title="DirectX11龙书-第三章:变换">DirectX11龙书-第三章:变换</span>
+            <span class="post-date" title="2019-09-09 15:51:46">2019/09/09</span>
         </a>
         
         <a  class="CG "
@@ -248,12 +248,12 @@
             <span class="post-date" title="2019-09-09 15:26:18">2019/09/09</span>
         </a>
         
-        <a  class="CG "
-           href="/2019/09/09/D3DTransform/"
-           data-tag="computer graphics,directx11"
+        <a  class="UE4 "
+           href="/2019/08/02/HUD/"
+           data-tag="ue4,slate"
            data-author="" >
-            <span class="post-title" title="DirectX11龙书-第三章:变换">DirectX11龙书-第三章:变换</span>
-            <span class="post-date" title="2019-09-09 15:51:46">2019/09/09</span>
+            <span class="post-title" title="虚幻4之Slate学习一 —— HUD">虚幻4之Slate学习一 —— HUD</span>
+            <span class="post-date" title="2019-08-02 10:07:12">2019/08/02</span>
         </a>
         
         <a  class="Algorithm "
@@ -262,6 +262,14 @@
            data-author="" >
             <span class="post-title" title="KMP">KMP</span>
             <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
+        </a>
+        
+        <a  class="UE4 "
+           href="/2019/08/04/SlateWidget/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习三 —— 创建Slate控件">虚幻4之Slate学习三 —— 创建Slate控件</span>
+            <span class="post-date" title="2019-08-04 20:20:05">2019/08/04</span>
         </a>
         
         <a  class="Menu UE4 "
@@ -281,11 +289,11 @@
         </a>
         
         <a  class="UE4 "
-           href="/2019/08/04/SlateWidget/"
-           data-tag="ue4,slate"
+           href="/2019/09/05/UE4RenderModule/"
+           data-tag="ue4,render"
            data-author="" >
-            <span class="post-title" title="虚幻4之Slate学习三 —— 创建Slate控件">虚幻4之Slate学习三 —— 创建Slate控件</span>
-            <span class="post-date" title="2019-08-04 20:20:05">2019/08/04</span>
+            <span class="post-title" title="虚幻4渲染模块">虚幻4渲染模块</span>
+            <span class="post-date" title="2019-09-05 09:30:06">2019/09/05</span>
         </a>
         
         <a  class="UE4 "
@@ -294,14 +302,6 @@
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习二 —— Slate控件样式">虚幻4之Slate学习二 —— Slate控件样式</span>
             <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
-        </a>
-        
-        <a  class="UE4 "
-           href="/2019/09/05/UE4RenderModule/"
-           data-tag="ue4,render"
-           data-author="" >
-            <span class="post-title" title="虚幻4渲染模块">虚幻4渲染模块</span>
-            <span class="post-date" title="2019-09-05 09:30:06">2019/09/05</span>
         </a>
         
         <a  class="CG "
@@ -381,7 +381,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#ue4','#slate','#computer graphics','#directx11','#algorithm','#menu','#json','#render',],
+            'data': ['#computer graphics','#directx11','#ue4','#slate','#algorithm','#menu','#json','#render',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
