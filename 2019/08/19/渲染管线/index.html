@@ -6,14 +6,18 @@
   <meta name="keywords" content=" computer graphics , directx11 ">
   <meta name="description" content="DirectX11龙书-第五章:渲染管线 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="线性变换定义 满足以下性质为线性变换 1.$\tau(u+v) = \tau(u) + \tau(v)$2.$\tau(ku) = k\tau(u)$其中u,v为任意三维向量，k为标量">
+<meta name="keywords" content="computer graphics,directx11">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DirectX11龙书-第三章:变换">
+<meta property="og:url" content="https://sanctorum.github.io/2019/09/09/D3DTransform/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="线性变换定义 满足以下性质为线性变换 1.$\tau(u+v) = \tau(u) + \tau(v)$2.$\tau(ku) = k\tau(u)$其中u,v为任意三维向量，k为标量">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:updated_time" content="2019-09-11T08:08:49.864Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="DirectX11龙书-第三章:变换">
+<meta name="twitter:description" content="线性变换定义 满足以下性质为线性变换 1.$\tau(u+v) = \tau(u) + \tau(v)$2.$\tau(ku) = k\tau(u)$其中u,v为任意三维向量，k为标量">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -358,7 +362,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-09-14 11:57:59'>2019-08-19 10:56</time>
+        创建时间:<time class="date" title='更新时间: 2019-09-14 15:03:27'>2019-08-19 10:56</time>
         
     </div>
     <div class="article-meta">
@@ -369,7 +373,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#三维视觉"><span class="toc-text">三维视觉</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模型的表现形式"><span class="toc-text">模型的表现形式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本计算机颜色"><span class="toc-text">基本计算机颜色</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#颜色运算"><span class="toc-text">颜色运算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#128位颜色"><span class="toc-text">128位颜色</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#32位颜色"><span class="toc-text">32位颜色</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#渲染管线概述"><span class="toc-text">渲染管线概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#输入装配阶段-Input-Assembler-Stage"><span class="toc-text">输入装配阶段(Input Assembler Stage)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#顶点"><span class="toc-text">顶点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图元拓扑"><span class="toc-text">图元拓扑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本图元"><span class="toc-text">基本图元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带邻接信息的图元"><span class="toc-text">带邻接信息的图元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#控制点面片列表"><span class="toc-text">控制点面片列表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引"><span class="toc-text">索引</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#顶点着色器阶段-vertex-shader-Stage"><span class="toc-text">顶点着色器阶段(vertex shader Stage)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#局部空间和世界空间"><span class="toc-text">局部空间和世界空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#观察空间"><span class="toc-text">观察空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#齐次裁剪控件"><span class="toc-text">齐次裁剪控件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#规范化设备坐标-NDC"><span class="toc-text">规范化设备坐标(NDC)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#曲面细分阶段"><span class="toc-text">曲面细分阶段</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#几何着色器阶段"><span class="toc-text">几何着色器阶段</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#裁剪阶段"><span class="toc-text">裁剪阶段</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#光栅化阶段"><span class="toc-text">光栅化阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#视口变换"><span class="toc-text">视口变换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#背面消隐"><span class="toc-text">背面消隐</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#判断三角形正反面"><span class="toc-text">判断三角形正反面</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#三维视觉"><span class="toc-text">三维视觉</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模型的表现形式"><span class="toc-text">模型的表现形式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本计算机颜色"><span class="toc-text">基本计算机颜色</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#颜色运算"><span class="toc-text">颜色运算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#128位颜色"><span class="toc-text">128位颜色</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#32位颜色"><span class="toc-text">32位颜色</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#渲染管线概述"><span class="toc-text">渲染管线概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#输入装配阶段-Input-Assembler-Stage"><span class="toc-text">输入装配阶段(Input Assembler Stage)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#顶点"><span class="toc-text">顶点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图元拓扑"><span class="toc-text">图元拓扑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本图元"><span class="toc-text">基本图元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带邻接信息的图元"><span class="toc-text">带邻接信息的图元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#控制点面片列表"><span class="toc-text">控制点面片列表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引"><span class="toc-text">索引</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#顶点着色器阶段-vertex-shader-Stage"><span class="toc-text">顶点着色器阶段(vertex shader Stage)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#局部空间和世界空间"><span class="toc-text">局部空间和世界空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#观察空间"><span class="toc-text">观察空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#齐次裁剪控件"><span class="toc-text">齐次裁剪控件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#规范化设备坐标-NDC"><span class="toc-text">规范化设备坐标(NDC)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#曲面细分阶段"><span class="toc-text">曲面细分阶段</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#几何着色器阶段"><span class="toc-text">几何着色器阶段</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#裁剪阶段"><span class="toc-text">裁剪阶段</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#光栅化阶段"><span class="toc-text">光栅化阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#视口变换"><span class="toc-text">视口变换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#背面消隐"><span class="toc-text">背面消隐</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#判断三角形正反面"><span class="toc-text">判断三角形正反面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#背面消隐-backface-culling"><span class="toc-text">背面消隐(backface culling)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#顶点属性插值"><span class="toc-text">顶点属性插值</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -525,6 +529,22 @@ UINT indexList[6] = {0, 1, 2,    //Triangle0
 </ul>
 <h2 id="背面消隐"><a href="#背面消隐" class="headerlink" title="背面消隐"></a>背面消隐</h2><h3 id="判断三角形正反面"><a href="#判断三角形正反面" class="headerlink" title="判断三角形正反面"></a>判断三角形正反面</h3><ul>
 <li>设三角形的定点排列为$v_{0},v_{1},v_{2}$</li>
+<li>可以计算出三角形的法线，方法如下:<blockquote>
+<p>$\vec{e_{0}} = v_{1} - v_{0}$<br>$\vec{e_{1}} = v_{2} - v_{1}$<br>$\vec{n} = \frac{\vec{e_{0}} × \vec{e_{1}}}{|| \vec{e_{0}} × \vec{e_{1}} ||}$</p>
+</blockquote>
+</li>
+<li>带有法线向量的面为正面，而另一个面为背面<blockquote>
+<p>当观察者看到三角形的正面时，我们说三角形是朝前的；当观察者看到三角形的背面时， 我们说三角形是朝后的。<br>因为按照我们选择的约定（即，我们计算三角形法线的方式），按顺时针方向环绕的三角形（相对于观察者）是朝前的，而按逆时针方向环绕的三角形（相对于观察者）是朝后的。</p>
+</blockquote>
+</li>
+<li>D3D 顺时针</li>
+</ul>
+<h3 id="背面消隐-backface-culling"><a href="#背面消隐-backface-culling" class="headerlink" title="背面消隐(backface culling)"></a>背面消隐(backface culling)</h3><ul>
+<li>背面消隐（backface culling）是指让管线放弃对朝后的三角形的处理。这可以将所要处理的三角形的数量降低到原数量的一半。</li>
+<li>以下为2D和3D场景消隐前后的表现<br><img src="backfaceCulling2D.png" alt><br><img src="backfaceCulling3D.png" alt></li>
+</ul>
+<h2 id="顶点属性插值"><a href="#顶点属性插值" class="headerlink" title="顶点属性插值"></a>顶点属性插值</h2><ul>
+<li>一条3D线被投影到投影窗口上（在屏幕空间中投影是一条2D线）。我们看到，在3D线上取等距离的点，在2D屏幕空间上的投影点却不是等距离的。所以，我们在3D空间中执行线性插值，在屏幕空间需要执行非线性插值。</li>
 </ul>
 
       
@@ -539,7 +559,7 @@ UINT indexList[6] = {0, 1, 2,    //Triangle0
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-08-19, 10:56:43</p>
-    <p><span class="copy-title">最后更新:</span>2019-09-14, 11:57:59</p>
+    <p><span class="copy-title">最后更新:</span>2019-09-14, 15:03:27</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/19/渲染管线/" title="DirectX11龙书-第五章:渲染管线">https://sanctorum.github.io/2019/08/19/渲染管线/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
