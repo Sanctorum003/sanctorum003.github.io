@@ -358,7 +358,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-09-14 11:45:21'>2019-08-19 10:56</time>
+        创建时间:<time class="date" title='更新时间: 2019-09-14 11:57:59'>2019-08-19 10:56</time>
         
     </div>
     <div class="article-meta">
@@ -478,19 +478,21 @@
 <li><p>方法一：使用三角形带。但是顶点必须按照带状组织，不灵活。</p>
 </li>
 <li><p>方法二：引入索引。</p>
-<pre><code class="cpp">//create a quad
+<pre><code class="lang-cpp">//create a quad
 Vertex v[4] = {v0, v1, v2, v3}; 
 UINT indexList[6] = {0, 1, 2,    //Triangle0 
   0, 2, 3}; // Triangle 1 
-};</code></pre>
+};
+</code></pre>
 <blockquote>
 <p>当顶点列表中的唯一顶点得到处理之后，显卡可以使用索引列表把顶点放在一起构成三角形。我们将“复制问题”转嫁给了索引列表，但是这种复制是可以让人接受的。因为：<br>1．索引是简单的整数，不像顶点结构体那样占用很多内存（顶点结构体包含的分量越多，占用的内存就越多）。<br>2．通过适当的顶点缓存排序，图形硬件不必重复处理顶点（在绝大多数的情况下）。</p>
 </blockquote>
 </li>
 </ul>
 <h1 id="顶点着色器阶段-vertex-shader-Stage"><a href="#顶点着色器阶段-vertex-shader-Stage" class="headerlink" title="顶点着色器阶段(vertex shader Stage)"></a>顶点着色器阶段(vertex shader Stage)</h1><p>顶点着色器将IA阶段的输出的顶点实现相关效果再输出（例如变换，光照，置换贴图映射等）。此外此阶段还可以访问内存种的纹理和其他数据（变换矩阵和场景灯光）。可以概念性地认为在硬件上执行了如下代码：</p>
-<pre><code class="cpp">for(UINT i = 0; i &lt; numVertices; ++i)
-    outputVertex[i] = VertexShader(inputVertex[i]); </code></pre>
+<pre><code class="lang-cpp">for(UINT i = 0; i &lt; numVertices; ++i)
+    outputVertex[i] = VertexShader(inputVertex[i]);
+</code></pre>
 <h2 id="局部空间和世界空间"><a href="#局部空间和世界空间" class="headerlink" title="局部空间和世界空间"></a>局部空间和世界空间</h2><ul>
 <li>世界变换:局部空间-&gt;世界空间</li>
 </ul>
@@ -537,7 +539,7 @@ UINT indexList[6] = {0, 1, 2,    //Triangle0
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-08-19, 10:56:43</p>
-    <p><span class="copy-title">最后更新:</span>2019-09-14, 11:45:21</p>
+    <p><span class="copy-title">最后更新:</span>2019-09-14, 11:57:59</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/19/渲染管线/" title="DirectX11龙书-第五章:渲染管线">https://sanctorum.github.io/2019/08/19/渲染管线/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
@@ -548,6 +550,46 @@ UINT indexList[6] = {0, 1, 2,    //Triangle0
 
 
 
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<input type="hidden" id="MathJax-js"
+        value="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+</input>
     
 
 
