@@ -233,6 +233,14 @@
     <nav id="title-list-nav">
         
         <a  class="CG "
+           href="/2019/09/09/D3DTransform/"
+           data-tag="computer graphics,directx11"
+           data-author="" >
+            <span class="post-title" title="DirectX11龙书-第三章:变换">DirectX11龙书-第三章:变换</span>
+            <span class="post-date" title="2019-09-09 15:51:46">2019/09/09</span>
+        </a>
+        
+        <a  class="CG "
            href="/2019/09/09/D3DInit/"
            data-tag="computer graphics,directx11"
            data-author="" >
@@ -280,14 +288,6 @@
             <span class="post-date" title="2019-08-07 16:58:06">2019/08/07</span>
         </a>
         
-        <a  class="CG "
-           href="/2019/09/09/D3DTransform/"
-           data-tag="computer graphics,directx11"
-           data-author="" >
-            <span class="post-title" title="DirectX11龙书-第三章:变换">DirectX11龙书-第三章:变换</span>
-            <span class="post-date" title="2019-09-09 15:51:46">2019/09/09</span>
-        </a>
-        
         <a  class="UE4 "
            href="/2019/09/05/UE4RenderModule/"
            data-tag="ue4,render"
@@ -297,19 +297,19 @@
         </a>
         
         <a  class="UE4 "
-           href="/2019/08/06/DelegateAndMacro/"
-           data-tag="ue4,slate"
-           data-author="" >
-            <span class="post-title" title="虚幻4之Slate学习四 —— 委托与宏">虚幻4之Slate学习四 —— 委托与宏</span>
-            <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
-        </a>
-        
-        <a  class="UE4 "
            href="/2019/08/03/WidgetStyle/"
            data-tag="ue4,slate"
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习二 —— Slate控件样式">虚幻4之Slate学习二 —— Slate控件样式</span>
             <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
+        </a>
+        
+        <a  class="UE4 "
+           href="/2019/08/06/DelegateAndMacro/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习四 —— 委托与宏">虚幻4之Slate学习四 —— 委托与宏</span>
+            <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
         </a>
         
         <a  class="CG "
@@ -394,7 +394,7 @@
 <p><img src="SlateStyle.png" alt></p>
 <hr>
 <p>可以测试一下是否成功,添加如下代码</p>
-<pre><code class="cpp">/** MySlateWidgetStyle.h 部分代码 **/
+<pre><code class="lang-cpp">/** MySlateWidgetStyle.h 部分代码 **/
 
 #pragma once
 
@@ -424,12 +424,13 @@ struct MYSLATE_API FMySlateStyle : public FSlateWidgetStyle
     //code needed to write 
     UPROPERTY(EditAnyWhere, Category = MenuHUD)
     FSlateBrush BackGroupBrush;
-};</code></pre>
+};
+</code></pre>
 <p>这样在BP_MySlateWidgetStyle中产生如下效果<br><img src="Brush.png" alt></p>
 <h1 id="自定义单例类"><a href="#自定义单例类" class="headerlink" title="自定义单例类"></a>自定义单例类</h1><p>接下来再来捋一下接下来的思路，我们需要在MyHUDWidget中获取到我们蓝图类中的样式。这里我们可以通过<a href="https://api.unrealengine.com/INT/API/Runtime/SlateCore/Styling/ISlateStyle/GetWidgetStyle/index.html" target="_blank" rel="noopener">ISlateStyle::GetWidgetStyle</a>。所以我们需要有一个ISlateStyle，这里我们可以通过得到FSlateStyleSet，它是继承于ISlateStyle的，可以直接隐式转换。接着我们<a href="https://api.unrealengine.com/INT/API/Runtime/Engine/Slate/FSlateGameResources/New/index.html" target="_blank" rel="noopener">FSlateGameResources::New</a>函数来获取蓝图类中的所有样式生成FSlateStyleSet。而这一些列操作需要一个单列来实现，而单例也需要在某个地方实例化。</p>
 <hr>
 <p>创建一个不继承任何类的类，命名为MyStyle。单例模式大同小异，可以按照如下进行模仿</p>
-<pre><code class="cpp">/** MyStyle.h **/
+<pre><code class="lang-cpp">/** MyStyle.h **/
 #pragma once
 
 #include &quot;CoreMinimal.h&quot;
@@ -449,8 +450,9 @@ public:
 private:
     static TSharedRef&lt;class FSlateStyleSet&gt; Create();
     static TSharedPtr&lt;class FSlateStyleSet&gt; MytyleInstance;
-};</code></pre>
-<pre><code class="cpp">/** MyStyle.cpp **/
+};
+</code></pre>
+<pre><code class="lang-cpp">/** MyStyle.cpp **/
 #include &quot;MyStyle.h&quot;
 #include &quot;SlateStyleRegistry.h&quot;
 #include &quot;SlateGameResources.h&quot;
@@ -490,7 +492,8 @@ TSharedRef&lt;class FSlateStyleSet&gt; MyStyle::Create()
 {
     TSharedRef&lt;FSlateStyleSet&gt; StyleRef = FSlateGameResources::New(GetStyleSetName(), &quot;/Game/&quot; , &quot;/Game/&quot;);
     return StyleRef;
-}</code></pre>
+}
+</code></pre>
 <h2 id="注册和注销"><a href="#注册和注销" class="headerlink" title="注册和注销"></a>注册和注销</h2><ul>
 <li>RegisterSlateStyle:Add a slate style to the repository.</li>
 <li>UnRegisterSlateStyle:Removes a slate style from the repository.</li>
@@ -501,18 +504,19 @@ TSharedRef&lt;class FSlateStyleSet&gt; MyStyle::Create()
 </ul>
 <h2 id="共享指针和共享引用"><a href="#共享指针和共享引用" class="headerlink" title="共享指针和共享引用"></a>共享指针和共享引用</h2><p>注意的是这两个都是指针，主要区别是TSharedRef&lt;&gt;不能指向空，且TSharedPtr&lt;&gt;可以隐式转换成TSharedRef&lt;&gt;，所有这里声明时用的是TSharedPtr&lt;&gt;</p>
 <h1 id="创建单例实例"><a href="#创建单例实例" class="headerlink" title="创建单例实例"></a>创建单例实例</h1><ul>
-<li>FDefaultGameModuleImpl中的StartupModule()和ShutdownModule()这两个函数会在加载(卸载)dll和模块后立刻调用,我们可以利用来生成实例。在MySlate中写如下代码:<pre><code class="cpp">/**  MySlate.h **/
+<li>FDefaultGameModuleImpl中的StartupModule()和ShutdownModule()这两个函数会在加载(卸载)dll和模块后立刻调用,我们可以利用来生成实例。在MySlate中写如下代码:<pre><code class="lang-cpp">/**  MySlate.h **/
 class FMySlateModule : public FDefaultGameModuleImpl
 {
 public:
      virtual void StartupModule() override;
      virtual void ShutdownModule() override;
-};</code></pre>
+};
+</code></pre>
 </li>
 <li>FDefaultGameModuleImpl:Default minimal module class for gameplay modules. Does nothing at startup and shutdown.</li>
 <li>所以上述其实就是自定义了一个模块</li>
 </ul>
-<pre><code class="cpp">/** MySlate.cpp **/
+<pre><code class="lang-cpp">/** MySlate.cpp **/
 #include &quot;MySlate.h&quot;
 #include &quot;Modules/ModuleManager.h&quot;
 #include &quot;Public/UI/MyStyle.h&quot;
@@ -538,12 +542,13 @@ void FMySlateModule::ShutdownModule()
 <li><a href="https://docs.unrealengine.com/zh-CN/Programming/Modules/Gameplay/index.html" target="_blank" rel="noopener">更多关于Module可以看官方手册</a></li>
 </ul>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这样我们就定义好了我们的控件样式，我们来测试一下是否成功，在样式蓝图中选择一张图片，并添加如下代码<br><img src="Sytle.png" alt></p>
-<pre><code class="cpp">/** SMyHUDWidget.h 部分代码**/
+<pre><code class="lang-cpp">/** SMyHUDWidget.h 部分代码**/
 #include &quot;MySlateWidgetStyle.h&quot;
 
 private:
-    const FMySlateStyle *MySlateStyle;</code></pre>
-<pre><code class="cpp">/** SMyHUDWidget.cpp **/
+    const FMySlateStyle *MySlateStyle;
+</code></pre>
+<pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/
 #include &quot;SMyHUDWidget.h&quot;
 #include &quot;SlateOptMacros.h&quot;
 #include &quot;SButton.h&quot;
@@ -563,7 +568,8 @@ void SMyHUDWidget::Construct(const FArguments&amp; InArgs)
     ];
 
 }
-END_SLATE_FUNCTION_BUILD_OPTIMIZATION</code></pre>
+END_SLATE_FUNCTION_BUILD_OPTIMIZATION
+</code></pre>
 <ul>
 <li><strong>注意MyStyle::Get()返回的是一个集合</strong>,所以我们需要使用GetWidgetStyle<fmyslatestyle>(“BP_MySlateWidgetStyle”)来获取我们所定义的蓝图样式。</fmyslatestyle></li>
 </ul>

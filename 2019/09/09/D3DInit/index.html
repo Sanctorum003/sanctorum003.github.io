@@ -233,6 +233,14 @@
     <nav id="title-list-nav">
         
         <a  class="CG "
+           href="/2019/09/09/D3DTransform/"
+           data-tag="computer graphics,directx11"
+           data-author="" >
+            <span class="post-title" title="DirectX11龙书-第三章:变换">DirectX11龙书-第三章:变换</span>
+            <span class="post-date" title="2019-09-09 15:51:46">2019/09/09</span>
+        </a>
+        
+        <a  class="CG "
            href="/2019/09/09/D3DInit/"
            data-tag="computer graphics,directx11"
            data-author="" >
@@ -280,14 +288,6 @@
             <span class="post-date" title="2019-08-07 16:58:06">2019/08/07</span>
         </a>
         
-        <a  class="CG "
-           href="/2019/09/09/D3DTransform/"
-           data-tag="computer graphics,directx11"
-           data-author="" >
-            <span class="post-title" title="DirectX11龙书-第三章:变换">DirectX11龙书-第三章:变换</span>
-            <span class="post-date" title="2019-09-09 15:51:46">2019/09/09</span>
-        </a>
-        
         <a  class="UE4 "
            href="/2019/09/05/UE4RenderModule/"
            data-tag="ue4,render"
@@ -297,19 +297,19 @@
         </a>
         
         <a  class="UE4 "
-           href="/2019/08/06/DelegateAndMacro/"
-           data-tag="ue4,slate"
-           data-author="" >
-            <span class="post-title" title="虚幻4之Slate学习四 —— 委托与宏">虚幻4之Slate学习四 —— 委托与宏</span>
-            <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
-        </a>
-        
-        <a  class="UE4 "
            href="/2019/08/03/WidgetStyle/"
            data-tag="ue4,slate"
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习二 —— Slate控件样式">虚幻4之Slate学习二 —— Slate控件样式</span>
             <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
+        </a>
+        
+        <a  class="UE4 "
+           href="/2019/08/06/DelegateAndMacro/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习四 —— 委托与宏">虚幻4之Slate学习四 —— 委托与宏</span>
+            <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
         </a>
         
         <a  class="CG "
@@ -415,14 +415,10 @@
 </li>
 <li><p>纹理不能直接绑定到渲染管线，只能把与资源关联的资源视图绑定到不同的管线阶段  </p>
 </li>
-<li><p>Direct3D始终要求我们在初始化时为纹理创建相关的<strong>资源视图</strong>（resource view），渲染目标视图（ID3D11RenderTargetView）和着色器资源视图（ID3D11ShaderResourceView） </p>
-</li>
-<li><p>创建资源时一定要指定绑定标志值，不然将无法创建资源视图 </p>
-<h2 id="资源视图的作用"><a href="#资源视图的作用" class="headerlink" title="资源视图的作用"></a>资源视图的作用</h2></li>
-<li><p>（1）告诉Direct3D如何使用资源（即，指定资源所要绑定的管线阶段）；</p>
-</li>
-<li><p>（2）如果在创建资源时指定的是弱类型（typeless）格式，那么在为它创建资源视图时就必须指定明确的资源类型。对于弱类型格式，纹理元素可能会在一个管线阶段中视为浮点数，而在另一个管线阶段中视为整数。</p>
-</li>
+<li>Direct3D始终要求我们在初始化时为纹理创建相关的<strong>资源视图</strong>（resource view），渲染目标视图（ID3D11RenderTargetView）和着色器资源视图（ID3D11ShaderResourceView） </li>
+<li>创建资源时一定要指定绑定标志值，不然将无法创建资源视图 <h2 id="资源视图的作用"><a href="#资源视图的作用" class="headerlink" title="资源视图的作用"></a>资源视图的作用</h2></li>
+<li>（1）告诉Direct3D如何使用资源（即，指定资源所要绑定的管线阶段）；</li>
+<li>（2）如果在创建资源时指定的是弱类型（typeless）格式，那么在为它创建资源视图时就必须指定明确的资源类型。对于弱类型格式，纹理元素可能会在一个管线阶段中视为浮点数，而在另一个管线阶段中视为整数。</li>
 </ul>
 <h1 id="多重采样"><a href="#多重采样" class="headerlink" title="多重采样"></a>多重采样</h1><ul>
 <li>超级采样（supersampling）:比如4x ssaa,将屏幕分别率提高4倍，然后每4个像素采样后取平均值。相当于深度缓存和后台缓存都扩大4倍。</li>

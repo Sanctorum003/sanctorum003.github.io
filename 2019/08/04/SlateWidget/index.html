@@ -233,6 +233,14 @@
     <nav id="title-list-nav">
         
         <a  class="CG "
+           href="/2019/09/09/D3DTransform/"
+           data-tag="computer graphics,directx11"
+           data-author="" >
+            <span class="post-title" title="DirectX11龙书-第三章:变换">DirectX11龙书-第三章:变换</span>
+            <span class="post-date" title="2019-09-09 15:51:46">2019/09/09</span>
+        </a>
+        
+        <a  class="CG "
            href="/2019/09/09/D3DInit/"
            data-tag="computer graphics,directx11"
            data-author="" >
@@ -280,14 +288,6 @@
             <span class="post-date" title="2019-08-07 16:58:06">2019/08/07</span>
         </a>
         
-        <a  class="CG "
-           href="/2019/09/09/D3DTransform/"
-           data-tag="computer graphics,directx11"
-           data-author="" >
-            <span class="post-title" title="DirectX11龙书-第三章:变换">DirectX11龙书-第三章:变换</span>
-            <span class="post-date" title="2019-09-09 15:51:46">2019/09/09</span>
-        </a>
-        
         <a  class="UE4 "
            href="/2019/09/05/UE4RenderModule/"
            data-tag="ue4,render"
@@ -297,19 +297,19 @@
         </a>
         
         <a  class="UE4 "
-           href="/2019/08/06/DelegateAndMacro/"
-           data-tag="ue4,slate"
-           data-author="" >
-            <span class="post-title" title="虚幻4之Slate学习四 —— 委托与宏">虚幻4之Slate学习四 —— 委托与宏</span>
-            <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
-        </a>
-        
-        <a  class="UE4 "
            href="/2019/08/03/WidgetStyle/"
            data-tag="ue4,slate"
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习二 —— Slate控件样式">虚幻4之Slate学习二 —— Slate控件样式</span>
             <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
+        </a>
+        
+        <a  class="UE4 "
+           href="/2019/08/06/DelegateAndMacro/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习四 —— 委托与宏">虚幻4之Slate学习四 —— 委托与宏</span>
+            <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
         </a>
         
         <a  class="CG "
@@ -389,12 +389,13 @@
 <li>介绍常用的Slate控件</li>
 <li>自定义DPI</li>
 </ul>
-<h1 id="用C-编写Slate控件"><a href="#用C-编写Slate控件" class="headerlink" title="用C++编写Slate控件"></a>用C++编写Slate控件</h1><pre><code class="cpp">ChildSlot
+<h1 id="用C-编写Slate控件"><a href="#用C-编写Slate控件" class="headerlink" title="用C++编写Slate控件"></a>用C++编写Slate控件</h1><pre><code class="lang-cpp">ChildSlot
 [
     SNew(SImage)
     .Image(&amp;MySlateStyle-&gt;BackGroupBrush)
 
-];</code></pre>
+];
+</code></pre>
 <p>只需要在ChildSlot中编写相关代码就可以创建控件。不同控件有不同的属性，下面将要介绍一些常用的控件,值得注意的是对于需要在游戏中动态控制的控件，需利用SAssignNew,再通过共享指针保存起来</p>
 <h2 id="SOverlay"><a href="#SOverlay" class="headerlink" title="SOverlay"></a>SOverlay</h2><ul>
 <li>用于实现重叠部件,可以创建任意个插件，即可以放任意个子控件</li>
@@ -411,7 +412,7 @@
 <h3 id="SOverlay-Slot"><a href="#SOverlay-Slot" class="headerlink" title="+SOverlay::Slot()"></a>+SOverlay::Slot()</h3><ul>
 <li>+SOverlay::Slot()与SNew().AddSlot等价。增加的插槽下用于放子控件</li>
 </ul>
-<pre><code class="cpp">SNew(SOverlay)
+<pre><code class="lang-cpp">SNew(SOverlay)
 + SOverlay::Slot()
 //这些属性设计是应用于插槽
 .HAlign(HAlign_Fill)
@@ -420,7 +421,8 @@
      SNew(SImage)
      //image()用于添加笔刷
      .Image(&amp;MySlateStyle-&gt;BackGroupBrush)
-]</code></pre>
+]
+</code></pre>
 <p><img src="SOverlay.png" alt></p>
 <h2 id="SImage"><a href="#SImage" class="headerlink" title="SImage"></a>SImage</h2><ul>
 <li>Image()通过加笔刷来显示图片</li>

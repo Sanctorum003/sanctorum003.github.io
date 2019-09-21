@@ -233,6 +233,14 @@
     <nav id="title-list-nav">
         
         <a  class="CG "
+           href="/2019/09/09/D3DTransform/"
+           data-tag="computer graphics,directx11"
+           data-author="" >
+            <span class="post-title" title="DirectX11龙书-第三章:变换">DirectX11龙书-第三章:变换</span>
+            <span class="post-date" title="2019-09-09 15:51:46">2019/09/09</span>
+        </a>
+        
+        <a  class="CG "
            href="/2019/09/09/D3DInit/"
            data-tag="computer graphics,directx11"
            data-author="" >
@@ -280,14 +288,6 @@
             <span class="post-date" title="2019-08-07 16:58:06">2019/08/07</span>
         </a>
         
-        <a  class="CG "
-           href="/2019/09/09/D3DTransform/"
-           data-tag="computer graphics,directx11"
-           data-author="" >
-            <span class="post-title" title="DirectX11龙书-第三章:变换">DirectX11龙书-第三章:变换</span>
-            <span class="post-date" title="2019-09-09 15:51:46">2019/09/09</span>
-        </a>
-        
         <a  class="UE4 "
            href="/2019/09/05/UE4RenderModule/"
            data-tag="ue4,render"
@@ -297,19 +297,19 @@
         </a>
         
         <a  class="UE4 "
-           href="/2019/08/06/DelegateAndMacro/"
-           data-tag="ue4,slate"
-           data-author="" >
-            <span class="post-title" title="虚幻4之Slate学习四 —— 委托与宏">虚幻4之Slate学习四 —— 委托与宏</span>
-            <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
-        </a>
-        
-        <a  class="UE4 "
            href="/2019/08/03/WidgetStyle/"
            data-tag="ue4,slate"
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习二 —— Slate控件样式">虚幻4之Slate学习二 —— Slate控件样式</span>
             <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
+        </a>
+        
+        <a  class="UE4 "
+           href="/2019/08/06/DelegateAndMacro/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习四 —— 委托与宏">虚幻4之Slate学习四 —— 委托与宏</span>
+            <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
         </a>
         
         <a  class="CG "
@@ -396,6 +396,7 @@
 <h2 id="Delegate宏"><a href="#Delegate宏" class="headerlink" title="Delegate宏"></a>Delegate宏</h2><ul>
 <li>虚幻4用c++封装了自定义的委托，提供各种参数和返回值可供使用。</li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -403,7 +404,8 @@
 <th>声明宏</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>void Function()</td>
 <td>DECLARE_DELEGATE( DelegateName )</td>
 </tr>
@@ -427,12 +429,15 @@
 <td><retval> Function( <param1>, <param2>, …  )</param2></param1></retval></td>
 <td>DECLARE_DELEGATE_RetVal_<num>Params( RetValType, DelegateName, Param1Type, Param2Type, … )</num></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="声明Delegate变量"><a href="#声明Delegate变量" class="headerlink" title="声明Delegate变量"></a>声明Delegate变量</h2><ul>
 <li>利用刚定义的宏声明一个Delegate变量，注意变量类型是上述的DelegateName。</li>
 <li>这个成员变量就是未来我们可以用来动态绑定其他和之前在宏声明的一样的函数签名的方法</li>
 </ul>
-<pre><code class="CPP">DelegateName MyDelegate</code></pre>
+<pre><code class="lang-CPP">DelegateName MyDelegate
+</code></pre>
 <h2 id="绑定"><a href="#绑定" class="headerlink" title="绑定"></a>绑定</h2><ul>
 <li>Bind()<blockquote>
 <p>直接Bind一个已经存在的Delegate</p>
@@ -461,14 +466,18 @@
 </ul>
 <h2 id="调用代理方法"><a href="#调用代理方法" class="headerlink" title="调用代理方法"></a>调用代理方法</h2><ul>
 <li><p>调用代理的方法就相对的简单，我们只需要使用下方方法即可。当然如果这个delegate是含参数的，可以在其中添加参数。这样所绑定的方法就会被调用，类似于通过函数指针来调用。</p>
-<pre><code class="cpp">MyDelegateMemVar.Execute(）</code></pre>
-<pre><code class="cpp">MyDelegateMemVar.Execute(Param1, Param2 ...)</code></pre>
+<pre><code class="lang-cpp">MyDelegateMemVar.Execute(）
+</code></pre>
+<pre><code class="lang-cpp">MyDelegateMemVar.Execute(Param1, Param2 ...)
+</code></pre>
 </li>
 <li><p>IsBound()用于判断委托是否绑定</p>
-<pre><code class="cpp">MyDelegateMemVar.IsBound()</code></pre>
+<pre><code class="lang-cpp">MyDelegateMemVar.IsBound()
+</code></pre>
 </li>
 <li><p>ExecuteIfBound(…)用于如果绑定特定内容则执行</p>
-<pre><code class="cpp">MyDelegateMemVar.ExecuteIfBound(...)</code></pre>
+<pre><code class="lang-cpp">MyDelegateMemVar.ExecuteIfBound(...)
+</code></pre>
 </li>
 </ul>
 <h1 id="Slate宏（macro）"><a href="#Slate宏（macro）" class="headerlink" title="Slate宏（macro）"></a>Slate宏（macro）</h1><ul>
@@ -476,15 +485,17 @@
 </ul>
 <h2 id="SLATE-BEGIN-ARGS-WidgetType-和SLATE-END-ARGS"><a href="#SLATE-BEGIN-ARGS-WidgetType-和SLATE-END-ARGS" class="headerlink" title="SLATE_BEGIN_ARGS(WidgetType)和SLATE_END_ARGS()"></a>SLATE_BEGIN_ARGS(WidgetType)和SLATE_END_ARGS()</h2><ul>
 <li>Widgets的创建者可以使用SLATE_BEGIN_ARGS和SLATE_END_ARGS来声明和构建一个Widget,使得Widget可以通过SNew()和SAssignNew()来创建一个Widget,从而可以添加到用户视口.</li>
-<li>其内部可放置相关参数<pre><code class="cpp">SLATE_BEGIN_ARGS(SSlAiMenuItemWidget){}
+<li>其内部可放置相关参数<pre><code class="lang-cpp">SLATE_BEGIN_ARGS(SSlAiMenuItemWidget){}
  SLATE_ATTRIBUTE(FText, ItemText)
  SLATE_EVENT(FItemClicked, MyOnClicked)
  SLATE_ATTRIBUTE(EMenuItem::Type,ItemType)
-SLATE_END_ARGS()</code></pre>
-定义上述参数后，可以进行赋值等操作<pre><code class="cpp">SNew(SSlAiMenuItemWidget)
+SLATE_END_ARGS()
+</code></pre>
+定义上述参数后，可以进行赋值等操作<pre><code class="lang-cpp">SNew(SSlAiMenuItemWidget)
 .ItemText(NSLOCTEXT(&quot;SlAiMenu&quot;,&quot;StartGame&quot;,&quot;StartGame&quot;))
 .ItemType(EMenuItem::StartGame)
-.MyOnClicked(this,&amp;SSlAiMenuWidget::MenuItemOnClicked)</code></pre>
+.MyOnClicked(this,&amp;SSlAiMenuWidget::MenuItemOnClicked)
+</code></pre>
 </li>
 </ul>
 <h2 id="SLATE-ATTRIBUTE（AttrType-AttrName）"><a href="#SLATE-ATTRIBUTE（AttrType-AttrName）" class="headerlink" title="SLATE_ATTRIBUTE（AttrType,AttrName）"></a>SLATE_ATTRIBUTE（AttrType,AttrName）</h2><ul>
@@ -496,8 +507,6 @@ SLATE_END_ARGS()</code></pre>
 </ul>
 <blockquote>
 <p>一个属性可以是一个值或者方法参数</p>
-</blockquote>
-<blockquote>
 <p>AttrType：属性类型，可以是任意数据类型<br>AttrName：属性名</p>
 </blockquote>
 <h2 id="SLATE-ARGUMENT-ArgType-ArgName"><a href="#SLATE-ARGUMENT-ArgType-ArgName" class="headerlink" title="SLATE_ARGUMENT(ArgType, ArgName)"></a>SLATE_ARGUMENT(ArgType, ArgName)</h2><ul>
@@ -525,29 +534,28 @@ SLATE_END_ARGS()</code></pre>
 </li>
 </ul>
 <h1 id="常用Slate控件函数"><a href="#常用Slate控件函数" class="headerlink" title="常用Slate控件函数"></a>常用Slate控件函数</h1><h2 id="OnClicked"><a href="#OnClicked" class="headerlink" title="OnClicked"></a>OnClicked</h2><ul>
-<li><p>事件原型</p>
-<pre><code class="cpp">/** Called when the button is clicked */
-SLATE_EVENT( FOnClicked, OnClicked )</code></pre>
+<li>事件原型<pre><code class="lang-cpp">/** Called when the button is clicked */
+SLATE_EVENT( FOnClicked, OnClicked )
+</code></pre>
 </li>
 <li><p>FOnClicked原型</p>
-<pre><code class="cpp">/**
+<pre><code class="lang-cpp">/**
 * A delegate that is invoked when widgets want to notify a user that they have been clicked.
 * Intended for use by buttons and other button-like widgets.
 */
 DECLARE_DELEGATE_RetVal( 
   FReply, 
   FOnClicked )
-// FReply FOnClicked()</code></pre>
+// FReply FOnClicked()
+</code></pre>
 </li>
 <li><p>因此OnClicked()调用的函数的函数原型必须是FReply FOnClicked()</p>
 </li>
-<li><p>FReply 告诉引擎如何处理事件</p>
-<blockquote>
+<li>FReply 告诉引擎如何处理事件<blockquote>
 <p>A Reply is something that a Slate event returns to the system to notify it about certain aspect of how an event was handled. For example, a widget may handle an OnMouseDown event by asking the system to give mouse capture to a specific Widget. To do this, return FReply::CaptureMouse( NewMouseCapture ).</p>
 </blockquote>
 </li>
-<li><p>FReply::Handled() 告诉引擎事件处理完</p>
-<blockquote>
+<li>FReply::Handled() 告诉引擎事件处理完<blockquote>
 <p>An event should return a FReply::Handled() to let the system know that an event was handled.</p>
 </blockquote>
 </li>
@@ -555,7 +563,7 @@ DECLARE_DELEGATE_RetVal(
 <ul>
 <li>下面举一个例子</li>
 </ul>
-<pre><code class="cpp">/** SMyHUDWidget.h **/
+<pre><code class="lang-cpp">/** SMyHUDWidget.h **/
 #pragma once
 
 #include &quot;CoreMinimal.h&quot;
@@ -580,8 +588,9 @@ private:
     const FMySlateStyle *MySlateStyle;
 
     FReply addImage();
-};</code></pre>
-<pre><code class="cpp">/** SMyHUDWidget.cpp **/
+};
+</code></pre>
+<pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/
 #include &quot;SMyHUDWidget.h&quot;
 #include &quot;SlateOptMacros.h&quot;
 #include &quot;SButton.h&quot;
@@ -621,7 +630,8 @@ FReply SMyHUDWidget::addImage()
 {
     MyImage-&gt;SetImage(&amp;MySlateStyle-&gt;BackGroupBrush);
     return FReply::Handled();
-}</code></pre>
+}
+</code></pre>
 <p>效果如下图<br><img src="onClick.png" alt><br><img src="onClicked.png" alt></p>
 <h2 id="SOverlay-Expose和SOverlay-FOverlaySlot"><a href="#SOverlay-Expose和SOverlay-FOverlaySlot" class="headerlink" title="SOverlay::Expose和SOverlay::FOverlaySlot"></a>SOverlay::Expose和SOverlay::FOverlaySlot</h2><ul>
 <li><p>上述两个结合使用可以获取SOverlay的插槽作为变量使用</p>
@@ -629,11 +639,12 @@ FReply SMyHUDWidget::addImage()
 <li><p>在OnClicked的例子中修改</p>
 </li>
 </ul>
-<pre><code class="cpp">/** SMyHUDWidget.h **/
+<pre><code class="lang-cpp">/** SMyHUDWidget.h **/
 public:
     //注意SOverlay::FOverlaySlot 是内部类
-    SOverlay::FOverlaySlot* MySlot;</code></pre>
-<pre><code class="cpp">/** SMyHUDWidget.cpp **/
+    SOverlay::FOverlaySlot* MySlot;
+</code></pre>
+<pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/
 + SOverlay::Slot()
 .HAlign(HAlign_Center)//这些属性设计是应用于插槽
 .VAlign(VAlign_Center)
@@ -641,36 +652,40 @@ public:
 [
     SNew(SButton)
     .OnClicked(this,&amp;SMyHUDWidget::addImage)
-]</code></pre>
-<pre><code class="cpp">/** SMyHUDWidget.cpp **/
+]
+</code></pre>
+<pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/
 FReply SMyHUDWidget::addImage()
 {
     MyImage-&gt;SetImage(&amp;MySlateStyle-&gt;BackGroupBrush);
     MySlot-&gt;HAlign(HAlign_Left);
     return FReply::Handled();
-}</code></pre>
+}
+</code></pre>
 <p>点击后按钮到最左侧<br><img src="FOverlaySlot.png" alt></p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
 <li>我们尝试编写图片的点击效果，来使用委托和宏。SImage默认不带这个效果。</li>
 <li>首先我们创建一个继承于SlateWidget的C++类命名为MyImage</li>
 <li>创建一个委托，用于与SLATE_EVENT绑定。相当于自定义一个需要单击会触发函数的函数原型</li>
 </ul>
-<pre><code class="cpp">/** SMyImage.h **/
-DECLARE_DELEGATE_RetVal(FReply,FImageOnClicked)</code></pre>
+<pre><code class="lang-cpp">/** SMyImage.h **/
+DECLARE_DELEGATE_RetVal(FReply,FImageOnClicked)
+</code></pre>
 <ul>
 <li>创建一个SLATE_EVENT,将之前创建的委托与该SLATE_EVENT绑定</li>
 </ul>
-<pre><code class="cpp">/** SMyImage.cpp **/
+<pre><code class="lang-cpp">/** SMyImage.cpp **/
 SLATE_BEGIN_ARGS(SMyHUDWidget)
 {}
 
 SLATE_EVENT(FImageOnClicked, ImageOnClicked)
 
-SLATE_END_ARGS()</code></pre>
+SLATE_END_ARGS()
+</code></pre>
 <ul>
 <li>然后在原来的SMyHUDWidget将SImage换成SMyImage并且可以调用ImageOnClicked()</li>
 </ul>
-<pre><code class="cpp">/** SMyHUDWidget.cpp **/
+<pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/
 #include &quot;SMyHUDWidget.h&quot;
 #include &quot;SlateOptMacros.h&quot;
 #include &quot;SButton.h&quot;
@@ -720,7 +735,7 @@ FReply SMyHUDWidget::addImage()
 <ul>
 <li>在SMyImage中添加图片</li>
 </ul>
-<pre><code class="cpp">/** SMyImage.cpp **/
+<pre><code class="lang-cpp">/** SMyImage.cpp **/
 #include &quot;SMyImage.h&quot;
 #include &quot;SlateOptMacros.h&quot;
 #include &quot;SImage.h&quot;
@@ -738,39 +753,43 @@ void SMyImage::Construct(const FArguments&amp; InArgs)
     ];
 
 }
-END_SLATE_FUNCTION_BUILD_OPTIMIZATION</code></pre>
+END_SLATE_FUNCTION_BUILD_OPTIMIZATION
+</code></pre>
 <p>此时效果如下<br><img src="MyImage.png" alt></p>
 <ul>
 <li>接着我们需要创建一个回调函数用于ImageOnClicked()，传入后event对应FImageOnClicked就绑定该函数了</li>
 </ul>
-<pre><code class="cpp">/** SMyHUDWidget.cpp **/
+<pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/
 FReply SMyHUDWidget::ImageClicked()
 {
     GEngine-&gt;AddOnScreenDebugMessage(-1, 5.f, FColor::Green, &quot;Suceess&quot;);
     return FReply::Handled();
-}</code></pre>
-<pre><code class="cpp">/** SMyHUDWidget.cpp **/
+}
+</code></pre>
+<pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/
 /**
     * TSharedPtr&lt;SMyImage&gt; MyImage;
 **/
 SAssignNew(MyImage, SMyImage)
-.ImageOnClicked(this, &amp;SMyHUDWidget::ImageClicked)</code></pre>
+.ImageOnClicked(this, &amp;SMyHUDWidget::ImageClicked)
+</code></pre>
 <ul>
 <li>但是这时候会发现，单击并没有什么效果。这是因为程序并不知道要根据单击触发。</li>
 <li>我们需要在MyImage中重写鼠标相关函数</li>
 </ul>
-<pre><code class="cpp">/** SMyImage.h **/
+<pre><code class="lang-cpp">/** SMyImage.h **/
 public:
     FImageOnClicked ImageOnClick;
     virtual FReply OnMouseButtonDown(const FGeometry&amp; MyGeometry, const FPointerEvent&amp; MouseEvent) override;
     virtual FReply OnMouseButtonUp(const FGeometry&amp; MyGeometry, const FPointerEvent&amp; MouseEvent) override;
     virtual void OnMouseLeave(const FPointerEvent&amp; MouseEvent) override;
-    bool BIsMouseButtonDown = false;</code></pre>
+    bool BIsMouseButtonDown = false;
+</code></pre>
 <ul>
 <li>我们这时候需要在鼠标按下时调用委托，使用我们必须事先获取到这个委托，<em>FImageOnClicked ImageOnClick</em>就是用来声明该委托。</li>
 <li>在构造中,通过InArgs._*可以来获取SLATE_BEGIN_ARGS(SMyHUDWidget)和SLATE_END_ARGS()之间的属性。</li>
 </ul>
-<pre><code class="cpp">/** SMyImage.cpp **/
+<pre><code class="lang-cpp">/** SMyImage.cpp **/
 void SMyImage::Construct(const FArguments&amp; InArgs)
 {
     ImageOnClick = InArgs._ImageOnClicked;
@@ -781,11 +800,12 @@ void SMyImage::Construct(const FArguments&amp; InArgs)
         .Image(&amp;MySlateStyle-&gt;BackGroupBrush)
     ];
 
-}</code></pre>
+}
+</code></pre>
 <ul>
 <li>这样我们就可以重写鼠标事件，让其在点击时调用相关委托</li>
 </ul>
-<pre><code class="cpp">FReply SMyImage::OnMouseButtonDown(const FGeometry&amp; MyGeometry, const FPointerEvent&amp; MouseEvent)
+<pre><code class="lang-cpp">FReply SMyImage::OnMouseButtonDown(const FGeometry&amp; MyGeometry, const FPointerEvent&amp; MouseEvent)
 {
     BIsMouseButtonDown = true;
     return FReply::Handled();
@@ -804,7 +824,8 @@ FReply SMyImage::OnMouseButtonUp(const FGeometry&amp; MyGeometry, const FPointer
 void SMyImage::OnMouseLeave(const FPointerEvent&amp; MouseEvent)
 {
     BIsMouseButtonDown = false;
-}</code></pre>
+}
+</code></pre>
 <ul>
 <li>到此就完成了，点击图片时会显示<strong>SUCCEESS</strong><br><img src="Success.png" alt><blockquote>
 <p>如果不成功可以尝试将播放模式设成模拟<br><img src="Simulation.png" alt></p>
