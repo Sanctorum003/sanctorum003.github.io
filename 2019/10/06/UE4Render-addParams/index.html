@@ -6,14 +6,18 @@
   <meta name="keywords" content=" ue4 , render , shader ">
   <meta name="description" content="在shader文件中添加第二个颜色变量 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="线性变换定义 满足以下性质为线性变换 1.$\tau(u+v) = \tau(u) + \tau(v)$2.$\tau(ku) = k\tau(u)$其中u,v为任意三维向量，k为标量">
+<meta name="keywords" content="computer graphics,directx11">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DirectX11龙书-第三章:变换">
+<meta property="og:url" content="https://sanctorum.github.io/2019/09/09/D3DTransform/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="线性变换定义 满足以下性质为线性变换 1.$\tau(u+v) = \tau(u) + \tau(v)$2.$\tau(ku) = k\tau(u)$其中u,v为任意三维向量，k为标量">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:updated_time" content="2019-09-11T08:08:49.864Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="DirectX11龙书-第三章:变换">
+<meta name="twitter:description" content="线性变换定义 满足以下性质为线性变换 1.$\tau(u+v) = \tau(u) + \tau(v)$2.$\tau(ku) = k\tau(u)$其中u,v为任意三维向量，k为标量">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -372,7 +376,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-06 11:48:37'>2019-10-06 11:46</time>
+        创建时间:<time class="date" title='更新时间: 2019-10-06 11:50:54'>2019-10-06 11:46</time>
         
     </div>
     <div class="article-meta">
@@ -383,7 +387,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在shader文件中添加第二个颜色变量"><span class="toc-text">在shader文件中添加第二个颜色变量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MyShader-usf"><span class="toc-text">MyShader.usf</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-“-Engine-Public-Platform-ush”"><span class="toc-text">include “/Engine/Public/Platform.ush”</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MyShaderTest-cpp"><span class="toc-text">MyShaderTest.cpp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DrawTestShaderRenderTarget"><span class="toc-text">DrawTestShaderRenderTarget</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VS-和-PS"><span class="toc-text">VS 和 PS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DrawTestShaderRenderTarget-RenderThread"><span class="toc-text">DrawTestShaderRenderTarget_RenderThread</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#if-WANTS-DRAW-MESH-EVENTS"><span class="toc-text">if WANTS_DRAW_MESH_EVENTS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#else"><span class="toc-text">else</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#endif"><span class="toc-text">endif</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在shader文件中添加第二个颜色变量"><span class="toc-text">在shader文件中添加第二个颜色变量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MyShader-usf"><span class="toc-text">MyShader.usf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyShaderTest-h"><span class="toc-text">MyShaderTest.h</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyShaderTest-cpp"><span class="toc-text">MyShaderTest.cpp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DrawTestShaderRenderTarget"><span class="toc-text">DrawTestShaderRenderTarget</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FMyShaderTest"><span class="toc-text">FMyShaderTest</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VS-和-PS"><span class="toc-text">VS 和 PS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DrawTestShaderRenderTarget-RenderThread"><span class="toc-text">DrawTestShaderRenderTarget_RenderThread</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -401,16 +405,35 @@
         <h1 id="在shader文件中添加第二个颜色变量"><a href="#在shader文件中添加第二个颜色变量" class="headerlink" title="在shader文件中添加第二个颜色变量"></a>在shader文件中添加第二个颜色变量</h1><p><a href="https://zhuanlan.zhihu.com/p/36635394" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/36635394</a><br><a href="https://zhuanlan.zhihu.com/p/36695496" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/36695496</a><br>在看了shader编程的第二第三章后,觉的似懂非懂。再上面添加点东西,便于很深入的理解</p>
 <h2 id="MyShader-usf"><a href="#MyShader-usf" class="headerlink" title="MyShader.usf"></a>MyShader.usf</h2><ul>
 <li>我们从目标要求开始,这里我想要使得输出颜色变为两个颜色的和，比如可以让颜色变成R+G,R+B等等</li>
-<li>这里我们现在usf文件中做如下添加和修改<br>```cpp<br>// MyShader.usf<h1 id="include-“-Engine-Public-Platform-ush”"><a href="#include-“-Engine-Public-Platform-ush”" class="headerlink" title="include “/Engine/Public/Platform.ush”"></a>include “/Engine/Public/Platform.ush”</h1></li>
+<li>这里我们现在usf文件中做如下添加和修改</li>
 </ul>
-<p>float4 SimpleColor;<br>// 增加一个颜色采样的变量<br>float4 SimpleColor2;<br>void MainVS(<br> in float4 InPosition : ATTRIBUTE0,<br> out float4 OutPosition : SV_POSITION<br> )<br>{<br> // screenspace position from vb<br>    OutPosition = InPosition;<br>}</p>
-<p>void MainPS(<br>    out float4 OutColor : SV_Target0<br>    )<br>{<br>    // 输出颜色变为两种颜色的叠加<br>    OutColor = (SimpleColor + SimpleColor2);<br>}</p>
-<pre><code>
-## MyShaderTest.h
-* 因为添加了一个颜色变量，我们得将相关数据传进去。首先想到的是在蓝图中增加一个引脚
+<pre><code class="lang-cpp">// MyShader.usf
+#include &quot;/Engine/Public/Platform.ush&quot;
 
-```cpp
-// MyShaderTest.h
+float4 SimpleColor;
+// 增加一个颜色采样的变量
+float4 SimpleColor2;
+void MainVS(
+ in float4 InPosition : ATTRIBUTE0,
+ out float4 OutPosition : SV_POSITION
+ )
+{
+ // screenspace position from vb
+    OutPosition = InPosition;
+}
+
+void MainPS(
+    out float4 OutColor : SV_Target0
+    )
+{
+    // 输出颜色变为两种颜色的叠加
+    OutColor = (SimpleColor + SimpleColor2);
+}
+</code></pre>
+<h2 id="MyShaderTest-h"><a href="#MyShaderTest-h" class="headerlink" title="MyShaderTest.h"></a>MyShaderTest.h</h2><ul>
+<li>因为添加了一个颜色变量，我们得将相关数据传进去。首先想到的是在蓝图中增加一个引脚</li>
+</ul>
+<pre><code class="lang-cpp">// MyShaderTest.h
 #pragma once
 
 #include &quot;CoreMinimal.h&quot;
@@ -427,32 +450,51 @@ class UTestShaderBlueprintLibrary : public UBlueprintFunctionLibrary
         // 在这里增加一个FLinearColor的形参就是增加一个引脚
         static void DrawTestShaderRenderTarget(class UTextureRenderTarget2D* OutputRenderTarget, AActor* AC, FLinearColor MyColor,FLinearColor MyColor2);
 };
-</code></pre><h2 id="MyShaderTest-cpp"><a href="#MyShaderTest-cpp" class="headerlink" title="MyShaderTest.cpp"></a>MyShaderTest.cpp</h2><h3 id="DrawTestShaderRenderTarget"><a href="#DrawTestShaderRenderTarget" class="headerlink" title="DrawTestShaderRenderTarget"></a>DrawTestShaderRenderTarget</h3><ul>
+</code></pre>
+<h2 id="MyShaderTest-cpp"><a href="#MyShaderTest-cpp" class="headerlink" title="MyShaderTest.cpp"></a>MyShaderTest.cpp</h2><h3 id="DrawTestShaderRenderTarget"><a href="#DrawTestShaderRenderTarget" class="headerlink" title="DrawTestShaderRenderTarget"></a>DrawTestShaderRenderTarget</h3><ul>
 <li>为此我们需要进入cpp文件中,添加相应的形参。这个函数是在逻辑线程中调用。</li>
 <li>ENQUEUE_RENDER_COMMAND向渲染线程压入一个渲染命令， 调用DrawTestShaderRenderTarget_RenderThread</li>
-<li><p>我们需要在lambda表达式中增加我们需要传的变量给渲染线程。</p>
-<blockquote>
-<p>DrawTestShaderRenderTarget中主要是对数据的获取和传递,一般不需要修改东西，只需要增加你要传递的各类数据。<br>```cpp<br>// MyShaderTest.cpp<br>void UTestShaderBlueprintLibrary::DrawTestShaderRenderTarget(<br>  UTextureRenderTarget2D<em> OutputRenderTarget,<br>  AActor</em> Ac,<br>  FLinearColor MyColor,<br>  FLinearColor MyColor2<br>)<br>{<br>  check(IsInGameThread());</p>
+<li>我们需要在lambda表达式中增加我们需要传的变量给渲染线程。<blockquote>
+<p>DrawTestShaderRenderTarget中主要是对数据的获取和传递,一般不需要修改东西，只需要增加你要传递的各类数据。</p>
 </blockquote>
-<p>  if (!OutputRenderTarget)<br>  {</p>
-<pre><code>  return;
-</code></pre><p>  }</p>
-<p>  FTextureRenderTargetResource<em> TextureRenderTargetResource = OutputRenderTarget-&gt;GameThread_GetRenderTargetResource();<br>  UWorld</em> World = Ac-&gt;GetWorld();<br>  ERHIFeatureLevel::Type FeatureLevel = World-&gt;Scene-&gt;GetFeatureLevel();<br>  FName TextureRenderTargetName = OutputRenderTarget-&gt;GetFName();<br>  ENQUEUE_RENDER_COMMAND(CaptureCommand)(</p>
-<pre><code>  [TextureRenderTargetResource, FeatureLevel, MyColor,MyColor2, TextureRenderTargetName](FRHICommandListImmediate&amp; RHICmdList)
-</code></pre><p>  {</p>
-<pre><code>  DrawTestShaderRenderTarget_RenderThread(RHICmdList, TextureRenderTargetResource, FeatureLevel, TextureRenderTargetName, MyColor,MyColor2);
-</code></pre><p>  }<br>  );</p>
 </li>
 </ul>
-<p>}</p>
-<pre><code>
-### FMyShaderTest
-* 因为给DrawTestShaderRenderTarget_RenderThread添加了一个数据，所以需要修改其函数，但是这个比较复杂我们先看简单的。
-* 渲染管线中VS和PS是一定要自己配置的,所以创建自定义的VS和PS,需要从FGlobalShader继承。然后需要使用
-```cpp
-IMPLEMENT_SHADER_TYPE(, FShaderTestVS, TEXT(&quot;/Plugin/ShadertestPlugin/Private/MyShader.usf&quot;), TEXT(&quot;MainVS&quot;), SF_Vertex)
+<pre><code class="lang-cpp">// MyShaderTest.cpp
+void UTestShaderBlueprintLibrary::DrawTestShaderRenderTarget(
+    UTextureRenderTarget2D* OutputRenderTarget,
+    AActor* Ac,
+    FLinearColor MyColor,
+    FLinearColor MyColor2
+)
+{
+    check(IsInGameThread());
+
+    if (!OutputRenderTarget)
+    {
+        return;
+    }
+
+    FTextureRenderTargetResource* TextureRenderTargetResource = OutputRenderTarget-&gt;GameThread_GetRenderTargetResource();
+    UWorld* World = Ac-&gt;GetWorld();
+    ERHIFeatureLevel::Type FeatureLevel = World-&gt;Scene-&gt;GetFeatureLevel();
+    FName TextureRenderTargetName = OutputRenderTarget-&gt;GetFName();
+    ENQUEUE_RENDER_COMMAND(CaptureCommand)(
+        [TextureRenderTargetResource, FeatureLevel, MyColor,MyColor2, TextureRenderTargetName](FRHICommandListImmediate&amp; RHICmdList)
+    {
+        DrawTestShaderRenderTarget_RenderThread(RHICmdList, TextureRenderTargetResource, FeatureLevel, TextureRenderTargetName, MyColor,MyColor2);
+    }
+    );
+
+}
+</code></pre>
+<h3 id="FMyShaderTest"><a href="#FMyShaderTest" class="headerlink" title="FMyShaderTest"></a>FMyShaderTest</h3><ul>
+<li>因为给DrawTestShaderRenderTarget_RenderThread添加了一个数据，所以需要修改其函数，但是这个比较复杂我们先看简单的。</li>
+<li>渲染管线中VS和PS是一定要自己配置的,所以创建自定义的VS和PS,需要从FGlobalShader继承。然后需要使用</li>
+</ul>
+<pre><code class="lang-cpp">IMPLEMENT_SHADER_TYPE(, FShaderTestVS, TEXT(&quot;/Plugin/ShadertestPlugin/Private/MyShader.usf&quot;), TEXT(&quot;MainVS&quot;), SF_Vertex)
 IMPLEMENT_SHADER_TYPE(, FShaderTestPS, TEXT(&quot;/Plugin/ShadertestPlugin/Private/MyShader.usf&quot;), TEXT(&quot;MainPS&quot;), SF_Pixel)
-</code></pre><p>这个语句来使相关类和Vertex Shader或Pixel Shader文件绑定，这样渲染管线中将会使用我们自定义的定点着色器和像素着色器</p>
+</code></pre>
+<p>这个语句来使相关类和Vertex Shader或Pixel Shader文件绑定，这样渲染管线中将会使用我们自定义的定点着色器和像素着色器</p>
 <ul>
 <li>因为在VS和PS中有些配置是一样的,所以我们可以先从FGlobalShader派生一个FMyShaderTest的类,然后再从FMyShaderTest派生出我们的FShaderTestVS和FShaderTestPS。</li>
 </ul>
@@ -533,15 +575,17 @@ void SetParameters(
   SetShaderValue(RHICmdList, GetPixelShader(), SimpleColorVal2, MyColor2);
 }
 </code></pre>
-<pre><code class="lang-cpp">  virtual bool Serialize(FArchive&amp; Ar) override
-  {
-      bool bShaderHasOutdatedParameters = FGlobalShader::Serialize(Ar);
-      Ar &lt;&lt; SimpleColorVal;
-      Ar &lt;&lt; SimpleColorVal2;
-      return bShaderHasOutdatedParameters;
-  }
-</code></pre>
 </li>
+</ul>
+<pre><code class="lang-cpp">    virtual bool Serialize(FArchive&amp; Ar) override
+    {
+        bool bShaderHasOutdatedParameters = FGlobalShader::Serialize(Ar);
+        Ar &lt;&lt; SimpleColorVal;
+        Ar &lt;&lt; SimpleColorVal2;
+        return bShaderHasOutdatedParameters;
+    }
+</code></pre>
+<ul>
 <li>虚幻序列化，用于读取磁盘上的渲染数据，这里需要将我们所需要的SimpleColorVal，SimpleColorVal2;</li>
 </ul>
 <pre><code class="lang-cpp">static bool ShouldCache(EShaderPlatform Platform)
@@ -562,103 +606,135 @@ static void ModifyCompilationEnvironment(const FGlobalShaderPermutationParameter
 }
 </code></pre>
 <ul>
-<li>剩下这些可以暂时不用管。<h3 id="VS-和-PS"><a href="#VS-和-PS" class="headerlink" title="VS 和 PS"></a>VS 和 PS</h3>```cpp<br>class FShaderTestVS : public FMyShaderTest<br>{<br>  DECLARE_SHADER_TYPE(FShaderTestVS, Global);</li>
+<li>剩下这些可以暂时不用管。<h3 id="VS-和-PS"><a href="#VS-和-PS" class="headerlink" title="VS 和 PS"></a>VS 和 PS</h3></li>
 </ul>
-<p>public:<br>    FShaderTestVS() {}</p>
-<pre><code>FShaderTestVS(const ShaderMetaType::CompiledShaderInitializerType&amp; Initializer)
-    : FMyShaderTest(Initializer)
+<pre><code class="lang-cpp">class FShaderTestVS : public FMyShaderTest
 {
+    DECLARE_SHADER_TYPE(FShaderTestVS, Global);
 
-}
-</code></pre><p>};</p>
-<p>class FShaderTestPS : public FMyShaderTest<br>{<br>    DECLARE_SHADER_TYPE(FShaderTestPS, Global);</p>
-<p>public:<br>    FShaderTestPS() {}</p>
-<pre><code>FShaderTestPS(const ShaderMetaType::CompiledShaderInitializerType&amp; Initializer)
-    : FMyShaderTest(Initializer)
+public:
+    FShaderTestVS() {}
+
+    FShaderTestVS(const ShaderMetaType::CompiledShaderInitializerType&amp; Initializer)
+        : FMyShaderTest(Initializer)
+    {
+
+    }
+};
+
+
+class FShaderTestPS : public FMyShaderTest
 {
+    DECLARE_SHADER_TYPE(FShaderTestPS, Global);
 
-}
-</code></pre><p>};</p>
-<p>IMPLEMENT_SHADER_TYPE(, FShaderTestVS, TEXT(“/Plugin/ShadertestPlugin/Private/MyShader.usf”), TEXT(“MainVS”), SF_Vertex)<br>IMPLEMENT_SHADER_TYPE(, FShaderTestPS, TEXT(“/Plugin/ShadertestPlugin/Private/MyShader.usf”), TEXT(“MainPS”), SF_Pixel)</p>
-<pre><code>* 这里从FMyShaderTest派生两个类分别利用IMPLEMENT_SHADER_TYPE宏指定为VS和PS
+public:
+    FShaderTestPS() {}
 
-```cpp
-DECLARE_SHADER_TYPE(FShaderTestVS, Global);
-</code></pre><ul>
+    FShaderTestPS(const ShaderMetaType::CompiledShaderInitializerType&amp; Initializer)
+        : FMyShaderTest(Initializer)
+    {
+
+    }
+};
+
+IMPLEMENT_SHADER_TYPE(, FShaderTestVS, TEXT(&quot;/Plugin/ShadertestPlugin/Private/MyShader.usf&quot;), TEXT(&quot;MainVS&quot;), SF_Vertex)
+IMPLEMENT_SHADER_TYPE(, FShaderTestPS, TEXT(&quot;/Plugin/ShadertestPlugin/Private/MyShader.usf&quot;), TEXT(&quot;MainPS&quot;), SF_Pixel)
+</code></pre>
+<ul>
+<li>这里从FMyShaderTest派生两个类分别利用IMPLEMENT_SHADER_TYPE宏指定为VS和PS</li>
+</ul>
+<pre><code class="lang-cpp">DECLARE_SHADER_TYPE(FShaderTestVS, Global);
+</code></pre>
+<ul>
 <li><p>该宏用于把该Shader加入全局shadermap中，在运行前会将shadermap中的所以shader进行编译。</p>
 </li>
 <li><p>还有一点需要注意，因为这里我们的VS和PS都是从FMyShaderTest继承的，所以SimpleColorVal和SimpleColorVal2在usf文件里是全局变量。</p>
-<h3 id="DrawTestShaderRenderTarget-RenderThread"><a href="#DrawTestShaderRenderTarget-RenderThread" class="headerlink" title="DrawTestShaderRenderTarget_RenderThread"></a>DrawTestShaderRenderTarget_RenderThread</h3><p>```cpp<br>static void DrawTestShaderRenderTarget_RenderThread(<br>  FRHICommandListImmediate&amp; RHICmdList,<br>  FTextureRenderTargetResource* OutputRenderTargetResource,<br>  ERHIFeatureLevel::Type FeatureLevel,<br>  FName TextureRenderTargetName,<br>  FLinearColor MyColor,<br>  FLinearColor MyColor2<br>)<br>{<br>  check(IsInRenderingThread());</p>
-</li>
+<h3 id="DrawTestShaderRenderTarget-RenderThread"><a href="#DrawTestShaderRenderTarget-RenderThread" class="headerlink" title="DrawTestShaderRenderTarget_RenderThread"></a>DrawTestShaderRenderTarget_RenderThread</h3></li>
 </ul>
-<h1 id="if-WANTS-DRAW-MESH-EVENTS"><a href="#if-WANTS-DRAW-MESH-EVENTS" class="headerlink" title="if WANTS_DRAW_MESH_EVENTS"></a>if WANTS_DRAW_MESH_EVENTS</h1><pre><code>FString EventName;
-TextureRenderTargetName.ToString(EventName);
-SCOPED_DRAW_EVENTF(RHICmdList, SceneCapture, TEXT(&quot;ShaderTest %s&quot;), *EventName);
-</code></pre><h1 id="else"><a href="#else" class="headerlink" title="else"></a>else</h1><pre><code>SCOPED_DRAW_EVENT(RHICmdList, DrawUVDisplacementToRenderTarget_RenderThread);
-</code></pre><h1 id="endif"><a href="#endif" class="headerlink" title="endif"></a>endif</h1><pre><code>//设置渲染目标  
-SetRenderTarget(
-    RHICmdList,
-    OutputRenderTargetResource-&gt;GetRenderTargetTexture(),
-    FTextureRHIRef(),
-    ESimpleRenderTargetMode::EUninitializedColorAndDepth,
-    FExclusiveDepthStencil::DepthNop_StencilNop
-);
-
-//设置视口  
-//FIntPoint DrawTargetResolution(OutputRenderTargetResource-&gt;GetSizeX(), OutputRenderTargetResource-&gt;GetSizeY());  
-//RHICmdList.SetViewport(0, 0, 0.0f, DrawTargetResolution.X, DrawTargetResolution.Y, 1.0f);  
-
-TShaderMap&lt;FGlobalShaderType&gt;* GlobalShaderMap = GetGlobalShaderMap(FeatureLevel);
-TShaderMapRef&lt;FShaderTestVS&gt; VertexShader(GlobalShaderMap);
-TShaderMapRef&lt;FShaderTestPS&gt; PixelShader(GlobalShaderMap);
-
-// Set the graphic pipeline state.  
-FGraphicsPipelineStateInitializer GraphicsPSOInit;
-RHICmdList.ApplyCachedRenderTargets(GraphicsPSOInit);
-GraphicsPSOInit.DepthStencilState = TStaticDepthStencilState&lt;false, CF_Always&gt;::GetRHI();
-GraphicsPSOInit.BlendState = TStaticBlendState&lt;&gt;::GetRHI();
-GraphicsPSOInit.RasterizerState = TStaticRasterizerState&lt;&gt;::GetRHI();
-GraphicsPSOInit.PrimitiveType = PT_TriangleList;
-GraphicsPSOInit.BoundShaderState.VertexDeclarationRHI = GetVertexDeclarationFVector4();
-GraphicsPSOInit.BoundShaderState.VertexShaderRHI = GETSAFERHISHADER_VERTEX(*VertexShader);
-GraphicsPSOInit.BoundShaderState.PixelShaderRHI = GETSAFERHISHADER_PIXEL(*PixelShader);
-SetGraphicsPipelineState(RHICmdList, GraphicsPSOInit);
-
-//RHICmdList.SetViewport(0, 0, 0.0f, DrawTargetResolution.X, DrawTargetResolution.Y, 1.0f);  
-PixelShader-&gt;SetParameters(RHICmdList, MyColor,MyColor2);
-
-// Draw grid.  
-//uint32 PrimitiveCount = 2;  
-//RHICmdList.DrawPrimitive(PT_TriangleList, 0, PrimitiveCount, 1);  
-FVector4 Vertices[4];
-Vertices[0].Set(-1.0f, 1.0f, 0, 1.0f);
-Vertices[1].Set(1.0f, 1.0f, 0, 1.0f);
-Vertices[2].Set(-1.0f, -1.0f, 0, 1.0f);
-Vertices[3].Set(1.0f, -1.0f, 0, 1.0f);
-static const uint16 Indices[6] =
+<pre><code class="lang-cpp">static void DrawTestShaderRenderTarget_RenderThread(
+    FRHICommandListImmediate&amp; RHICmdList,
+    FTextureRenderTargetResource* OutputRenderTargetResource,
+    ERHIFeatureLevel::Type FeatureLevel,
+    FName TextureRenderTargetName,
+    FLinearColor MyColor,
+    FLinearColor MyColor2
+)
 {
-    0, 1, 2,
-    2, 1, 3
-};
-//DrawPrimitiveUP(RHICmdList, PT_TriangleStrip, 2, Vertices, sizeof(Vertices[0]));  
-DrawIndexedPrimitiveUP(
-    RHICmdList,
-    PT_TriangleList,
-    0,
-    ARRAY_COUNT(Vertices),
-    2,
-    Indices,
-    sizeof(Indices[0]),
-    Vertices,
-    sizeof(Vertices[0])
-);
+    check(IsInRenderingThread());
 
-// Resolve render target.  
-RHICmdList.CopyToResolveTarget(
-    OutputRenderTargetResource-&gt;GetRenderTargetTexture(),
-    OutputRenderTargetResource-&gt;TextureRHI,
-    false, FResolveParams());
-</code></pre><p>}<br>```</p>
+#if WANTS_DRAW_MESH_EVENTS  
+    FString EventName;
+    TextureRenderTargetName.ToString(EventName);
+    SCOPED_DRAW_EVENTF(RHICmdList, SceneCapture, TEXT(&quot;ShaderTest %s&quot;), *EventName);
+#else  
+    SCOPED_DRAW_EVENT(RHICmdList, DrawUVDisplacementToRenderTarget_RenderThread);
+#endif  
+
+    //设置渲染目标  
+    SetRenderTarget(
+        RHICmdList,
+        OutputRenderTargetResource-&gt;GetRenderTargetTexture(),
+        FTextureRHIRef(),
+        ESimpleRenderTargetMode::EUninitializedColorAndDepth,
+        FExclusiveDepthStencil::DepthNop_StencilNop
+    );
+
+    //设置视口  
+    //FIntPoint DrawTargetResolution(OutputRenderTargetResource-&gt;GetSizeX(), OutputRenderTargetResource-&gt;GetSizeY());  
+    //RHICmdList.SetViewport(0, 0, 0.0f, DrawTargetResolution.X, DrawTargetResolution.Y, 1.0f);  
+
+    TShaderMap&lt;FGlobalShaderType&gt;* GlobalShaderMap = GetGlobalShaderMap(FeatureLevel);
+    TShaderMapRef&lt;FShaderTestVS&gt; VertexShader(GlobalShaderMap);
+    TShaderMapRef&lt;FShaderTestPS&gt; PixelShader(GlobalShaderMap);
+
+    // Set the graphic pipeline state.  
+    FGraphicsPipelineStateInitializer GraphicsPSOInit;
+    RHICmdList.ApplyCachedRenderTargets(GraphicsPSOInit);
+    GraphicsPSOInit.DepthStencilState = TStaticDepthStencilState&lt;false, CF_Always&gt;::GetRHI();
+    GraphicsPSOInit.BlendState = TStaticBlendState&lt;&gt;::GetRHI();
+    GraphicsPSOInit.RasterizerState = TStaticRasterizerState&lt;&gt;::GetRHI();
+    GraphicsPSOInit.PrimitiveType = PT_TriangleList;
+    GraphicsPSOInit.BoundShaderState.VertexDeclarationRHI = GetVertexDeclarationFVector4();
+    GraphicsPSOInit.BoundShaderState.VertexShaderRHI = GETSAFERHISHADER_VERTEX(*VertexShader);
+    GraphicsPSOInit.BoundShaderState.PixelShaderRHI = GETSAFERHISHADER_PIXEL(*PixelShader);
+    SetGraphicsPipelineState(RHICmdList, GraphicsPSOInit);
+
+    //RHICmdList.SetViewport(0, 0, 0.0f, DrawTargetResolution.X, DrawTargetResolution.Y, 1.0f);  
+    PixelShader-&gt;SetParameters(RHICmdList, MyColor,MyColor2);
+
+    // Draw grid.  
+    //uint32 PrimitiveCount = 2;  
+    //RHICmdList.DrawPrimitive(PT_TriangleList, 0, PrimitiveCount, 1);  
+    FVector4 Vertices[4];
+    Vertices[0].Set(-1.0f, 1.0f, 0, 1.0f);
+    Vertices[1].Set(1.0f, 1.0f, 0, 1.0f);
+    Vertices[2].Set(-1.0f, -1.0f, 0, 1.0f);
+    Vertices[3].Set(1.0f, -1.0f, 0, 1.0f);
+    static const uint16 Indices[6] =
+    {
+        0, 1, 2,
+        2, 1, 3
+    };
+    //DrawPrimitiveUP(RHICmdList, PT_TriangleStrip, 2, Vertices, sizeof(Vertices[0]));  
+    DrawIndexedPrimitiveUP(
+        RHICmdList,
+        PT_TriangleList,
+        0,
+        ARRAY_COUNT(Vertices),
+        2,
+        Indices,
+        sizeof(Indices[0]),
+        Vertices,
+        sizeof(Vertices[0])
+    );
+
+    // Resolve render target.  
+    RHICmdList.CopyToResolveTarget(
+        OutputRenderTargetResource-&gt;GetRenderTargetTexture(),
+        OutputRenderTargetResource-&gt;TextureRHI,
+        false, FResolveParams());
+}
+</code></pre>
 <ul>
 <li>这是渲染线程中执行的函数</li>
 <li>这里只要在形参中添加MyColor2，以及SetParameters中添加MyColor2</li>
@@ -676,7 +752,7 @@ RHICmdList.CopyToResolveTarget(
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-10-06, 11:46:00</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-06, 11:48:37</p>
+    <p><span class="copy-title">最后更新:</span>2019-10-06, 11:50:54</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/06/UE4Render-addParams/" title="在shader文件中添加第二个颜色变量">https://sanctorum.github.io/2019/10/06/UE4Render-addParams/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
