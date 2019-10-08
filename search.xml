@@ -4,6 +4,32 @@
   
     
     <entry>
+      <title>UE4Live_RenderProcess</title>
+      <link href="/2019/10/08/UE4Live-RenderProcess/"/>
+      <url>/2019/10/08/UE4Live-RenderProcess/</url>
+      
+        <content type="html"><![CDATA[<p>视频地址 <a href="https://www.bilibili.com/video/av35615021?t=3626" target="_blank" rel="noopener">https://www.bilibili.com/video/av35615021?t=3626</a><br>相关图片 <a href="https://blog.csdn.net/jli_family/article/details/86584208" target="_blank" rel="noopener">https://blog.csdn.net/jli_family/article/details/86584208</a></p><p><img src="UE4Live_RenderProcess.png" alt></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>operation</title>
+      <link href="/2019/10/07/UE4Render-ResourceOperation/"/>
+      <url>/2019/10/07/UE4Render-ResourceOperation/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>在shader文件中添加第二个颜色变量</title>
       <link href="/2019/10/06/UE4Render-addParams/"/>
       <url>/2019/10/06/UE4Render-addParams/</url>
@@ -190,9 +216,9 @@
             
             <tag> slate </tag>
             
-            <tag> menu </tag>
-            
             <tag> json </tag>
+            
+            <tag> menu </tag>
             
         </tags>
       
