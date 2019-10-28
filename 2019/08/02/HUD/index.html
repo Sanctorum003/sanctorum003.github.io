@@ -288,7 +288,7 @@
            href="/2019/10/07/UE4Render-ResourceOperation/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="operation">operation</span>
+            <span class="post-title" title="虚幻4渲染编程 - 资源操作">虚幻4渲染编程 - 资源操作</span>
             <span class="post-date" title="2019-10-07 21:43:49">2019/10/07</span>
         </a>
         
@@ -386,7 +386,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-08-07 19:41:55'>2019-08-02 10:07</time>
+        创建时间:<time class="date" title='更新时间: 2019-10-28 21:46:48'>2019-08-02 10:07</time>
         
     </div>
     <div class="article-meta">
@@ -397,7 +397,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本章简介"><span class="toc-text">本章简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Slate库"><span class="toc-text">Slate库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建HUD"><span class="toc-text">创建HUD</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是HUD"><span class="toc-text">什么是HUD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置自定义HUD"><span class="toc-text">设置自定义HUD</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将自定义Widget添加到视口"><span class="toc-text">将自定义Widget添加到视口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#如何创建控件实例"><span class="toc-text">如何创建控件实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何将MyHUDWidget从视口中添加和删除"><span class="toc-text">如何将MyHUDWidget从视口中添加和删除</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置光标"><span class="toc-text">设置光标</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-“MySlateGameModeBase-h”"><span class="toc-text">include “MySlateGameModeBase.h”</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-“Public-UI-MyHUD-h”"><span class="toc-text">include “Public\UI\MyHUD.h”</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-“Public-MyController-h”"><span class="toc-text">include “Public\MyController.h”</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相关链接"><span class="toc-text">相关链接</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本章简介"><span class="toc-text">本章简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Slate库"><span class="toc-text">Slate库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建HUD"><span class="toc-text">创建HUD</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是HUD"><span class="toc-text">什么是HUD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置自定义HUD"><span class="toc-text">设置自定义HUD</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将自定义Widget添加到视口"><span class="toc-text">将自定义Widget添加到视口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#如何创建控件实例"><span class="toc-text">如何创建控件实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何将MyHUDWidget从视口中添加和删除"><span class="toc-text">如何将MyHUDWidget从视口中添加和删除</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置光标"><span class="toc-text">设置光标</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相关链接"><span class="toc-text">相关链接</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -519,14 +519,21 @@ void AMyController::BeginPlay()
 }
 </code></pre>
 <ul>
-<li>在Gamemode中应用，这样光标一直显示，且不能移出视口<br>```cpp<br>/<strong> MySlateGameModeBase.cpp </strong>/<h1 id="include-“MySlateGameModeBase-h”"><a href="#include-“MySlateGameModeBase-h”" class="headerlink" title="include “MySlateGameModeBase.h”"></a>include “MySlateGameModeBase.h”</h1><h1 id="include-“Public-UI-MyHUD-h”"><a href="#include-“Public-UI-MyHUD-h”" class="headerlink" title="include “Public\UI\MyHUD.h”"></a>include “Public\UI\MyHUD.h”</h1><h1 id="include-“Public-MyController-h”"><a href="#include-“Public-MyController-h”" class="headerlink" title="include “Public\MyController.h”"></a>include “Public\MyController.h”</h1></li>
+<li>在Gamemode中应用，这样光标一直显示，且不能移出视口</li>
 </ul>
-<p>AMySlateGameModeBase::AMySlateGameModeBase()<br>{<br>    HUDClass = AMyHUD::StaticClass();<br>    PlayerControllerClass = AMyController::StaticClass();<br>}</p>
-<pre><code>
-# 总结
-到目前为止,准备工作算是做好了。我们可以测试以下是否成功。在MyHUDWidget中添加代码
-```cpp
-/** SMyHUDWidget.cpp **/
+<pre><code class="lang-cpp">/** MySlateGameModeBase.cpp **/
+#include &quot;MySlateGameModeBase.h&quot;
+#include &quot;Public\UI\MyHUD.h&quot;
+#include &quot;Public\MyController.h&quot;
+
+AMySlateGameModeBase::AMySlateGameModeBase()
+{
+    HUDClass = AMyHUD::StaticClass();
+    PlayerControllerClass = AMyController::StaticClass();
+}
+</code></pre>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>到目前为止,准备工作算是做好了。我们可以测试以下是否成功。在MyHUDWidget中添加代码</p>
+<pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/
 #include &quot;SMyHUDWidget.h&quot;
 #include &quot;SlateOptMacros.h&quot;
 #include &quot;SButton.h&quot;
@@ -543,7 +550,8 @@ void SMyHUDWidget::Construct(const FArguments&amp; InArgs)
 
 }
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
-</code></pre><p>这样你将看到屏幕中一个全屏填满的按钮<br><img src="Button.png" alt></p>
+</code></pre>
+<p>这样你将看到屏幕中一个全屏填满的按钮<br><img src="Button.png" alt></p>
 <blockquote>
 <p>如果无法编译,尝试在SMyHUDWidget中添加#include “DeclarativeSyntaxSupport.h”头文件</p>
 </blockquote>
@@ -564,7 +572,7 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-08-02, 10:07:12</p>
-    <p><span class="copy-title">最后更新:</span>2019-08-07, 19:41:55</p>
+    <p><span class="copy-title">最后更新:</span>2019-10-28, 21:46:48</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/02/HUD/" title="虚幻4之Slate学习一 —— HUD">https://sanctorum.github.io/2019/08/02/HUD/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
