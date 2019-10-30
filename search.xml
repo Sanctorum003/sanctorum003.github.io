@@ -59,6 +59,33 @@
     
     
     <entry>
+      <title>LearnOpengl_HelloWindow</title>
+      <link href="/2019/09/21/LearnOpengl-HelloWindow/"/>
+      <url>/2019/09/21/LearnOpengl-HelloWindow/</url>
+      
+        <content type="html"><![CDATA[<ul><li><p>glfwMakeContextCurrent(window)</p><blockquote><p>用于在当前线程上载入window的上下文。</p></blockquote></li><li><p>需要在使用opengl函数前加载glad用于定于函数地址</p><pre><code class="lang-cpp">if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){  std::cout &lt;&lt; &quot;Failed to initialize GLAD&quot; &lt;&lt; std::endl;  return -1;}</code></pre><p>疑问:必须在glfwMakeContextCurrent(window)之后才能初始化GLAD,为什么？</p><blockquote><p>我做了一些尝试,glViewport的操作,如果不初始化GLAD,将无法使用。而要初始化GLAD,要在当前线程载入window上下文—190921 </p></blockquote></li></ul><ul><li><p>glViewport()<br>最终显示的内容由glViewport和glfwCreateWindow的参数共同决定：不会超过glfwCreateWindow的大小,小于的话会由部分不加载出来</p><blockquote><p>如果glfwCreateWindow:800*600,glViewport:1600*600,最终 800*600<br>如果glfwCreateWindow:800*600,glViewport:400*300,最终 400*300</p></blockquote></li><li><p>glfwSetFramebufferSizeCallback()<br>这是一个回调绑定函数,他会相应窗口变化，并传递宽高给回调函数</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> opengl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>DirectX11龙书-第三章:变换</title>
       <link href="/2019/09/09/D3DTransform/"/>
       <url>/2019/09/09/D3DTransform/</url>

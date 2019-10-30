@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>Blog</title>
-  <meta name="keywords" content>
-  <meta name="description" content="Blog">
+  <title>LearnOpengl_HelloWindow | Blog</title>
+  <meta name="keywords" content=" computer graphics , opengl ">
+  <meta name="description" content="LearnOpengl_HelloWindow | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
@@ -47,7 +47,7 @@
 </div>
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/" class="avatar_target">
     <img class="avatar" src="/img/avatar.jpg" />
@@ -370,10 +370,44 @@
         </div>
     </div>
 </aside>
-<div class="post index">
+<div class="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-LearnOpengl-HelloWindow" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">LearnOpengl_HelloWindow</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a href="javascript:" data-rel="CG">CG</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="javascript:" class="color3">computer graphics</a>
+            
+            <a href="javascript:" class="color2">opengl</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2019-10-30 23:41:10'>2019-09-21 16:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        
+    </div>
+    
+    <div class="toc-ref">
     
         
     
@@ -388,11 +422,65 @@
     }
 </style>
 </div>
-            <p><img src="/img/content.png" alt=""></p>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>glfwMakeContextCurrent(window)</p>
+<blockquote>
+<p>用于在当前线程上载入window的上下文。</p>
+</blockquote>
+</li>
+<li><p>需要在使用opengl函数前加载glad用于定于函数地址</p>
+<pre><code class="lang-cpp">if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+{
+  std::cout &lt;&lt; &quot;Failed to initialize GLAD&quot; &lt;&lt; std::endl;
+  return -1;
+}
+</code></pre>
+<p>疑问:必须在glfwMakeContextCurrent(window)之后才能初始化GLAD,为什么？</p>
+<blockquote>
+<p>我做了一些尝试,glViewport的操作,如果不初始化GLAD,将无法使用。而要初始化GLAD,要在当前线程载入window上下文—190921 </p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><p>glViewport()<br>最终显示的内容由glViewport和glfwCreateWindow的参数共同决定：不会超过glfwCreateWindow的大小,小于的话会由部分不加载出来</p>
+<blockquote>
+<p>如果glfwCreateWindow:800*600,glViewport:1600*600,最终 800*600<br>如果glfwCreateWindow:800*600,glViewport:400*300,最终 400*300</p>
+</blockquote>
+</li>
+<li><p>glfwSetFramebufferSizeCallback()<br>这是一个回调绑定函数,他会相应窗口变化，并传递宽高给回调函数</p>
+</li>
+</ul>
 
-        </article>
-        
-        
+      
+       
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>LearnOpengl_HelloWindow</p>
+    
+    <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-09-21, 16:00:18</p>
+    <p><span class="copy-title">最后更新:</span>2019-10-30, 23:41:10</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/09/21/LearnOpengl-HelloWindow/" title="LearnOpengl_HelloWindow">https://sanctorum.github.io/2019/09/21/LearnOpengl-HelloWindow/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">©2019 Sanctorum003</p>
