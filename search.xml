@@ -17,6 +17,33 @@
     
     
     <entry>
+      <title>LearnOpengl_HelloTriangle</title>
+      <link href="/2019/10/08/LearnOpengl-HelloTriangle/"/>
+      <url>/2019/10/08/LearnOpengl-HelloTriangle/</url>
+      
+        <content type="html"><![CDATA[<pre><code class="lang-cpp">// ..:: Initialization code (done once (unless your object frequently changes)) :: ..// 1. bind Vertex Array ObjectglBindVertexArray(VAO);// 2. copy our vertices array in a buffer for OpenGL to useglBindBuffer(GL_ARRAY_BUFFER, VBO);glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);// 3. then set our vertex attributes pointersglVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);glEnableVertexAttribArray(0);  [...]// ..:: Drawing code (in render loop) :: ..// 4. draw the objectglUseProgram(shaderProgram);glBindVertexArray(VAO);someOpenGLFunctionThatDrawsOurTriangle();</code></pre><ul><li><p>通过opengl绘制图形，需要通过opengl的渲染管线，这一过程实际上指的是一堆原始图形数据途经一个输送管道，期间经过各种变化处理最终出现在屏幕的过程。图形渲染管线可以被划分为两个主要部分：第一部分把你的3D坐标转换为2D坐标，第二部分是把2D坐标转变为实际的有颜色的像素。</p></li><li><p>对于利用opengl画出一个三角形，归纳为以下步骤</p><h1 id="build-and-compile-our-shader-program"><a href="#build-and-compile-our-shader-program" class="headerlink" title="build and compile our shader program"></a>build and compile our shader program</h1><p><img src="Opengl_ShaderCreate.png" alt></p></li><li>在OpenGL的渲染管线中，我们必须要配置VS和FS(PS)两个着色器,可以选择配置GS。<pre><code class="lang-cpp">//创建着色器的方式/**** 创建一个指定类型的着色器，返回指向这个着色器的在显存地址的引用***/int MyShader = glCreateShader(TYPE_OF_SHADER);</code></pre></li><li>着色器程序运行的着色器语言，在opengl中使用的是GLSL。所以我们需要编写GLSL,并且将其绑定到我们创建的着色器上<pre><code class="lang-cpp">/**** MyShaderSource中写入待绑定的GLSL程序***/const char *MyShaderSource = &quot;#version 330 core\n&quot;  &quot;out vec4 FragColor;\n&quot;  &quot;void main()\n&quot;  &quot;{\n&quot;  &quot;   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n&quot;  &quot;}\n\0&quot;;/**** 将GLSL程序与Shader进行绑定* Shader显存地址/程序数量/字符串(数组)/字符串数组长度***/glShaderSource(MyShader, 1, &amp;MyShaderSource, NULL);</code></pre></li><li>进行着色器编译并显示Debug信息<pre><code class="lang-cpp">glCompileShader(vertexShader);// check for shader compile errorsint success;char infoLog[512];glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &amp;success);if (!success){  glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);  std::cout &lt;&lt; &quot;ERROR::SHADER::VERTEX::COMPILATION_FAILED\n&quot; &lt;&lt; infoLog &lt;&lt; std::endl;}</code></pre></li><li>到这里我们的着色器就编译好了，接下来我们需要将编译好的着色器链接成一个着色器对象。这个着色器对象就是我们将数据渲染到屏幕所使用的的渲染管线。<br>```cpp<br>unsigned int shaderProgram;<br>shaderProgram = glCreateProgram();<br>glAttachShader(shaderProgram, vertexShader);<br>glAttachShader(shaderProgram, fragmentShader);<br>glLinkProgram(shaderProgram);</li></ul><p>glGetProgramiv(shaderProgram, GL_LINK_STATUS, &amp;success);<br>if(!success) {<br>    glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);<br>    std::cout &lt;&lt; “ERROR::SHADER::PROGTRAM::LINK_FAILED\n” &lt;&lt; infoLog &lt;&lt; std::endl;<br>}</p><p>/<em>*</em></p><ul><li>在之后可以调用glUseProgram(shaderProgram)来使用这个我们已经链接好的着色器程序对象。<br><em>*</em>/</li></ul><p>//别忘了垃圾回收，这两个这时候已经没用了<br>glDeleteShader(vertexShader);<br>glDeleteShader(fragmentShader);<br>```</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> opengl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>虚幻4渲染编程 - 资源操作</title>
       <link href="/2019/10/07/UE4Render-ResourceOperation/"/>
       <url>/2019/10/07/UE4Render-ResourceOperation/</url>

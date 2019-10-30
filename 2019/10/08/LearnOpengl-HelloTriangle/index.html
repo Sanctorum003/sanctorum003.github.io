@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>KMP | Blog</title>
-  <meta name="keywords" content=" algorithm ">
-  <meta name="description" content="KMP | Blog">
+  <title>LearnOpengl_HelloTriangle | Blog</title>
+  <meta name="keywords" content=" computer graphics , opengl ">
+  <meta name="description" content="LearnOpengl_HelloTriangle | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="视频地址 https://www.bilibili.com/video/av35615021?t=3626相关图片 https://blog.csdn.net/jli_family/article/details/86584208">
 <meta property="og:type" content="article">
@@ -385,9 +385,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-KMP" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-LearnOpengl-HelloTriangle" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">KMP</h1>
+        <h1 class="article-title">LearnOpengl_HelloTriangle</h1>
     
     <div class="article-meta">
         
@@ -395,21 +395,23 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Algorithm">Algorithm</a>
+                <a href="javascript:" data-rel="CG">CG</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color5">algorithm</a>
+            <a href="javascript:" class="color3">computer graphics</a>
+            
+            <a href="javascript:" class="color2">opengl</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-08-08 14:38:12'>2019-08-01 16:47</time>
+        创建时间:<time class="date" title='更新时间: 2019-10-30 23:43:30'>2019-10-08 18:33</time>
         
     </div>
     <div class="article-meta">
@@ -420,7 +422,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#KMP"><span class="toc-text">KMP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#王道方法"><span class="toc-text">王道方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#殷人昆"><span class="toc-text">殷人昆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见方法"><span class="toc-text">常见方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#转换技巧-快速做选择题"><span class="toc-text">转换技巧[快速做选择题]</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#build-and-compile-our-shader-program"><span class="toc-text">build and compile our shader program</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -435,38 +437,73 @@
 </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h1><h2 id="王道方法"><a href="#王道方法" class="headerlink" title="王道方法"></a>王道方法</h2><p><img src="kmp1.bmp" alt title="KMP1"></p>
-<blockquote>
-<p>1) next 数组从1开始</p>
-<p>2) next[1] = 0<br>next[2] = 1<br>next[0]不使用</p>
-<p>3) 求当next数组当前位置<strong>j</strong></p>
-<pre><code class="lang-cpp">// 主要方法就是 将前一个位置(j-1)的字符与next[j-1]所对应的字符比较相同则 next[j] = next[j-1]+1;
-// 不同则 将next[j-1]的字符 与next[ next[j-1] ]对应否字符相比较相同则 next[j] = next[ next[j-1] ]+1;
-// 不断重复
-// 如果next[...] = 0 ==&gt; next[j] = 1;
-    k = next[j-1]; 
-    while(1)
-    {
-        if(S[k] == S[j-1])//S为字符数组
-        {
-            next[j] = k+1;
-            break;
-        }
-        else
-            k = next[k];
-    }
+        <pre><code class="lang-cpp">// ..:: Initialization code (done once (unless your object frequently changes)) :: ..
+// 1. bind Vertex Array Object
+glBindVertexArray(VAO);
+// 2. copy our vertices array in a buffer for OpenGL to use
+glBindBuffer(GL_ARRAY_BUFFER, VBO);
+glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+// 3. then set our vertex attributes pointers
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+glEnableVertexAttribArray(0);  
+
+[...]
+
+// ..:: Drawing code (in render loop) :: ..
+// 4. draw the object
+glUseProgram(shaderProgram);
+glBindVertexArray(VAO);
+someOpenGLFunctionThatDrawsOurTriangle();
 </code></pre>
-<h2 id="殷人昆"><a href="#殷人昆" class="headerlink" title="殷人昆"></a>殷人昆</h2><p><img src="kmp2.bmp" alt title="KMP2"></p>
-<p>可以直接看 前n个串中的最大 前缀等于后缀 的个数 即为 next[j]的值</p>
-<h2 id="常见方法"><a href="#常见方法" class="headerlink" title="常见方法"></a>常见方法</h2><p>1) next[1]=0</p>
-<p>2) 从第j(j&gt;1)个开启 比较前j个的 最大 前缀等于后缀 </p>
-</blockquote>
-<h2 id="转换技巧-快速做选择题"><a href="#转换技巧-快速做选择题" class="headerlink" title="转换技巧[快速做选择题]"></a>转换技巧[快速做选择题]</h2><p><a href="http://www.cskaoyan.com/thread-650235-1-1.html" target="_blank" rel="noopener">http://www.cskaoyan.com/thread-650235-1-1.html</a><br><a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html</a></p>
-<blockquote>
-<p>规则1：用常见方法做出结果 </p>
-<p>规则2：右移一位，最左边添-1，最右边自然溢出</p>
-<p>规则3：全部加1</p>
-</blockquote>
+<ul>
+<li><p>通过opengl绘制图形，需要通过opengl的渲染管线，这一过程实际上指的是一堆原始图形数据途经一个输送管道，期间经过各种变化处理最终出现在屏幕的过程。图形渲染管线可以被划分为两个主要部分：第一部分把你的3D坐标转换为2D坐标，第二部分是把2D坐标转变为实际的有颜色的像素。</p>
+</li>
+<li><p>对于利用opengl画出一个三角形，归纳为以下步骤</p>
+<h1 id="build-and-compile-our-shader-program"><a href="#build-and-compile-our-shader-program" class="headerlink" title="build and compile our shader program"></a>build and compile our shader program</h1><p><img src="Opengl_ShaderCreate.png" alt></p>
+</li>
+<li>在OpenGL的渲染管线中，我们必须要配置VS和FS(PS)两个着色器,可以选择配置GS。<pre><code class="lang-cpp">//创建着色器的方式
+/***
+* 创建一个指定类型的着色器，返回指向这个着色器的在显存地址的引用
+***/
+int MyShader = glCreateShader(TYPE_OF_SHADER);
+</code></pre>
+</li>
+<li>着色器程序运行的着色器语言，在opengl中使用的是GLSL。所以我们需要编写GLSL,并且将其绑定到我们创建的着色器上<pre><code class="lang-cpp">/***
+* MyShaderSource中写入待绑定的GLSL程序
+***/
+const char *MyShaderSource = &quot;#version 330 core\n&quot;
+  &quot;out vec4 FragColor;\n&quot;
+  &quot;void main()\n&quot;
+  &quot;{\n&quot;
+  &quot;   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n&quot;
+  &quot;}\n\0&quot;;
+/***
+* 将GLSL程序与Shader进行绑定
+* Shader显存地址/程序数量/字符串(数组)/字符串数组长度
+***/
+glShaderSource(MyShader, 1, &amp;MyShaderSource, NULL);
+</code></pre>
+</li>
+<li>进行着色器编译并显示Debug信息<pre><code class="lang-cpp">glCompileShader(vertexShader);
+// check for shader compile errors
+int success;
+char infoLog[512];
+glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &amp;success);
+if (!success)
+{
+  glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+  std::cout &lt;&lt; &quot;ERROR::SHADER::VERTEX::COMPILATION_FAILED\n&quot; &lt;&lt; infoLog &lt;&lt; std::endl;
+}
+</code></pre>
+</li>
+<li>到这里我们的着色器就编译好了，接下来我们需要将编译好的着色器链接成一个着色器对象。这个着色器对象就是我们将数据渲染到屏幕所使用的的渲染管线。<br>```cpp<br>unsigned int shaderProgram;<br>shaderProgram = glCreateProgram();<br>glAttachShader(shaderProgram, vertexShader);<br>glAttachShader(shaderProgram, fragmentShader);<br>glLinkProgram(shaderProgram);</li>
+</ul>
+<p>glGetProgramiv(shaderProgram, GL_LINK_STATUS, &amp;success);<br>if(!success) {<br>    glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);<br>    std::cout &lt;&lt; “ERROR::SHADER::PROGTRAM::LINK_FAILED\n” &lt;&lt; infoLog &lt;&lt; std::endl;<br>}</p>
+<p>/<em>*</em></p>
+<ul>
+<li>在之后可以调用glUseProgram(shaderProgram)来使用这个我们已经链接好的着色器程序对象。<br><em>*</em>/</li>
+</ul>
+<p>//别忘了垃圾回收，这两个这时候已经没用了<br>glDeleteShader(vertexShader);<br>glDeleteShader(fragmentShader);<br>```</p>
 
       
        
@@ -476,12 +513,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>KMP</p>
+    <p><span class="copy-title">文章标题:</span>LearnOpengl_HelloTriangle</p>
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-08-01, 16:47:03</p>
-    <p><span class="copy-title">最后更新:</span>2019-08-08, 14:38:12</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/01/KMP/" title="KMP">https://sanctorum.github.io/2019/08/01/KMP/</a>
+    <p><span class="copy-title">发布时间:</span>2019-10-08, 18:33:36</p>
+    <p><span class="copy-title">最后更新:</span>2019-10-30, 23:43:30</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/08/LearnOpengl-HelloTriangle/" title="LearnOpengl_HelloTriangle">https://sanctorum.github.io/2019/10/08/LearnOpengl-HelloTriangle/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
