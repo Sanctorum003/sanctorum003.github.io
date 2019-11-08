@@ -6,14 +6,19 @@
   <meta name="keywords" content=" computer graphics , opengl ">
   <meta name="description" content="LearnOpengl_HelloTriangle | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="视频地址 https://www.bilibili.com/video/av35615021?t=3626相关图片 https://blog.csdn.net/jli_family/article/details/86584208">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UE4Live_RenderProcess">
+<meta property="og:url" content="https://sanctorum.github.io/2019/10/08/UE4Live-RenderProcess/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="视频地址 https://www.bilibili.com/video/av35615021?t=3626相关图片 https://blog.csdn.net/jli_family/article/details/86584208">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:image" content="https://sanctorum.github.io/2019/10/08/UE4Live-RenderProcess/UE4Live_RenderProcess.png">
+<meta property="og:updated_time" content="2019-10-08T13:56:46.260Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="UE4Live_RenderProcess">
+<meta name="twitter:description" content="视频地址 https://www.bilibili.com/video/av35615021?t=3626相关图片 https://blog.csdn.net/jli_family/article/details/86584208">
+<meta name="twitter:image" content="https://sanctorum.github.io/2019/10/08/UE4Live-RenderProcess/UE4Live_RenderProcess.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -406,7 +411,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-08 15:04:27'>2019-10-08 18:33</time>
+        创建时间:<time class="date" title='更新时间: 2019-11-08 15:17:20'>2019-10-08 18:33</time>
         
     </div>
     <div class="article-meta">
@@ -616,9 +621,26 @@ glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 <ul>
 <li>注意VAO也会保存EBO的数组配置信息，glDrawElements会使用我们绑定的EBO中的索引顺序,所以要注意解绑VAO的顺序</li>
 </ul>
-<h1 id="绘制最终流程"><a href="#绘制最终流程" class="headerlink" title="绘制最终流程"></a>绘制最终流程</h1><p>```cpp<br>// ..:: 初始化代码 :: ..<br>// 1. 绑定顶点数组对象<br>glBindVertexArray(VAO);<br>// 2. 把我们的顶点数组复制到一个顶点缓冲中，供OpenGL使用<br>glBindBuffer(GL_ARRAY_BUFFER, VBO);<br>glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);<br>// 3. 复制我们的索引数组到一个索引缓冲中，供OpenGL使用<br>glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);<br>glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);<br>// 4. 设定顶点属性指针<br>glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 <em> sizeof(float), (void</em>)0);<br>glEnableVertexAttribArray(0);</p>
-<p>…</p>
-<p>// ..:: 绘制代码（渲染循环中） :: ..<br>glUseProgram(shaderProgram);<br>glBindVertexArray(VAO);<br>glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)<br>glBindVertexArray(0);<br>``cpp</p>
+<h1 id="绘制最终流程"><a href="#绘制最终流程" class="headerlink" title="绘制最终流程"></a>绘制最终流程</h1><pre><code class="lang-cpp">// ..:: 初始化代码 :: ..
+// 1. 绑定顶点数组对象
+glBindVertexArray(VAO);
+// 2. 把我们的顶点数组复制到一个顶点缓冲中，供OpenGL使用
+glBindBuffer(GL_ARRAY_BUFFER, VBO);
+glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+// 3. 复制我们的索引数组到一个索引缓冲中，供OpenGL使用
+glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+// 4. 设定顶点属性指针
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+glEnableVertexAttribArray(0);
+
+
+// ..:: 绘制代码（渲染循环中） :: ..
+glUseProgram(shaderProgram);
+glBindVertexArray(VAO);
+glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)
+glBindVertexArray(0);
+</code></pre>
 
       
        
@@ -632,7 +654,7 @@ glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-10-08, 18:33:36</p>
-    <p><span class="copy-title">最后更新:</span>2019-11-08, 15:04:27</p>
+    <p><span class="copy-title">最后更新:</span>2019-11-08, 15:17:20</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/08/LearnOpengl-HelloTriangle/" title="LearnOpengl_HelloTriangle">https://sanctorum.github.io/2019/10/08/LearnOpengl-HelloTriangle/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
