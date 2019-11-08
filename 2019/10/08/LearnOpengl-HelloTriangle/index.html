@@ -406,7 +406,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-30 23:49:04'>2019-10-08 18:33</time>
+        创建时间:<time class="date" title='更新时间: 2019-11-08 14:27:48'>2019-10-08 18:33</time>
         
     </div>
     <div class="article-meta">
@@ -417,7 +417,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#build-and-compile-our-shader-program"><span class="toc-text">build and compile our shader program</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#build-and-compile-our-shader-program"><span class="toc-text">build and compile our shader program</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#set-up-vertex-data-and-buffer-s-and-configure-vertex-attributes"><span class="toc-text">set up vertex data (and buffer(s)) and configure vertex attributes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#VBO-vertex-buffer-objects-顶点缓冲对象"><span class="toc-text">VBO(vertex buffer objects):顶点缓冲对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解释显存中的缓存数据"><span class="toc-text">解释显存中的缓存数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VAO-Vertex-Array-Objec-顶点数组对象"><span class="toc-text">VAO(Vertex Array Objec):顶点数组对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#render-loop"><span class="toc-text">render loop</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -432,25 +432,7 @@
 </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <pre><code class="lang-cpp">// ..:: Initialization code (done once (unless your object frequently changes)) :: ..
-// 1. bind Vertex Array Object
-glBindVertexArray(VAO);
-// 2. copy our vertices array in a buffer for OpenGL to use
-glBindBuffer(GL_ARRAY_BUFFER, VBO);
-glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-// 3. then set our vertex attributes pointers
-glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-glEnableVertexAttribArray(0);  
-
-// xxxxxxx
-
-// ..:: Drawing code (in render loop) :: ..
-// 4. draw the object
-glUseProgram(shaderProgram);
-glBindVertexArray(VAO);
-someOpenGLFunctionThatDrawsOurTriangle();
-</code></pre>
-<ul>
+        <ul>
 <li><p>通过opengl绘制图形，需要通过opengl的渲染管线，这一过程实际上指的是一堆原始图形数据途经一个输送管道，期间经过各种变化处理最终出现在屏幕的过程。图形渲染管线可以被划分为两个主要部分：第一部分把你的3D坐标转换为2D坐标，第二部分是把2D坐标转变为实际的有颜色的像素。</p>
 </li>
 <li><p>对于利用opengl画出一个三角形，归纳为以下步骤</p>
@@ -521,6 +503,105 @@ if(!success) {
 glDeleteShader(vertexShader);
 glDeleteShader(fragmentShader);
 </code></pre>
+<h1 id="set-up-vertex-data-and-buffer-s-and-configure-vertex-attributes"><a href="#set-up-vertex-data-and-buffer-s-and-configure-vertex-attributes" class="headerlink" title="set up vertex data (and buffer(s)) and configure vertex attributes"></a>set up vertex data (and buffer(s)) and configure vertex attributes</h1><ul>
+<li>我们要画图形的话，需要几样的东西，首先是需要在内存中准备顶点，然后传输到显存中。</li>
+</ul>
+<h2 id="VBO-vertex-buffer-objects-顶点缓冲对象"><a href="#VBO-vertex-buffer-objects-顶点缓冲对象" class="headerlink" title="VBO(vertex buffer objects):顶点缓冲对象"></a>VBO(vertex buffer objects):顶点缓冲对象</h2><pre><code class="lang-cpp">unsigned int VBO;
+//这里用&amp;，是因为直接改变VBO指向内存单元的数据，执行完后VBO保存一个显存地址
+glGenBuffers(1, &amp;VBO);
+//这一步将显存地址与GL_ARRAY_BUFFER绑定，这样之后所有对GL_ARRAY_BUFFER，其实就是在操作VBO所指的显存区域。
+glBindBuffer(GL_ARRAY_BUFFER, VBO);
+//这一步是用于将内存中的数据传输到显存中
+glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+</code></pre>
+<ul>
+<li>上述代码用于创建一个叫做VBO缓冲对象的东西，这个用于存储将来从内存传输过来的定点数据。</li>
+</ul>
+<h2 id="解释显存中的缓存数据"><a href="#解释显存中的缓存数据" class="headerlink" title="解释显存中的缓存数据"></a>解释显存中的缓存数据</h2><ul>
+<li>在显存中的数据，我们必须手动指定输入数据的哪一个部分对应顶点着色器的哪一个顶点属性。</li>
+</ul>
+<pre><code class="lang-cpp">//该函数用于让OpenGL知道该如何解析顶点数据
+
+//第一个参数表示该数据希望传输到VS的哪一个参数。比如
+//  layout (location = 0) in vec3 aPos;
+//  layout (location = 1) in vec3 bPos;
+//第一个参数设为0则该数据传入aPos,1则传入bPos
+
+//第二个参数表示该定点属性的大小，这里是3
+
+//第三个参数表示大小为3，每个部分的类型为float
+
+//第四个参数表示是否要标准化设备坐标(Normalized Device Coordinates, NDC)
+
+//第五个参数表示每个顶点属性的总大小,对于紧密排列的数据可以用0代替
+
+//第六感参数表示位置数据在缓冲中起始位置的偏移量(Offset)，比如sizeof(float)，则偏移一个float值，3*sizeof(float)，则偏移一个定点
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+</code></pre>
+<ul>
+<li>接下来我们应该使用glEnableVertexAttribArray，以顶点属性位置值作为参数，启用顶点属性；顶点属性默认是禁用的。</li>
+</ul>
+<pre><code class="lang-cpp">glEnableVertexAttribArray(0);
+</code></pre>
+<h2 id="VAO-Vertex-Array-Objec-顶点数组对象"><a href="#VAO-Vertex-Array-Objec-顶点数组对象" class="headerlink" title="VAO(Vertex Array Objec):顶点数组对象"></a>VAO(Vertex Array Objec):顶点数组对象</h2><ul>
+<li>一个顶点数组对象会储存以下这些内容：<blockquote>
+<p>glEnableVertexAttribArray和glDisableVertexAttribArray的调用。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>通过glVertexAttribPointer设置的顶点属性配置。</p>
+<p>通过glVertexAttribPointer调用与顶点属性关联的顶点缓冲对象。</p>
+</blockquote>
+<ul>
+<li>顶点数组对象(Vertex Array Object, VAO)可以像顶点缓冲对象那样被绑定，任何随后的顶点属性调用都会储存在这个VAO中。</li>
+<li>也就是说我们对VBO的所有配置都会保存在我们所绑定的VAO中，如果之后想要使用这一配置，只需要重新绑定它就行了。</li>
+</ul>
+<pre><code class="lang-cpp">//VAO绑定
+unsigned int VAO;
+glGenVertexArrays(1, &amp;VAO);
+glBindVertexArray(VAO);
+</code></pre>
+<pre><code class="lang-cpp">//VAO解绑
+glBindVertexArray(VAO);
+</code></pre>
+<pre><code class="lang-cpp">//VAO使用
+glBindVertexArray(VAO);
+</code></pre>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><pre><code class="lang-cpp">// ..:: Initialization code (done once (unless your object frequently changes)) :: ..
+// 1. bind Vertex Array Object
+glBindVertexArray(VAO);
+// 2. copy our vertices array in a buffer for OpenGL to use
+glBindBuffer(GL_ARRAY_BUFFER, VBO);
+glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+// 3. then set our vertex attributes pointers
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+glEnableVertexAttribArray(0);  
+//glBindVertexArray(0);
+
+// xxxxxxx
+
+// ..:: Drawing code (in render loop) ::..
+// 4. draw the object
+glUseProgram(shaderProgram);
+glBindVertexArray(VAO);
+someOpenGLFunctionThatDrawsOurTriangle();
+</code></pre>
+<h1 id="render-loop"><a href="#render-loop" class="headerlink" title="render loop"></a>render loop</h1><ul>
+<li>如何使用我们所自定义的着色器和配置好的定点属性呢?</li>
+</ul>
+<pre><code class="lang-cpp">// draw our first triangle
+glUseProgram(shaderProgram);
+glBindVertexArray(VAO); // seeing as we only have a single VAO there&#39;s no need to bind it every time, but we&#39;ll do so to keep things a bit more organized
+glDrawArrays(GL_TRIANGLES, 0, 3);
+// glBindVertexArray(0); // no need to unbind it every time
+</code></pre>
+<ul>
+<li>在glUseProgram函数调用之后，每个着色器调用和渲染调用都会使用这个程序对象</li>
+<li>在glBindVertexArray函数调用之后，会使用VAO中所保存的顶点数据配置</li>
+<li>glDrawArray函数用于绘制图元，第一个函数是图元类型，第二个参数指定了顶点数组的起始索引，第三是顶点个数。绘制glVertexAttribPointer绑定后的第几个位置开始的几个定点。注意这里是定点的偏移，比如这里上下文中大小为 3*sizeof(float)</li>
+<li>需要区分在glVertexAttribPointer中的offset和这里的索引</li>
+</ul>
 
       
        
@@ -534,7 +615,7 @@ glDeleteShader(fragmentShader);
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-10-08, 18:33:36</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-30, 23:49:04</p>
+    <p><span class="copy-title">最后更新:</span>2019-11-08, 14:27:48</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/08/LearnOpengl-HelloTriangle/" title="LearnOpengl_HelloTriangle">https://sanctorum.github.io/2019/10/08/LearnOpengl-HelloTriangle/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
