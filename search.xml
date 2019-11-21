@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>LearnOpengl-Shaders</title>
+      <link href="/2019/11/21/LearnOpengl-Shaders/"/>
+      <url>/2019/11/21/LearnOpengl-Shaders/</url>
+      
+        <content type="html"><![CDATA[<ul><li><p>很多都是概念性的东西，教程里整理的很好<br><a href="https://learnopengl-cn.github.io/01%20Getting%20started/05%20Shaders/#_1" target="_blank" rel="noopener">https://learnopengl-cn.github.io/01%20Getting%20started/05%20Shaders/#_1</a></p></li><li><p>layout (location = 0)</p><blockquote><p>为了定义顶点数据该如何管理，我们使用location这一元数据指定输入变量，这样我们才可以在CPU上配置顶点属性。</p></blockquote></li><li><p>如果你在片段着色器没有定义输出颜色，OpenGL会把你的物体渲染为黑色（或白色）</p></li></ul><h1 id="uniform"><a href="#uniform" class="headerlink" title="uniform"></a>uniform</h1><ul><li>uniform是全局的(Global)。全局意味着uniform变量必须在每个着色器程序对象中都是独一无二的，而且它可以被着色器程序的任意着色器在任意阶段访问。</li><li>第二，无论你把uniform值设置成什么，uniform会一直保存它们的数据，直到它们被重置或更新。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> opengl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>UE4Live_RenderProcess</title>
       <link href="/2019/10/08/UE4Live-RenderProcess/"/>
       <url>/2019/10/08/UE4Live-RenderProcess/</url>
