@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>LearnOpengl-Transformations</title>
+      <link href="/2019/12/04/LearnOpengl-Transformations/"/>
+      <url>/2019/12/04/LearnOpengl-Transformations/</url>
+      
+        <content type="html"><![CDATA[<ul><li>单位向量 $\hat{n}$</li></ul><h1 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h1><ul><li>它允许我们在3D向量上进行位移</li><li>如果一个向量的齐次坐标是0，这个坐标就是方向向量(Direction Vector)，因为w坐标是0，这个向量就不能位移</li></ul><h1 id="四元数"><a href="#四元数" class="headerlink" title="四元数"></a>四元数</h1><ul><li>用于避免万向结死锁</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> opengl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>LearnOpengl-Textures</title>
       <link href="/2019/11/21/LearnOpengl-Textures/"/>
       <url>/2019/11/21/LearnOpengl-Textures/</url>
