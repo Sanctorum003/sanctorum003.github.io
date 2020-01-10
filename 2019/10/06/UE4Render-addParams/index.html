@@ -191,43 +191,43 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">computer graphics</a>
+        <a class="color3">computer graphics</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">directx11</a>
+        <a class="color5">directx11</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color4">ue4</a>
+        <a class="color4">ue4</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color1">slate</a>
+        <a class="color1">slate</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">json</a>
+        <a class="color5">json</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color2">opengl</a>
+        <a class="color2">opengl</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">algorithm</a>
+        <a class="color5">algorithm</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">menu</a>
+        <a class="color5">menu</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color2">render</a>
+        <a class="color2">render</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color2">shader</a>
+        <a class="color2">shader</a>
     </li>
     
     <div class="clearfix"></div>
@@ -430,18 +430,18 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="UE4">UE4</a>
+                <a  data-rel="UE4">UE4</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color4">ue4</a>
+            <a class="color4">ue4</a>
             
-            <a href="javascript:" class="color2">render</a>
+            <a class="color2">render</a>
             
-            <a href="javascript:" class="color2">shader</a>
+            <a class="color2">shader</a>
             
         </span>
         
@@ -472,6 +472,7 @@
     }
 </style>
 </div>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="在shader文件中添加第二个颜色变量"><a href="#在shader文件中添加第二个颜色变量" class="headerlink" title="在shader文件中添加第二个颜色变量"></a>在shader文件中添加第二个颜色变量</h1><p><a href="https://zhuanlan.zhihu.com/p/36635394" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/36635394</a><br><a href="https://zhuanlan.zhihu.com/p/36695496" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/36695496</a><br>在看了shader编程的第二第三章后,觉的似懂非懂。再上面添加点东西,便于很深入的理解</p>
@@ -822,7 +823,7 @@ IMPLEMENT_SHADER_TYPE(, FShaderTestPS, TEXT(&quot;/Plugin/ShadertestPlugin/Priva
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>在shader文件中添加第二个颜色变量</p>
     
-    <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
+    <p><span class="copy-title">本文作者:</span><a  title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-10-06, 11:46:00</p>
     <p><span class="copy-title">最后更新:</span>2019-10-06, 16:28:38</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/06/UE4Render-addParams/" title="在shader文件中添加第二个颜色变量">https://sanctorum.github.io/2019/10/06/UE4Render-addParams/</a>
@@ -854,13 +855,14 @@ IMPLEMENT_SHADER_TYPE(, FShaderTestPS, TEXT(&quot;/Plugin/ShadertestPlugin/Priva
 
     </div>
 </div>
-<a class="" id="rocket" href="javascript:void(0)"></a>
+<a class="" id="rocket" ></a>
+
     </div>
 </div>
 <div class="acParent"></div>
 
 </body>
-<script src="//cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
 
 <script src="/js/script.js?v=1.0.1" ></script>
 <script>
@@ -906,6 +908,7 @@ IMPLEMENT_SHADER_TYPE(, FShaderTestPS, TEXT(&quot;/Plugin/ShadertestPlugin/Priva
         $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
 
         
+        
     }
 
     /*打赏页面隐藏与展示*/
@@ -949,6 +952,54 @@ IMPLEMENT_SHADER_TYPE(, FShaderTestPS, TEXT(&quot;/Plugin/ShadertestPlugin/Priva
 
 <!--自定义样式设置-->
 <style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+        .nav .hide-list.fullscreen {
+            left: 492px
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
     
     .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
         color: #383636;

@@ -191,43 +191,43 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">computer graphics</a>
+        <a class="color3">computer graphics</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">directx11</a>
+        <a class="color5">directx11</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color4">ue4</a>
+        <a class="color4">ue4</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color1">slate</a>
+        <a class="color1">slate</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">json</a>
+        <a class="color5">json</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color2">opengl</a>
+        <a class="color2">opengl</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">algorithm</a>
+        <a class="color5">algorithm</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">menu</a>
+        <a class="color5">menu</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color2">render</a>
+        <a class="color2">render</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color2">shader</a>
+        <a class="color2">shader</a>
     </li>
     
     <div class="clearfix"></div>
@@ -430,16 +430,16 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="CG">CG</a>
+                <a  data-rel="CG">CG</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">computer graphics</a>
+            <a class="color3">computer graphics</a>
             
-            <a href="javascript:" class="color2">opengl</a>
+            <a class="color2">opengl</a>
             
         </span>
         
@@ -470,6 +470,7 @@
     }
 </style>
 </div>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="纹理坐标"><a href="#纹理坐标" class="headerlink" title="纹理坐标"></a>纹理坐标</h1><ul>
@@ -606,7 +607,7 @@ stbi_set_flip_vertically_on_load(true);
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>LearnOpengl-Textures</p>
     
-    <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
+    <p><span class="copy-title">本文作者:</span><a  title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2019-11-21, 18:58:30</p>
     <p><span class="copy-title">最后更新:</span>2019-12-02, 22:25:45</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/21/LearnOpengl-Textures/" title="LearnOpengl-Textures">https://sanctorum.github.io/2019/11/21/LearnOpengl-Textures/</a>
@@ -638,13 +639,14 @@ stbi_set_flip_vertically_on_load(true);
 
     </div>
 </div>
-<a class="" id="rocket" href="javascript:void(0)"></a>
+<a class="" id="rocket" ></a>
+
     </div>
 </div>
 <div class="acParent"></div>
 
 </body>
-<script src="//cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
 
 <script src="/js/script.js?v=1.0.1" ></script>
 <script>
@@ -690,6 +692,7 @@ stbi_set_flip_vertically_on_load(true);
         $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
 
         
+        
     }
 
     /*打赏页面隐藏与展示*/
@@ -733,6 +736,54 @@ stbi_set_flip_vertically_on_load(true);
 
 <!--自定义样式设置-->
 <style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+        .nav .hide-list.fullscreen {
+            left: 492px
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
     
     .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
         color: #383636;
