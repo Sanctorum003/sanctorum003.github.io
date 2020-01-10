@@ -4,6 +4,60 @@
   
     
     <entry>
+      <title>Render_RayMarching</title>
+      <link href="/2020/01/10/Render-RayMarching/"/>
+      <url>/2020/01/10/Render-RayMarching/</url>
+      
+        <content type="html"><![CDATA[<p><img src="raytrace.png" alt="rom &quot;Ray tracing&quot; on Wikipedia"></p><ul><li>Ray Marching和Ray Tracing有一些相似之处。看上图，可以看出来他们都说从摄像机的位置开始,遍历屏幕上的所有像素，通过从摄像机穿过像素的射线来计算出该点像素的颜色。</li><li>对于Ray Marching来说，通过使用SDF函数来判断是否碰撞到物体。SDF函数就是signed distance function，比如说对于球体。  </li></ul><script type="math/tex; mode=display">SDF(P)=||\vec{p}-\vec{c}||-r \left\{\begin{aligned}< & 0, 在球体内部 \\= & 0, 在球体边上 \\> & 0, 在球体外部\end{aligned}\right.</script><ul><li>上述就是一个球体的SDF函数,而求得的SDF函数的值就是点P到球体的最短距离。</li></ul><script type="math/tex; mode=display">p = eye + depth * raydirection</script><ul><li>对于测试点P的depth来说,增加SPF(p)的大小肯定是不会发生碰撞的。然后考虑到如果该射线最终能撞到物体,那么depth肯定是一个固定值,而如果不撞到其他物体的话,那么depth = + $\infin$。所以需要设置p的最小值(初试值),最大值(超过这个值认为没有hit),depth的最小值(小于这个值认为ray marching结束),ray marching步长(超过这个值认为ray marching结束)</li></ul><p><img src="spheretrace.jpg" alt="From GPU Gems 2: Chapter 8."></p><ul><li>可以拿上图举例,从点P0开始,计算场景中所有SDF的值,并取最小值,那么depth加上这个值肯定不会发生碰撞。<script type="math/tex; mode=display">SDF(p) = min(SDF_{1}(p),SDF_{2}(p),...)</script></li></ul><pre><code class="lang-glsl">//Shadertoy// co:circle origin// tp:test pointfloat CircleSDF(vec3 co,float radius,vec3 tp){    return length(co-tp)-radius;}float SceneSDF(vec3 tp){    float tp1 = CircleSDF(vec3(0,0,0),1.f,tp);    float tp2 = CircleSDF(vec3(1,1,0),1.f,tp);    return min(tp1,tp2);}float Scene(vec3 eye,vec3 dir, int MAX_STRIDE,float E,float MIN_DIS,float MAX_DIS){    float depth = MIN_DIS;    for(int i = 0; i &lt; MAX_STRIDE;++i)    {        float inc = SceneSDF(eye+depth*dir);        if(inc &lt; E)            return depth;        depth += inc;        if(depth &gt; MAX_DIS)            return MAX_DIS;    }       return depth;}vec3 GetRayDirection(float fov,vec2 size, vec2 fragCoord){    vec3 dir;    //因为屏幕的原点在中心,而fragCoord的原点在左上角，进行变换    dir.xy = fragCoord - size/2.f;    //通过fov来设置视野范围       dir.z = - ((size.y/2.f)/tan(radians(fov)/2.f));    //注意一定要标准化    return normalize(dir);}void mainImage( out vec4 fragColor, in vec2 fragCoord ){        const float MAX_DIS = 100.f;    const float MIN_DIS = 0.f;    const float E = 0.1f;    const int MAX_STRIDE = 255;    vec3 eye = vec3(0.f,0.f,5.f);    vec3 dir = GetRayDirection(45.f,iResolution.xy,fragCoord.xy);    float depth = Scene(eye,dir,MAX_STRIDE,E,MIN_DIS,MAX_DIS);    if(depth &lt; MAX_DIS - E)    {        fragColor = vec4(1,0.75,0.79,1.f);        return;    }      fragColor = vec4(0.f,0.f,0.f,1.f); }</code></pre><h1 id="参考网站"><a href="#参考网站" class="headerlink" title="参考网站"></a>参考网站</h1><p><a href="http://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/" target="_blank" rel="noopener">http://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/</a><br><a href="https://zhuanlan.zhihu.com/p/36759481" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/36759481</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> opengl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LearnOpengl-CoordinateSystems</title>
+      <link href="/2020/01/04/LearnOpengl-CoordinateSystems/"/>
+      <url>/2020/01/04/LearnOpengl-CoordinateSystems/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> opengl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>LearnOpengl-Transformations</title>
       <link href="/2019/12/04/LearnOpengl-Transformations/"/>
       <url>/2019/12/04/LearnOpengl-Transformations/</url>
