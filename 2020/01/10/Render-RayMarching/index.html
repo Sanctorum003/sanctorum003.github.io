@@ -2,18 +2,25 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>Render_RayMarching | Blog</title>
+  <title>Ray Marching | Blog</title>
   <meta name="keywords" content=" computer graphics , opengl ">
-  <meta name="description" content="Render_RayMarching | Blog">
+  <meta name="description" content="Ray Marching | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="Ray Marching和Ray Tracing有一些相似之处。看上图，可以看出来他们都说从摄像机的位置开始,遍历屏幕上的所有像素，通过从摄像机穿过像素的射线来计算出该点像素的颜色。 对于Ray Marching来说，通过使用SDF函数来判断是否碰撞到物体。SDF函数就是signed distance function，比如说对于球体。    SDF(P)=||\vec{p}-\vec{c}|">
+<meta name="keywords" content="computer graphics,opengl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ray Marching">
+<meta property="og:url" content="https://sanctorum.github.io/2020/01/10/Render-RayMarching/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Ray Marching和Ray Tracing有一些相似之处。看上图，可以看出来他们都说从摄像机的位置开始,遍历屏幕上的所有像素，通过从摄像机穿过像素的射线来计算出该点像素的颜色。 对于Ray Marching来说，通过使用SDF函数来判断是否碰撞到物体。SDF函数就是signed distance function，比如说对于球体。    SDF(P)=||\vec{p}-\vec{c}|">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:image" content="https://sanctorum.github.io/2020/01/10/Render-RayMarching/raytrace.png">
+<meta property="og:image" content="https://sanctorum.github.io/2020/01/10/Render-RayMarching/spheretrace.jpg">
+<meta property="og:updated_time" content="2020-01-10T11:12:57.935Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="Ray Marching">
+<meta name="twitter:description" content="Ray Marching和Ray Tracing有一些相似之处。看上图，可以看出来他们都说从摄像机的位置开始,遍历屏幕上的所有像素，通过从摄像机穿过像素的射线来计算出该点像素的颜色。 对于Ray Marching来说，通过使用SDF函数来判断是否碰撞到物体。SDF函数就是signed distance function，比如说对于球体。    SDF(P)=||\vec{p}-\vec{c}|">
+<meta name="twitter:image" content="https://sanctorum.github.io/2020/01/10/Render-RayMarching/raytrace.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -308,7 +315,7 @@
            href="/2020/01/10/Render-RayMarching/"
            data-tag="computer graphics,opengl"
            data-author="" >
-            <span class="post-title" title="Render_RayMarching">Render_RayMarching</span>
+            <span class="post-title" title="Ray Marching">Ray Marching</span>
             <span class="post-date" title="2020-01-10 18:34:24">2020/01/10</span>
         </a>
         
@@ -422,7 +429,7 @@
     <div class="pjax">
         <article id="post-Render-RayMarching" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Render_RayMarching</h1>
+        <h1 class="article-title">Ray Marching</h1>
     
     <div class="article-meta">
         
@@ -446,7 +453,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-10 19:10:27'>2020-01-10 18:34</time>
+        创建时间:<time class="date" title='更新时间: 2020-01-10 19:12:57'>2020-01-10 18:34</time>
         
     </div>
     <div class="article-meta">
@@ -564,12 +571,12 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>Render_RayMarching</p>
+    <p><span class="copy-title">文章标题:</span>Ray Marching</p>
     
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="Sanctorum003">Sanctorum003</a></p>
     <p><span class="copy-title">发布时间:</span>2020-01-10, 18:34:24</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-10, 19:10:27</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/10/Render-RayMarching/" title="Render_RayMarching">https://sanctorum.github.io/2020/01/10/Render-RayMarching/</a>
+    <p><span class="copy-title">最后更新:</span>2020-01-10, 19:12:57</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/10/Render-RayMarching/" title="Ray Marching">https://sanctorum.github.io/2020/01/10/Render-RayMarching/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
