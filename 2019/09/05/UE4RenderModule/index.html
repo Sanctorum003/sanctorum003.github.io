@@ -6,14 +6,21 @@
   <meta name="keywords" content=" ue4 , render ">
   <meta name="description" content="虚幻4渲染模块 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="Ray Marching和Ray Tracing有一些相似之处。看上图，可以看出来他们都说从摄像机的位置开始,遍历屏幕上的所有像素，通过从摄像机穿过像素的射线来计算出该点像素的颜色。 对于Ray Marching来说，通过使用SDF函数来判断是否碰撞到物体。SDF函数就是signed distance function，比如说对于球体。    SDF(P)=||\vec{p}-\vec{c}|">
+<meta name="keywords" content="computer graphics,opengl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ray Marching">
+<meta property="og:url" content="https://sanctorum.github.io/2020/01/10/Render-RayMarching/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Ray Marching和Ray Tracing有一些相似之处。看上图，可以看出来他们都说从摄像机的位置开始,遍历屏幕上的所有像素，通过从摄像机穿过像素的射线来计算出该点像素的颜色。 对于Ray Marching来说，通过使用SDF函数来判断是否碰撞到物体。SDF函数就是signed distance function，比如说对于球体。    SDF(P)=||\vec{p}-\vec{c}|">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:image" content="https://sanctorum.github.io/2020/01/10/Render-RayMarching/raytrace.png">
+<meta property="og:image" content="https://sanctorum.github.io/2020/01/10/Render-RayMarching/spheretrace.jpg">
+<meta property="og:updated_time" content="2020-01-10T11:15:51.342Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="Ray Marching">
+<meta name="twitter:description" content="Ray Marching和Ray Tracing有一些相似之处。看上图，可以看出来他们都说从摄像机的位置开始,遍历屏幕上的所有像素，通过从摄像机穿过像素的射线来计算出该点像素的颜色。 对于Ray Marching来说，通过使用SDF函数来判断是否碰撞到物体。SDF函数就是signed distance function，比如说对于球体。    SDF(P)=||\vec{p}-\vec{c}|">
+<meta name="twitter:image" content="https://sanctorum.github.io/2020/01/10/Render-RayMarching/raytrace.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -101,7 +108,7 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="全部文章">全部文章<small>(21)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(21)</small></div></li>
     
         
             
@@ -155,7 +162,7 @@
     
     
     </div>
-    <div><a  class="friends">友链</a></div>
+    <div><a  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="21">
 
@@ -168,7 +175,7 @@
     <div class="nav-right">
         <div class="friends-area">
     <div class="friends-title">
-        友情链接
+        Links
         <i class="iconfont icon-left"></i>
     </div>
     <div class="friends-content">
@@ -185,7 +192,7 @@
     <div class="right-top">
         <div id="default-panel">
             <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
-            <div class="right-title">全部文章</div>
+            <div class="right-title">All</div>
             <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
         </div>
         <div id="search-panel">
@@ -256,7 +263,7 @@
     
     <nav id="title-list-nav">
         
-        <a  class="全部文章 CG "
+        <a  class="All CG "
            href="/2020/01/10/Render-RayMarching/"
            data-tag="computer graphics,opengl"
            data-author="" >
@@ -264,7 +271,7 @@
             <span class="post-date" title="2020-01-10 18:34:24">2020/01/10</span>
         </a>
         
-        <a  class="全部文章 CG "
+        <a  class="All CG "
            href="/2020/01/04/LearnOpengl-CoordinateSystems/"
            data-tag="computer graphics,opengl"
            data-author="" >
@@ -272,7 +279,7 @@
             <span class="post-date" title="2020-01-04 16:30:47">2020/01/04</span>
         </a>
         
-        <a  class="全部文章 CG "
+        <a  class="All CG "
            href="/2019/12/04/LearnOpengl-Transformations/"
            data-tag="computer graphics,opengl"
            data-author="" >
@@ -280,7 +287,7 @@
             <span class="post-date" title="2019-12-04 20:02:13">2019/12/04</span>
         </a>
         
-        <a  class="全部文章 CG "
+        <a  class="All CG "
            href="/2019/11/21/LearnOpengl-Textures/"
            data-tag="computer graphics,opengl"
            data-author="" >
@@ -288,7 +295,7 @@
             <span class="post-date" title="2019-11-21 18:58:30">2019/11/21</span>
         </a>
         
-        <a  class="全部文章 CG "
+        <a  class="All CG "
            href="/2019/11/21/LearnOpengl-Shaders/"
            data-tag="computer graphics,opengl"
            data-author="" >
@@ -296,7 +303,7 @@
             <span class="post-date" title="2019-11-21 18:40:03">2019/11/21</span>
         </a>
         
-        <a  class="全部文章 "
+        <a  class="All "
            href="/2019/10/08/UE4Live-RenderProcess/"
            data-tag=""
            data-author="" >
@@ -304,7 +311,7 @@
             <span class="post-date" title="2019-10-08 21:50:59">2019/10/08</span>
         </a>
         
-        <a  class="全部文章 CG "
+        <a  class="All CG "
            href="/2019/10/08/LearnOpengl-HelloTriangle/"
            data-tag="computer graphics,opengl"
            data-author="" >
@@ -312,7 +319,7 @@
             <span class="post-date" title="2019-10-08 18:33:36">2019/10/08</span>
         </a>
         
-        <a  class="全部文章 "
+        <a  class="All "
            href="/2019/10/07/UE4Render-ResourceOperation/"
            data-tag=""
            data-author="" >
@@ -320,7 +327,7 @@
             <span class="post-date" title="2019-10-07 21:43:49">2019/10/07</span>
         </a>
         
-        <a  class="全部文章 UE4 "
+        <a  class="All UE4 "
            href="/2019/10/06/UE4Render-addParams/"
            data-tag="ue4,render,shader"
            data-author="" >
@@ -328,7 +335,7 @@
             <span class="post-date" title="2019-10-06 11:46:00">2019/10/06</span>
         </a>
         
-        <a  class="全部文章 CG "
+        <a  class="All CG "
            href="/2019/09/21/LearnOpengl-HelloWindow/"
            data-tag="computer graphics,opengl"
            data-author="" >
@@ -336,7 +343,7 @@
             <span class="post-date" title="2019-09-21 16:00:18">2019/09/21</span>
         </a>
         
-        <a  class="全部文章 CG "
+        <a  class="All CG "
            href="/2019/09/09/D3DTransform/"
            data-tag="computer graphics,directx11"
            data-author="" >
@@ -344,7 +351,7 @@
             <span class="post-date" title="2019-09-09 15:51:46">2019/09/09</span>
         </a>
         
-        <a  class="全部文章 CG "
+        <a  class="All CG "
            href="/2019/09/09/D3DInit/"
            data-tag="computer graphics,directx11"
            data-author="" >
@@ -352,7 +359,7 @@
             <span class="post-date" title="2019-09-09 15:26:18">2019/09/09</span>
         </a>
         
-        <a  class="全部文章 UE4 "
+        <a  class="All UE4 "
            href="/2019/09/05/UE4RenderModule/"
            data-tag="ue4,render"
            data-author="" >
@@ -360,7 +367,7 @@
             <span class="post-date" title="2019-09-05 09:30:06">2019/09/05</span>
         </a>
         
-        <a  class="全部文章 CG "
+        <a  class="All CG "
            href="/2019/08/19/渲染管线/"
            data-tag="computer graphics,directx11"
            data-author="" >
@@ -368,7 +375,7 @@
             <span class="post-date" title="2019-08-19 10:56:43">2019/08/19</span>
         </a>
         
-        <a  class="全部文章 UE4 "
+        <a  class="All UE4 "
            href="/2019/08/07/JSON/"
            data-tag="ue4,json"
            data-author="" >
@@ -376,7 +383,7 @@
             <span class="post-date" title="2019-08-07 20:07:01">2019/08/07</span>
         </a>
         
-        <a  class="全部文章 Menu UE4 "
+        <a  class="All Menu UE4 "
            href="/2019/08/07/UE4Menu/"
            data-tag="ue4,slate,json,menu"
            data-author="" >
@@ -384,7 +391,7 @@
             <span class="post-date" title="2019-08-07 16:58:06">2019/08/07</span>
         </a>
         
-        <a  class="全部文章 UE4 "
+        <a  class="All UE4 "
            href="/2019/08/06/DelegateAndMacro/"
            data-tag="ue4,slate"
            data-author="" >
@@ -392,7 +399,7 @@
             <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
         </a>
         
-        <a  class="全部文章 UE4 "
+        <a  class="All UE4 "
            href="/2019/08/04/SlateWidget/"
            data-tag="ue4,slate"
            data-author="" >
@@ -400,7 +407,7 @@
             <span class="post-date" title="2019-08-04 20:20:05">2019/08/04</span>
         </a>
         
-        <a  class="全部文章 UE4 "
+        <a  class="All UE4 "
            href="/2019/08/03/WidgetStyle/"
            data-tag="ue4,slate"
            data-author="" >
@@ -408,7 +415,7 @@
             <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
         </a>
         
-        <a  class="全部文章 UE4 "
+        <a  class="All UE4 "
            href="/2019/08/02/HUD/"
            data-tag="ue4,slate"
            data-author="" >
@@ -416,7 +423,7 @@
             <span class="post-date" title="2019-08-02 10:07:12">2019/08/02</span>
         </a>
         
-        <a  class="全部文章 Algorithm "
+        <a  class="All Algorithm "
            href="/2019/08/01/KMP/"
            data-tag="algorithm"
            data-author="" >
@@ -470,7 +477,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2019-09-05 11:43:32'>2019-09-05 09:30</time>
+            Created At : <time class="date" title='Updated At: 2019-09-05 11:43:32'>2019-09-05 09:30</time>
         
     </div>
     <div class="article-meta">
