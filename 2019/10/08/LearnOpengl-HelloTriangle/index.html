@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <title>LearnOpengl_HelloTriangle | Blog</title>
+  <meta name="keywords" content=" computer graphics , opengl ">
+  <meta name="description" content="LearnOpengl_HelloTriangle | Blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="about">
+<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="about">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/darcula.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0"></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js"></script>
+
+<script src="/js/iconfont.js?v=1.1.0"></script>
+
+</head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value>
+  <input class="theme_blog_path" value>
+  <input id="theme_shortcut" value="true">
+</div>
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar.jpg" />
+</a>
+<div class="author">
+    <span>Sanctorum003</span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active" data-rel="All">All<small>(21)</small></div></li>
+    
+        
+            
+            <li><div data-rel="Algorithm">Algorithm<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="CG">CG<small>(10)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Menu"><i class="fold iconfont icon-right"></i>Menu<small>(1)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Menu<--->UE4">UE4<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="UE4">UE4<small>(7)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div><a  class="friends">Friends</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="21">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="https://naruto-zhao.github.io/">赵果</a></li>
+            
+            <li><a target="_blank" href="https://solthx.github.io/">程子丰</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" />
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>algorithm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>computer graphics</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>directx11</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>json</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>menu</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>opengl</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>render</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>shader</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>slate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ue4</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        <a  class="All CG "
+           href="/2020/01/10/Render-RayMarching/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="Ray Marching">Ray Marching</span>
+            <span class="post-date" title="2020-01-10 18:34:24">2020/01/10</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2020/01/04/LearnOpengl-CoordinateSystems/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="LearnOpengl-CoordinateSystems">LearnOpengl-CoordinateSystems</span>
+            <span class="post-date" title="2020-01-04 16:30:47">2020/01/04</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/12/04/LearnOpengl-Transformations/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="LearnOpengl-Transformations">LearnOpengl-Transformations</span>
+            <span class="post-date" title="2019-12-04 20:02:13">2019/12/04</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/11/21/LearnOpengl-Textures/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="LearnOpengl-Textures">LearnOpengl-Textures</span>
+            <span class="post-date" title="2019-11-21 18:58:30">2019/11/21</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/11/21/LearnOpengl-Shaders/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="LearnOpengl-Shaders">LearnOpengl-Shaders</span>
+            <span class="post-date" title="2019-11-21 18:40:03">2019/11/21</span>
+        </a>
+        
+        <a  class="All "
+           href="/2019/10/08/UE4Live-RenderProcess/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="UE4Live_RenderProcess">UE4Live_RenderProcess</span>
+            <span class="post-date" title="2019-10-08 21:50:59">2019/10/08</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/10/08/LearnOpengl-HelloTriangle/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="LearnOpengl_HelloTriangle">LearnOpengl_HelloTriangle</span>
+            <span class="post-date" title="2019-10-08 18:33:36">2019/10/08</span>
+        </a>
+        
+        <a  class="All "
+           href="/2019/10/07/UE4Render-ResourceOperation/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="虚幻4渲染编程 - 资源操作">虚幻4渲染编程 - 资源操作</span>
+            <span class="post-date" title="2019-10-07 21:43:49">2019/10/07</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/10/06/UE4Render-addParams/"
+           data-tag="ue4,render,shader"
+           data-author="" >
+            <span class="post-title" title="在shader文件中添加第二个颜色变量">在shader文件中添加第二个颜色变量</span>
+            <span class="post-date" title="2019-10-06 11:46:00">2019/10/06</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/09/21/LearnOpengl-HelloWindow/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="LearnOpengl_HelloWindow">LearnOpengl_HelloWindow</span>
+            <span class="post-date" title="2019-09-21 16:00:18">2019/09/21</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/09/09/D3DTransform/"
+           data-tag="computer graphics,directx11"
+           data-author="" >
+            <span class="post-title" title="DirectX11龙书-第三章:变换">DirectX11龙书-第三章:变换</span>
+            <span class="post-date" title="2019-09-09 15:51:46">2019/09/09</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/09/09/D3DInit/"
+           data-tag="computer graphics,directx11"
+           data-author="" >
+            <span class="post-title" title="DirectX11龙书-第四章:渲染管线">DirectX11龙书-第四章:渲染管线</span>
+            <span class="post-date" title="2019-09-09 15:26:18">2019/09/09</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/09/05/UE4RenderModule/"
+           data-tag="ue4,render"
+           data-author="" >
+            <span class="post-title" title="虚幻4渲染模块">虚幻4渲染模块</span>
+            <span class="post-date" title="2019-09-05 09:30:06">2019/09/05</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/08/19/渲染管线/"
+           data-tag="computer graphics,directx11"
+           data-author="" >
+            <span class="post-title" title="DirectX11龙书-第五章:渲染管线">DirectX11龙书-第五章:渲染管线</span>
+            <span class="post-date" title="2019-08-19 10:56:43">2019/08/19</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/08/07/JSON/"
+           data-tag="ue4,json"
+           data-author="" >
+            <span class="post-title" title="虚幻4之JSON学习">虚幻4之JSON学习</span>
+            <span class="post-date" title="2019-08-07 20:07:01">2019/08/07</span>
+        </a>
+        
+        <a  class="All Menu UE4 "
+           href="/2019/08/07/UE4Menu/"
+           data-tag="ue4,slate,json,menu"
+           data-author="" >
+            <span class="post-title" title="虚幻4学习">虚幻4学习</span>
+            <span class="post-date" title="2019-08-07 16:58:06">2019/08/07</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/08/06/DelegateAndMacro/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习四 —— 委托与宏">虚幻4之Slate学习四 —— 委托与宏</span>
+            <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/08/04/SlateWidget/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习三 —— 创建Slate控件">虚幻4之Slate学习三 —— 创建Slate控件</span>
+            <span class="post-date" title="2019-08-04 20:20:05">2019/08/04</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/08/03/WidgetStyle/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习二 —— Slate控件样式">虚幻4之Slate学习二 —— Slate控件样式</span>
+            <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/08/02/HUD/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习一 —— HUD">虚幻4之Slate学习一 —— HUD</span>
+            <span class="post-date" title="2019-08-02 10:07:12">2019/08/02</span>
+        </a>
+        
+        <a  class="All Algorithm "
+           href="/2019/08/01/KMP/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="KMP">KMP</span>
+            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-LearnOpengl-HelloTriangle" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">LearnOpengl_HelloTriangle</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="CG">CG</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">computer graphics</a>
+            
+            <a class="color2">opengl</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2020-01-10 19:49:43'>2019-10-08 18:33</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#build-and-compile-our-shader-program"><span class="toc-text">build and compile our shader program</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#set-up-vertex-data-and-buffer-s-and-configure-vertex-attributes"><span class="toc-text">set up vertex data (and buffer(s)) and configure vertex attributes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#VBO-vertex-buffer-objects-顶点缓冲对象"><span class="toc-text">VBO(vertex buffer objects):顶点缓冲对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解释显存中的缓存数据"><span class="toc-text">解释显存中的缓存数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VAO-Vertex-Array-Objec-顶点数组对象"><span class="toc-text">VAO(Vertex Array Objec):顶点数组对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#render-loop"><span class="toc-text">render loop</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EBO-Element-Buffer-Object-引缓冲对象"><span class="toc-text">EBO(Element Buffer Object):引缓冲对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#绘制最终流程"><span class="toc-text">绘制最终流程</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>通过opengl绘制图形，需要通过opengl的渲染管线，这一过程实际上指的是一堆原始图形数据途经一个输送管道，期间经过各种变化处理最终出现在屏幕的过程。图形渲染管线可以被划分为两个主要部分：第一部分把你的3D坐标转换为2D坐标，第二部分是把2D坐标转变为实际的有颜色的像素。</p>
+</li>
+<li><p>对于利用opengl画出一个三角形，归纳为以下步骤</p>
+</li>
+</ul>
+<h1 id="build-and-compile-our-shader-program"><a href="#build-and-compile-our-shader-program" class="headerlink" title="build and compile our shader program"></a>build and compile our shader program</h1><p><img src="Opengl_ShaderCreate.png" alt></p>
+<ul>
+<li>在OpenGL的渲染管线中，我们必须要配置VS和FS(PS)两个着色器,可以选择配置GS。</li>
+</ul>
+<pre><code class="lang-cpp">//创建着色器的方式
+/***
+  * 创建一个指定类型的着色器，返回指向这个着色器的在显存地址的引用
+***/
+int MyShader = glCreateShader(TYPE_OF_SHADER);
+</code></pre>
+<ul>
+<li>着色器程序运行的着色器语言，在opengl中使用的是GLSL。所以我们需要编写GLSL,并且将其绑定到我们创建的着色器上</li>
+</ul>
+<pre><code class="lang-cpp">/***
+  * MyShaderSource中写入待绑定的GLSL程序
+***/
+const char *MyShaderSource = &quot;#version 330 core\n&quot;
+    &quot;out vec4 FragColor;\n&quot;
+    &quot;void main()\n&quot;
+    &quot;{\n&quot;
+    &quot;   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n&quot;
+    &quot;}\n\0&quot;;
+/***
+  * 将GLSL程序与Shader进行绑定
+  * Shader显存地址/程序数量/字符串(数组)/字符串数组长度
+***/
+glShaderSource(MyShader, 1, &amp;MyShaderSource, NULL);
+</code></pre>
+<ul>
+<li>进行着色器编译并显示Debug信息</li>
+</ul>
+<pre><code class="lang-cpp">glCompileShader(vertexShader);
+// check for shader compile errors
+int success;
+char infoLog[512];
+glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &amp;success);
+if (!success)
+{
+    glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+    std::cout &lt;&lt; &quot;ERROR::SHADER::VERTEX::COMPILATION_FAILED\n&quot; &lt;&lt; infoLog &lt;&lt; std::endl;
+}
+</code></pre>
+<ul>
+<li>到这里我们的着色器就编译好了，接下来我们需要将编译好的着色器链接成一个着色器对象。这个着色器对象就是我们将数据渲染到屏幕所使用的的渲染管线。</li>
+</ul>
+<pre><code class="lang-cpp">unsigned int shaderProgram;
+shaderProgram = glCreateProgram();
+glAttachShader(shaderProgram, vertexShader);
+glAttachShader(shaderProgram, fragmentShader);
+glLinkProgram(shaderProgram);
+
+glGetProgramiv(shaderProgram, GL_LINK_STATUS, &amp;success);
+if(!success) {
+    glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+    std::cout &lt;&lt; &quot;ERROR::SHADER::PROGTRAM::LINK_FAILED\n&quot; &lt;&lt; infoLog &lt;&lt; std::endl;
+}
+
+/***
+  * 在之后可以调用glUseProgram(shaderProgram)来使用这个我们已经链接好的着色器程序对象。
+***/
+
+//别忘了垃圾回收，这两个这时候已经没用了
+glDeleteShader(vertexShader);
+glDeleteShader(fragmentShader);
+</code></pre>
+<h1 id="set-up-vertex-data-and-buffer-s-and-configure-vertex-attributes"><a href="#set-up-vertex-data-and-buffer-s-and-configure-vertex-attributes" class="headerlink" title="set up vertex data (and buffer(s)) and configure vertex attributes"></a>set up vertex data (and buffer(s)) and configure vertex attributes</h1><ul>
+<li>我们要画图形的话，需要几样的东西，首先是需要在内存中准备顶点，然后传输到显存中。</li>
+</ul>
+<h2 id="VBO-vertex-buffer-objects-顶点缓冲对象"><a href="#VBO-vertex-buffer-objects-顶点缓冲对象" class="headerlink" title="VBO(vertex buffer objects):顶点缓冲对象"></a>VBO(vertex buffer objects):顶点缓冲对象</h2><pre><code class="lang-cpp">unsigned int VBO;
+//这里用&amp;，是因为直接改变VBO指向内存单元的数据，执行完后VBO保存一个显存地址
+glGenBuffers(1, &amp;VBO);
+//这一步将显存地址与GL_ARRAY_BUFFER绑定，这样之后所有对GL_ARRAY_BUFFER，其实就是在操作VBO所指的显存区域。
+glBindBuffer(GL_ARRAY_BUFFER, VBO);
+//这一步是用于将内存中的数据传输到显存中
+glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+</code></pre>
+<ul>
+<li>上述代码用于创建一个叫做VBO缓冲对象的东西，这个用于存储将来从内存传输过来的定点数据。</li>
+</ul>
+<h2 id="解释显存中的缓存数据"><a href="#解释显存中的缓存数据" class="headerlink" title="解释显存中的缓存数据"></a>解释显存中的缓存数据</h2><ul>
+<li>在显存中的数据，我们必须手动指定输入数据的哪一个部分对应顶点着色器的哪一个顶点属性。</li>
+</ul>
+<pre><code class="lang-cpp">//该函数用于让OpenGL知道该如何解析顶点数据
+
+//第一个参数表示该数据希望传输到VS的哪一个参数。比如
+//  layout (location = 0) in vec3 aPos;
+//  layout (location = 1) in vec3 bPos;
+//第一个参数设为0则该数据传入aPos,1则传入bPos
+
+//第二个参数表示该定点属性的大小，这里是3
+
+//第三个参数表示大小为3，每个部分的类型为float
+
+//第四个参数表示是否要标准化设备坐标(Normalized Device Coordinates, NDC)
+
+//第五个参数表示每个顶点属性的总大小,对于紧密排列的数据可以用0代替
+
+//第六感参数表示位置数据在缓冲中起始位置的偏移量(Offset)，比如sizeof(float)，则偏移一个float值，3*sizeof(float)，则偏移一个定点
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+</code></pre>
+<ul>
+<li>接下来我们应该使用glEnableVertexAttribArray，以顶点属性位置值作为参数，启用顶点属性；顶点属性默认是禁用的。</li>
+</ul>
+<pre><code class="lang-cpp">glEnableVertexAttribArray(0);
+</code></pre>
+<h2 id="VAO-Vertex-Array-Objec-顶点数组对象"><a href="#VAO-Vertex-Array-Objec-顶点数组对象" class="headerlink" title="VAO(Vertex Array Objec):顶点数组对象"></a>VAO(Vertex Array Objec):顶点数组对象</h2><ul>
+<li>一个顶点数组对象会储存以下这些内容：<blockquote>
+<p>glEnableVertexAttribArray和glDisableVertexAttribArray的调用。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>通过glVertexAttribPointer设置的顶点属性配置。</p>
+<p>通过glVertexAttribPointer调用与顶点属性关联的顶点缓冲对象。</p>
+</blockquote>
+<ul>
+<li>顶点数组对象(Vertex Array Object, VAO)可以像顶点缓冲对象那样被绑定，任何随后的顶点属性调用都会储存在这个VAO中。</li>
+<li>也就是说我们对VBO的所有配置都会保存在我们所绑定的VAO中，如果之后想要使用这一配置，只需要重新绑定它就行了。</li>
+</ul>
+<pre><code class="lang-cpp">//VAO绑定
+unsigned int VAO;
+glGenVertexArrays(1, &amp;VAO);
+glBindVertexArray(VAO);
+</code></pre>
+<pre><code class="lang-cpp">//VAO解绑
+glBindVertexArray(VAO);
+</code></pre>
+<pre><code class="lang-cpp">//VAO使用
+glBindVertexArray(VAO);
+</code></pre>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><pre><code class="lang-cpp">// ..:: Initialization code (done once (unless your object frequently changes)) :: ..
+// 1. bind Vertex Array Object
+glBindVertexArray(VAO);
+// 2. copy our vertices array in a buffer for OpenGL to use
+glBindBuffer(GL_ARRAY_BUFFER, VBO);
+glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+// 3. then set our vertex attributes pointers
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+glEnableVertexAttribArray(0);  
+//glBindVertexArray(0);
+
+...
+
+// ..:: Drawing code (in render loop) ::..
+// 4. draw the object
+glUseProgram(shaderProgram);
+glBindVertexArray(VAO);
+someOpenGLFunctionThatDrawsOurTriangle();
+</code></pre>
+<h1 id="render-loop"><a href="#render-loop" class="headerlink" title="render loop"></a>render loop</h1><ul>
+<li>如何使用我们所自定义的着色器和配置好的定点属性呢?</li>
+</ul>
+<pre><code class="lang-cpp">// draw our first triangle
+glUseProgram(shaderProgram);
+glBindVertexArray(VAO); // seeing as we only have a single VAO there&#39;s no need to bind it every time, but we&#39;ll do so to keep things a bit more organized
+glDrawArrays(GL_TRIANGLES, 0, 3);
+// glBindVertexArray(0); // no need to unbind it every time
+</code></pre>
+<ul>
+<li>在glUseProgram函数调用之后，每个着色器调用和渲染调用都会使用这个程序对象</li>
+<li>在glBindVertexArray函数调用之后，会使用VAO中所保存的顶点数据配置</li>
+<li>glDrawArray函数用于绘制图元，第一个函数是图元类型，第二个参数指定了顶点数组的起始索引，第三是顶点个数。绘制glVertexAttribPointer绑定后的第几个位置开始的几个定点。注意这里是定点的偏移，比如这里上下文中大小为 3*sizeof(float)</li>
+<li>需要区分在glVertexAttribPointer中的offset和这里的索引</li>
+</ul>
+<h1 id="EBO-Element-Buffer-Object-引缓冲对象"><a href="#EBO-Element-Buffer-Object-引缓冲对象" class="headerlink" title="EBO(Element Buffer Object):引缓冲对象"></a>EBO(Element Buffer Object):引缓冲对象</h1><ul>
+<li>用于指定定点的绘制顺序</li>
+</ul>
+<pre><code class="lang-cpp">unsigned int EBO;
+glGenBuffers(1, &amp;EBO);
+glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), Indices, GL_STATIC_DRAW);
+</code></pre>
+<pre><code class="lang-cpp">//这里改用这glDrawElements来画三角形
+glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+</code></pre>
+<ul>
+<li>注意VAO也会保存EBO的数组配置信息，glDrawElements会使用我们绑定的EBO中的索引顺序,所以要注意解绑VAO的顺序</li>
+</ul>
+<h1 id="绘制最终流程"><a href="#绘制最终流程" class="headerlink" title="绘制最终流程"></a>绘制最终流程</h1><pre><code class="lang-cpp">// ..:: 初始化代码 :: ..
+// 1. 绑定顶点数组对象
+glBindVertexArray(VAO);
+// 2. 把我们的顶点数组复制到一个顶点缓冲中，供OpenGL使用
+glBindBuffer(GL_ARRAY_BUFFER, VBO);
+glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+// 3. 复制我们的索引数组到一个索引缓冲中，供OpenGL使用
+glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+// 4. 设定顶点属性指针
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+glEnableVertexAttribArray(0);
+
+
+// ..:: 绘制代码（渲染循环中） :: ..
+glUseProgram(shaderProgram);
+glBindVertexArray(VAO);
+glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)
+glBindVertexArray(0);
+</code></pre>
+
+      
+       
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<input type="hidden" id="MathJax-js"
+        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</input>
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2019-2020 Sanctorum003
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("/img/cover.jpg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+    #post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+
+
+
+
+
+</html>

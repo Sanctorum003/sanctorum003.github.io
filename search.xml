@@ -2,6 +2,551 @@
 <search> 
   
   
+    
+    <entry>
+      <title>Ray Marching</title>
+      <link href="/2020/01/10/Render-RayMarching/"/>
+      <url>/2020/01/10/Render-RayMarching/</url>
+      
+        <content type="html"><![CDATA[<p><img src="raytrace.png" alt="from &quot;Ray tracing&quot; on Wikipedia"></p><ul><li>Ray Marching和Ray Tracing有一些相似之处。看上图，可以看出来他们都说从摄像机的位置开始,遍历屏幕上的所有像素，通过从摄像机穿过像素的射线来计算出该点像素的颜色。</li><li>对于Ray Marching来说，通过使用SDF函数来判断是否碰撞到物体。SDF函数就是signed distance function，比如说对于球体。  </li></ul><script type="math/tex; mode=display">SDF(P)=||\vec{p}-\vec{c}||-r \left\{\begin{aligned}< & 0, 在球体内部 \\= & 0, 在球体边上 \\> & 0, 在球体外部\end{aligned}\right.</script><ul><li>上述就是一个球体的SDF函数,而求得的SDF函数的值就是点P到球体的最短距离。</li></ul><script type="math/tex; mode=display">p = eye + depth * raydirection</script><ul><li>对于测试点P的depth来说,增加SPF(p)的大小肯定是不会发生碰撞的。然后考虑到如果该射线最终能撞到物体,那么depth肯定是一个固定值,而如果不撞到其他物体的话,那么depth = + $\infty$。所以需要设置p的最小值(初试值),最大值(超过这个值认为没有hit),depth的最小值(小于这个值认为ray marching结束),ray marching步长(超过这个值认为ray marching结束)</li></ul><p><img src="spheretrace.jpg" alt="From GPU Gems 2: Chapter 8."></p><ul><li>可以拿上图举例,从点P0开始,计算场景中所有SDF的值,并取最小值,那么depth加上这个值肯定不会发生碰撞。</li></ul><script type="math/tex; mode=display">SDF(p) = min(SDF_{1}(p),SDF_{2}(p),...)</script><pre><code class="lang-cpp">//Shadertoy// co:circle origin// tp:test pointfloat CircleSDF(vec3 co,float radius,vec3 tp){    return length(co-tp)-radius;}float SceneSDF(vec3 tp){    float tp1 = CircleSDF(vec3(0,0,0),1.f,tp);    float tp2 = CircleSDF(vec3(1,1,0),1.f,tp);    return min(tp1,tp2);}float Scene(vec3 eye,vec3 dir, int MAX_STRIDE,float E,float MIN_DIS,float MAX_DIS){    float depth = MIN_DIS;    for(int i = 0; i &lt; MAX_STRIDE;++i)    {        float inc = SceneSDF(eye+depth*dir);        if(inc &lt; E)            return depth;        depth += inc;        if(depth &gt; MAX_DIS)            return MAX_DIS;    }       return depth;}vec3 GetRayDirection(float fov,vec2 size, vec2 fragCoord){    vec3 dir;    //因为屏幕的原点在中心,而fragCoord的原点在左上角，进行变换    dir.xy = fragCoord - size/2.f;    //通过fov来设置视野范围       dir.z = - ((size.y/2.f)/tan(radians(fov)/2.f));    //注意一定要标准化    return normalize(dir);}void mainImage( out vec4 fragColor, in vec2 fragCoord ){        const float MAX_DIS = 100.f;    const float MIN_DIS = 0.f;    const float E = 0.1f;    const int MAX_STRIDE = 255;    vec3 eye = vec3(0.f,0.f,5.f);    vec3 dir = GetRayDirection(45.f,iResolution.xy,fragCoord.xy);    float depth = Scene(eye,dir,MAX_STRIDE,E,MIN_DIS,MAX_DIS);    if(depth &lt; MAX_DIS - E)    {        fragColor = vec4(1,0.75,0.79,1.f);        return;    }      fragColor = vec4(0.f,0.f,0.f,1.f); }</code></pre><h1 id="表面法线"><a href="#表面法线" class="headerlink" title="表面法线"></a>表面法线</h1><ul><li>梯度的值 == 法线的值</li></ul><script type="math/tex; mode=display">∇f=( \frac{​∂f}{​∂x},\frac{​∂f}{​∂y},\frac{​∂f}{​∂z})</script><ul><li>上面的式子可以用下面的式子来近似<blockquote><p>But no need to break out the calculus chops here. Instead of taking the real derivative of the function, we’ll do an approximation by sampling points around the point on the surface, much like how you learned to calculate slope in a function as over rise-over-run before you learned how to do derivatives.</p></blockquote></li></ul><script type="math/tex; mode=display">\vec{n} = \left[ \begin{matrix}​f(x+ε,y,z)−f(x−ε,y,z) \\​f(x,y+ε,z)−f(x,y−ε,z) \\​f(x,y,z+ε)−f(x,y,z−ε) \\\end{matrix} \right]​​</script><pre><code class="lang-cpp">//shadertoy// co:circle origin// tp:test pointfloat CircleSDF(vec3 co,float radius,vec3 tp){    return length(co-tp)-radius;}float SceneSDF(vec3 tp){     return CircleSDF(vec3(0,0,0),1.f,tp);}float Scene(vec3 eye,vec3 dir, int MAX_STRIDE,float E,float MIN_DIS,float MAX_DIS){    float depth = MIN_DIS;    for(int i = 0; i &lt; MAX_STRIDE;++i)    {        float inc = SceneSDF(eye+depth*dir);        if(inc &lt; E)            return depth;        depth += inc;        if(depth &gt; MAX_DIS)            return MAX_DIS;    }       return depth;}vec3 GetRayDirection(float fov,vec2 size, vec2 fragCoord){    vec3 dir;    dir.xy = fragCoord - size/2.f;       dir.z = - ((size.y/2.f)/tan(radians(fov)/2.f));    return normalize(dir);}vec3 estimateNormal(vec3 p,float EPSILON) {    return normalize(vec3(        SceneSDF(vec3(p.x + EPSILON, p.y, p.z)) - SceneSDF(vec3(p.x - EPSILON, p.y, p.z)),        SceneSDF(vec3(p.x, p.y + EPSILON, p.z)) - SceneSDF(vec3(p.x, p.y - EPSILON, p.z)),        SceneSDF(vec3(p.x, p.y, p.z  + EPSILON)) - SceneSDF(vec3(p.x, p.y, p.z - EPSILON))    ));}vec3 GetColor(vec3 p){    return estimateNormal(p,0.01f);}void mainImage( out vec4 fragColor, in vec2 fragCoord ){        const float MAX_DIS = 100.f;    const float MIN_DIS = 0.f;    const float E = 0.1f;    const int MAX_STRIDE = 255;    vec3 eye = vec3(0.f,0.f,5.f);    vec3 dir = GetRayDirection(45.f,iResolution.xy,fragCoord.xy);    float depth = Scene(eye,dir,MAX_STRIDE,E,MIN_DIS,MAX_DIS);    if(depth &gt; MAX_DIS - E)    {        fragColor = vec4(0.f,0.f,0.f,1.f);        return;    }    fragColor = vec4(GetColor(eye + depth * dir),1.f);}</code></pre><h1 id="参考网站"><a href="#参考网站" class="headerlink" title="参考网站"></a>参考网站</h1><p><a href="http://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/" target="_blank" rel="noopener">http://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/</a><br><a href="https://zhuanlan.zhihu.com/p/36759481" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/36759481</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> opengl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LearnOpengl-CoordinateSystems</title>
+      <link href="/2020/01/04/LearnOpengl-CoordinateSystems/"/>
+      <url>/2020/01/04/LearnOpengl-CoordinateSystems/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> opengl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LearnOpengl-Transformations</title>
+      <link href="/2019/12/04/LearnOpengl-Transformations/"/>
+      <url>/2019/12/04/LearnOpengl-Transformations/</url>
+      
+        <content type="html"><![CDATA[<ul><li>单位向量 $\hat{n}$</li></ul><h1 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h1><ul><li>它允许我们在3D向量上进行位移</li><li>如果一个向量的齐次坐标是0，这个坐标就是方向向量(Direction Vector)，因为w坐标是0，这个向量就不能位移</li></ul><h1 id="四元数"><a href="#四元数" class="headerlink" title="四元数"></a>四元数</h1><ul><li>用于避免万向结死锁</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> opengl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LearnOpengl-Textures</title>
+      <link href="/2019/11/21/LearnOpengl-Textures/"/>
+      <url>/2019/11/21/LearnOpengl-Textures/</url>
+      
+        <content type="html"><![CDATA[<h1 id="纹理坐标"><a href="#纹理坐标" class="headerlink" title="纹理坐标"></a>纹理坐标</h1><ul><li><p>纹理坐标中,左下角位(0,0),右上角位(1,1)<br><img src="tex_coords.png" alt></p></li><li><p>使用纹理坐标获取纹理颜色叫做<strong>采样(Sampling)</strong></p></li></ul><h1 id="纹理环绕方式"><a href="#纹理环绕方式" class="headerlink" title="纹理环绕方式"></a>纹理环绕方式</h1><ul><li>原文讲的够好了<br><a href="https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/" target="_blank" rel="noopener">https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/</a></li></ul><h1 id="纹理过滤"><a href="#纹理过滤" class="headerlink" title="纹理过滤"></a>纹理过滤</h1><ul><li><p>产生原因:纹理坐标可以取任意浮点值，所以纹理元素与纹理坐标无法一一对应</p></li><li><p>纹理元素(Texel)</p></li></ul><blockquote><p>而纹素是纹理图片空间的基本单元，可以看成是纹理的组成“像素”</p></blockquote><ul><li>纹理过滤（Texture Filtering)</li></ul><blockquote><p>一个像素一般不会正好对应于一个纹元（texel)。所以像素的颜色无法直接得到，需要经过一定的运算，这个过程就是纹理过滤。<br>参考网址：<a href="https://zhuanlan.zhihu.com/p/91208143" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/91208143</a></p></blockquote><ul><li>有两种常见的纹理过滤的方式:GL_NEAREST和GL_LINEAR</li></ul><blockquote><p>邻近过滤:选择中心点最接近纹理坐标的那个像素<br>线性过滤:基于纹理坐标附近的纹理像素，计算出一个插值。一个纹理像素的中心距离纹理坐标越近，那么这个纹理像素的颜色对最终的样本颜色的贡献越大。<br>具体项目可见<a href="https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/" target="_blank" rel="noopener">https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/</a>  </p></blockquote><ul><li>如何设置过滤方式</li></ul><pre><code class="lang-cpp">glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</code></pre><blockquote><p>GL_TEXTURE_MAG_FILTTER:纹理元素的数量 &lt; 图元像素的数量。比如texture为256*256，图元为512*512。相当于纹理元素被放大，一个纹理元素的颜色决定多个图元像素的颜色</p><p>GL_TEXTURE_MIN_FILTER 纹理元素的数量 &gt; 图元像素的数量。比如texture为512*512,图元为256*256。相当于纹理被缩小，一个图元像素的颜色由多个纹理像素决定。</p></blockquote><h1 id="多级渐远纹理-Mipmap"><a href="#多级渐远纹理-Mipmap" class="headerlink" title="多级渐远纹理(Mipmap)"></a>多级渐远纹理(Mipmap)</h1><ul><li><p>产生原因:我们有一个包含着上千物体的大房间，每个物体上都有纹理。有些物体会很远，但其纹理会拥有与近处物体同样高的分辨率。由于远处的物体可能只产生很少的片段(像素)，OpenGL从高分辨率纹理中为这些片段（像素）获取正确的颜色值就很困难，因为它需要对一个跨过纹理很大部分的片段（像素）只拾取一个纹理颜色。在小物体上这会产生不真实的感觉，更不用说对它们使用高分辨率纹理浪费内存的问题了。</p></li><li><p>多级渐远纹理：简单来说就是一系列的纹理图像，后一个纹理图像是前一个的二分之一</p></li><li><p>距观察者的距离超过一定的阈值，OpenGL会使用不同的多级渐远纹理，即最适合物体的距离的那个。由于距离远，解析度不高也不会被用户注意到。同时，多级渐远纹理另一加分之处是它的性能非常好。 </p></li><li><p>Mipmap的例子如下<br><img src="mipmaps.png" alt></p></li><li><p>可以在GL_TEXTURE_MIN_FILTER中使用多级渐远纹理过滤选项，但是在GL_TEXTURE_MAG_FILTER中无法使用，纹理放大不会使用多级渐远纹理，为放大过滤设置多级渐远纹理的选项会产生一个GL_INVALID_ENUM错误代码。</p></li></ul><h1 id="stb-image-h"><a href="#stb-image-h" class="headerlink" title="stb_image.h"></a>stb_image.h</h1><h2 id="加载图片"><a href="#加载图片" class="headerlink" title="加载图片"></a>加载图片</h2><pre><code class="lang-cpp">int width, height, nrChannels;//地址、宽度、高度、颜色通道的个数、期望通道数（得到的data中的数据的通道数目）unsigned char *data = stbi_load(&quot;container.jpg&quot;, &amp;width, &amp;height, &amp;nrChannels, 0);</code></pre><h1 id="生成纹理"><a href="#生成纹理" class="headerlink" title="生成纹理"></a>生成纹理</h1><pre><code class="lang-cpp">unsigned int texture;glGenTextures(1, &amp;texture);glBindTexture(GL_TEXTURE_2D, texture);// 为当前绑定的纹理对象设置环绕、过滤方式glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);// 加载并生成纹理int width, height, nrChannels;unsigned char *data = stbi_load(&quot;container.jpg&quot;, &amp;width, &amp;height, &amp;nrChannels, 0);if (data){    //用于生成2D纹理    // 参数一：设置纹理目标，一般为GL_TEXTURE_1D、GL_TEXTURE_2D、GL_TEXTURE_3D    // 参数二：Mipmap级别,手动设置每个的话这里设0    // 参数三：纹理存储格式    // 参数四：宽度    // 参数五：长度    // 0    // 参数六：image的的存储格式    // 参数七：图像数据    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);    //为当前绑定的纹理自动生成所有需要的多级渐远纹理。    glGenerateMipmap(GL_TEXTURE_2D);}else{    std::cout &lt;&lt; &quot;Failed to load texture&quot; &lt;&lt; std::endl;}//释放图像的内存stbi_image_free(data);</code></pre><h1 id="应用纹理"><a href="#应用纹理" class="headerlink" title="应用纹理"></a>应用纹理</h1><ul><li>在定点数组中添加纹理坐标</li><li>在VS中声明纹理坐标属性</li><li>利用glVertexAttribPointer给定点数组中的纹理坐标解释，并启用该定点属性</li><li>在PS中获取VS中的纹理坐标，声明sampler2D变量</li><li>glActiveTexture激活对应的纹理单元</li><li>利用texture(ourTexture, TexCoord)使用之前设置的纹理参数对相应的颜色值进行采样</li></ul><h1 id="纹理单元"><a href="#纹理单元" class="headerlink" title="纹理单元"></a>纹理单元</h1><ul><li>uniform sampler2D MySampler存放纹理的位置称为纹理单元。</li><li>opengl有GL_TEXTURE0 - GL_TEXTURE15总共16个纹理单元。</li><li>使用方式如下</li></ul><pre><code class="lang-cpp">// 设置着色器采样器使用哪个纹理单元ourShader.use(); // 别忘记在激活着色器前先设置uniform！glUniform1i(glGetUniformLocation(ourShader.ID, &quot;texture1&quot;), 0); // 手动设置ourShader.setInt(&quot;texture2&quot;, 1); // 或者使用着色器类设置</code></pre><pre><code class="lang-cpp">//激活纹理单元glActiveTexture(GL_TEXTURE0);//绑定时会自动使用当前激活的纹理单元 glBindTexture(GL_TEXTURE_2D, texture1);glActiveTexture(GL_TEXTURE1);glBindTexture(GL_TEXTURE_2D, texture2);</code></pre><ul><li>纹理单元GL_TEXTURE0默认总是被激活，所以我们在前面的例子里当我们使用glBindTexture的时候，无需激活任何纹理单元。</li></ul><h1 id="图片翻转问题"><a href="#图片翻转问题" class="headerlink" title="图片翻转问题"></a>图片翻转问题</h1><ul><li>纹理可能上下颠倒，这是因为OpenGL要求y轴0.0坐标是在图片的底部的，但是图片的y轴0.0坐标通常在顶部。</li></ul><pre><code class="lang-cpp">//解决方法stbi_set_flip_vertically_on_load(true);</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> opengl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LearnOpengl-Shaders</title>
+      <link href="/2019/11/21/LearnOpengl-Shaders/"/>
+      <url>/2019/11/21/LearnOpengl-Shaders/</url>
+      
+        <content type="html"><![CDATA[<ul><li><p>很多都是概念性的东西，教程里整理的很好<br><a href="https://learnopengl-cn.github.io/01%20Getting%20started/05%20Shaders/#_1" target="_blank" rel="noopener">https://learnopengl-cn.github.io/01%20Getting%20started/05%20Shaders/#_1</a></p></li><li><p>layout (location = 0)</p><blockquote><p>为了定义顶点数据该如何管理，我们使用location这一元数据指定输入变量，这样我们才可以在CPU上配置顶点属性。</p></blockquote></li><li><p>如果你在片段着色器没有定义输出颜色，OpenGL会把你的物体渲染为黑色（或白色）</p></li></ul><h1 id="uniform"><a href="#uniform" class="headerlink" title="uniform"></a>uniform</h1><ul><li>uniform是全局的(Global)。全局意味着uniform变量必须在每个着色器程序对象中都是独一无二的，而且它可以被着色器程序的任意着色器在任意阶段访问。</li><li>第二，无论你把uniform值设置成什么，uniform会一直保存它们的数据，直到它们被重置或更新。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> opengl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>UE4Live_RenderProcess</title>
+      <link href="/2019/10/08/UE4Live-RenderProcess/"/>
+      <url>/2019/10/08/UE4Live-RenderProcess/</url>
+      
+        <content type="html"><![CDATA[<p>视频地址 <a href="https://www.bilibili.com/video/av35615021?t=3626" target="_blank" rel="noopener">https://www.bilibili.com/video/av35615021?t=3626</a><br>相关图片 <a href="https://blog.csdn.net/jli_family/article/details/86584208" target="_blank" rel="noopener">https://blog.csdn.net/jli_family/article/details/86584208</a></p><p><img src="UE4Live_RenderProcess.png" alt></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LearnOpengl_HelloTriangle</title>
+      <link href="/2019/10/08/LearnOpengl-HelloTriangle/"/>
+      <url>/2019/10/08/LearnOpengl-HelloTriangle/</url>
+      
+        <content type="html"><![CDATA[<ul><li><p>通过opengl绘制图形，需要通过opengl的渲染管线，这一过程实际上指的是一堆原始图形数据途经一个输送管道，期间经过各种变化处理最终出现在屏幕的过程。图形渲染管线可以被划分为两个主要部分：第一部分把你的3D坐标转换为2D坐标，第二部分是把2D坐标转变为实际的有颜色的像素。</p></li><li><p>对于利用opengl画出一个三角形，归纳为以下步骤</p></li></ul><h1 id="build-and-compile-our-shader-program"><a href="#build-and-compile-our-shader-program" class="headerlink" title="build and compile our shader program"></a>build and compile our shader program</h1><p><img src="Opengl_ShaderCreate.png" alt></p><ul><li>在OpenGL的渲染管线中，我们必须要配置VS和FS(PS)两个着色器,可以选择配置GS。</li></ul><pre><code class="lang-cpp">//创建着色器的方式/***  * 创建一个指定类型的着色器，返回指向这个着色器的在显存地址的引用***/int MyShader = glCreateShader(TYPE_OF_SHADER);</code></pre><ul><li>着色器程序运行的着色器语言，在opengl中使用的是GLSL。所以我们需要编写GLSL,并且将其绑定到我们创建的着色器上</li></ul><pre><code class="lang-cpp">/***  * MyShaderSource中写入待绑定的GLSL程序***/const char *MyShaderSource = &quot;#version 330 core\n&quot;    &quot;out vec4 FragColor;\n&quot;    &quot;void main()\n&quot;    &quot;{\n&quot;    &quot;   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n&quot;    &quot;}\n\0&quot;;/***  * 将GLSL程序与Shader进行绑定  * Shader显存地址/程序数量/字符串(数组)/字符串数组长度***/glShaderSource(MyShader, 1, &amp;MyShaderSource, NULL);</code></pre><ul><li>进行着色器编译并显示Debug信息</li></ul><pre><code class="lang-cpp">glCompileShader(vertexShader);// check for shader compile errorsint success;char infoLog[512];glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &amp;success);if (!success){    glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);    std::cout &lt;&lt; &quot;ERROR::SHADER::VERTEX::COMPILATION_FAILED\n&quot; &lt;&lt; infoLog &lt;&lt; std::endl;}</code></pre><ul><li>到这里我们的着色器就编译好了，接下来我们需要将编译好的着色器链接成一个着色器对象。这个着色器对象就是我们将数据渲染到屏幕所使用的的渲染管线。</li></ul><pre><code class="lang-cpp">unsigned int shaderProgram;shaderProgram = glCreateProgram();glAttachShader(shaderProgram, vertexShader);glAttachShader(shaderProgram, fragmentShader);glLinkProgram(shaderProgram);glGetProgramiv(shaderProgram, GL_LINK_STATUS, &amp;success);if(!success) {    glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);    std::cout &lt;&lt; &quot;ERROR::SHADER::PROGTRAM::LINK_FAILED\n&quot; &lt;&lt; infoLog &lt;&lt; std::endl;}/***  * 在之后可以调用glUseProgram(shaderProgram)来使用这个我们已经链接好的着色器程序对象。***///别忘了垃圾回收，这两个这时候已经没用了glDeleteShader(vertexShader);glDeleteShader(fragmentShader);</code></pre><h1 id="set-up-vertex-data-and-buffer-s-and-configure-vertex-attributes"><a href="#set-up-vertex-data-and-buffer-s-and-configure-vertex-attributes" class="headerlink" title="set up vertex data (and buffer(s)) and configure vertex attributes"></a>set up vertex data (and buffer(s)) and configure vertex attributes</h1><ul><li>我们要画图形的话，需要几样的东西，首先是需要在内存中准备顶点，然后传输到显存中。</li></ul><h2 id="VBO-vertex-buffer-objects-顶点缓冲对象"><a href="#VBO-vertex-buffer-objects-顶点缓冲对象" class="headerlink" title="VBO(vertex buffer objects):顶点缓冲对象"></a>VBO(vertex buffer objects):顶点缓冲对象</h2><pre><code class="lang-cpp">unsigned int VBO;//这里用&amp;，是因为直接改变VBO指向内存单元的数据，执行完后VBO保存一个显存地址glGenBuffers(1, &amp;VBO);//这一步将显存地址与GL_ARRAY_BUFFER绑定，这样之后所有对GL_ARRAY_BUFFER，其实就是在操作VBO所指的显存区域。glBindBuffer(GL_ARRAY_BUFFER, VBO);//这一步是用于将内存中的数据传输到显存中glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);</code></pre><ul><li>上述代码用于创建一个叫做VBO缓冲对象的东西，这个用于存储将来从内存传输过来的定点数据。</li></ul><h2 id="解释显存中的缓存数据"><a href="#解释显存中的缓存数据" class="headerlink" title="解释显存中的缓存数据"></a>解释显存中的缓存数据</h2><ul><li>在显存中的数据，我们必须手动指定输入数据的哪一个部分对应顶点着色器的哪一个顶点属性。</li></ul><pre><code class="lang-cpp">//该函数用于让OpenGL知道该如何解析顶点数据//第一个参数表示该数据希望传输到VS的哪一个参数。比如//  layout (location = 0) in vec3 aPos;//  layout (location = 1) in vec3 bPos;//第一个参数设为0则该数据传入aPos,1则传入bPos//第二个参数表示该定点属性的大小，这里是3//第三个参数表示大小为3，每个部分的类型为float//第四个参数表示是否要标准化设备坐标(Normalized Device Coordinates, NDC)//第五个参数表示每个顶点属性的总大小,对于紧密排列的数据可以用0代替//第六感参数表示位置数据在缓冲中起始位置的偏移量(Offset)，比如sizeof(float)，则偏移一个float值，3*sizeof(float)，则偏移一个定点glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);</code></pre><ul><li>接下来我们应该使用glEnableVertexAttribArray，以顶点属性位置值作为参数，启用顶点属性；顶点属性默认是禁用的。</li></ul><pre><code class="lang-cpp">glEnableVertexAttribArray(0);</code></pre><h2 id="VAO-Vertex-Array-Objec-顶点数组对象"><a href="#VAO-Vertex-Array-Objec-顶点数组对象" class="headerlink" title="VAO(Vertex Array Objec):顶点数组对象"></a>VAO(Vertex Array Objec):顶点数组对象</h2><ul><li>一个顶点数组对象会储存以下这些内容：<blockquote><p>glEnableVertexAttribArray和glDisableVertexAttribArray的调用。</p></blockquote></li></ul><blockquote><p>通过glVertexAttribPointer设置的顶点属性配置。</p><p>通过glVertexAttribPointer调用与顶点属性关联的顶点缓冲对象。</p></blockquote><ul><li>顶点数组对象(Vertex Array Object, VAO)可以像顶点缓冲对象那样被绑定，任何随后的顶点属性调用都会储存在这个VAO中。</li><li>也就是说我们对VBO的所有配置都会保存在我们所绑定的VAO中，如果之后想要使用这一配置，只需要重新绑定它就行了。</li></ul><pre><code class="lang-cpp">//VAO绑定unsigned int VAO;glGenVertexArrays(1, &amp;VAO);glBindVertexArray(VAO);</code></pre><pre><code class="lang-cpp">//VAO解绑glBindVertexArray(VAO);</code></pre><pre><code class="lang-cpp">//VAO使用glBindVertexArray(VAO);</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><pre><code class="lang-cpp">// ..:: Initialization code (done once (unless your object frequently changes)) :: ..// 1. bind Vertex Array ObjectglBindVertexArray(VAO);// 2. copy our vertices array in a buffer for OpenGL to useglBindBuffer(GL_ARRAY_BUFFER, VBO);glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);// 3. then set our vertex attributes pointersglVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);glEnableVertexAttribArray(0);  //glBindVertexArray(0);...// ..:: Drawing code (in render loop) ::..// 4. draw the objectglUseProgram(shaderProgram);glBindVertexArray(VAO);someOpenGLFunctionThatDrawsOurTriangle();</code></pre><h1 id="render-loop"><a href="#render-loop" class="headerlink" title="render loop"></a>render loop</h1><ul><li>如何使用我们所自定义的着色器和配置好的定点属性呢?</li></ul><pre><code class="lang-cpp">// draw our first triangleglUseProgram(shaderProgram);glBindVertexArray(VAO); // seeing as we only have a single VAO there&#39;s no need to bind it every time, but we&#39;ll do so to keep things a bit more organizedglDrawArrays(GL_TRIANGLES, 0, 3);// glBindVertexArray(0); // no need to unbind it every time</code></pre><ul><li>在glUseProgram函数调用之后，每个着色器调用和渲染调用都会使用这个程序对象</li><li>在glBindVertexArray函数调用之后，会使用VAO中所保存的顶点数据配置</li><li>glDrawArray函数用于绘制图元，第一个函数是图元类型，第二个参数指定了顶点数组的起始索引，第三是顶点个数。绘制glVertexAttribPointer绑定后的第几个位置开始的几个定点。注意这里是定点的偏移，比如这里上下文中大小为 3*sizeof(float)</li><li>需要区分在glVertexAttribPointer中的offset和这里的索引</li></ul><h1 id="EBO-Element-Buffer-Object-引缓冲对象"><a href="#EBO-Element-Buffer-Object-引缓冲对象" class="headerlink" title="EBO(Element Buffer Object):引缓冲对象"></a>EBO(Element Buffer Object):引缓冲对象</h1><ul><li>用于指定定点的绘制顺序</li></ul><pre><code class="lang-cpp">unsigned int EBO;glGenBuffers(1, &amp;EBO);glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), Indices, GL_STATIC_DRAW);</code></pre><pre><code class="lang-cpp">//这里改用这glDrawElements来画三角形glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);</code></pre><ul><li>注意VAO也会保存EBO的数组配置信息，glDrawElements会使用我们绑定的EBO中的索引顺序,所以要注意解绑VAO的顺序</li></ul><h1 id="绘制最终流程"><a href="#绘制最终流程" class="headerlink" title="绘制最终流程"></a>绘制最终流程</h1><pre><code class="lang-cpp">// ..:: 初始化代码 :: ..// 1. 绑定顶点数组对象glBindVertexArray(VAO);// 2. 把我们的顶点数组复制到一个顶点缓冲中，供OpenGL使用glBindBuffer(GL_ARRAY_BUFFER, VBO);glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);// 3. 复制我们的索引数组到一个索引缓冲中，供OpenGL使用glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);// 4. 设定顶点属性指针glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);glEnableVertexAttribArray(0);// ..:: 绘制代码（渲染循环中） :: ..glUseProgram(shaderProgram);glBindVertexArray(VAO);glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)glBindVertexArray(0);</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> opengl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>虚幻4渲染编程 - 资源操作</title>
+      <link href="/2019/10/07/UE4Render-ResourceOperation/"/>
+      <url>/2019/10/07/UE4Render-ResourceOperation/</url>
+      
+        <content type="html"><![CDATA[<h1 id="CS"><a href="#CS" class="headerlink" title="CS"></a>CS</h1><ul><li>Compute Shader<br><a href="https://docs.microsoft.com/en-us/windows/uwp/graphics-concepts/compute-shader-stage--cs-" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/windows/uwp/graphics-concepts/compute-shader-stage--cs-</a><br><a href="https://www.khronos.org/opengl/wiki/Compute_Shader" target="_blank" rel="noopener">https://www.khronos.org/opengl/wiki/Compute_Shader</a></li></ul><h1 id="UAV"><a href="#UAV" class="headerlink" title="UAV"></a>UAV</h1><ul><li>Unordered Access view<br><a href="https://docs.microsoft.com/en-us/windows/uwp/graphics-concepts/shader-resource-view--srv-" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/windows/uwp/graphics-concepts/shader-resource-view--srv-</a></li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>在shader文件中添加第二个颜色变量</title>
+      <link href="/2019/10/06/UE4Render-addParams/"/>
+      <url>/2019/10/06/UE4Render-addParams/</url>
+      
+        <content type="html"><![CDATA[<h1 id="在shader文件中添加第二个颜色变量"><a href="#在shader文件中添加第二个颜色变量" class="headerlink" title="在shader文件中添加第二个颜色变量"></a>在shader文件中添加第二个颜色变量</h1><p><a href="https://zhuanlan.zhihu.com/p/36635394" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/36635394</a><br><a href="https://zhuanlan.zhihu.com/p/36695496" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/36695496</a><br>在看了shader编程的第二第三章后,觉的似懂非懂。再上面添加点东西,便于很深入的理解</p><h2 id="MyShader-usf"><a href="#MyShader-usf" class="headerlink" title="MyShader.usf"></a>MyShader.usf</h2><ul><li>我们从目标要求开始,这里我想要使得输出颜色变为两个颜色的和，比如可以让颜色变成R+G,R+B等等</li><li>这里我们现在usf文件中做如下添加和修改</li></ul><pre><code class="lang-cpp">// MyShader.usf#include &quot;/Engine/Public/Platform.ush&quot;float4 SimpleColor;// 增加一个颜色采样的变量float4 SimpleColor2;void MainVS( in float4 InPosition : ATTRIBUTE0, out float4 OutPosition : SV_POSITION ){ // screenspace position from vb    OutPosition = InPosition;}void MainPS(    out float4 OutColor : SV_Target0    ){    // 输出颜色变为两种颜色的叠加    OutColor = (SimpleColor + SimpleColor2);}</code></pre><h2 id="MyShaderTest-h"><a href="#MyShaderTest-h" class="headerlink" title="MyShaderTest.h"></a>MyShaderTest.h</h2><ul><li>因为添加了一个颜色变量，我们得将相关数据传进去。首先想到的是在蓝图中增加一个引脚</li></ul><pre><code class="lang-cpp">// MyShaderTest.h#pragma once#include &quot;CoreMinimal.h&quot;#include &quot;UObject/ObjectMacros.h&quot;#include &quot;Classes/Kismet/BlueprintFunctionLibrary.h&quot;#include &quot;MyShaderTest.generated.h&quot;UCLASS(MinimalAPI, meta = (ScriptName = &quot;TestShaderLibrary&quot;))class UTestShaderBlueprintLibrary : public UBlueprintFunctionLibrary{    GENERATED_UCLASS_BODY()        UFUNCTION(BlueprintCallable, Category = &quot;ShaderTestPlugin&quot;, meta = (WorldContext = &quot;WorldContextObject&quot;))        // 在这里增加一个FLinearColor的形参就是增加一个引脚        static void DrawTestShaderRenderTarget(class UTextureRenderTarget2D* OutputRenderTarget, AActor* AC, FLinearColor MyColor,FLinearColor MyColor2);};</code></pre><h2 id="MyShaderTest-cpp"><a href="#MyShaderTest-cpp" class="headerlink" title="MyShaderTest.cpp"></a>MyShaderTest.cpp</h2><h3 id="DrawTestShaderRenderTarget"><a href="#DrawTestShaderRenderTarget" class="headerlink" title="DrawTestShaderRenderTarget"></a>DrawTestShaderRenderTarget</h3><ul><li>为此我们需要进入cpp文件中,添加相应的形参。这个函数是在逻辑线程中调用。</li><li>ENQUEUE_RENDER_COMMAND向渲染线程压入一个渲染命令， 调用DrawTestShaderRenderTarget_RenderThread</li><li>我们需要在lambda表达式中增加我们需要传的变量给渲染线程。<blockquote><p>DrawTestShaderRenderTarget中主要是对数据的获取和传递,一般不需要修改东西，只需要增加你要传递的各类数据。</p></blockquote></li></ul><pre><code class="lang-cpp">// MyShaderTest.cppvoid UTestShaderBlueprintLibrary::DrawTestShaderRenderTarget(    UTextureRenderTarget2D* OutputRenderTarget,    AActor* Ac,    FLinearColor MyColor,    FLinearColor MyColor2){    check(IsInGameThread());    if (!OutputRenderTarget)    {        return;    }    FTextureRenderTargetResource* TextureRenderTargetResource = OutputRenderTarget-&gt;GameThread_GetRenderTargetResource();    UWorld* World = Ac-&gt;GetWorld();    ERHIFeatureLevel::Type FeatureLevel = World-&gt;Scene-&gt;GetFeatureLevel();    FName TextureRenderTargetName = OutputRenderTarget-&gt;GetFName();    ENQUEUE_RENDER_COMMAND(CaptureCommand)(        [TextureRenderTargetResource, FeatureLevel, MyColor,MyColor2, TextureRenderTargetName](FRHICommandListImmediate&amp; RHICmdList)    {        DrawTestShaderRenderTarget_RenderThread(RHICmdList, TextureRenderTargetResource, FeatureLevel, TextureRenderTargetName, MyColor,MyColor2);    }    );}</code></pre><h3 id="FMyShaderTest"><a href="#FMyShaderTest" class="headerlink" title="FMyShaderTest"></a>FMyShaderTest</h3><ul><li>因为给DrawTestShaderRenderTarget_RenderThread添加了一个数据，所以需要修改其函数，但是这个比较复杂我们先看简单的。</li><li>渲染管线中VS和PS是一定要自己配置的,所以创建自定义的VS和PS,需要从FGlobalShader继承。然后需要使用</li></ul><pre><code class="lang-cpp">IMPLEMENT_SHADER_TYPE(, FShaderTestVS, TEXT(&quot;/Plugin/ShadertestPlugin/Private/MyShader.usf&quot;), TEXT(&quot;MainVS&quot;), SF_Vertex)IMPLEMENT_SHADER_TYPE(, FShaderTestPS, TEXT(&quot;/Plugin/ShadertestPlugin/Private/MyShader.usf&quot;), TEXT(&quot;MainPS&quot;), SF_Pixel)</code></pre><p>这个语句来使相关类和Vertex Shader或Pixel Shader文件绑定，这样渲染管线中将会使用我们自定义的定点着色器和像素着色器</p><ul><li>因为在VS和PS中有些配置是一样的,所以我们可以先从FGlobalShader派生一个FMyShaderTest的类,然后再从FMyShaderTest派生出我们的FShaderTestVS和FShaderTestPS。</li></ul><pre><code class="lang-cpp">// MyShaderTest.cppclass FMyShaderTest : public FGlobalShader{public:    FMyShaderTest() {}    FMyShaderTest(const ShaderMetaType::CompiledShaderInitializerType&amp; Initializer)        : FGlobalShader(Initializer)    {        SimpleColorVal.Bind(Initializer.ParameterMap, TEXT(&quot;SimpleColor&quot;));        SimpleColorVal2.Bind(Initializer.ParameterMap, TEXT(&quot;SimpleColor2&quot;));    }    static bool ShouldCache(EShaderPlatform Platform)    {        return true;    }    static bool ShouldCompilePermutation(const FGlobalShaderPermutationParameters&amp; Parameters)    {        //return IsFeatureLevelSupported(Parameters.Platform, ERHIFeatureLevel::SM4);          return true;    }    static void ModifyCompilationEnvironment(const FGlobalShaderPermutationParameters&amp; Parameters, FShaderCompilerEnvironment&amp; OutEnvironment)    {        FGlobalShader::ModifyCompilationEnvironment(Parameters, OutEnvironment);        OutEnvironment.SetDefine(TEXT(&quot;TEST_MICRO&quot;), 1);    }    void SetParameters(        FRHICommandListImmediate&amp; RHICmdList,        const FLinearColor &amp;MyColor,        const FLinearColor &amp;MyColor2    )    {        SetShaderValue(RHICmdList, GetPixelShader(), SimpleColorVal, MyColor);        SetShaderValue(RHICmdList, GetPixelShader(), SimpleColorVal2, MyColor2);    }    virtual bool Serialize(FArchive&amp; Ar) override    {        bool bShaderHasOutdatedParameters = FGlobalShader::Serialize(Ar);        Ar &lt;&lt; SimpleColorVal;        Ar &lt;&lt; SimpleColorVal2;        return bShaderHasOutdatedParameters;    }private:    FShaderParameter SimpleColorVal;    FShaderParameter SimpleColorVal2;};</code></pre><p>其中</p><pre><code class="lang-cpp">// MyShaderTest.cppSimpleColorVal.Bind(Initializer.ParameterMap, TEXT(&quot;SimpleColor&quot;));SimpleColorVal2.Bind(Initializer.ParameterMap, TEXT(&quot;SimpleColor2&quot;));// MyShader.usffloat4 SimpleColor;float4 SimpleColor2;</code></pre><ul><li>这是将FMyShaderTest中的私有变量与MyShader.usf中变量进行绑定。</li><li><p>但是我们注意到我们还没有将颜色输入到FMyShaderTest中的私有变量。因此我们需要写一个函数用于把我们的颜色信息传到shader里。。</p><pre><code class="lang-cpp">// MyShaderTest.cppvoid SetParameters(  FRHICommandListImmediate&amp; RHICmdList,  const FLinearColor &amp;MyColor,  const FLinearColor &amp;MyColor2){  SetShaderValue(RHICmdList, GetPixelShader(), SimpleColorVal, MyColor);  SetShaderValue(RHICmdList, GetPixelShader(), SimpleColorVal2, MyColor2);}</code></pre></li><li><p>因为这些参数在PS中使用到，所以此处使用GetPixelShader()参数</p></li></ul><pre><code class="lang-cpp">    virtual bool Serialize(FArchive&amp; Ar) override    {        bool bShaderHasOutdatedParameters = FGlobalShader::Serialize(Ar);        Ar &lt;&lt; SimpleColorVal;        Ar &lt;&lt; SimpleColorVal2;        return bShaderHasOutdatedParameters;    }</code></pre><ul><li>虚幻序列化，用于读取磁盘上的渲染数据，这里需要将我们所需要的SimpleColorVal，SimpleColorVal2;</li></ul><pre><code class="lang-cpp">static bool ShouldCache(EShaderPlatform Platform){    return true;}static bool ShouldCompilePermutation(const FGlobalShaderPermutationParameters&amp; Parameters){    //return IsFeatureLevelSupported(Parameters.Platform, ERHIFeatureLevel::SM4);      return true;}static void ModifyCompilationEnvironment(const FGlobalShaderPermutationParameters&amp; Parameters, FShaderCompilerEnvironment&amp; OutEnvironment){    FGlobalShader::ModifyCompilationEnvironment(Parameters, OutEnvironment);    OutEnvironment.SetDefine(TEXT(&quot;TEST_MICRO&quot;), 1);}</code></pre><ul><li>剩下这些可以暂时不用管。<h3 id="VS-和-PS"><a href="#VS-和-PS" class="headerlink" title="VS 和 PS"></a>VS 和 PS</h3></li></ul><pre><code class="lang-cpp">class FShaderTestVS : public FMyShaderTest{    DECLARE_SHADER_TYPE(FShaderTestVS, Global);public:    FShaderTestVS() {}    FShaderTestVS(const ShaderMetaType::CompiledShaderInitializerType&amp; Initializer)        : FMyShaderTest(Initializer)    {    }};class FShaderTestPS : public FMyShaderTest{    DECLARE_SHADER_TYPE(FShaderTestPS, Global);public:    FShaderTestPS() {}    FShaderTestPS(const ShaderMetaType::CompiledShaderInitializerType&amp; Initializer)        : FMyShaderTest(Initializer)    {    }};IMPLEMENT_SHADER_TYPE(, FShaderTestVS, TEXT(&quot;/Plugin/ShadertestPlugin/Private/MyShader.usf&quot;), TEXT(&quot;MainVS&quot;), SF_Vertex)IMPLEMENT_SHADER_TYPE(, FShaderTestPS, TEXT(&quot;/Plugin/ShadertestPlugin/Private/MyShader.usf&quot;), TEXT(&quot;MainPS&quot;), SF_Pixel)</code></pre><ul><li>这里从FMyShaderTest派生两个类分别利用IMPLEMENT_SHADER_TYPE宏指定为VS和PS</li></ul><pre><code class="lang-cpp">DECLARE_SHADER_TYPE(FShaderTestVS, Global);</code></pre><ul><li>该宏用于把该Shader加入全局shadermap中，在运行前会将shadermap中的所以shader进行编译。</li></ul><h3 id="DrawTestShaderRenderTarget-RenderThread"><a href="#DrawTestShaderRenderTarget-RenderThread" class="headerlink" title="DrawTestShaderRenderTarget_RenderThread"></a>DrawTestShaderRenderTarget_RenderThread</h3><pre><code class="lang-cpp">static void DrawTestShaderRenderTarget_RenderThread(    FRHICommandListImmediate&amp; RHICmdList,    FTextureRenderTargetResource* OutputRenderTargetResource,    ERHIFeatureLevel::Type FeatureLevel,    FName TextureRenderTargetName,    FLinearColor MyColor,    FLinearColor MyColor2){    check(IsInRenderingThread());#if WANTS_DRAW_MESH_EVENTS      FString EventName;    TextureRenderTargetName.ToString(EventName);    SCOPED_DRAW_EVENTF(RHICmdList, SceneCapture, TEXT(&quot;ShaderTest %s&quot;), *EventName);#else      SCOPED_DRAW_EVENT(RHICmdList, DrawUVDisplacementToRenderTarget_RenderThread);#endif      //设置渲染目标      SetRenderTarget(        RHICmdList,        OutputRenderTargetResource-&gt;GetRenderTargetTexture(),        FTextureRHIRef(),        ESimpleRenderTargetMode::EUninitializedColorAndDepth,        FExclusiveDepthStencil::DepthNop_StencilNop    );    //设置视口      //FIntPoint DrawTargetResolution(OutputRenderTargetResource-&gt;GetSizeX(), OutputRenderTargetResource-&gt;GetSizeY());      //RHICmdList.SetViewport(0, 0, 0.0f, DrawTargetResolution.X, DrawTargetResolution.Y, 1.0f);      TShaderMap&lt;FGlobalShaderType&gt;* GlobalShaderMap = GetGlobalShaderMap(FeatureLevel);    TShaderMapRef&lt;FShaderTestVS&gt; VertexShader(GlobalShaderMap);    TShaderMapRef&lt;FShaderTestPS&gt; PixelShader(GlobalShaderMap);    // Set the graphic pipeline state.      FGraphicsPipelineStateInitializer GraphicsPSOInit;    RHICmdList.ApplyCachedRenderTargets(GraphicsPSOInit);    GraphicsPSOInit.DepthStencilState = TStaticDepthStencilState&lt;false, CF_Always&gt;::GetRHI();    GraphicsPSOInit.BlendState = TStaticBlendState&lt;&gt;::GetRHI();    GraphicsPSOInit.RasterizerState = TStaticRasterizerState&lt;&gt;::GetRHI();    GraphicsPSOInit.PrimitiveType = PT_TriangleList;    GraphicsPSOInit.BoundShaderState.VertexDeclarationRHI = GetVertexDeclarationFVector4();    GraphicsPSOInit.BoundShaderState.VertexShaderRHI = GETSAFERHISHADER_VERTEX(*VertexShader);    GraphicsPSOInit.BoundShaderState.PixelShaderRHI = GETSAFERHISHADER_PIXEL(*PixelShader);    SetGraphicsPipelineState(RHICmdList, GraphicsPSOInit);    //RHICmdList.SetViewport(0, 0, 0.0f, DrawTargetResolution.X, DrawTargetResolution.Y, 1.0f);      PixelShader-&gt;SetParameters(RHICmdList, MyColor,MyColor2);    // Draw grid.      //uint32 PrimitiveCount = 2;      //RHICmdList.DrawPrimitive(PT_TriangleList, 0, PrimitiveCount, 1);      FVector4 Vertices[4];    Vertices[0].Set(-1.0f, 1.0f, 0, 1.0f);    Vertices[1].Set(1.0f, 1.0f, 0, 1.0f);    Vertices[2].Set(-1.0f, -1.0f, 0, 1.0f);    Vertices[3].Set(1.0f, -1.0f, 0, 1.0f);    static const uint16 Indices[6] =    {        0, 1, 2,        2, 1, 3    };    //DrawPrimitiveUP(RHICmdList, PT_TriangleStrip, 2, Vertices, sizeof(Vertices[0]));      DrawIndexedPrimitiveUP(        RHICmdList,        PT_TriangleList,        0,        ARRAY_COUNT(Vertices),        2,        Indices,        sizeof(Indices[0]),        Vertices,        sizeof(Vertices[0])    );    // Resolve render target.      RHICmdList.CopyToResolveTarget(        OutputRenderTargetResource-&gt;GetRenderTargetTexture(),        OutputRenderTargetResource-&gt;TextureRHI,        false, FResolveParams());}</code></pre><ul><li>这是渲染线程中执行的函数</li><li>这里只要在形参中添加MyColor2，以及SetParameters中添加MyColor2</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> UE4 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ue4 </tag>
+            
+            <tag> render </tag>
+            
+            <tag> shader </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LearnOpengl_HelloWindow</title>
+      <link href="/2019/09/21/LearnOpengl-HelloWindow/"/>
+      <url>/2019/09/21/LearnOpengl-HelloWindow/</url>
+      
+        <content type="html"><![CDATA[<ul><li><p>glfwMakeContextCurrent(window)</p><blockquote><p>用于在当前线程上载入window的上下文。</p></blockquote></li><li><p>需要在使用opengl函数前加载glad用于定于函数地址</p><pre><code class="lang-cpp">if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){  std::cout &lt;&lt; &quot;Failed to initialize GLAD&quot; &lt;&lt; std::endl;  return -1;}</code></pre><p>疑问:必须在glfwMakeContextCurrent(window)之后才能初始化GLAD,为什么？</p><blockquote><p>我做了一些尝试,glViewport的操作,如果不初始化GLAD,将无法使用。而要初始化GLAD,要在当前线程载入window上下文—190921 </p></blockquote></li></ul><ul><li><p>glViewport()<br>最终显示的内容由glViewport和glfwCreateWindow的参数共同决定：不会超过glfwCreateWindow的大小,小于的话会由部分不加载出来</p><blockquote><p>如果glfwCreateWindow:800*600,glViewport:1600*600,最终 800*600<br>如果glfwCreateWindow:800*600,glViewport:400*300,最终 400*300</p></blockquote></li><li><p>glfwSetFramebufferSizeCallback()<br>这是一个回调绑定函数,他会相应窗口变化，并传递宽高给回调函数</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> opengl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>DirectX11龙书-第三章:变换</title>
+      <link href="/2019/09/09/D3DTransform/"/>
+      <url>/2019/09/09/D3DTransform/</url>
+      
+        <content type="html"><![CDATA[<h1 id="线性变换"><a href="#线性变换" class="headerlink" title="线性变换"></a>线性变换</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul><li>满足以下性质为线性变换<blockquote><p>1.$\tau(u+v) = \tau(u) + \tau(v)$<br>2.$\tau(ku) = k\tau(u)$<br>其中u,v为任意三维向量，k为标量 </p></blockquote></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> directx11 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>DirectX11龙书-第四章:渲染管线</title>
+      <link href="/2019/09/09/D3DInit/"/>
+      <url>/2019/09/09/D3DInit/</url>
+      
+        <content type="html"><![CDATA[<h1 id="COM"><a href="#COM" class="headerlink" title="COM"></a>COM</h1><ul><li>我们必须使用特定的函数活其他的COM接口方法来获取指向COM接口的指针,而不能用<strong>new</strong>  </li><li>释放用其基类IUnkown的Release,而不能用<strong>delete</strong>  </li><li>COM接口都以<strong>I</strong>为前缀,例如ID3D11Texture2D  </li></ul><h1 id="纹理"><a href="#纹理" class="headerlink" title="纹理"></a>纹理</h1><ul><li>2D纹理是一种数据元素矩阵，可以用于存储图像数据，每个元素存储一个像素颜色。也可以存储纹理法线  </li><li>纹理只支持特定格式的数据类型。有DXGI_FORMAT枚举类型描述  </li><li>存在一种弱类型（typeless），预先分配空间，但不解释类型。</li></ul><h1 id="交换链和页面翻转"><a href="#交换链和页面翻转" class="headerlink" title="交换链和页面翻转"></a>交换链和页面翻转</h1><ul><li><strong>离屏</strong>(off-screen) =&gt; <strong>后台缓冲区</strong>(back buffer)</li><li><strong>前台缓冲区</strong>(front buffer)</li><li>前后缓冲区互换的行为为<strong>呈现</strong>(presenting)<blockquote><p>这一操作只是交换两者指针指向的位置，所以速度很快<br><img src="SwapBuffer.png" alt></p></blockquote></li><li>前后缓冲区组成一个<strong>交换链</strong>(swap chain)</li></ul><h1 id="深度缓冲区"><a href="#深度缓冲区" class="headerlink" title="深度缓冲区"></a>深度缓冲区</h1><ul><li>深度缓冲区与后台缓冲区大小一样</li><li>D3D11 判断前后遮挡使用 深度缓存(depth buffering)或Z缓存(z-buffering)</li></ul><h1 id="纹理资源视图"><a href="#纹理资源视图" class="headerlink" title="纹理资源视图"></a>纹理资源视图</h1><ul><li><p>纹理可以被绑定到渲染管线（rendering pipeline）的不同阶段（stage）。  </p><blockquote><p>将纹理作为渲染目标（即，Direct3D渲染到纹理,在渲染结果暂存在纹理中），使用标志D3D11_BIND_RENDER_TARGET<br>着色器资源（即，在着色器中对纹理进行采样），使用标志D3D10_BIND_SHADER_RESOURCE</p></blockquote></li><li><p>纹理不能直接绑定到渲染管线，只能把与资源关联的资源视图绑定到不同的管线阶段  </p></li><li>Direct3D始终要求我们在初始化时为纹理创建相关的<strong>资源视图</strong>（resource view），渲染目标视图（ID3D11RenderTargetView）和着色器资源视图（ID3D11ShaderResourceView） </li><li>创建资源时一定要指定绑定标志值，不然将无法创建资源视图 <h2 id="资源视图的作用"><a href="#资源视图的作用" class="headerlink" title="资源视图的作用"></a>资源视图的作用</h2></li><li>（1）告诉Direct3D如何使用资源（即，指定资源所要绑定的管线阶段）；</li><li>（2）如果在创建资源时指定的是弱类型（typeless）格式，那么在为它创建资源视图时就必须指定明确的资源类型。对于弱类型格式，纹理元素可能会在一个管线阶段中视为浮点数，而在另一个管线阶段中视为整数。</li></ul><h1 id="多重采样"><a href="#多重采样" class="headerlink" title="多重采样"></a>多重采样</h1><ul><li>超级采样（supersampling）:比如4x ssaa,将屏幕分别率提高4倍，然后每4个像素采样后取平均值。相当于深度缓存和后台缓存都扩大4倍。</li><li>多重采样（multisampling）:比如4x msaa,只在三角形的边缘进行处理。且每一个像素分为4个子像素。深度缓存和后台缓存也会扩大4倍。</li></ul><h1 id="特征等级"><a href="#特征等级" class="headerlink" title="特征等级"></a>特征等级</h1><ul><li>特征等级定义了一系列支持不同d3d功能的相应的等级，用意即如果一个用户的硬件不支持某一特征等级，程序可以选择较低的等级。</li></ul><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><a href="https://enjoyphysics.cn/Article1513" target="_blank" rel="noopener">https://enjoyphysics.cn/Article1513</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> directx11 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>虚幻4渲染模块</title>
+      <link href="/2019/09/05/UE4RenderModule/"/>
+      <url>/2019/09/05/UE4RenderModule/</url>
+      
+        <content type="html"><![CDATA[<p>原文:<a href="https://zhuanlan.zhihu.com/p/72509370" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/72509370</a></p><h1 id="UE4场景和场景管理-Scene-、SceneManager"><a href="#UE4场景和场景管理-Scene-、SceneManager" class="headerlink" title="UE4场景和场景管理(Scene 、SceneManager)"></a>UE4场景和场景管理(Scene 、SceneManager)</h1><h2 id="Scene与UWorld和FScene"><a href="#Scene与UWorld和FScene" class="headerlink" title="Scene与UWorld和FScene"></a>Scene与UWorld和FScene</h2><ul><li>UE4 Scene有UWorld和FScene组成  </li><li>UWorld用于游戏线程，包括用户的主动行为，如物体的创建和删除。</li><li>FScene用于渲染线程，包括物体的被动行为。</li><li>UWorld和FScene一一对应</li></ul><h2 id="UWorld和ULevel和ULevelStraming"><a href="#UWorld和ULevel和ULevelStraming" class="headerlink" title="UWorld和ULevel和ULevelStraming"></a>UWorld和ULevel和ULevelStraming</h2><ul><li>UWorld由持久关卡(ULevel)和子关卡组成。子关卡可以动态加卸载，也被称为流关卡(ULevelStreaming)</li><li>流关卡(ULevelStreaming)加载和卸载由UWorldComposition负责。由基于视点距离和流关卡卡包围盒的简单的加载策略实现</li><li>具体物体放置在关卡活流关卡中，而不是在UWorld中</li></ul><h2 id="FScene"><a href="#FScene" class="headerlink" title="FScene"></a>FScene</h2><ul><li>FScene不具备复杂的场景管理功能</li><li>FScene有以下结构<blockquote><p>数组:用于管理各种可渲染对象和灯光<br>Octree:用于灯光和可渲染对象的快速查找<br>DrawList:用于Cache各个渲染指令</p></blockquote></li></ul><h1 id="SceneObject"><a href="#SceneObject" class="headerlink" title="SceneObject"></a>SceneObject</h1><ul><li>将具体物体放入场景(即关卡和流关卡)中的时候，各个独立物体是由AActor及其子类的对象实例来建模表达</li><li>AActor和其子类不直接持有渲染数据，具体的渲染相关的数据均在UActorComponent及其子类的实例中。</li><li>渲染相关的主要Component类结构层次如下<br><img src="ComponentClassLevel.jpg" alt></li></ul><h1 id="UE4渲染API封装"><a href="#UE4渲染API封装" class="headerlink" title="UE4渲染API封装"></a>UE4渲染API封装</h1><ul><li>UE4中的渲染API封装是个独立的模块(Module)，他们把它命名为RHI（Render Hardware Interface）</li><li>RHI的转发实现在RHICommandList.h文件里，除了基本的条件判断，大都是直接 转调渲染API实现的RHI子模块里的渲染指令。</li></ul><h1 id="UE4的材质系统"><a href="#UE4的材质系统" class="headerlink" title="UE4的材质系统"></a>UE4的材质系统</h1><ul><li>UE4对材质系统的封装可以理解为RenderPipeline输入的所有数据中除了几何体数据之外的所有其它数据。</li></ul><h2 id="材质"><a href="#材质" class="headerlink" title="材质"></a>材质</h2><ul><li>材质分为材质模块(UMaterial)和材质实例(UMaterialInstance),两者继承自UMaterialInterface</li><li>UMaterial材质模板带有可编辑的节点图并可据此生成对应的Shader组合</li><li>UMaterialInstance材质实例则只需要引用UMaterial对应的Shader且只能修改材质模板暴露出来的材质参数。</li></ul><h2 id="FMaterialResource"><a href="#FMaterialResource" class="headerlink" title="FMaterialResource"></a>FMaterialResource</h2><ul><li>没关UMaterial中含有多个FMaterialResource，其继承自FMateriale。其负责为各个渲染API和材质所支持的各种质量等级生成对应的Shader组合</li></ul><h2 id="FMaterialRenderProxy"><a href="#FMaterialRenderProxy" class="headerlink" title="FMaterialRenderProxy"></a>FMaterialRenderProxy</h2><ul><li>FMaterialRenderProxy是FMaterial用于渲染线程的代理,它可以透过FMaterail和UMaterialInterface访问到Shader、渲染状态，光照模型等所有用户设置好的材质参数。</li></ul><hr><ul><li>UE4的材质中光照模型是不可定制的，除非修改源码</li></ul><h1 id="UE4中Shader生成"><a href="#UE4中Shader生成" class="headerlink" title="UE4中Shader生成"></a>UE4中Shader生成</h1><ul><li>UE4的shader基类为FShader,其有两个主要的子类FGlobalShader和FMaterialShader</li><li>FGlobalShader:全局Shader,会自动注册到全局ShaderCache中</li><li>FMaterialShader:用于材质(编辑器）的Shader，所有的后处理、UI、用于模型渲染的Shader都是它的子类。 </li><li>UE4 Shader生成分两部分<blockquote><p>第一部分是把材质编辑器中的节点图编译成HLSL代码，这一部分是通过FHLSLMaterialTranslator来完成的。<br>第二部分是把HLSL生成多平台的Shader代码，如Windows上的HLSL,Android上的GLSL,IOS上的MetalShader。</p></blockquote></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> UE4 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ue4 </tag>
+            
+            <tag> render </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>DirectX11龙书-第五章:渲染管线</title>
+      <link href="/2019/08/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/"/>
+      <url>/2019/08/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/</url>
+      
+        <content type="html"><![CDATA[<h1 id="三维视觉"><a href="#三维视觉" class="headerlink" title="三维视觉"></a>三维视觉</h1><ul><li>渲染管线:在给定一个3D场景的几何描述及一架已确定位置和方向的虚拟摄像机时，根据虚拟摄像机的视角生成2D图像的一系列步骤<blockquote><p>渲染管线由许多步骤组成，每个步骤称为一个阶段</p></blockquote></li></ul><p><img src="5-1.jpg" alt></p><ul><li>线性透视（linear perspective）:在2d画布上两条平行的线不断向远处延伸，最终会相交到一点。这个点是零点（vanishing point）<br><img src="5-2.jpg" alt></li><li>景深现象（depth phenomenon）:物体的大小会随着深度的增加而减小<br><img src="5-3.jpg" alt></li><li>物体重叠（object overlap）:一个不透明的物体会挡住它后面的其他物体的一部分（或全部）<br><img src="5-4.jpg" alt></li><li>光照（lighting）和阴影（shading）:表现物体立体感和体积感<br><img src="5-5.jpg" alt><blockquote><p>阴影具有两个关键作用：一是告诉我们场景中的光源位置，二是告诉我们飞船距离地面的高度。<br><img src="5-6.jpg" alt></p></blockquote></li></ul><h1 id="模型的表现形式"><a href="#模型的表现形式" class="headerlink" title="模型的表现形式"></a>模型的表现形式</h1><ul><li>三角形是构成物体模型的基本单位</li></ul><h1 id="基本计算机颜色"><a href="#基本计算机颜色" class="headerlink" title="基本计算机颜色"></a>基本计算机颜色</h1><h2 id="颜色运算"><a href="#颜色运算" class="headerlink" title="颜色运算"></a>颜色运算</h2><ul><li><p>0.5(1, 1,1) = (0.5, 0.5, 0.5)</p><blockquote><p>将白色乘以0.5，得到一个中等强度的灰色</p></blockquote></li><li><p>分量乘法（componentwise multiplication）。</p><blockquote><p>$(c_{r},c_{g},c_{b}) ⨂ (k_{r},k_{g},k_{b}) = (c_{r}k_{r},c_{g}k_{g},c_{b}k_{b})$<br>(r,g,b)⨂(0.5,0.75,0.25) = (0.5r,0.75g,0.25b)<br>常用于光照方程,比如上述式子可以表示：光线照射物体时，反射50%红光，75%绿光，25%蓝光</p></blockquote></li></ul><h2 id="128位颜色"><a href="#128位颜色" class="headerlink" title="128位颜色"></a>128位颜色</h2><ul><li><p>alpha值：用于表示物体的不透明度</p><blockquote><p>alpha == 0 完全透明；alpha == 1 完全不透明</p></blockquote></li><li><p>r,g,b,a各用32位浮点型，所以这种表达方式共128位</p></li></ul><h2 id="32位颜色"><a href="#32位颜色" class="headerlink" title="32位颜色"></a>32位颜色</h2><ul><li><p>r,g,b,a分别用8位表示，每个分量又256种强度。</p></li><li><p>32位于128位互相转换</p><blockquote><p>32-&gt;128: 各分量除以256，转换为float<br>128-&gt;32: 各分量乘以256, 转换为int</p></blockquote></li><li><p>通常，许多颜色运算（例如，在像素着色器中）使用的都是128位颜色值；通过这一方式，我们可以有足够多的二进制位来保证计算的精确度，减少算术错误的累积。不过，最终的像素颜色通常是存储在后台缓冲区的32位颜色值中；目前的物理显示设备还不能充分利用更高的分辨率颜色。</p></li></ul><h1 id="渲染管线概述"><a href="#渲染管线概述" class="headerlink" title="渲染管线概述"></a>渲染管线概述</h1><p><img src="5-7.jpg" alt></p><blockquote><p>内存到阶段的箭头表示阶段从内存种读数据<br>内存到阶段的箭头表示阶段在内存种写数据</p></blockquote><h1 id="输入装配阶段-Input-Assembler-Stage"><a href="#输入装配阶段-Input-Assembler-Stage" class="headerlink" title="输入装配阶段(Input Assembler Stage)"></a>输入装配阶段(Input Assembler Stage)</h1><p>输入装配（Input Assembler，简称IA）阶段从内存读取几何数据（顶点和索引）并将这些数据组合为几何图元（例如，三角形、直线）。</p><blockquote><p>索引规定了顶点的组织形式，解释了该以何种方式组成图元。</p></blockquote><h2 id="顶点"><a href="#顶点" class="headerlink" title="顶点"></a>顶点</h2><ul><li>Direct3D中的顶点由空间位置和各种附加属性组成。比如添加法线向量实现光照，添加纹理坐标实现纹理等等</li></ul><h2 id="图元拓扑"><a href="#图元拓扑" class="headerlink" title="图元拓扑"></a>图元拓扑</h2><ul><li>顶点缓冲区:在连续内存中存储了的一个顶点列表</li><li>图元拓扑:用来指定如何组织顶点缓冲区的顶点。例如每两个组成一条直线，每三个组成一个三角形</li></ul><h3 id="基本图元"><a href="#基本图元" class="headerlink" title="基本图元"></a>基本图元</h3><p><img src="5-8.png" alt></p><blockquote><p>(a)为点列表  D3D11_PRIMITIVE_TOPOLOGY_POINTLIST<br>(b)为线带 D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP<br>(c)为线列表 D3D11_PRIMITIVE_TOPOLOGY_LINELIST<br>(d)为三角形带 D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP 三角形带不会造成顶点的重复存储  </p></blockquote><p><img src="5-9.png" alt></p><blockquote><p>(a)为三角形列表 D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST</p></blockquote><h3 id="带邻接信息的图元"><a href="#带邻接信息的图元" class="headerlink" title="带邻接信息的图元"></a>带邻接信息的图元</h3><ul><li>如上图(b)主要用于某些几何着色器的的算法 D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST_ADJ<blockquote><p>邻接图元顶点只能作为几何着色器的输入数据且不会被绘制出来</p></blockquote></li></ul><h3 id="控制点面片列表"><a href="#控制点面片列表" class="headerlink" title="控制点面片列表"></a>控制点面片列表</h3><ul><li>见13章  D3D11_PRIMITIVE_TOPOLOGY_N_CONTRIL_POINT_PATCHLIST<blockquote><p>用于图形渲染管线的细分阶段</p></blockquote></li></ul><h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><ul><li><p>问题：通过三角形构造其他图形的时候，如果使用三角形列表，将会造成大量的顶点的重复。</p></li><li><p>产生影响: 1.增加内存需求量。2.增加图形硬件的处理负担。</p></li><li><p>方法一：使用三角形带。但是顶点必须按照带状组织，不灵活。</p></li><li><p>方法二：引入索引。</p><pre><code class="lang-cpp">//create a quadVertex v[4] = {v0, v1, v2, v3}; UINT indexList[6] = {0, 1, 2,    //Triangle0   0, 2, 3}; // Triangle 1 };</code></pre><blockquote><p>当顶点列表中的唯一顶点得到处理之后，显卡可以使用索引列表把顶点放在一起构成三角形。我们将“复制问题”转嫁给了索引列表，但是这种复制是可以让人接受的。因为：<br>1．索引是简单的整数，不像顶点结构体那样占用很多内存（顶点结构体包含的分量越多，占用的内存就越多）。<br>2．通过适当的顶点缓存排序，图形硬件不必重复处理顶点（在绝大多数的情况下）。</p></blockquote></li></ul><h1 id="顶点着色器阶段-vertex-shader-Stage"><a href="#顶点着色器阶段-vertex-shader-Stage" class="headerlink" title="顶点着色器阶段(vertex shader Stage)"></a>顶点着色器阶段(vertex shader Stage)</h1><p>顶点着色器将IA阶段的输出的顶点实现相关效果再输出（例如变换，光照，置换贴图映射等）。此外此阶段还可以访问内存种的纹理和其他数据（变换矩阵和场景灯光）。可以概念性地认为在硬件上执行了如下代码：</p><pre><code class="lang-cpp">for(UINT i = 0; i &lt; numVertices; ++i)    outputVertex[i] = VertexShader(inputVertex[i]);</code></pre><h2 id="局部空间和世界空间"><a href="#局部空间和世界空间" class="headerlink" title="局部空间和世界空间"></a>局部空间和世界空间</h2><ul><li>世界变换:局部空间-&gt;世界空间</li></ul><h2 id="观察空间"><a href="#观察空间" class="headerlink" title="观察空间"></a>观察空间</h2><ul><li>观察变换:世界空间-&gt;观察空间</li></ul><h2 id="齐次裁剪控件"><a href="#齐次裁剪控件" class="headerlink" title="齐次裁剪控件"></a>齐次裁剪控件</h2><p><a href="https://gameinstitute.qq.com/community/detail/117556" target="_blank" rel="noopener">https://gameinstitute.qq.com/community/detail/117556</a></p><h2 id="规范化设备坐标-NDC"><a href="#规范化设备坐标-NDC" class="headerlink" title="规范化设备坐标(NDC)"></a>规范化设备坐标(NDC)</h2><ul><li>将坐标都映射到[-1,1]，目的是消除设备差异性</li></ul><h1 id="曲面细分阶段"><a href="#曲面细分阶段" class="headerlink" title="曲面细分阶段"></a>曲面细分阶段</h1><ul><li>可选阶段,详见13章</li></ul><h1 id="几何着色器阶段"><a href="#几何着色器阶段" class="headerlink" title="几何着色器阶段"></a>几何着色器阶段</h1><ul><li>接收完整的图元数据</li><li>用于创建和销毁几何体<blockquote><p>根据接收到的图元数据来扩展图元或根据某些条件来拒绝输出某些图元数据<br>常用于将一个点扩展为一个四边形，或者将一条线扩展为一个四边形</p></blockquote></li><li>顶点位置在离开几何着色器之前，必须被变换到齐次裁剪空间。</li></ul><h1 id="裁剪阶段"><a href="#裁剪阶段" class="headerlink" title="裁剪阶段"></a>裁剪阶段</h1><ul><li>完全位于这块空间内部的图元将会被保留，完全位于这块空间外部的图元将会被剔除，而与这块空间边界相交的图元就会被裁剪。</li><li>三角形被裁剪后会变成四边形，这需要重新划分三角形</li><li>Sutherland-Hodgeman裁剪法:</li></ul><h1 id="光栅化阶段"><a href="#光栅化阶段" class="headerlink" title="光栅化阶段"></a>光栅化阶段</h1><h2 id="视口变换"><a href="#视口变换" class="headerlink" title="视口变换"></a>视口变换</h2><ul><li>齐次裁剪空间-&gt;规范化设备空间-&gt;后台缓冲区的视口区域（此时x,y以像素为单位）</li><li>z值还要被深度缓存使用。</li></ul><h2 id="背面消隐"><a href="#背面消隐" class="headerlink" title="背面消隐"></a>背面消隐</h2><h3 id="判断三角形正反面"><a href="#判断三角形正反面" class="headerlink" title="判断三角形正反面"></a>判断三角形正反面</h3><ul><li>设三角形的定点排列为$v_{0},v_{1},v_{2}$</li><li>可以计算出三角形的法线，方法如下:<blockquote><p>$\vec{e_{0}} = v_{1} - v_{0}$<br>$\vec{e_{1}} = v_{2} - v_{1}$<br>$\vec{n} = \frac{\vec{e_{0}} × \vec{e_{1}}}{|| \vec{e_{0}} × \vec{e_{1}} ||}$</p></blockquote></li><li>带有法线向量的面为正面，而另一个面为背面<blockquote><p>当观察者看到三角形的正面时，我们说三角形是朝前的；当观察者看到三角形的背面时， 我们说三角形是朝后的。<br>因为按照我们选择的约定（即，我们计算三角形法线的方式），按顺时针方向环绕的三角形（相对于观察者）是朝前的，而按逆时针方向环绕的三角形（相对于观察者）是朝后的。</p></blockquote></li><li>D3D 顺时针</li></ul><h3 id="背面消隐-backface-culling"><a href="#背面消隐-backface-culling" class="headerlink" title="背面消隐(backface culling)"></a>背面消隐(backface culling)</h3><ul><li>背面消隐（backface culling）是指让管线放弃对朝后的三角形的处理。这可以将所要处理的三角形的数量降低到原数量的一半。</li><li>以下为2D和3D场景消隐前后的表现<br><img src="backfaceCulling2D.png" alt><br><img src="backfaceCulling3D.png" alt></li></ul><h2 id="顶点属性插值"><a href="#顶点属性插值" class="headerlink" title="顶点属性插值"></a>顶点属性插值</h2><ul><li>一条3D线被投影到投影窗口上（在屏幕空间中投影是一条2D线）。我们看到，在3D线上取等距离的点，在2D屏幕空间上的投影点却不是等距离的。所以，我们在3D空间中执行线性插值，在屏幕空间需要执行非线性插值。</li></ul><h1 id="像素着色器阶段"><a href="#像素着色器阶段" class="headerlink" title="像素着色器阶段"></a>像素着色器阶段</h1><ul><li>像素着色器（Pixel shader）是由我们编写的在GPU上执行的程序。像素着色器会处理每个像素片段（pixel fragment），它的输入是插值后的顶点属性，由此计算出一个颜色。像素着色器可以非常简单地输出一个颜色，也可以很复杂，例如实现逐像素光照、反射和阴影等效果。</li></ul><h1 id="输出合并阶段"><a href="#输出合并阶段" class="headerlink" title="输出合并阶段"></a>输出合并阶段</h1><ul><li>当像素片段由像素着色器生成之后，它们会被传送到渲染管线的输出合并（output<br>merger，简称OM）阶段。在该阶段中，某些像素片段会被丢弃（例如，未能通过深度测试或模板测试）。未丢弃的像素片段会被写入后台缓冲区。混合（blending）工作是在该阶段中完成的，一个像素可以与后台缓冲区中的当前像素进行混合，并以混合后的值作为该像素的最终颜色。某些特殊效果，比如透明度，就是通过混合来实现的；我们会在第9章专门讲解混合。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> CG </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> computer graphics </tag>
+            
+            <tag> directx11 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>虚幻4之JSON学习</title>
+      <link href="/2019/08/07/JSON/"/>
+      <url>/2019/08/07/JSON/</url>
+      
+        <content type="html"><![CDATA[<h1 id="本章简介"><a href="#本章简介" class="headerlink" title="本章简介"></a>本章简介</h1><ul><li>JSON格式</li><li>解析JSON文件</li><li>修改JSON文件</li></ul><h1 id="JSON格式"><a href="#JSON格式" class="headerlink" title="JSON格式"></a>JSON格式</h1><ul><li><a href="https://zhuanlan.zhihu.com/p/29119549" target="_blank" rel="noopener">十分钟搞定JSON和JSON对象</a></li></ul><p>想要使用JSO相关工具，必须在<strong>ProjectName.Build.cs</strong>，在其中添加</p><pre><code class="lang-cs">PublicDependencyModuleNames.AddRange(    new string[]     {         &quot;Core&quot;,          &quot;CoreUObject&quot;,          &quot;Engine&quot;,          &quot;InputCore&quot;,         &quot;Slate&quot;,         &quot;SlateCore&quot;,         &quot;Json&quot;,         &quot;JsonUtilities&quot;    });</code></pre><h1 id="解析JSON文件"><a href="#解析JSON文件" class="headerlink" title="解析JSON文件"></a>解析JSON文件</h1><ul><li>我们在 \Content\Res\Data.json中天下如下测试例子</li></ul><pre><code class="lang-json">/** Data.json **/[    {        &quot;1-1&quot;:&quot;1-1&quot;,        &quot;1-2&quot;:&quot;1-2&quot;    },    {        &quot;2-1&quot;:&quot;2-1&quot;    },    {        &quot;3-1&quot;:        [            {                &quot;1&quot;:&quot;3-1-1&quot;            },            {                &quot;2&quot;:&quot;3-1-2&quot;            }        ]    }]</code></pre><ul><li>我们要首先得将他以字符串的形式读入<blockquote><p>FPaths::GameContentDir() 能获取 */Content/ 的位置<br>FFileHelper::LoadFileToString() Load a text file to an FString.</p></blockquote></li></ul><pre><code class="lang-cpp">bool MyJsonHandle::LoadStringFromFile(FString &amp; RelativePathName, FString &amp; FileName, FString &amp; ResultString){    if (!FileName.IsEmpty())    {        FString AbsloutePathName = FPaths::GameContentDir() + RelativePathName + FileName;        if (FPaths::FileExists(AbsloutePathName))        {            if (FFileHelper::LoadFileToString(ResultString, *AbsloutePathName))            {                return true;            }        }    }    return false;}`</code></pre><ul><li>接下来我们来解析我们所获取到的FString</li></ul><pre><code class="lang-cpp">/** MyJsonHandle.cpp **/bool MyJsonHandle::RecordDataJsonRead(){    FString result;    //这是我们上面自定义的函数    LoadStringFromFile(RelativePathName, DataFileName, result);    TArray&lt;TSharedPtr&lt;FJsonValue&gt;&gt; JsonParse;    TSharedRef&lt;TJsonReader&lt;TCHAR&gt;&gt; JsonReader = TJsonReaderFactory&lt;TCHAR&gt;::Create(result);    if (FJsonSerializer::Deserialize(JsonReader, JsonParse))    { //这样解析后的节点全部存在JsonParse中        UE_LOG(LogTemp, Warning, TEXT(&quot;%s&quot;), *JsonParse[0]-&gt;AsObject()-&gt;GetStringField(FString(&quot;1-1&quot;)));        UE_LOG(LogTemp, Warning, TEXT(&quot;%s&quot;), *JsonParse[0]-&gt;AsObject()-&gt;GetStringField(FString(&quot;1-2&quot;)));        UE_LOG(LogTemp, Warning, TEXT(&quot;%s&quot;), *JsonParse[1]-&gt;AsObject()-&gt;GetStringField(FString(&quot;2-1&quot;)));        //如果对象是嵌套的，则需要再声明一次TArray&lt;TSharedPtr&lt;FJsonValue&gt;&gt;来获取        TArray&lt;TSharedPtr&lt;FJsonValue&gt;&gt; JsonParse3 = JsonParse[2]-&gt;AsObject()-&gt;GetArrayField(FString(&quot;3-1&quot;));        if (JsonParse3.IsValidIndex(0))        {            for (int cnt = 1; cnt &lt;= JsonParse3.Num(); ++cnt)            {                UE_LOG(LogTemp, Warning, TEXT(&quot;%s&quot;), *JsonParse3[cnt-1]-&gt;AsObject()-&gt;GetStringField(FString::FromInt(cnt)));            }        }        else        {            UE_LOG(LogTemp, Warning, TEXT(&quot;error JsonParse3&quot;));        }        return true;    }    return false;}</code></pre><h1 id="修改JSON文件"><a href="#修改JSON文件" class="headerlink" title="修改JSON文件"></a>修改JSON文件</h1><h2 id="设置单个属性"><a href="#设置单个属性" class="headerlink" title="设置单个属性"></a>设置单个属性</h2><ul><li>通过下面的代码生成一个<pre><code class="lang-cpp">/*** A Json Object is a structure holding an unordered set of name/value pairs.* In a Json file, it is represented by everything between curly braces {}.*/TSharedPtr&lt;FJsonObject&gt; Object1 = MakeShareable(new FJsonObject);Object1-&gt;SetStringField(&quot;1-1&quot;, &quot;1--1&quot;);Object1-&gt;SetStringField(&quot;1-2&quot;, &quot;1--2&quot;);TSharedPtr&lt;FJsonValueObject&gt; CultureValue = MakeShareable(new FJsonValueObject(CultureObject));</code></pre></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> UE4 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ue4 </tag>
+            
+            <tag> json </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>虚幻4学习</title>
+      <link href="/2019/08/07/UE4Menu/"/>
+      <url>/2019/08/07/UE4Menu/</url>
+      
+        <content type="html"><![CDATA[<p>本文主要根据<a href="https://ke.qq.com/course/301049?from=iosapp&amp;_bid=167&amp;_wv=3&amp;ADUIN=1076613110&amp;ADSESSION=1556776713&amp;ADTAG=CLIENT.QQ.5611_.0&amp;ADPUBNO=26886&amp;taid=2114631443453945" target="_blank" rel="noopener">UE4纯C++与Slate开发沙盒游戏</a>的内容归纳成笔记。以及参考<a href="https://blog.csdn.net/qq_20309931/article/details/53289032" target="_blank" rel="noopener">Unreal Engine 4 C++ Slate 介绍</a>的博客</p><h1 id="章节目录"><a href="#章节目录" class="headerlink" title="章节目录"></a>章节目录</h1><p><a href="https://sanctorum003.github.io/2019/08/02/HUD/" target="_blank" rel="noopener">虚幻4之Slate学习一 —— HUD</a><br><a href="https://sanctorum003.github.io/2019/08/03/WidgetStyle/" target="_blank" rel="noopener">虚幻4之Slate学习二 —— Slate控件样式</a><br><a href="https://sanctorum003.github.io/2019/08/04/SlateWidget/" target="_blank" rel="noopener">虚幻4之Slate学习三 —— 创建Slate控件</a><br><a href="https://sanctorum003.github.io/2019/08/06/DelegateAndMacro/" target="_blank" rel="noopener">虚幻4之Slate学习四 —— 委托与宏</a><br><a href="https://sanctorum003.github.io/2019/08/07/JSON/" target="_blank" rel="noopener">虚幻4之JSON学习</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Menu </category>
+          
+          <category> UE4 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ue4 </tag>
+            
+            <tag> slate </tag>
+            
+            <tag> json </tag>
+            
+            <tag> menu </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>虚幻4之Slate学习四 —— 委托与宏</title>
+      <link href="/2019/08/06/DelegateAndMacro/"/>
+      <url>/2019/08/06/DelegateAndMacro/</url>
+      
+        <content type="html"><![CDATA[<h1 id="本章简介"><a href="#本章简介" class="headerlink" title="本章简介"></a>本章简介</h1><ul><li>了解虚幻4委托</li><li>了解Slate相关宏</li><li>了解Slate控件的相关回调函数</li></ul><h1 id="虚幻4委托"><a href="#虚幻4委托" class="headerlink" title="虚幻4委托"></a>虚幻4委托</h1><ul><li>委托用于将方法作为参数传递给其他方法。 事件处理程序就是通过委托调用的方法。 你可以创建一个自定义方法，当发生特定事件时，某个类（如 Windows 控件）就可以调用你的方法。</li><li>简单来说，delegate实现了将一个方法传递给其他类，使得其他的类在编译时期内不需要了解具体是什么方法被调用，而只是知道这个被调用方法的函数签名。有点类似于C++中函数指针的存在。</li></ul><h2 id="Delegate宏"><a href="#Delegate宏" class="headerlink" title="Delegate宏"></a>Delegate宏</h2><ul><li>虚幻4用c++封装了自定义的委托，提供各种参数和返回值可供使用。</li></ul><div class="table-container"><table><thead><tr><th>函数签名</th><th>声明宏</th></tr></thead><tbody><tr><td>void Function()</td><td>DECLARE_DELEGATE( DelegateName )</td></tr><tr><td>void Function( <param1> )</param1></td><td>DECLARE_DELEGATE_OneParam( DelegateName, Param1Type )</td></tr><tr><td>void Function( <param1>, <param2>, … )</param2></param1></td><td>DECLARE_DELEGATE_<num>Params( DelegateName, Param1Type, Param2Type, … )</num></td></tr><tr><td><retval> Function()</retval></td><td>DECLARE_DELEGATE_RetVal( RetValType, DelegateName )</td></tr><tr><td><retval> Function( <param1> )</param1></retval></td><td>DECLARE_DELEGATE_RetVal_OneParam( RetValType, DelegateName, Param1Type )</td></tr><tr><td><retval> Function( <param1>, <param2>, …  )</param2></param1></retval></td><td>DECLARE_DELEGATE_RetVal_<num>Params( RetValType, DelegateName, Param1Type, Param2Type, … )</num></td></tr></tbody></table></div><h2 id="声明Delegate变量"><a href="#声明Delegate变量" class="headerlink" title="声明Delegate变量"></a>声明Delegate变量</h2><ul><li>利用刚定义的宏声明一个Delegate变量，注意变量类型是上述的DelegateName。</li><li>这个成员变量就是未来我们可以用来动态绑定其他和之前在宏声明的一样的函数签名的方法</li></ul><pre><code class="lang-CPP">DelegateName MyDelegate</code></pre><h2 id="绑定"><a href="#绑定" class="headerlink" title="绑定"></a>绑定</h2><ul><li>Bind()<blockquote><p>直接Bind一个已经存在的Delegate</p></blockquote></li><li>BindRaw()<blockquote><p>绑定c++原生指针，非smart指针</p></blockquote></li><li>BindUobject()<blockquote><p>绑定继承自UObject的类</p></blockquote></li><li>BindUFUCNTION()<blockquote><p>绑定的类成员方法是UFUNCTION</p></blockquote></li><li>BindSP<blockquote><p>绑定智能指针</p></blockquote></li><li>BindStatic<blockquote><p>绑定的类成员方法是UFUNCTION</p></blockquote></li></ul><h2 id="调用代理方法"><a href="#调用代理方法" class="headerlink" title="调用代理方法"></a>调用代理方法</h2><ul><li><p>调用代理的方法就相对的简单，我们只需要使用下方方法即可。当然如果这个delegate是含参数的，可以在其中添加参数。这样所绑定的方法就会被调用，类似于通过函数指针来调用。</p><pre><code class="lang-cpp">MyDelegateMemVar.Execute(）</code></pre><pre><code class="lang-cpp">MyDelegateMemVar.Execute(Param1, Param2 ...)</code></pre></li><li><p>IsBound()用于判断委托是否绑定</p><pre><code class="lang-cpp">MyDelegateMemVar.IsBound()</code></pre></li><li><p>ExecuteIfBound(…)用于如果绑定特定内容则执行</p><pre><code class="lang-cpp">MyDelegateMemVar.ExecuteIfBound(...)</code></pre></li></ul><h1 id="Slate宏（macro）"><a href="#Slate宏（macro）" class="headerlink" title="Slate宏（macro）"></a>Slate宏（macro）</h1><ul><li>Slate框架结合了声明式语法，并且提供了一套完整的宏来简化声明及创建新控件的过程。下面就来学习一下slate创建中一些常见的宏：</li></ul><h2 id="SLATE-BEGIN-ARGS-WidgetType-和SLATE-END-ARGS"><a href="#SLATE-BEGIN-ARGS-WidgetType-和SLATE-END-ARGS" class="headerlink" title="SLATE_BEGIN_ARGS(WidgetType)和SLATE_END_ARGS()"></a>SLATE_BEGIN_ARGS(WidgetType)和SLATE_END_ARGS()</h2><ul><li>Widgets的创建者可以使用SLATE_BEGIN_ARGS和SLATE_END_ARGS来声明和构建一个Widget,使得Widget可以通过SNew()和SAssignNew()来创建一个Widget,从而可以添加到用户视口.</li><li>其内部可放置相关参数<pre><code class="lang-cpp">SLATE_BEGIN_ARGS(SSlAiMenuItemWidget){} SLATE_ATTRIBUTE(FText, ItemText) SLATE_EVENT(FItemClicked, MyOnClicked) SLATE_ATTRIBUTE(EMenuItem::Type,ItemType)SLATE_END_ARGS()</code></pre>定义上述参数后，可以进行赋值等操作<pre><code class="lang-cpp">SNew(SSlAiMenuItemWidget).ItemText(NSLOCTEXT(&quot;SlAiMenu&quot;,&quot;StartGame&quot;,&quot;StartGame&quot;)).ItemType(EMenuItem::StartGame).MyOnClicked(this,&amp;SSlAiMenuWidget::MenuItemOnClicked)</code></pre></li></ul><h2 id="SLATE-ATTRIBUTE（AttrType-AttrName）"><a href="#SLATE-ATTRIBUTE（AttrType-AttrName）" class="headerlink" title="SLATE_ATTRIBUTE（AttrType,AttrName）"></a>SLATE_ATTRIBUTE（AttrType,AttrName）</h2><ul><li>Use this macro to add a attribute to the declaration of your widget.</li><li>An attribute can be a value or a function.<blockquote><p>使用这个宏可以为你正在声明的Widget添加一个属性(TAttribute&lt;&gt;类型).</p></blockquote></li></ul><blockquote><p>一个属性可以是一个值或者方法参数</p><p>AttrType：属性类型，可以是任意数据类型<br>AttrName：属性名</p></blockquote><h2 id="SLATE-ARGUMENT-ArgType-ArgName"><a href="#SLATE-ARGUMENT-ArgType-ArgName" class="headerlink" title="SLATE_ARGUMENT(ArgType, ArgName)"></a>SLATE_ARGUMENT(ArgType, ArgName)</h2><ul><li>Use this macro to declare a slate argument.</li><li>Arguments differ from attributes in that they can only be values.<blockquote><p> 使用这个宏可以为你的正在构建的Widget声明一个参数，这个参数不是一个TAttribute&lt;&gt;类型（属性），只是一个一般数据类型的变量</p></blockquote></li></ul><blockquote><p>  Argumet和Attribute的区别在于Argument只能是一个值，而Attitude可以是一个值或者方法，并且可以为其绑定代理。</p></blockquote><h2 id="SLATE-EVENT-DelegateName-EventName"><a href="#SLATE-EVENT-DelegateName-EventName" class="headerlink" title="SLATE_EVENT(DelegateName,EventName)"></a>SLATE_EVENT(DelegateName,EventName)</h2><ul><li>用于自定义事件委托</li><li>注意与<strong>事件</strong>是不一样的</li><li>可以用于创建自定义单击事件<blockquote><p>SLATE_EVENT( FOnClicked, OnClicked )</p></blockquote></li></ul><h2 id="FORCEINLINE"><a href="#FORCEINLINE" class="headerlink" title="FORCEINLINE"></a>FORCEINLINE</h2><ul><li>虚幻4自定义的声明内敛函数的宏<blockquote><p>FORCEINLINE void Debug(FString Message, float duration)</p></blockquote></li></ul><h1 id="常用Slate控件函数"><a href="#常用Slate控件函数" class="headerlink" title="常用Slate控件函数"></a>常用Slate控件函数</h1><h2 id="OnClicked"><a href="#OnClicked" class="headerlink" title="OnClicked"></a>OnClicked</h2><ul><li>事件原型<pre><code class="lang-cpp">/** Called when the button is clicked */SLATE_EVENT( FOnClicked, OnClicked )</code></pre></li><li><p>FOnClicked原型</p><pre><code class="lang-cpp">/*** A delegate that is invoked when widgets want to notify a user that they have been clicked.* Intended for use by buttons and other button-like widgets.*/DECLARE_DELEGATE_RetVal(   FReply,   FOnClicked )// FReply FOnClicked()</code></pre></li><li><p>因此OnClicked()调用的函数的函数原型必须是FReply FOnClicked()</p></li><li>FReply 告诉引擎如何处理事件<blockquote><p>A Reply is something that a Slate event returns to the system to notify it about certain aspect of how an event was handled. For example, a widget may handle an OnMouseDown event by asking the system to give mouse capture to a specific Widget. To do this, return FReply::CaptureMouse( NewMouseCapture ).</p></blockquote></li><li>FReply::Handled() 告诉引擎事件处理完<blockquote><p>An event should return a FReply::Handled() to let the system know that an event was handled.</p></blockquote></li></ul><ul><li>下面举一个例子</li></ul><pre><code class="lang-cpp">/** SMyHUDWidget.h **/#pragma once#include &quot;CoreMinimal.h&quot;#include &quot;Widgets/SCompoundWidget.h&quot;#include &quot;DeclarativeSyntaxSupport.h&quot;#include &quot;MySlateWidgetStyle.h&quot;#include &quot;SImage.h&quot;class MYSLATE_API SMyHUDWidget : public SCompoundWidget{public:    SLATE_BEGIN_ARGS(SMyHUDWidget)    {}    SLATE_END_ARGS()    // Constructs this widget with InArgs     void Construct(const FArguments&amp; InArgs);    //注意SAssignNew需要使用共享指针    TSharedPtr&lt;SImage&gt; MyImage;private:    const FMySlateStyle *MySlateStyle;    FReply addImage();};</code></pre><pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/#include &quot;SMyHUDWidget.h&quot;#include &quot;SlateOptMacros.h&quot;#include &quot;SButton.h&quot;#include &quot;SImage.h&quot;#include &quot;MyStyle.h&quot;#include &quot;SOverlay.h&quot;BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATIONvoid SMyHUDWidget::Construct(const FArguments&amp; InArgs){    MySlateStyle = &amp;MyStyle::Get().GetWidgetStyle&lt;FMySlateStyle&gt;(&quot;BP_MySlateWidgetStyle&quot;);    ChildSlot    [        SNew(SOverlay)        + SOverlay::Slot()        .HAlign(HAlign_Fill)        .VAlign(VAlign_Fill)        [            SAssignNew(MyImage, SImage)        ]        + SOverlay::Slot()        .HAlign(HAlign_Center)//这些属性设计是应用于插槽        .VAlign(VAlign_Center)        [            SNew(SButton)            .OnClicked(this,&amp;SMyHUDWidget::addImage)        ]    ];}END_SLATE_FUNCTION_BUILD_OPTIMIZATIONFReply SMyHUDWidget::addImage(){    MyImage-&gt;SetImage(&amp;MySlateStyle-&gt;BackGroupBrush);    return FReply::Handled();}</code></pre><p>效果如下图<br><img src="onClick.png" alt><br><img src="onClicked.png" alt></p><h2 id="SOverlay-Expose和SOverlay-FOverlaySlot"><a href="#SOverlay-Expose和SOverlay-FOverlaySlot" class="headerlink" title="SOverlay::Expose和SOverlay::FOverlaySlot"></a>SOverlay::Expose和SOverlay::FOverlaySlot</h2><ul><li><p>上述两个结合使用可以获取SOverlay的插槽作为变量使用</p></li><li><p>在OnClicked的例子中修改</p></li></ul><pre><code class="lang-cpp">/** SMyHUDWidget.h **/public:    //注意SOverlay::FOverlaySlot 是内部类    SOverlay::FOverlaySlot* MySlot;</code></pre><pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/+ SOverlay::Slot().HAlign(HAlign_Center)//这些属性设计是应用于插槽.VAlign(VAlign_Center).Expose(MySlot)[    SNew(SButton)    .OnClicked(this,&amp;SMyHUDWidget::addImage)]</code></pre><pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/FReply SMyHUDWidget::addImage(){    MyImage-&gt;SetImage(&amp;MySlateStyle-&gt;BackGroupBrush);    MySlot-&gt;HAlign(HAlign_Left);    return FReply::Handled();}</code></pre><p>点击后按钮到最左侧<br><img src="FOverlaySlot.png" alt></p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul><li>我们尝试编写图片的点击效果，来使用委托和宏。SImage默认不带这个效果。</li><li>首先我们创建一个继承于SlateWidget的C++类命名为MyImage</li><li>创建一个委托，用于与SLATE_EVENT绑定。相当于自定义一个需要单击会触发函数的函数原型</li></ul><pre><code class="lang-cpp">/** SMyImage.h **/DECLARE_DELEGATE_RetVal(FReply,FImageOnClicked)</code></pre><ul><li>创建一个SLATE_EVENT,将之前创建的委托与该SLATE_EVENT绑定</li></ul><pre><code class="lang-cpp">/** SMyImage.cpp **/SLATE_BEGIN_ARGS(SMyHUDWidget){}SLATE_EVENT(FImageOnClicked, ImageOnClicked)SLATE_END_ARGS()</code></pre><ul><li>然后在原来的SMyHUDWidget将SImage换成SMyImage并且可以调用ImageOnClicked()</li></ul><pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/#include &quot;SMyHUDWidget.h&quot;#include &quot;SlateOptMacros.h&quot;#include &quot;SButton.h&quot;#include &quot;SImage.h&quot;#include &quot;MyStyle.h&quot;#include &quot;SOverlay.h&quot;BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATIONvoid SMyHUDWidget::Construct(const FArguments&amp; InArgs){    MySlateStyle = &amp;MyStyle::Get().GetWidgetStyle&lt;FMySlateStyle&gt;(&quot;BP_MySlateWidgetStyle&quot;);    ChildSlot    [        SNew(SOverlay)        + SOverlay::Slot()        .HAlign(HAlign_Fill)        .VAlign(VAlign_Fill)        [            /**              * TSharedPtr&lt;SMyImage&gt; MyImage;            **/            SAssignNew(MyImage, SMyImage)            //.ImageOnClicked()        ]        + SOverlay::Slot()        .HAlign(HAlign_Center)//这些属性设计是应用于插槽        .VAlign(VAlign_Center)        .Expose(MySlot)        [            SNew(SButton)            .OnClicked(this,&amp;SMyHUDWidget::addImage)        ]    ];}END_SLATE_FUNCTION_BUILD_OPTIMIZATIONFReply SMyHUDWidget::addImage(){    //删除原来语句    MySlot-&gt;HAlign(HAlign_Left);    return FReply::Handled();}</code></pre><ul><li>在SMyImage中添加图片</li></ul><pre><code class="lang-cpp">/** SMyImage.cpp **/#include &quot;SMyImage.h&quot;#include &quot;SlateOptMacros.h&quot;#include &quot;SImage.h&quot;#include &quot;Public/UI/MySlateWidgetStyle.h&quot;#include &quot;Public/UI/MyStyle.h&quot;BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATIONvoid SMyImage::Construct(const FArguments&amp; InArgs){    MySlateStyle = &amp;MyStyle::Get().GetWidgetStyle&lt;FMySlateStyle&gt;(&quot;BP_MySlateWidgetStyle&quot;);    ChildSlot    [        SNew(SImage)        .Image(&amp;MySlateStyle-&gt;BackGroupBrush)    ];}END_SLATE_FUNCTION_BUILD_OPTIMIZATION</code></pre><p>此时效果如下<br><img src="MyImage.png" alt></p><ul><li>接着我们需要创建一个回调函数用于ImageOnClicked()，传入后event对应FImageOnClicked就绑定该函数了</li></ul><pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/FReply SMyHUDWidget::ImageClicked(){    GEngine-&gt;AddOnScreenDebugMessage(-1, 5.f, FColor::Green, &quot;Suceess&quot;);    return FReply::Handled();}</code></pre><pre><code class="lang-cpp">/** SMyHUDWidget.cpp **//**    * TSharedPtr&lt;SMyImage&gt; MyImage;**/SAssignNew(MyImage, SMyImage).ImageOnClicked(this, &amp;SMyHUDWidget::ImageClicked)</code></pre><ul><li>但是这时候会发现，单击并没有什么效果。这是因为程序并不知道要根据单击触发。</li><li>我们需要在MyImage中重写鼠标相关函数</li></ul><pre><code class="lang-cpp">/** SMyImage.h **/public:    FImageOnClicked ImageOnClick;    virtual FReply OnMouseButtonDown(const FGeometry&amp; MyGeometry, const FPointerEvent&amp; MouseEvent) override;    virtual FReply OnMouseButtonUp(const FGeometry&amp; MyGeometry, const FPointerEvent&amp; MouseEvent) override;    virtual void OnMouseLeave(const FPointerEvent&amp; MouseEvent) override;    bool BIsMouseButtonDown = false;</code></pre><ul><li>我们这时候需要在鼠标按下时调用委托，使用我们必须事先获取到这个委托，<em>FImageOnClicked ImageOnClick</em>就是用来声明该委托。</li><li>在构造中,通过InArgs._*可以来获取SLATE_BEGIN_ARGS(SMyHUDWidget)和SLATE_END_ARGS()之间的属性。</li></ul><pre><code class="lang-cpp">/** SMyImage.cpp **/void SMyImage::Construct(const FArguments&amp; InArgs){    ImageOnClick = InArgs._ImageOnClicked;    MySlateStyle = &amp;MyStyle::Get().GetWidgetStyle&lt;FMySlateStyle&gt;(&quot;BP_MySlateWidgetStyle&quot;);    ChildSlot    [        SNew(SImage)        .Image(&amp;MySlateStyle-&gt;BackGroupBrush)    ];}</code></pre><ul><li>这样我们就可以重写鼠标事件，让其在点击时调用相关委托</li></ul><pre><code class="lang-cpp">FReply SMyImage::OnMouseButtonDown(const FGeometry&amp; MyGeometry, const FPointerEvent&amp; MouseEvent){    BIsMouseButtonDown = true;    return FReply::Handled();}FReply SMyImage::OnMouseButtonUp(const FGeometry&amp; MyGeometry, const FPointerEvent&amp; MouseEvent){    if (BIsMouseButtonDown == true)    {        BIsMouseButtonDown = false;        ImageOnClick.Execute();    }    return FReply::Handled();}void SMyImage::OnMouseLeave(const FPointerEvent&amp; MouseEvent){    BIsMouseButtonDown = false;}</code></pre><ul><li>到此就完成了，点击图片时会显示<strong>SUCCEESS</strong><br><img src="Success.png" alt><blockquote><p>如果不成功可以尝试将播放模式设成模拟<br><img src="Simulation.png" alt></p></blockquote></li></ul><h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul><li>下章链接<br><a href="https://sanctorum003.github.io/2019/08/07/JSON/" target="_blank" rel="noopener">虚幻4之JSON学习</a></li><li>章节总览<br><a href="https://sanctorum003.github.io/2019/08/07/SlateMenu/" target="_blank" rel="noopener">虚幻4之Slate学习</a> </li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> UE4 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ue4 </tag>
+            
+            <tag> slate </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>虚幻4之Slate学习三 —— 创建Slate控件</title>
+      <link href="/2019/08/04/SlateWidget/"/>
+      <url>/2019/08/04/SlateWidget/</url>
+      
+        <content type="html"><![CDATA[<h1 id="本章简介"><a href="#本章简介" class="headerlink" title="本章简介"></a>本章简介</h1><ul><li>如何利用C++编写Slate控件</li><li>介绍常用的Slate控件</li><li>自定义DPI</li></ul><h1 id="用C-编写Slate控件"><a href="#用C-编写Slate控件" class="headerlink" title="用C++编写Slate控件"></a>用C++编写Slate控件</h1><pre><code class="lang-cpp">ChildSlot[    SNew(SImage)    .Image(&amp;MySlateStyle-&gt;BackGroupBrush)];</code></pre><p>只需要在ChildSlot中编写相关代码就可以创建控件。不同控件有不同的属性，下面将要介绍一些常用的控件,值得注意的是对于需要在游戏中动态控制的控件，需利用SAssignNew,再通过共享指针保存起来</p><h2 id="SOverlay"><a href="#SOverlay" class="headerlink" title="SOverlay"></a>SOverlay</h2><ul><li>用于实现重叠部件,可以创建任意个插件，即可以放任意个子控件</li></ul><h3 id="HAlign和VAlign"><a href="#HAlign和VAlign" class="headerlink" title="HAlign和VAlign"></a>HAlign和VAlign</h3><ul><li>设计布局方式</li></ul><h3 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h3><ul><li>设计边缘空隙</li></ul><h3 id="FillWidth和FillHeight"><a href="#FillWidth和FillHeight" class="headerlink" title="FillWidth和FillHeight"></a>FillWidth和FillHeight</h3><ul><li>填充宽度和高度</li></ul><h3 id="SOverlay-Slot"><a href="#SOverlay-Slot" class="headerlink" title="+SOverlay::Slot()"></a>+SOverlay::Slot()</h3><ul><li>+SOverlay::Slot()与SNew().AddSlot等价。增加的插槽下用于放子控件</li></ul><pre><code class="lang-cpp">SNew(SOverlay)+ SOverlay::Slot()//这些属性设计是应用于插槽.HAlign(HAlign_Fill).VAlign(VAlign_Fill)[     SNew(SImage)     //image()用于添加笔刷     .Image(&amp;MySlateStyle-&gt;BackGroupBrush)]</code></pre><p><img src="SOverlay.png" alt></p><h2 id="SImage"><a href="#SImage" class="headerlink" title="SImage"></a>SImage</h2><ul><li>Image()通过加笔刷来显示图片</li><li>ColorAndOpacity()改变颜色和透明度</li></ul><h2 id="SBox"><a href="#SBox" class="headerlink" title="SBox"></a>SBox</h2><ul><li>只能添加一个子组件</li><li>WidthOverride和HeightOverride设置长宽</li><li>对应UMG中的SizeBox</li></ul><h2 id="SBorder"><a href="#SBorder" class="headerlink" title="SBorder"></a>SBorder</h2><ul><li>可放子控件，可显示图片</li><li>用BorderImage添加图片</li></ul><h2 id="STextBlock"><a href="#STextBlock" class="headerlink" title="STextBlock"></a>STextBlock</h2><ul><li>用于添加文字</li><li>Font()设置字体（不是指针）</li><li>Text()设置显示文字</li></ul><h2 id="SVerticalBox"><a href="#SVerticalBox" class="headerlink" title="SVerticalBox"></a>SVerticalBox</h2><ul><li>垂直容器</li><li>可以加插槽</li><li>+SVerticalBox::Slot == AddSlot</li></ul><h2 id="SCheckBox"><a href="#SCheckBox" class="headerlink" title="SCheckBox"></a>SCheckBox</h2><ul><li>OnCheckStateChanged：传入函数指针（委托），状态改变时调用</li></ul><h2 id="SSlider"><a href="#SSlider" class="headerlink" title="SSlider"></a>SSlider</h2><ul><li>滑动条</li><li>滑动条样式用 FSliderStyle</li><li>OnValueChanged(Delegate) 此为SLATE_EVENT，里面应该传入一参数（滑动条value）委托，每次滑动条value改变时调用。</li><li>SetValue()设置滑动位置，范围[0f,1f]</li></ul><h1 id="自定义DPI"><a href="#自定义DPI" class="headerlink" title="自定义DPI"></a>自定义DPI</h1><h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul><li>下章链接<br><a href="https://sanctorum003.github.io/2019/08/06/DelegateAndMacro/" target="_blank" rel="noopener">虚幻4之Slate学习四 —— 委托与宏</a></li><li>章节总览<br><a href="https://sanctorum003.github.io/2019/08/07/SlateMenu/" target="_blank" rel="noopener">虚幻4之Slate学习</a> </li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> UE4 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ue4 </tag>
+            
+            <tag> slate </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>虚幻4之Slate学习二 —— Slate控件样式</title>
+      <link href="/2019/08/03/WidgetStyle/"/>
+      <url>/2019/08/03/WidgetStyle/</url>
+      
+        <content type="html"><![CDATA[<h1 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h1><ul><li>自定义控件样式</li><li>生成样式集合，用于加载和引用我们的样式</li></ul><h1 id="简单梳理"><a href="#简单梳理" class="headerlink" title="简单梳理"></a>简单梳理</h1><p>为了能够在控件上显示自定义的各类属性，使用我们要使用自定义的控件样式。使用我们需要创建一个基于SlateWidgetSytle的C++类。在这里可以定义许多的自定义样式。比如最常用的FSlateBrush用于显示图片，FSlateFontInfo用于表示字体信息。接着我们思考的是怎么指定这些相关属性，即怎么指定图片等信息。有两个方法，一是直接用硬编码，指定文件地址。二是转变成蓝图类，可视化选择我们指定的内容。使用现在的问题是如何让在不同地方的Slate控件能够获取获取到这些内容。这里的方法是写一个<strong>单例</strong>，并在GameModule中生成唯一实例以供调用。</p><h1 id="定义自定义Slate控件样式"><a href="#定义自定义Slate控件样式" class="headerlink" title="定义自定义Slate控件样式"></a>定义自定义Slate控件样式</h1><p>创建基于SlateWidgetStyle的C++类MySlateWidgetStyle，在UE4 Editor中的内容浏览器中创建自定义的控件样式蓝图，并选择样式为刚创建的C++类，命名为BP_MySlateWidgetStyle,具体操作如图:</p><p><img src="Menu.png" alt></p><p><img src="SlateStyle.png" alt></p><hr><p>可以测试一下是否成功,添加如下代码</p><pre><code class="lang-cpp">/** MySlateWidgetStyle.h 部分代码 **/#pragma once#include &quot;CoreMinimal.h&quot;#include &quot;Styling/SlateWidgetStyle.h&quot;#include &quot;SlateWidgetStyleContainerBase.h&quot;#include &quot;SlateBrush.h&quot;#include &quot;MySlateWidgetStyle.generated.h&quot;/** *  */USTRUCT()struct MYSLATE_API FMySlateStyle : public FSlateWidgetStyle{    GENERATED_USTRUCT_BODY()    FMySlateStyle();    virtual ~FMySlateStyle();    // FSlateWidgetStyle    virtual void GetResources(TArray&lt;const FSlateBrush*&gt;&amp; OutBrushes) const override;    static const FName TypeName;    virtual const FName GetTypeName() const override { return TypeName; };    static const FMySlateStyle&amp; GetDefault();    //code needed to write     UPROPERTY(EditAnyWhere, Category = MenuHUD)    FSlateBrush BackGroupBrush;};</code></pre><p>这样在BP_MySlateWidgetStyle中产生如下效果<br><img src="Brush.png" alt></p><h1 id="自定义单例类"><a href="#自定义单例类" class="headerlink" title="自定义单例类"></a>自定义单例类</h1><p>接下来再来捋一下接下来的思路，我们需要在MyHUDWidget中获取到我们蓝图类中的样式。这里我们可以通过<a href="https://api.unrealengine.com/INT/API/Runtime/SlateCore/Styling/ISlateStyle/GetWidgetStyle/index.html" target="_blank" rel="noopener">ISlateStyle::GetWidgetStyle</a>。所以我们需要有一个ISlateStyle，这里我们可以通过得到FSlateStyleSet，它是继承于ISlateStyle的，可以直接隐式转换。接着我们<a href="https://api.unrealengine.com/INT/API/Runtime/Engine/Slate/FSlateGameResources/New/index.html" target="_blank" rel="noopener">FSlateGameResources::New</a>函数来获取蓝图类中的所有样式生成FSlateStyleSet。而这一些列操作需要一个单列来实现，而单例也需要在某个地方实例化。</p><hr><p>创建一个不继承任何类的类，命名为MyStyle。单例模式大同小异，可以按照如下进行模仿</p><pre><code class="lang-cpp">/** MyStyle.h **/#pragma once#include &quot;CoreMinimal.h&quot;#include &quot;ISlateStyle.h&quot;/** *  */class MYSLATE_API MyStyle{public:    static void Initialze();    static FName GetStyleSetName();    static void ShutDown();    static const ISlateStyle&amp; Get();private:    static TSharedRef&lt;class FSlateStyleSet&gt; Create();    static TSharedPtr&lt;class FSlateStyleSet&gt; MytyleInstance;};</code></pre><pre><code class="lang-cpp">/** MyStyle.cpp **/#include &quot;MyStyle.h&quot;#include &quot;SlateStyleRegistry.h&quot;#include &quot;SlateGameResources.h&quot;//由于此单例不用构造函数，所以成员初始化写在这里TSharedPtr&lt;FSlateStyleSet&gt; MyStyle::MyStyleInstance = NULL;void MyStyle::Initialze(){    if (!MyStyleInstance.IsValid())    {        MyStyleInstance = Create();        FSlateStyleRegistry::RegisterSlateStyle(*MyStyleInstance);    }}FName MyStyle::GetStyleSetName(){    const static FName MyStyleName(TEXT(&quot;BP_MySlateWidgetStyle&quot;));    return MyStyleName;}void MyStyle::ShutDown(){    FSlateStyleRegistry::UnRegisterSlateStyle(*MyStyleInstance);    ensure(MyStyleInstance.IsUnique());    MyStyleInstance.Reset();}const ISlateStyle&amp; MyStyle::Get(){    return *MyStyleInstance;}TSharedRef&lt;class FSlateStyleSet&gt; MyStyle::Create(){    TSharedRef&lt;FSlateStyleSet&gt; StyleRef = FSlateGameResources::New(GetStyleSetName(), &quot;/Game/&quot; , &quot;/Game/&quot;);    return StyleRef;}</code></pre><h2 id="注册和注销"><a href="#注册和注销" class="headerlink" title="注册和注销"></a>注册和注销</h2><ul><li>RegisterSlateStyle:Add a slate style to the repository.</li><li>UnRegisterSlateStyle:Removes a slate style from the repository.</li></ul><p>猜测:用于在 Static initialization时预加载我们需要的样式</p><h2 id="FSlateStyleSet"><a href="#FSlateStyleSet" class="headerlink" title="FSlateStyleSet"></a>FSlateStyleSet</h2><ul><li>一个Slate样式块，包含一组指定Slate外观的命名属性。</li></ul><h2 id="共享指针和共享引用"><a href="#共享指针和共享引用" class="headerlink" title="共享指针和共享引用"></a>共享指针和共享引用</h2><p>注意的是这两个都是指针，主要区别是TSharedRef&lt;&gt;不能指向空，且TSharedPtr&lt;&gt;可以隐式转换成TSharedRef&lt;&gt;，所有这里声明时用的是TSharedPtr&lt;&gt;</p><h1 id="创建单例实例"><a href="#创建单例实例" class="headerlink" title="创建单例实例"></a>创建单例实例</h1><ul><li>FDefaultGameModuleImpl中的StartupModule()和ShutdownModule()这两个函数会在加载(卸载)dll和模块后立刻调用,我们可以利用来生成实例。在MySlate中写如下代码:<pre><code class="lang-cpp">/**  MySlate.h **/class FMySlateModule : public FDefaultGameModuleImpl{public:     virtual void StartupModule() override;     virtual void ShutdownModule() override;};</code></pre></li><li>FDefaultGameModuleImpl:Default minimal module class for gameplay modules. Does nothing at startup and shutdown.</li><li>所以上述其实就是自定义了一个模块</li></ul><pre><code class="lang-cpp">/** MySlate.cpp **/#include &quot;MySlate.h&quot;#include &quot;Modules/ModuleManager.h&quot;#include &quot;Public/UI/MyStyle.h&quot;#include &quot;SlateStyleRegistry.h&quot;IMPLEMENT_PRIMARY_GAME_MODULE(FMySlateModule, MySlate, &quot;MySlate&quot; );void FMySlateModule::StartupModule(){    //先取消注册，保证不会重复注册    FSlateStyleRegistry::UnRegisterSlateStyle(MyStyle::GetStyleSetName());    MyStyle::Initialze();}void FMySlateModule::ShutdownModule(){    MyStyle::ShutDown();}</code></pre><ul><li>在您的游戏中，至少要使用IMPLEMENT_PRIMARY_GAME_MODULE注册一个模块。其他模块可以使用另一个可选的IMPLEMENT_GAME_MODULE方法进行注册。</li><li>所要使用的模组，注意默认是FDefaultGameModuleImpl,所以这里我们改为FMySlateModule</li><li><a href="https://docs.unrealengine.com/zh-CN/Programming/Modules/Gameplay/index.html" target="_blank" rel="noopener">更多关于Module可以看官方手册</a></li></ul><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这样我们就定义好了我们的控件样式，我们来测试一下是否成功，在样式蓝图中选择一张图片，并添加如下代码<br><img src="Sytle.png" alt></p><pre><code class="lang-cpp">/** SMyHUDWidget.h 部分代码**/#include &quot;MySlateWidgetStyle.h&quot;private:    const FMySlateStyle *MySlateStyle;</code></pre><pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/#include &quot;SMyHUDWidget.h&quot;#include &quot;SlateOptMacros.h&quot;#include &quot;SButton.h&quot;#include &quot;SImage.h&quot;#include &quot;MyStyle.h&quot;BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATIONvoid SMyHUDWidget::Construct(const FArguments&amp; InArgs){    MySlateStyle = &amp;MyStyle::Get().GetWidgetStyle&lt;FMySlateStyle&gt;(&quot;BP_MySlateWidgetStyle&quot;);    ChildSlot    [        SNew(SImage)        .Image(&amp;MySlateStyle-&gt;BackGroupBrush)    ];}END_SLATE_FUNCTION_BUILD_OPTIMIZATION</code></pre><ul><li><strong>注意MyStyle::Get()返回的是一个集合</strong>,所以我们需要使用GetWidgetStyle<fmyslatestyle>(“BP_MySlateWidgetStyle”)来获取我们所定义的蓝图样式。</fmyslatestyle></li></ul><p>上述运行结果<br><img src="result.png" alt></p><h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul><li>下章链接<br><a href="https://sanctorum003.github.io/2019/08/04/SlateWidget/" target="_blank" rel="noopener">虚幻4之Slate学习三 —— 创建Slate控件</a></li><li>章节总览<br><a href="https://sanctorum003.github.io/2019/08/07/SlateMenu/" target="_blank" rel="noopener">虚幻4之Slate学习</a> </li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> UE4 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ue4 </tag>
+            
+            <tag> slate </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>虚幻4之Slate学习一 —— HUD</title>
+      <link href="/2019/08/02/HUD/"/>
+      <url>/2019/08/02/HUD/</url>
+      
+        <content type="html"><![CDATA[<h1 id="本章简介"><a href="#本章简介" class="headerlink" title="本章简介"></a>本章简介</h1><ul><li>为项目添加Slate依赖库</li><li>创建容纳各种Widget的HUD类</li><li>创建自定义Widget类并将其添加到视口</li><li>设置光标的相关属性</li></ul><h1 id="Slate库"><a href="#Slate库" class="headerlink" title="Slate库"></a>Slate库</h1><p>想要使用Slate的库，必须在项目工程中包含相关的依赖库。在VS工程中找到  <strong>ProjectName.Build.cs</strong>，在其中添加</p><pre><code class="lang-cs">PublicDependencyModuleNames.AddRange(    new string[]     {         &quot;Core&quot;,          &quot;CoreUObject&quot;,          &quot;Engine&quot;,          &quot;InputCore&quot;,         &quot;Slate&quot;,         &quot;SlateCore&quot;    });</code></pre><p>这样我们就能使用Slate库了。</p><h1 id="创建HUD"><a href="#创建HUD" class="headerlink" title="创建HUD"></a>创建HUD</h1><h2 id="什么是HUD"><a href="#什么是HUD" class="headerlink" title="什么是HUD"></a>什么是HUD</h2><p>HUD是平视显示器的缩写，其与UI的有区别，但较难阐述。此处只需知道，Slate库使用HUD来作为容器，即在HUD中编写相关控件</p><h2 id="设置自定义HUD"><a href="#设置自定义HUD" class="headerlink" title="设置自定义HUD"></a>设置自定义HUD</h2><ul><li>创建一个继承于HUD的C++类，此处命名为MyHUD</li><li>在MySlateGameModeBase.cpp中将HUD class改为MyHUD<blockquote><p>也可以直接创建GameModeBase类，并在世界设置中改为自定义GameModeBase类</p></blockquote></li></ul><pre><code class="lang-cpp">/** MySlateGameModeBase.cpp **/#include &quot;MySlateGameModeBase.h&quot;#include &quot;Public\UI\MyHUD.h&quot;AMySlateGameModeBase::AMySlateGameModeBase(){    HUDClass = AMyHUD::StaticClass();}</code></pre><p>这样在在初始化游戏时，就会默认调用自定义的HUD</p><h1 id="将自定义Widget添加到视口"><a href="#将自定义Widget添加到视口" class="headerlink" title="将自定义Widget添加到视口"></a>将自定义Widget添加到视口</h1><ul><li>先创建自定义Widget的C++类，起名为MyHUDWidget</li><li>在MyHUD的构建函数中将MyHUDWidget添加到视口，这样在开始游戏时将自动调用</li></ul><pre><code class="lang-cpp">/** MyHUD.h **/private:    TSharedPtr&lt;class SMyHUDWidget&gt; HUDWidget;</code></pre><pre><code class="lang-cpp">/** MyHUD.cpp **/AMyHUD::AMyHUD(){    if (GEngine &amp;&amp; GEngine-&gt;GameViewport)    {        SAssignNew(HUDWidget, SMyHUDWidget);        GEngine-&gt;GameViewport-&gt;AddViewportWidgetContent(SNew(SWeakWidget).PossiblyNullContent(HUDWidget.ToSharedRef()));    }}</code></pre><h2 id="如何创建控件实例"><a href="#如何创建控件实例" class="headerlink" title="如何创建控件实例"></a>如何创建控件实例</h2><ul><li>创建控件实例有下面两种方法</li><li>SAssignNew(TSharedPtr<slatewidgetclassname>,SlateWidgetClassName);<blockquote><p>将创建的控件保存到共享指针中</p></blockquote></slatewidgetclassname></li><li>SNew(SlateWidgetClassName)</li></ul><h2 id="如何将MyHUDWidget从视口中添加和删除"><a href="#如何将MyHUDWidget从视口中添加和删除" class="headerlink" title="如何将MyHUDWidget从视口中添加和删除"></a>如何将MyHUDWidget从视口中添加和删除</h2><ul><li>将控件添加到视口中<pre><code class="lang-cpp">TSharedPtr&lt;MyWidget&gt; MyWidgetPtr;GEngine-&gt;GameViewport-&gt;AddViewportWidgetContent(  SNew(SWeakWidget).  PossiblyNullContent(MyWidgetPtr.ToSharedRef()));</code></pre></li><li>将控件从视口删除<pre><code class="lang-cpp">GEngine-&gt;GameViewport-&gt;RemoveViewportWidgetContent(  SNew(MyWidgetPtr.ToSharedRef()));</code></pre></li><li>将视口中的全部控件删除<pre><code class="lang-cpp">GEngine-&gt;GameViewport-&gt;RemoveAllViewportWidgets();</code></pre></li></ul><h1 id="设置光标"><a href="#设置光标" class="headerlink" title="设置光标"></a>设置光标</h1><ul><li>这里光标是默认的，我们需要让光标一直显示，不然对后面会有影像。</li><li>我们创建继承于PlayerController的MyController类。</li></ul><pre><code class="lang-cpp">/** MyController.cpp **/AMyController::AMyController(){    /** Whether the mouse cursor should be displayed. */    bShowMouseCursor = true;}</code></pre><ul><li>我们还可以设置光标的移动范围</li></ul><pre><code class="lang-cpp">/** MyController.cpp **/void AMyController::BeginPlay(){    /** Data structure used to setup an input mode that allows only the UI to respond to user input. */    FInputModeUIOnly InputMode;    /** Sets the mouse locking behavior of the viewport */    InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);    SetInputMode(InputMode);}</code></pre><ul><li>在Gamemode中应用，这样光标一直显示，且不能移出视口</li></ul><pre><code class="lang-cpp">/** MySlateGameModeBase.cpp **/#include &quot;MySlateGameModeBase.h&quot;#include &quot;Public\UI\MyHUD.h&quot;#include &quot;Public\MyController.h&quot;AMySlateGameModeBase::AMySlateGameModeBase(){    HUDClass = AMyHUD::StaticClass();    PlayerControllerClass = AMyController::StaticClass();}</code></pre><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>到目前为止,准备工作算是做好了。我们可以测试以下是否成功。在MyHUDWidget中添加代码</p><pre><code class="lang-cpp">/** SMyHUDWidget.cpp **/#include &quot;SMyHUDWidget.h&quot;#include &quot;SlateOptMacros.h&quot;#include &quot;SButton.h&quot;BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATIONvoid SMyHUDWidget::Construct(const FArguments&amp; InArgs){    ChildSlot    [        SNew(SButton)    ];}END_SLATE_FUNCTION_BUILD_OPTIMIZATION</code></pre><p>这样你将看到屏幕中一个全屏填满的按钮<br><img src="Button.png" alt></p><blockquote><p>如果无法编译,尝试在SMyHUDWidget中添加#include “DeclarativeSyntaxSupport.h”头文件</p></blockquote><h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul><li>下章链接<br><a href="https://sanctorum003.github.io/2019/08/03/WidgetStyle/" target="_blank" rel="noopener">虚幻4之Slate学习二 —— Slate控件样式</a></li><li>章节总览<br><a href="https://sanctorum003.github.io/2019/08/07/SlateMenu/" target="_blank" rel="noopener">虚幻4之Slate学习</a> </li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> UE4 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ue4 </tag>
+            
+            <tag> slate </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>KMP</title>
+      <link href="/2019/08/01/KMP/"/>
+      <url>/2019/08/01/KMP/</url>
+      
+        <content type="html"><![CDATA[<h1 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h1><h2 id="王道方法"><a href="#王道方法" class="headerlink" title="王道方法"></a>王道方法</h2><p><img src="kmp1.bmp" alt title="KMP1"></p><blockquote><p>1) next 数组从1开始</p><p>2) next[1] = 0<br>next[2] = 1<br>next[0]不使用</p><p>3) 求当next数组当前位置<strong>j</strong></p><pre><code class="lang-cpp">// 主要方法就是 将前一个位置(j-1)的字符与next[j-1]所对应的字符比较相同则 next[j] = next[j-1]+1;// 不同则 将next[j-1]的字符 与next[ next[j-1] ]对应否字符相比较相同则 next[j] = next[ next[j-1] ]+1;// 不断重复// 如果next[...] = 0 ==&gt; next[j] = 1;    k = next[j-1];     while(1)    {        if(S[k] == S[j-1])//S为字符数组        {            next[j] = k+1;            break;        }        else            k = next[k];    }</code></pre><h2 id="殷人昆"><a href="#殷人昆" class="headerlink" title="殷人昆"></a>殷人昆</h2><p><img src="kmp2.bmp" alt title="KMP2"></p><p>可以直接看 前n个串中的最大 前缀等于后缀 的个数 即为 next[j]的值</p><h2 id="常见方法"><a href="#常见方法" class="headerlink" title="常见方法"></a>常见方法</h2><p>1) next[1]=0</p><p>2) 从第j(j&gt;1)个开启 比较前j个的 最大 前缀等于后缀 </p></blockquote><h2 id="转换技巧-快速做选择题"><a href="#转换技巧-快速做选择题" class="headerlink" title="转换技巧[快速做选择题]"></a>转换技巧[快速做选择题]</h2><p><a href="http://www.cskaoyan.com/thread-650235-1-1.html" target="_blank" rel="noopener">http://www.cskaoyan.com/thread-650235-1-1.html</a><br><a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html</a></p><blockquote><p>规则1：用常见方法做出结果 </p><p>规则2：右移一位，最左边添-1，最右边自然溢出</p><p>规则3：全部加1</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> Algorithm </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> algorithm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
   
   
 </search>

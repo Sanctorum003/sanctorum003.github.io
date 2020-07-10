@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <title>虚幻4之Slate学习三 —— 创建Slate控件 | Blog</title>
+  <meta name="keywords" content=" ue4 , slate ">
+  <meta name="description" content="虚幻4之Slate学习三 —— 创建Slate控件 | Blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="about">
+<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="about">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/darcula.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0"></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js"></script>
+
+<script src="/js/iconfont.js?v=1.1.0"></script>
+
+</head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value>
+  <input class="theme_blog_path" value>
+  <input id="theme_shortcut" value="true">
+</div>
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar.jpg" />
+</a>
+<div class="author">
+    <span>Sanctorum003</span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active" data-rel="All">All<small>(21)</small></div></li>
+    
+        
+            
+            <li><div data-rel="Algorithm">Algorithm<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="CG">CG<small>(10)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Menu"><i class="fold iconfont icon-right"></i>Menu<small>(1)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Menu<--->UE4">UE4<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="UE4">UE4<small>(7)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div><a  class="friends">Friends</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="21">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="https://naruto-zhao.github.io/">赵果</a></li>
+            
+            <li><a target="_blank" href="https://solthx.github.io/">程子丰</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" />
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>algorithm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>computer graphics</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>directx11</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>json</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>menu</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>opengl</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>render</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>shader</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>slate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ue4</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        <a  class="All CG "
+           href="/2020/01/10/Render-RayMarching/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="Ray Marching">Ray Marching</span>
+            <span class="post-date" title="2020-01-10 18:34:24">2020/01/10</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2020/01/04/LearnOpengl-CoordinateSystems/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="LearnOpengl-CoordinateSystems">LearnOpengl-CoordinateSystems</span>
+            <span class="post-date" title="2020-01-04 16:30:47">2020/01/04</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/12/04/LearnOpengl-Transformations/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="LearnOpengl-Transformations">LearnOpengl-Transformations</span>
+            <span class="post-date" title="2019-12-04 20:02:13">2019/12/04</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/11/21/LearnOpengl-Textures/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="LearnOpengl-Textures">LearnOpengl-Textures</span>
+            <span class="post-date" title="2019-11-21 18:58:30">2019/11/21</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/11/21/LearnOpengl-Shaders/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="LearnOpengl-Shaders">LearnOpengl-Shaders</span>
+            <span class="post-date" title="2019-11-21 18:40:03">2019/11/21</span>
+        </a>
+        
+        <a  class="All "
+           href="/2019/10/08/UE4Live-RenderProcess/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="UE4Live_RenderProcess">UE4Live_RenderProcess</span>
+            <span class="post-date" title="2019-10-08 21:50:59">2019/10/08</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/10/08/LearnOpengl-HelloTriangle/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="LearnOpengl_HelloTriangle">LearnOpengl_HelloTriangle</span>
+            <span class="post-date" title="2019-10-08 18:33:36">2019/10/08</span>
+        </a>
+        
+        <a  class="All "
+           href="/2019/10/07/UE4Render-ResourceOperation/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="虚幻4渲染编程 - 资源操作">虚幻4渲染编程 - 资源操作</span>
+            <span class="post-date" title="2019-10-07 21:43:49">2019/10/07</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/10/06/UE4Render-addParams/"
+           data-tag="ue4,render,shader"
+           data-author="" >
+            <span class="post-title" title="在shader文件中添加第二个颜色变量">在shader文件中添加第二个颜色变量</span>
+            <span class="post-date" title="2019-10-06 11:46:00">2019/10/06</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/09/21/LearnOpengl-HelloWindow/"
+           data-tag="computer graphics,opengl"
+           data-author="" >
+            <span class="post-title" title="LearnOpengl_HelloWindow">LearnOpengl_HelloWindow</span>
+            <span class="post-date" title="2019-09-21 16:00:18">2019/09/21</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/09/09/D3DTransform/"
+           data-tag="computer graphics,directx11"
+           data-author="" >
+            <span class="post-title" title="DirectX11龙书-第三章:变换">DirectX11龙书-第三章:变换</span>
+            <span class="post-date" title="2019-09-09 15:51:46">2019/09/09</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/09/09/D3DInit/"
+           data-tag="computer graphics,directx11"
+           data-author="" >
+            <span class="post-title" title="DirectX11龙书-第四章:渲染管线">DirectX11龙书-第四章:渲染管线</span>
+            <span class="post-date" title="2019-09-09 15:26:18">2019/09/09</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/09/05/UE4RenderModule/"
+           data-tag="ue4,render"
+           data-author="" >
+            <span class="post-title" title="虚幻4渲染模块">虚幻4渲染模块</span>
+            <span class="post-date" title="2019-09-05 09:30:06">2019/09/05</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2019/08/19/渲染管线/"
+           data-tag="computer graphics,directx11"
+           data-author="" >
+            <span class="post-title" title="DirectX11龙书-第五章:渲染管线">DirectX11龙书-第五章:渲染管线</span>
+            <span class="post-date" title="2019-08-19 10:56:43">2019/08/19</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/08/07/JSON/"
+           data-tag="ue4,json"
+           data-author="" >
+            <span class="post-title" title="虚幻4之JSON学习">虚幻4之JSON学习</span>
+            <span class="post-date" title="2019-08-07 20:07:01">2019/08/07</span>
+        </a>
+        
+        <a  class="All Menu UE4 "
+           href="/2019/08/07/UE4Menu/"
+           data-tag="ue4,slate,json,menu"
+           data-author="" >
+            <span class="post-title" title="虚幻4学习">虚幻4学习</span>
+            <span class="post-date" title="2019-08-07 16:58:06">2019/08/07</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/08/06/DelegateAndMacro/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习四 —— 委托与宏">虚幻4之Slate学习四 —— 委托与宏</span>
+            <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/08/04/SlateWidget/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习三 —— 创建Slate控件">虚幻4之Slate学习三 —— 创建Slate控件</span>
+            <span class="post-date" title="2019-08-04 20:20:05">2019/08/04</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/08/03/WidgetStyle/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习二 —— Slate控件样式">虚幻4之Slate学习二 —— Slate控件样式</span>
+            <span class="post-date" title="2019-08-03 15:49:36">2019/08/03</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/08/02/HUD/"
+           data-tag="ue4,slate"
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习一 —— HUD">虚幻4之Slate学习一 —— HUD</span>
+            <span class="post-date" title="2019-08-02 10:07:12">2019/08/02</span>
+        </a>
+        
+        <a  class="All Algorithm "
+           href="/2019/08/01/KMP/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="KMP">KMP</span>
+            <span class="post-date" title="2019-08-01 16:47:03">2019/08/01</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-SlateWidget" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">虚幻4之Slate学习三 —— 创建Slate控件</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="UE4">UE4</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">ue4</a>
+            
+            <a class="color1">slate</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2020-01-10 19:49:43'>2019-08-04 20:20</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本章简介"><span class="toc-text">本章简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用C-编写Slate控件"><span class="toc-text">用C++编写Slate控件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SOverlay"><span class="toc-text">SOverlay</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HAlign和VAlign"><span class="toc-text">HAlign和VAlign</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Padding"><span class="toc-text">Padding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FillWidth和FillHeight"><span class="toc-text">FillWidth和FillHeight</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SOverlay-Slot"><span class="toc-text">+SOverlay::Slot()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SImage"><span class="toc-text">SImage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SBox"><span class="toc-text">SBox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SBorder"><span class="toc-text">SBorder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#STextBlock"><span class="toc-text">STextBlock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVerticalBox"><span class="toc-text">SVerticalBox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SCheckBox"><span class="toc-text">SCheckBox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSlider"><span class="toc-text">SSlider</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义DPI"><span class="toc-text">自定义DPI</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相关链接"><span class="toc-text">相关链接</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="本章简介"><a href="#本章简介" class="headerlink" title="本章简介"></a>本章简介</h1><ul>
+<li>如何利用C++编写Slate控件</li>
+<li>介绍常用的Slate控件</li>
+<li>自定义DPI</li>
+</ul>
+<h1 id="用C-编写Slate控件"><a href="#用C-编写Slate控件" class="headerlink" title="用C++编写Slate控件"></a>用C++编写Slate控件</h1><pre><code class="lang-cpp">ChildSlot
+[
+    SNew(SImage)
+    .Image(&amp;MySlateStyle-&gt;BackGroupBrush)
+
+];
+</code></pre>
+<p>只需要在ChildSlot中编写相关代码就可以创建控件。不同控件有不同的属性，下面将要介绍一些常用的控件,值得注意的是对于需要在游戏中动态控制的控件，需利用SAssignNew,再通过共享指针保存起来</p>
+<h2 id="SOverlay"><a href="#SOverlay" class="headerlink" title="SOverlay"></a>SOverlay</h2><ul>
+<li>用于实现重叠部件,可以创建任意个插件，即可以放任意个子控件</li>
+</ul>
+<h3 id="HAlign和VAlign"><a href="#HAlign和VAlign" class="headerlink" title="HAlign和VAlign"></a>HAlign和VAlign</h3><ul>
+<li>设计布局方式</li>
+</ul>
+<h3 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h3><ul>
+<li>设计边缘空隙</li>
+</ul>
+<h3 id="FillWidth和FillHeight"><a href="#FillWidth和FillHeight" class="headerlink" title="FillWidth和FillHeight"></a>FillWidth和FillHeight</h3><ul>
+<li>填充宽度和高度</li>
+</ul>
+<h3 id="SOverlay-Slot"><a href="#SOverlay-Slot" class="headerlink" title="+SOverlay::Slot()"></a>+SOverlay::Slot()</h3><ul>
+<li>+SOverlay::Slot()与SNew().AddSlot等价。增加的插槽下用于放子控件</li>
+</ul>
+<pre><code class="lang-cpp">SNew(SOverlay)
++ SOverlay::Slot()
+//这些属性设计是应用于插槽
+.HAlign(HAlign_Fill)
+.VAlign(VAlign_Fill)
+[
+     SNew(SImage)
+     //image()用于添加笔刷
+     .Image(&amp;MySlateStyle-&gt;BackGroupBrush)
+]
+</code></pre>
+<p><img src="SOverlay.png" alt></p>
+<h2 id="SImage"><a href="#SImage" class="headerlink" title="SImage"></a>SImage</h2><ul>
+<li>Image()通过加笔刷来显示图片</li>
+<li>ColorAndOpacity()改变颜色和透明度</li>
+</ul>
+<h2 id="SBox"><a href="#SBox" class="headerlink" title="SBox"></a>SBox</h2><ul>
+<li>只能添加一个子组件</li>
+<li>WidthOverride和HeightOverride设置长宽</li>
+<li>对应UMG中的SizeBox</li>
+</ul>
+<h2 id="SBorder"><a href="#SBorder" class="headerlink" title="SBorder"></a>SBorder</h2><ul>
+<li>可放子控件，可显示图片</li>
+<li>用BorderImage添加图片</li>
+</ul>
+<h2 id="STextBlock"><a href="#STextBlock" class="headerlink" title="STextBlock"></a>STextBlock</h2><ul>
+<li>用于添加文字</li>
+<li>Font()设置字体（不是指针）</li>
+<li>Text()设置显示文字</li>
+</ul>
+<h2 id="SVerticalBox"><a href="#SVerticalBox" class="headerlink" title="SVerticalBox"></a>SVerticalBox</h2><ul>
+<li>垂直容器</li>
+<li>可以加插槽</li>
+<li>+SVerticalBox::Slot == AddSlot</li>
+</ul>
+<h2 id="SCheckBox"><a href="#SCheckBox" class="headerlink" title="SCheckBox"></a>SCheckBox</h2><ul>
+<li>OnCheckStateChanged：传入函数指针（委托），状态改变时调用</li>
+</ul>
+<h2 id="SSlider"><a href="#SSlider" class="headerlink" title="SSlider"></a>SSlider</h2><ul>
+<li>滑动条</li>
+<li>滑动条样式用 FSliderStyle</li>
+<li>OnValueChanged(Delegate) 此为SLATE_EVENT，里面应该传入一参数（滑动条value）委托，每次滑动条value改变时调用。</li>
+<li>SetValue()设置滑动位置，范围[0f,1f]</li>
+</ul>
+<h1 id="自定义DPI"><a href="#自定义DPI" class="headerlink" title="自定义DPI"></a>自定义DPI</h1><h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul>
+<li>下章链接<br><a href="https://sanctorum003.github.io/2019/08/06/DelegateAndMacro/" target="_blank" rel="noopener">虚幻4之Slate学习四 —— 委托与宏</a></li>
+<li>章节总览<br><a href="https://sanctorum003.github.io/2019/08/07/SlateMenu/" target="_blank" rel="noopener">虚幻4之Slate学习</a> </li>
+</ul>
+
+      
+       
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<input type="hidden" id="MathJax-js"
+        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</input>
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2019-2020 Sanctorum003
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("/img/cover.jpg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+    #post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+
+
+
+
+
+</html>
