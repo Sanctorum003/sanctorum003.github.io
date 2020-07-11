@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>LC 1.两数之和</title>
+      <link href="/2020/07/11/LeetCode/%5BLC%5D%201.%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/"/>
+      <url>/2020/07/11/LeetCode/%5BLC%5D%201.%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</url>
+      
+        <content type="html"><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><img src="Q_two-sum.png" alt></p><h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><ul><li>注意点<ul><li>数组无序</li><li>返回<strong>下标</strong></li></ul></li></ul><h2 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h2><ul><li><p>二重循环</p><pre><code class="lang-cpp">class Solution {public:  vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) {      vector&lt;int&gt; v;      for(int i = 0; i &lt; nums.size();++i)          for(int j = i+1; j &lt; nums.size();++j)              if(nums[i] + nums[j] == target)              {                  v.push_back(i);                  v.push_back(j);              }      return v;  }};</code></pre></li><li><p>时间复杂度:O($n^{2}$)</p></li><li>空间复杂度 O(1)</li></ul><h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><ul><li>排序($nlog(n)$)之后使用双指针($O(n)$)找出所求的值</li><li>所求的是原数组中的下标，所以排序前复制一份。之后利用找到的值来找到下标</li><li><p>需要注意从原数组找下标时，下标大小和数值重复的问题。</p><pre><code class="lang-cpp">class Solution {public:  vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) {      vector&lt;int&gt; tmp = nums;      sort(tmp.begin(),tmp.end());      int i = 0;      int j = tmp.size()-1;      while(i &lt; j)      {          if(tmp[i] + tmp[j] &gt; target) --j;          else if(tmp[i] + tmp[j] &lt; target) ++i;          else break;      }      bool bi = false;      bool bj = false;      for(int k = 0; k &lt; nums.size();++k)      {          if(!bi &amp;&amp; nums[k] == tmp[i] )          {              i=k;              bi = true;              continue;          }          if(!bj &amp;&amp; nums[k] == tmp[j])          {              j = k;              bj = true;              continue;          }      }      if(i &gt; j)          swap(i,j);      return {i,j};  }};</code></pre></li><li><p>时间复杂度: $O(nlog(n) + n + n) = O(nlog(n))$</p></li><li>空间复杂度: $O(n)$</li></ul><h2 id="两边哈希"><a href="#两边哈希" class="headerlink" title="两边哈希"></a>两边哈希</h2><ul><li>利用map或unordered_map将数组中的值和下标关联在一起。<ul><li>这里会注意到一点，可能数组中的值会重复，导致一个值关联多个下标，而实际代码中的结果会使得最后一个重复值关联相应下标。</li><li>但是这并不会影响结果。如此考虑，因为<strong>结果唯一</strong>，所以结果要取重复值，则数组中该结果对应的重复值有且仅有2个，不然不满足结果唯一。</li><li>所以在查找的时候，用的是原数组进行迭代，所以重复的第一个值要找的就是重复的后一个值，所以上述正好满足我们的要求</li></ul></li><li><p>利用原数组进行查找 target - nums[i] 是否在map中,map::find为O(log(n))，其基于红黑树。unordered_map::find()为O(1),其基于哈希表</p><pre><code class="lang-cpp">class Solution {public:  vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) {      unordered_map&lt;int,int&gt; m;      for(int i =0; i &lt; nums.size();++i)          m[nums[i]] = i;      for(int i =0; i &lt; nums.size();++i)      {          if(m.find(target-nums[i]) != m.end() &amp;&amp; m[target-nums[i]] != i)              return {i,m[target-nums[i]]};      }      return {};  }};</code></pre></li><li>时间复杂度:map:$O(nlog(n))$、unordered_map:$O(n)$</li><li>空间复杂度:o(n)</li></ul><h2 id="一遍哈希"><a href="#一遍哈希" class="headerlink" title="一遍哈希"></a>一遍哈希</h2><ul><li>利用map或unordered_map将数组中的值和下标关联在一起。</li><li><p>在这里直接循环原数组，查找map中否有target - nums[i]。没有的话加入map中。</p><pre><code class="lang-cpp">class Solution {public:  vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) {      unordered_map&lt;int,int&gt; m;      for(int i =0; i &lt; nums.size();++i)      {          if(m.find(target-nums[i]) != m.end())          {              return {m[target-nums[i]],i};          }          else          {              m[nums[i]] = i;          }      }      return {};  }};</code></pre></li><li>时间复杂度:map:$O(nlog(n))$、unordered_map:$O(n)$</li><li>空间复杂度:o(1)</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> LeetCode </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> LeetCode </tag>
+            
+            <tag> Array </tag>
+            
+            <tag> HashMap </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Ray Marching</title>
       <link href="/2020/01/10/CG/Render/Render-RayMarching/"/>
       <url>/2020/01/10/CG/Render/Render-RayMarching/</url>
