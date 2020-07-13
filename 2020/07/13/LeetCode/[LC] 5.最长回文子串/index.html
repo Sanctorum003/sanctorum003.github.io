@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>LearnOpengl-Textures | Blog</title>
-  <meta name="keywords" content=" computer graphics , opengl ">
-  <meta name="description" content="LearnOpengl-Textures | Blog">
+  <title>最长回文子串 | Blog</title>
+  <meta name="keywords" content>
+  <meta name="description" content="最长回文子串 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
@@ -505,36 +505,19 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-CG/Opengl/LearnOpengl-Textures" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-LeetCode/[LC] 5.最长回文子串" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">LearnOpengl-Textures</h1>
+        <h1 class="article-title">最长回文子串</h1>
     
     <div class="article-meta">
         
         
         
-        <span class="book">
-            <i class="iconfont icon-category"></i>
-            
-            
-            <a  data-rel="CG">CG</a>
-            
-        </span>
-        
-        
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color3">computer graphics</a>
-            
-            <a class="color2">opengl</a>
-            
-        </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-01-10 19:49:43'>2019-11-21 18:58</time>
+            Created At : <time class="date" title='Updated At: 2020-07-13 15:29:47'>2020-07-13 14:36</time>
         
     </div>
     <div class="article-meta">
@@ -556,7 +539,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#纹理坐标"><span class="toc-text">纹理坐标</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#纹理环绕方式"><span class="toc-text">纹理环绕方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#纹理过滤"><span class="toc-text">纹理过滤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#多级渐远纹理-Mipmap"><span class="toc-text">多级渐远纹理(Mipmap)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#stb-image-h"><span class="toc-text">stb_image.h</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#加载图片"><span class="toc-text">加载图片</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生成纹理"><span class="toc-text">生成纹理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#应用纹理"><span class="toc-text">应用纹理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#纹理单元"><span class="toc-text">纹理单元</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#图片翻转问题"><span class="toc-text">图片翻转问题</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#题目"><span class="toc-text">题目</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#题解"><span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#中心扩散"><span class="toc-text">中心扩散</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态规划"><span class="toc-text">动态规划</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -572,128 +555,42 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="纹理坐标"><a href="#纹理坐标" class="headerlink" title="纹理坐标"></a>纹理坐标</h1><ul>
-<li><p>纹理坐标中,左下角位(0,0),右上角位(1,1)<br><img src="tex_coords.png" alt></p>
-</li>
-<li><p>使用纹理坐标获取纹理颜色叫做<strong>采样(Sampling)</strong></p>
-</li>
-</ul>
-<h1 id="纹理环绕方式"><a href="#纹理环绕方式" class="headerlink" title="纹理环绕方式"></a>纹理环绕方式</h1><ul>
-<li>原文讲的够好了<br><a href="https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/" target="_blank" rel="noopener">https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/</a></li>
-</ul>
-<h1 id="纹理过滤"><a href="#纹理过滤" class="headerlink" title="纹理过滤"></a>纹理过滤</h1><ul>
-<li><p>产生原因:纹理坐标可以取任意浮点值，所以纹理元素与纹理坐标无法一一对应</p>
-</li>
-<li><p>纹理元素(Texel)</p>
-</li>
-</ul>
-<blockquote>
-<p>而纹素是纹理图片空间的基本单元，可以看成是纹理的组成“像素”</p>
-</blockquote>
-<ul>
-<li>纹理过滤（Texture Filtering)</li>
-</ul>
-<blockquote>
-<p>一个像素一般不会正好对应于一个纹元（texel)。所以像素的颜色无法直接得到，需要经过一定的运算，这个过程就是纹理过滤。<br>参考网址：<a href="https://zhuanlan.zhihu.com/p/91208143" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/91208143</a></p>
-</blockquote>
-<ul>
-<li>有两种常见的纹理过滤的方式:GL_NEAREST和GL_LINEAR</li>
-</ul>
-<blockquote>
-<p>邻近过滤:选择中心点最接近纹理坐标的那个像素<br>线性过滤:基于纹理坐标附近的纹理像素，计算出一个插值。一个纹理像素的中心距离纹理坐标越近，那么这个纹理像素的颜色对最终的样本颜色的贡献越大。<br>具体项目可见<a href="https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/" target="_blank" rel="noopener">https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/</a>  </p>
-</blockquote>
-<ul>
-<li>如何设置过滤方式</li>
-</ul>
-<pre><code class="lang-cpp">glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);     
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-</code></pre>
-<blockquote>
-<p>GL_TEXTURE_MAG_FILTTER:纹理元素的数量 &lt; 图元像素的数量。比如texture为256*256，图元为512*512。相当于纹理元素被放大，一个纹理元素的颜色决定多个图元像素的颜色</p>
-<p>GL_TEXTURE_MIN_FILTER 纹理元素的数量 &gt; 图元像素的数量。比如texture为512*512,图元为256*256。相当于纹理被缩小，一个图元像素的颜色由多个纹理像素决定。</p>
-</blockquote>
-<h1 id="多级渐远纹理-Mipmap"><a href="#多级渐远纹理-Mipmap" class="headerlink" title="多级渐远纹理(Mipmap)"></a>多级渐远纹理(Mipmap)</h1><ul>
-<li><p>产生原因:我们有一个包含着上千物体的大房间，每个物体上都有纹理。有些物体会很远，但其纹理会拥有与近处物体同样高的分辨率。由于远处的物体可能只产生很少的片段(像素)，OpenGL从高分辨率纹理中为这些片段（像素）获取正确的颜色值就很困难，因为它需要对一个跨过纹理很大部分的片段（像素）只拾取一个纹理颜色。在小物体上这会产生不真实的感觉，更不用说对它们使用高分辨率纹理浪费内存的问题了。</p>
-</li>
-<li><p>多级渐远纹理：简单来说就是一系列的纹理图像，后一个纹理图像是前一个的二分之一</p>
-</li>
-<li><p>距观察者的距离超过一定的阈值，OpenGL会使用不同的多级渐远纹理，即最适合物体的距离的那个。由于距离远，解析度不高也不会被用户注意到。同时，多级渐远纹理另一加分之处是它的性能非常好。 </p>
-</li>
-<li><p>Mipmap的例子如下<br><img src="mipmaps.png" alt></p>
-</li>
-<li><p>可以在GL_TEXTURE_MIN_FILTER中使用多级渐远纹理过滤选项，但是在GL_TEXTURE_MAG_FILTER中无法使用，纹理放大不会使用多级渐远纹理，为放大过滤设置多级渐远纹理的选项会产生一个GL_INVALID_ENUM错误代码。</p>
-</li>
-</ul>
-<h1 id="stb-image-h"><a href="#stb-image-h" class="headerlink" title="stb_image.h"></a>stb_image.h</h1><h2 id="加载图片"><a href="#加载图片" class="headerlink" title="加载图片"></a>加载图片</h2><pre><code class="lang-cpp">int width, height, nrChannels;
-//地址、宽度、高度、颜色通道的个数、期望通道数（得到的data中的数据的通道数目）
-unsigned char *data = stbi_load(&quot;container.jpg&quot;, &amp;width, &amp;height, &amp;nrChannels, 0);
-</code></pre>
-<h1 id="生成纹理"><a href="#生成纹理" class="headerlink" title="生成纹理"></a>生成纹理</h1><pre><code class="lang-cpp">unsigned int texture;
-glGenTextures(1, &amp;texture);
-glBindTexture(GL_TEXTURE_2D, texture);
-// 为当前绑定的纹理对象设置环绕、过滤方式
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);   
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-// 加载并生成纹理
-int width, height, nrChannels;
-unsigned char *data = stbi_load(&quot;container.jpg&quot;, &amp;width, &amp;height, &amp;nrChannels, 0);
-if (data)
-{
-    //用于生成2D纹理
-    // 参数一：设置纹理目标，一般为GL_TEXTURE_1D、GL_TEXTURE_2D、GL_TEXTURE_3D
-    // 参数二：Mipmap级别,手动设置每个的话这里设0
-    // 参数三：纹理存储格式
-    // 参数四：宽度
-    // 参数五：长度
-    // 0
-    // 参数六：image的的存储格式
-    // 参数七：图像数据
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-    //为当前绑定的纹理自动生成所有需要的多级渐远纹理。
-    glGenerateMipmap(GL_TEXTURE_2D);
-}
-else
-{
-    std::cout &lt;&lt; &quot;Failed to load texture&quot; &lt;&lt; std::endl;
-}
-//释放图像的内存
-stbi_image_free(data);
-</code></pre>
-<h1 id="应用纹理"><a href="#应用纹理" class="headerlink" title="应用纹理"></a>应用纹理</h1><ul>
-<li>在定点数组中添加纹理坐标</li>
-<li>在VS中声明纹理坐标属性</li>
-<li>利用glVertexAttribPointer给定点数组中的纹理坐标解释，并启用该定点属性</li>
-<li>在PS中获取VS中的纹理坐标，声明sampler2D变量</li>
-<li>glActiveTexture激活对应的纹理单元</li>
-<li>利用texture(ourTexture, TexCoord)使用之前设置的纹理参数对相应的颜色值进行采样</li>
-</ul>
-<h1 id="纹理单元"><a href="#纹理单元" class="headerlink" title="纹理单元"></a>纹理单元</h1><ul>
-<li>uniform sampler2D MySampler存放纹理的位置称为纹理单元。</li>
-<li>opengl有GL_TEXTURE0 - GL_TEXTURE15总共16个纹理单元。</li>
-<li>使用方式如下</li>
-</ul>
-<pre><code class="lang-cpp">// 设置着色器采样器使用哪个纹理单元
-ourShader.use(); // 别忘记在激活着色器前先设置uniform！
-glUniform1i(glGetUniformLocation(ourShader.ID, &quot;texture1&quot;), 0); // 手动设置
-ourShader.setInt(&quot;texture2&quot;, 1); // 或者使用着色器类设置
-</code></pre>
-<pre><code class="lang-cpp">//激活纹理单元
-glActiveTexture(GL_TEXTURE0);
-//绑定时会自动使用当前激活的纹理单元 
-glBindTexture(GL_TEXTURE_2D, texture1);
-glActiveTexture(GL_TEXTURE1);
-glBindTexture(GL_TEXTURE_2D, texture2);
-</code></pre>
-<ul>
-<li>纹理单元GL_TEXTURE0默认总是被激活，所以我们在前面的例子里当我们使用glBindTexture的时候，无需激活任何纹理单元。</li>
-</ul>
-<h1 id="图片翻转问题"><a href="#图片翻转问题" class="headerlink" title="图片翻转问题"></a>图片翻转问题</h1><ul>
-<li>纹理可能上下颠倒，这是因为OpenGL要求y轴0.0坐标是在图片的底部的，但是图片的y轴0.0坐标通常在顶部。</li>
-</ul>
-<pre><code class="lang-cpp">//解决方法
-stbi_set_flip_vertically_on_load(true);
+        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="中心扩散"><a href="#中心扩散" class="headerlink" title="中心扩散"></a>中心扩散</h2><h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p>动态规划的关键点：初始条件和状态转换方程。<br>设：s[l][r]表示字符串中下标L到R的位置<br>则有如下转态转换方程<br>    s[l][r] = s[l+1][r-1] &amp;&amp; (s[l] == s[r])<br>那初始状态呢<br>    s[l][l] = ture<br>    s[l][l+1] = (s[l] == s[l+1])</p>
+<pre><code class="lang-cpp">class Solution {
+public:
+    string longestPalindrome(string s) {
+        vector&lt;vector&lt;bool&gt;&gt; v(s.size(),vector&lt;bool&gt;(s.size(),false));
+
+        string res;
+
+        for(int i = 0; i &lt; v.size();++i)
+        {
+            for(int j = i; j &lt; v.size();++j)
+            {
+                if(i == j)
+                    v[i][j] = true;
+                else if(j-i == 1)
+                    v[i][j] = s[i] == s[j] ? true : false;
+            }
+        }
+
+        //这里需要注意一点的是从后往前遍历，因为v[i][j] = v[i+1][j-1] &amp;&amp; (s[i] == s[j]);会优先用到数组尾部的数据
+        for(int i = v.size()-1; i &gt;= 0;--i)
+        {
+            for(int j = i; j &lt; v.size();++j)
+            {
+                if(j-i &gt; 1)
+                    v[i][j] = v[i+1][j-1] &amp;&amp; (s[i] == s[j]);
+
+                if(v[i][j] == true &amp;&amp; j-i+1 &gt; res.size())
+                    res = s.substr(i,j-i+1);  
+            }
+        }
+
+        return res;
+
+    }
+};
 </code></pre>
 
       

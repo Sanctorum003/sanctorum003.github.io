@@ -4,6 +4,32 @@
   
     
     <entry>
+      <title>最长回文子串</title>
+      <link href="/2020/07/13/LeetCode/%5BLC%5D%205.%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/"/>
+      <url>/2020/07/13/LeetCode/%5BLC%5D%205.%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="中心扩散"><a href="#中心扩散" class="headerlink" title="中心扩散"></a>中心扩散</h2><h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p>动态规划的关键点：初始条件和状态转换方程。<br>设：s[l][r]表示字符串中下标L到R的位置<br>则有如下转态转换方程<br>    s[l][r] = s[l+1][r-1] &amp;&amp; (s[l] == s[r])<br>那初始状态呢<br>    s[l][l] = ture<br>    s[l][l+1] = (s[l] == s[l+1])</p><pre><code class="lang-cpp">class Solution {public:    string longestPalindrome(string s) {        vector&lt;vector&lt;bool&gt;&gt; v(s.size(),vector&lt;bool&gt;(s.size(),false));        string res;        for(int i = 0; i &lt; v.size();++i)        {            for(int j = i; j &lt; v.size();++j)            {                if(i == j)                    v[i][j] = true;                else if(j-i == 1)                    v[i][j] = s[i] == s[j] ? true : false;            }        }        //这里需要注意一点的是从后往前遍历，因为v[i][j] = v[i+1][j-1] &amp;&amp; (s[i] == s[j]);会优先用到数组尾部的数据        for(int i = v.size()-1; i &gt;= 0;--i)        {            for(int j = i; j &lt; v.size();++j)            {                if(j-i &gt; 1)                    v[i][j] = v[i+1][j-1] &amp;&amp; (s[i] == s[j]);                if(v[i][j] == true &amp;&amp; j-i+1 &gt; res.size())                    res = s.substr(i,j-i+1);              }        }        return res;    }};</code></pre>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>寻找两个正序数组的中位数</title>
+      <link href="/2020/07/13/LeetCode/%5BLC%5D%204.%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%AD%A3%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/"/>
+      <url>/2020/07/13/LeetCode/%5BLC%5D%204.%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%AD%A3%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>【LC】 3.无重复字符的最长子串</title>
       <link href="/2020/07/12/LeetCode/%5BLC%5D%203.%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2/"/>
       <url>/2020/07/12/LeetCode/%5BLC%5D%203.%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2/</url>
@@ -55,9 +81,9 @@
             
             <tag> LeetCode </tag>
             
-            <tag> Array </tag>
-            
             <tag> HashMap </tag>
+            
+            <tag> Array </tag>
             
         </tags>
       
