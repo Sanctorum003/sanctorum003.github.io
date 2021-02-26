@@ -8,7 +8,7 @@
       <link href="/2021/02/04/LeetCode/%E5%B9%B6%E6%9F%A5%E9%9B%86%E6%80%BB%E7%BB%93/"/>
       <url>/2021/02/04/LeetCode/%E5%B9%B6%E6%9F%A5%E9%9B%86%E6%80%BB%E7%BB%93/</url>
       
-        <content type="html"><![CDATA[<h1 id="并查集模板"><a href="#并查集模板" class="headerlink" title="并查集模板"></a>并查集模板</h1><pre><code class="lang-cpp">void init(int n){    for(int i=1;i&lt;=n;++i)        fa[i]=i,ran[i]=0;    //刚开始每个人都是自己的老大，每个人都没有手下}int ffind(int x){    return x==fa[x]?x:fa[x]=ffind(fa[x]);}void unite(int x,int y){    int fx=ffind(x);    int fy=ffind(y);    if(fx==fy)  return;    if(ran[fx]&lt;ran[fy])        fa[fx]=fy;    else    {        fa[fy]=fx;        if(ran[fx]==ran[fy])            ran[fx]++;    }}</code></pre><ul><li>模板引用来源:<a href="https://www.cnblogs.com/StungYep/p/12254027.html" target="_blank" rel="noopener">https://www.cnblogs.com/StungYep/p/12254027.html</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<h1 id="并查集模板"><a href="#并查集模板" class="headerlink" title="并查集模板"></a>并查集模板</h1><pre><code class="lang-cpp">const int N=30005;int fa[N],s[N],h[N];void Init(int n){    for(int i=1;i&lt;=n;++i)        fa[i]=i,ran[i]=0;    //刚开始每个人都是自己的老大，每个人都没有手下}int Find(int x){    return x==fa[x]?x:fa[x]=Find(fa[x]);}void Merge(int x,int y){    int fx=Find(x);    int fy=Find(y);    if(fx==fy)  return;    if(ran[fx]&lt;ran[fy])        fa[fx]=fy;    else    {        fa[fy]=fx;        if(ran[fx]==ran[fy])            ran[fx]++;    }}</code></pre><ul><li>模板引用来源:<a href="https://www.cnblogs.com/StungYep/p/12254027.html" target="_blank" rel="noopener">https://www.cnblogs.com/StungYep/p/12254027.html</a></li></ul>]]></content>
       
       
       <categories>
