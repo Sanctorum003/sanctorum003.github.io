@@ -35,6 +35,37 @@
     
     
     <entry>
+      <title>剑指Offer 03.数组中重复的数字</title>
+      <link href="/2021/02/26/LeetCode/%5B%E5%89%91%E6%8C%87Offer%5D%2003.%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/"/>
+      <url>/2021/02/26/LeetCode/%5B%E5%89%91%E6%8C%87Offer%5D%2003.%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/</url>
+      
+        <content type="html"><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><ul><li><a href="https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/</a></li></ul><h1 id="方法一：哈希表"><a href="#方法一：哈希表" class="headerlink" title="方法一：哈希表"></a>方法一：哈希表</h1><pre><code class="lang-cpp">class Solution {public:    int findRepeatNumber(vector&lt;int&gt;&amp; nums) {        map&lt;int,int&gt; m;        for(const auto&amp; n : nums)        {            if(m[n] == 0) m[n]++;            else return n;        }        return -1;    }};</code></pre><ul><li>时间复杂度：O(N)</li><li>空间复杂度：O(N)</li></ul><h1 id="方法二：原地置换"><a href="#方法二：原地置换" class="headerlink" title="方法二：原地置换"></a>方法二：原地置换</h1><pre><code class="lang-cpp">class Solution {public:    void swap(int&amp; a,int&amp; b)    {        a = a^b;        b = a^b;        a = a^b;    }    int findRepeatNumber(vector&lt;int&gt;&amp; nums) {        int i = 0;        while(i &lt; nums.size())        {             if(i != nums[i])            {                if(nums[i] == nums[nums[i]]) return nums[i];                   swap(nums[i],nums[nums[i]]);            }            else                ++i;        }        return -1;    }};</code></pre><ul><li>时间复杂度:O(N)</li><li>空间复杂度:O(1)</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> LeetCode </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> LeetCode </tag>
+            
+            <tag> Array </tag>
+            
+            <tag> HashMap </tag>
+            
+            <tag> 剑指Offer </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>并查集总结</title>
       <link href="/2021/02/04/LeetCode/%E5%B9%B6%E6%9F%A5%E9%9B%86%E6%80%BB%E7%BB%93/"/>
       <url>/2021/02/04/LeetCode/%E5%B9%B6%E6%9F%A5%E9%9B%86%E6%80%BB%E7%BB%93/</url>
