@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>about | Blog</title>
-  <meta name="keywords" content>
-  <meta name="description" content="about | Blog">
+  <title>C++重点复习及自我总结 | Blog</title>
+  <meta name="keywords" content=" menu , c++ , recruitment ">
+  <meta name="description" content="C++重点复习及自我总结 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
@@ -637,19 +637,40 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <article id="post-Recruitment/C++重点复习及自我总结" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">about</h1>
+        <h1 class="article-title">C++重点复习及自我总结</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Menu">Menu</a> > 
+            
+            <a  data-rel="Menu&lt;---&gt;Recruitment">Recruitment</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color5">menu</a>
+            
+            <a class="color4">c++</a>
+            
+            <a class="color2">recruitment</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2019-08-01 15:11:34'>2019-08-01 15:11</time>
+            Created At : <time class="date" title='Updated At: 2021-03-01 21:53:09'>2021-03-01 21:17</time>
         
     </div>
     <div class="article-meta">
@@ -671,7 +692,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Const"><span class="toc-text">Const</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#const对象必须初始化"><span class="toc-text">const对象必须初始化</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -687,7 +708,25 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="Const"><a href="#Const" class="headerlink" title="Const"></a>Const</h1><h2 id="const对象必须初始化"><a href="#const对象必须初始化" class="headerlink" title="const对象必须初始化"></a>const对象必须初始化</h2><ul>
+<li><p>然而并不是所有的const对象都必须初始化</p>
+</li>
+<li><p>顶层const必须初始化，因为本身不能改变，不初始化根本没法用。而底层const(常量指针)可以不初始化</p>
+<blockquote>
+<p>参考:<a href="https://blog.csdn.net/qq_21034239/article/details/70492318" target="_blank" rel="noopener">https://blog.csdn.net/qq_21034239/article/details/70492318</a></p>
+</blockquote>
+</li>
+<li><p>其实没有那么简单,const对象必须初始化值对bulit-in类型和POD类行有效</p>
+<ul>
+<li>built-in类型是内置类型包括算术类型和空类型(void)</li>
+<li>注意的是指针和引用是符合类型<blockquote>
+<p>参考:<a href="https://stackoverflow.com/questions/8440381/why-do-const-variables-have-to-be-initialized-right-away" target="_blank" rel="noopener">https://stackoverflow.com/questions/8440381/why-do-const-variables-have-to-be-initialized-right-away</a><br>(翻译:<a href="https://www.it1352.com/465052.html" target="_blank" rel="noopener">https://www.it1352.com/465052.html</a>)</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+
       
        
     </div>

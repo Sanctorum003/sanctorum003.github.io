@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>C++重点复习及自我总结</title>
+      <link href="/2021/03/01/Recruitment/C++%E9%87%8D%E7%82%B9%E5%A4%8D%E4%B9%A0%E5%8F%8A%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93/"/>
+      <url>/2021/03/01/Recruitment/C++%E9%87%8D%E7%82%B9%E5%A4%8D%E4%B9%A0%E5%8F%8A%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Const"><a href="#Const" class="headerlink" title="Const"></a>Const</h1><h2 id="const对象必须初始化"><a href="#const对象必须初始化" class="headerlink" title="const对象必须初始化"></a>const对象必须初始化</h2><ul><li><p>然而并不是所有的const对象都必须初始化</p></li><li><p>顶层const必须初始化，因为本身不能改变，不初始化根本没法用。而底层const(常量指针)可以不初始化</p><blockquote><p>参考:<a href="https://blog.csdn.net/qq_21034239/article/details/70492318" target="_blank" rel="noopener">https://blog.csdn.net/qq_21034239/article/details/70492318</a></p></blockquote></li><li><p>其实没有那么简单,const对象必须初始化值对bulit-in类型和POD类行有效</p><ul><li>built-in类型是内置类型包括算术类型和空类型(void)</li><li>注意的是指针和引用是符合类型<blockquote><p>参考:<a href="https://stackoverflow.com/questions/8440381/why-do-const-variables-have-to-be-initialized-right-away" target="_blank" rel="noopener">https://stackoverflow.com/questions/8440381/why-do-const-variables-have-to-be-initialized-right-away</a><br>(翻译:<a href="https://www.it1352.com/465052.html" target="_blank" rel="noopener">https://www.it1352.com/465052.html</a>)</p></blockquote></li></ul></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Menu </category>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> menu </tag>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>剑指Offer 11.旋转数组的最小数字</title>
       <link href="/2021/03/01/LeetCode/%5B%E5%89%91%E6%8C%87Offer%5D%2011.%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97/"/>
       <url>/2021/03/01/LeetCode/%5B%E5%89%91%E6%8C%87Offer%5D%2011.%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97/</url>
@@ -33,9 +64,9 @@
     
     
     <entry>
-      <title>剑指Offer刷题笔记</title>
-      <link href="/2021/02/28/Menu/%E5%89%91%E6%8C%87Offer%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/"/>
-      <url>/2021/02/28/Menu/%E5%89%91%E6%8C%87Offer%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/</url>
+      <title>LeetCode刷题笔记</title>
+      <link href="/2021/02/28/Menu/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/"/>
+      <url>/2021/02/28/Menu/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/</url>
       
         <content type="html"><![CDATA[<h1 id="剑指Offer刷题笔记"><a href="#剑指Offer刷题笔记" class="headerlink" title="剑指Offer刷题笔记"></a>剑指Offer刷题笔记</h1><ul><li>2021年2月末，为准备研三的秋招，开始算法题的康复运动<blockquote><p>(“&hearts;” 表示刷的时候做出了最优解)</p></blockquote></li></ul><div class="table-container"><table><thead><tr><th>#</th><th>Title</th><th>Solution</th><th>Tag</th><th>Difficulty</th><th>最优时间复杂度&amp;&amp;空间复杂度</th><th>最优解</th></tr></thead><tbody><tr><td>剑指 Offer 03</td><td><a href="https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/" target="_blank" rel="noopener">数组中重复的数字</a></td><td><a href="https://sanctorum003.github.io/2021/02/26/LeetCode/[%E5%89%91%E6%8C%87Offer]%2003.%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/" target="_blank" rel="noopener">C++</a></td><td>数组 &amp;&amp; 哈希表</td><td>Easy</td><td>O(N) &amp;&amp; O(1)</td><td></td></tr><tr><td>剑指 Offer 09</td><td><a href="https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/" target="_blank" rel="noopener">用两个栈实现队列</a></td><td><a href="https://sanctorum003.github.io/2021/02/28/LeetCode/[%E5%89%91%E6%8C%87Offer]%2009.%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/" target="_blank" rel="noopener">C++</a></td><td>栈 &amp;&amp; 设计</td><td>Hard</td><td></td><td></td></tr><tr><td>剑指 Offer 11</td><td><a href="https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/" target="_blank" rel="noopener">旋转数组的最小数字</a></td><td><a href="https://sanctorum003.github.io/2021/03/01/LeetCode/[%E5%89%91%E6%8C%87Offer]%2011.%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97/" target="_blank" rel="noopener">C++</a></td><td>二分查找</td><td>Easy(Hard)</td><td>O(lgN) &amp; O(1)</td><td></td></tr><tr><td>303</td><td><a href="https://leetcode-cn.com/problems/range-sum-query-immutable/" target="_blank" rel="noopener">区域和检索 - 数组不可变</a></td><td><a href>c++</a></td><td>DP</td><td>Easy</td><td>建立O(N) &amp;&amp; 调用O(1)</td></tr></tbody></table></div>]]></content>
       
