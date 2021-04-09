@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>C++复习 Static | Blog</title>
+  <title>C++复习 this指针 | Blog</title>
   <meta name="keywords" content=" c++ , recruitment ">
-  <meta name="description" content="C++复习 Static | Blog">
+  <meta name="description" content="C++复习 this指针 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
@@ -669,9 +669,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-C++/C++复习 Static" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-C++/C++复习 this指针" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">C++复习 Static</h1>
+        <h1 class="article-title">C++复习 this指针</h1>
     
     <div class="article-meta">
         
@@ -698,7 +698,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2021-04-09 17:38:54'>2021-04-09 12:21</time>
+            发布时间 : <time class="date" title='最后更新: 2021-04-09 19:12:22'>2021-04-09 17:39</time>
         
     </div>
     <div class="article-meta">
@@ -720,7 +720,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#static"><span class="toc-text">static</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#this-指针"><span class="toc-text">this 指针</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -736,27 +736,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="static"><a href="#static" class="headerlink" title="static"></a>static</h1><ul>
-<li><p>修饰普通变量，修改变量的存储区域和生命周期，使变量存储在静态区，在 main 函数运行前就分配了空间，如果有初始值就用初始值初始化它，如果没有初始值系统用默认值初始化它。</p>
+        <h1 id="this-指针"><a href="#this-指针" class="headerlink" title="this 指针"></a>this 指针</h1><ol>
+<li><code>this</code> 指针是一个隐含于每一个非静态成员函数中的特殊指针。它指向调用该成员函数的那个对象。</li>
+<li>当对一个对象调用成员函数时，编译程序先将对象的地址赋给 <code>this</code> 指针，然后调用成员函数，每次成员函数存取数据成员时，都隐式使用 <code>this</code> 指针。</li>
+<li>当一个成员函数被调用时，自动向它传递一个隐含的参数，该参数是一个指向这个成员函数所在的对象的指针。</li>
+<li><code>this</code> 指针被隐含地声明为: <code>ClassName *const this</code>，这意味着不能给 <code>this</code> 指针赋值；在 <code>ClassName</code> 类的 <code>const</code> 成员函数中，<code>this</code> 指针的类型为：<code>const ClassName* const</code>，这说明不能对 <code>this</code> 指针所指向的这种对象是不可修改的（即不能对这种对象的数据成员进行赋值操作）；</li>
+<li><code>this</code> 并不是一个常规变量，而是个右值，所以不能取得 <code>this</code> 的地址（不能 <code>&amp;this</code>）。</li>
+<li>在以下场景中，经常需要显式引用 <code>this</code> 指针：<ol>
+<li>为实现对象的链式引用；</li>
+<li>为避免对同一对象进行赋值操作；</li>
+<li>在实现一些数据结构时，如 <code>list</code>。</li>
+</ol>
 </li>
-<li><p>修饰普通函数，表明函数的作用范围，仅在定义该函数的文件内才能使用。在多人开发项目时，为了防止与他人命名空间里的函数重名，可以将函数定位为 static。</p>
-</li>
-<li><p>修饰成员变量，修饰成员变量使所有的对象只保存一个该变量，而且不需要生成对象就可以访问该成员。</p>
-</li>
-</ul>
-<blockquote>
-<p>既可以是public也是private</p>
-</blockquote>
-<ul>
-<li>修饰成员函数，修饰成员函数使得不需要生成对象就可以访问该函数，但是在 static 函数内不能访问非静态成员。</li>
-</ul>
-<blockquote>
-<p>类的静态成员函数不包括this指针,所以静态成员函数不能设置为const</p>
-<p><a href="https://blog.csdn.net/u010476094/article/details/38959265" target="_blank" rel="noopener">C++静态成员函数不能声明为const、volatile、virtual的原因 与 C++的对象模型</a></p>
-</blockquote>
-<ul>
-<li>在类外定义静态成员，不用再重复声明static关键字</li>
-</ul>
+</ol>
 
       
        

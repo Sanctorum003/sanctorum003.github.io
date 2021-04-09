@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>C++复习 this指针</title>
+      <link href="/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20this%E6%8C%87%E9%92%88/"/>
+      <url>/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20this%E6%8C%87%E9%92%88/</url>
+      
+        <content type="html"><![CDATA[<h1 id="this-指针"><a href="#this-指针" class="headerlink" title="this 指针"></a>this 指针</h1><ol><li><code>this</code> 指针是一个隐含于每一个非静态成员函数中的特殊指针。它指向调用该成员函数的那个对象。</li><li>当对一个对象调用成员函数时，编译程序先将对象的地址赋给 <code>this</code> 指针，然后调用成员函数，每次成员函数存取数据成员时，都隐式使用 <code>this</code> 指针。</li><li>当一个成员函数被调用时，自动向它传递一个隐含的参数，该参数是一个指向这个成员函数所在的对象的指针。</li><li><code>this</code> 指针被隐含地声明为: <code>ClassName *const this</code>，这意味着不能给 <code>this</code> 指针赋值；在 <code>ClassName</code> 类的 <code>const</code> 成员函数中，<code>this</code> 指针的类型为：<code>const ClassName* const</code>，这说明不能对 <code>this</code> 指针所指向的这种对象是不可修改的（即不能对这种对象的数据成员进行赋值操作）；</li><li><code>this</code> 并不是一个常规变量，而是个右值，所以不能取得 <code>this</code> 的地址（不能 <code>&amp;this</code>）。</li><li>在以下场景中，经常需要显式引用 <code>this</code> 指针：<ol><li>为实现对象的链式引用；</li><li>为避免对同一对象进行赋值操作；</li><li>在实现一些数据结构时，如 <code>list</code>。</li></ol></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++复习 Static</title>
       <link href="/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20Static/"/>
       <url>/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20Static/</url>
