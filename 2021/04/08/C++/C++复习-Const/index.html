@@ -6,18 +6,14 @@
   <meta name="keywords" content=" c++ , recruitment ">
   <meta name="description" content="C++复习-Const | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="Const 定义：const用于定义一个变量，它的值不能被改变  const对象必须初始化 然而并不是所有的const对象都必须初始化  顶层const必须初始化，因为本身不能改变，不初始化根本没法用。而底层const(常量指针)可以不初始化  参考:https://blog.csdn.net/qq_21034239/article/details/70492318   其实没有那么简单,cons">
-<meta name="keywords" content="c++,recruitment">
-<meta property="og:type" content="article">
-<meta property="og:title" content="C++复习-Const">
-<meta property="og:url" content="https://sanctorum.github.io/2021/04/08/C++/C++复习-Const/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="about">
+<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="Const 定义：const用于定义一个变量，它的值不能被改变  const对象必须初始化 然而并不是所有的const对象都必须初始化  顶层const必须初始化，因为本身不能改变，不初始化根本没法用。而底层const(常量指针)可以不初始化  参考:https://blog.csdn.net/qq_21034239/article/details/70492318   其实没有那么简单,cons">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2021-04-09T06:31:25.307Z">
+<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++复习-Const">
-<meta name="twitter:description" content="Const 定义：const用于定义一个变量，它的值不能被改变  const对象必须初始化 然而并不是所有的const对象都必须初始化  顶层const必须初始化，因为本身不能改变，不初始化根本没法用。而底层const(常量指针)可以不初始化  参考:https://blog.csdn.net/qq_21034239/article/details/70492318   其实没有那么简单,cons">
+<meta name="twitter:title" content="about">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -694,7 +690,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-04-09 14:31:25'>2021-04-08 21:46</time>
+            Created At : <time class="date" title='Updated At: 2021-04-09 16:59:07'>2021-04-08 21:46</time>
         
     </div>
     <div class="article-meta">
@@ -716,7 +712,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Const"><span class="toc-text">Const</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#const对象必须初始化"><span class="toc-text">const对象必须初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#const对象仅对当前文件有效"><span class="toc-text">const对象仅对当前文件有效</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#extern"><span class="toc-text">extern</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#链接"><span class="toc-text">链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对const的引用"><span class="toc-text">对const的引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#对const的引用可能引用一个并非const的对象"><span class="toc-text">对const的引用可能引用一个并非const的对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指针和const"><span class="toc-text">指针和const</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指针常量-pointer-to-const"><span class="toc-text">指针常量(pointer to const)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常量指针-const-pointer"><span class="toc-text">常量指针(const pointer)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#顶层const和底层const"><span class="toc-text">顶层const和底层const</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#const对拷贝的影响"><span class="toc-text">const对拷贝的影响</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#constexpr和常量表达式-c-11"><span class="toc-text">constexpr和常量表达式[c++11]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#constexpr变量"><span class="toc-text">constexpr变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#constexpr-指针"><span class="toc-text">constexpr 指针</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Const"><span class="toc-text">Const</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#const对象必须初始化"><span class="toc-text">const对象必须初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#const对象仅对当前文件有效"><span class="toc-text">const对象仅对当前文件有效</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#extern"><span class="toc-text">extern</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#链接"><span class="toc-text">链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对const的引用"><span class="toc-text">对const的引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#对const的引用可能引用一个并非const的对象"><span class="toc-text">对const的引用可能引用一个并非const的对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指针和const"><span class="toc-text">指针和const</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指针常量-pointer-to-const"><span class="toc-text">指针常量(pointer to const)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常量指针-const-pointer"><span class="toc-text">常量指针(const pointer)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#顶层const和底层const"><span class="toc-text">顶层const和底层const</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#const对拷贝的影响"><span class="toc-text">const对拷贝的影响</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#constexpr和常量表达式-c-11"><span class="toc-text">constexpr和常量表达式[c++11]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#constexpr变量"><span class="toc-text">constexpr变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#constexpr-指针"><span class="toc-text">constexpr 指针</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#const补充"><span class="toc-text">const补充</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -937,6 +933,50 @@ int *const p3;  //顶层const
 constexpr const int *p4;
 //&lt;=&gt;
 const int *const p5;
+</code></pre>
+<h2 id="const补充"><a href="#const补充" class="headerlink" title="const补充"></a>const补充</h2><p><a href="https://interview.huihut.com/#/?id=cc" target="_blank" rel="noopener">const 使用</a></p>
+<pre><code class="lang-cpp">// 类
+class A
+{
+private:
+    const int a;                // 常对象成员，只能在初始化列表赋值
+
+public:
+    // 构造函数
+    A() : a(0) { };
+    A(int x) : a(x) { };        // 初始化列表
+
+    // const可用于对重载函数的区分
+    int getValue();             // 普通成员函数
+    int getValue() const;       // 常成员函数，不得修改类中的任何数据成员的值
+};
+
+void function()
+{
+    // 对象
+    A b;                        // 普通对象，可以调用全部成员函数、更新常成员变量
+    const A a;                  // 常对象，只能调用常成员函数
+    const A *p = &amp;a;            // 指针变量，指向常对象
+    const A &amp;q = a;             // 指向常对象的引用
+
+    // 指针
+    char greeting[] = &quot;Hello&quot;;
+    char* p1 = greeting;                // 指针变量，指向字符数组变量
+    const char* p2 = greeting;          // 指针变量，指向字符数组常量（const 后面是 char，说明指向的字符（char）不可改变）
+    char* const p3 = greeting;          // 自身是常量的指针，指向字符数组变量（const 后面是 p3，说明 p3 指针自身不可改变）
+    const char* const p4 = greeting;    // 自身是常量的指针，指向字符数组常量
+}
+
+// 函数
+void function1(const int Var);           // 传递过来的参数在函数内不可变
+void function2(const char* Var);         // 参数指针所指内容为常量
+void function3(char* const Var);         // 参数指针为常量
+void function4(const int&amp; Var);          // 引用参数在函数内为常量
+
+// 函数返回值
+const int function5();      // 返回一个常数
+const int* function6();     // 返回一个指向常量的指针变量，使用：const int *p = function6();
+int* const function7();     // 返回一个指向变量的常指针，使用：int* const p = function7();
 </code></pre>
 
       
