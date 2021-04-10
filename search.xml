@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>C++复习 Sizeof()</title>
+      <link href="/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20Sizeof()/"/>
+      <url>/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20Sizeof()/</url>
+      
+        <content type="html"><![CDATA[<h1 id="sizeof"><a href="#sizeof" class="headerlink" title="sizeof()"></a>sizeof()</h1><ul><li>sizeof 运算符返回一条表达式或一个类型名字所占的字节数。<blockquote><p>满足右结合律<br>sizeof <em>p = sizeof(</em>p);</p></blockquote></li></ul><blockquote><p>返回值：size_t类型的常量表达式</p></blockquote><pre><code class="lang-cpp">//使用方法sizeof (type)sizeof expr //返回表达式结果类型的大小，不实际计算运算对象的值</code></pre><ul><li>不实际计算运算对象，即使对象是空指针也可以运行</li></ul><h2 id="c-11"><a href="#c-11" class="headerlink" title="c++11"></a>c++11</h2><ul><li>可以通过 作用域 符号来获取成员的大小</li></ul><pre><code class="lang-cpp">sizeof ClassName::ClassMember;//ClassName的ClassMember成员对应类型的大小</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul><li>对char或者类型为char的表达式，结果为1</li><li>对引用类型，结果为被引用对象所占空间的大小</li><li>对指针类型，结果为指针本身所占空间的大小</li><li>对解引用指针类型，结果为指向的对象所占空间的大小，指针不需要有效</li><li>对数组，结果为数组所占空间的大小，等价于数组中所有元素所占空间之和。sizeof不把数组转换为指针进行处理</li><li>对string和vector等，返回该类型固定部分的大小，不会计算对象中的元素占用了多少空间</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++复习 Assert</title>
       <link href="/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20Assert/"/>
       <url>/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20Assert/</url>
