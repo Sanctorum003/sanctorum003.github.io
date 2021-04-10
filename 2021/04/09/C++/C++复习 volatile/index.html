@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>KMP | Blog</title>
-  <meta name="keywords" content=" algorithm ">
-  <meta name="description" content="KMP | Blog">
+  <title>C++复习 inline内联函数 | Blog</title>
+  <meta name="keywords" content=" c++ , recruitment ">
+  <meta name="description" content="C++复习 inline内联函数 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
@@ -693,9 +693,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-Algorithm/KMP" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-C++/C++复习 volatile" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">KMP</h1>
+        <h1 class="article-title">C++复习 inline内联函数</h1>
     
     <div class="article-meta">
         
@@ -705,7 +705,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Algorithm">Algorithm</a>
+            <a  data-rel="Recruitment">Recruitment</a>
             
         </span>
         
@@ -713,14 +713,16 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color5">algorithm</a>
+            <a class="color4">c++</a>
+            
+            <a class="color2">recruitment</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-01-10 19:49:43'>2019-08-01 16:47</time>
+            Created At : <time class="date" title='Updated At: 2021-04-09 20:14:53'>2021-04-09 19:36</time>
         
     </div>
     <div class="article-meta">
@@ -742,7 +744,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#KMP"><span class="toc-text">KMP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#王道方法"><span class="toc-text">王道方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#殷人昆"><span class="toc-text">殷人昆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见方法"><span class="toc-text">常见方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#转换技巧-快速做选择题"><span class="toc-text">转换技巧[快速做选择题]</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile-ˈvɑː-lə-t̬əl"><span class="toc-text">volatile[ /ˈvɑː.lə.t̬əl/]</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -758,38 +760,49 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h1><h2 id="王道方法"><a href="#王道方法" class="headerlink" title="王道方法"></a>王道方法</h2><p><img src="kmp1.bmp" alt title="KMP1"></p>
-<blockquote>
-<p>1) next 数组从1开始</p>
-<p>2) next[1] = 0<br>next[2] = 1<br>next[0]不使用</p>
-<p>3) 求当next数组当前位置<strong>j</strong></p>
-<pre><code class="lang-cpp">// 主要方法就是 将前一个位置(j-1)的字符与next[j-1]所对应的字符比较相同则 next[j] = next[j-1]+1;
-// 不同则 将next[j-1]的字符 与next[ next[j-1] ]对应否字符相比较相同则 next[j] = next[ next[j-1] ]+1;
-// 不断重复
-// 如果next[...] = 0 ==&gt; next[j] = 1;
-    k = next[j-1]; 
-    while(1)
-    {
-        if(S[k] == S[j-1])//S为字符数组
-        {
-            next[j] = k+1;
-            break;
-        }
-        else
-            k = next[k];
-    }
+        <h1 id="volatile-ˈvɑː-lə-t̬əl"><a href="#volatile-ˈvɑː-lə-t̬əl" class="headerlink" title="volatile[ /ˈvɑː.lə.t̬əl/]"></a>volatile[ /ˈvɑː.lə.t̬əl/]</h1><pre><code class="lang-cpp">volatile int i = 10;
 </code></pre>
-<h2 id="殷人昆"><a href="#殷人昆" class="headerlink" title="殷人昆"></a>殷人昆</h2><p><img src="kmp2.bmp" alt title="KMP2"></p>
-<p>可以直接看 前n个串中的最大 前缀等于后缀 的个数 即为 next[j]的值</p>
-<h2 id="常见方法"><a href="#常见方法" class="headerlink" title="常见方法"></a>常见方法</h2><p>1) next[1]=0</p>
-<p>2) 从第j(j&gt;1)个开启 比较前j个的 最大 前缀等于后缀 </p>
-</blockquote>
-<h2 id="转换技巧-快速做选择题"><a href="#转换技巧-快速做选择题" class="headerlink" title="转换技巧[快速做选择题]"></a>转换技巧[快速做选择题]</h2><p><a href="http://www.cskaoyan.com/thread-650235-1-1.html" target="_blank" rel="noopener">http://www.cskaoyan.com/thread-650235-1-1.html</a><br><a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html</a></p>
+<ul>
+<li><p>volatile 关键字是一种类型修饰符，用它声明的类型变量表示可以被某些编译器未知的因素（操作系统、硬件、其它线程等）更改。所以使用 volatile 告诉编译器不应对这样的对象进行优化。</p>
+</li>
+<li><p>volatile 关键字声明的变量，每次访问时都必须从内存中取出值（没有被 volatile 修饰的变量，可能由于编译器的优化，从 CPU 寄存器中取值）</p>
+</li>
+<li><p>const 可以是 volatile （如只读的状态寄存器）</p>
+</li>
+<li><p>指针可以是 volatile</p>
 <blockquote>
-<p>规则1：用常见方法做出结果 </p>
-<p>规则2：右移一位，最左边添-1，最右边自然溢出</p>
-<p>规则3：全部加1</p>
+<p>volatile跟const类似可以跟指针，引用等组合</p>
 </blockquote>
+</li>
+</ul>
+<blockquote>
+<p>带有volatile的成员函数只能被volatile的对象调用。</p>
+</blockquote>
+<ul>
+<li>合成的拷贝对volatile对象无效<blockquote>
+<p>如果没有定义复制构造函数，编译器会自动合成一个。与合成的默认构造函数不同，即使我们定义了其他构造函数，也会合成复制构造函数。合成复制构造函数会对成员逐个进行初始化，将新对象初始化为原对象的副本。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>合成的成员接受的形参类型是常量（非 volatile）引用，以此不能把一个非volatile引用绑定到一个volatile，因此需要自定义。</p>
+</blockquote>
+<pre><code class="lang-cpp">class Foo
+{
+public:
+    //从一个volatile对象进行拷贝
+    Foo(const volatile Foo&amp;);
+    //将一个volatile对象赋值给一个*非*Volatile对象
+    Foo&amp; operator=(volatile const Foo&amp;);
+    //将一个volatile对象赋值给一个volatile对象
+    //这个没问题volatile表示这个函数只能被volatile对象调用，而这是个符号重载，所以左值一定是volatile类型
+    Foo&amp; operator=(volatile const Foo&amp;) volatile;
+    //Foo类的其他部分//
+}
+</code></pre>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/33074506" target="_blank" rel="noopener">谈谈 C/C++ 中的 volatile</a></li>
+</ul>
 
       
        

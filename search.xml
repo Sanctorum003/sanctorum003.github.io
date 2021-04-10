@@ -4,11 +4,92 @@
   
     
     <entry>
+      <title>C++复习 Assert</title>
+      <link href="/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20Assert/"/>
+      <url>/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20Assert/</url>
+      
+        <content type="html"><![CDATA[<h4 id="assert预处理宏"><a href="#assert预处理宏" class="headerlink" title="assert预处理宏"></a>assert预处理宏</h4><ul><li>由预处理器管理，可以直接使用</li></ul><blockquote><p>无需std或using声明</p></blockquote><h4 id="NDEBUG预处理变量"><a href="#NDEBUG预处理变量" class="headerlink" title="NDEBUG预处理变量"></a>NDEBUG预处理变量</h4><ul><li>NDEBUG可以决定assert是否启用。但是注意要定义在assert声明之前。具体看以下连接</li></ul><blockquote><p><a href="https://www.zhihu.com/question/23075111" target="_blank" rel="noopener">https://www.zhihu.com/question/23075111</a></p></blockquote><ul><li>一些局部静态变量，可以用于调试<br><img src="局部静态变量.png" alt>P</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++复习 inline内联函数</title>
+      <link href="/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20volatile/"/>
+      <url>/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20volatile/</url>
+      
+        <content type="html"><![CDATA[<h1 id="volatile-ˈvɑː-lə-t̬əl"><a href="#volatile-ˈvɑː-lə-t̬əl" class="headerlink" title="volatile[ /ˈvɑː.lə.t̬əl/]"></a>volatile[ /ˈvɑː.lə.t̬əl/]</h1><pre><code class="lang-cpp">volatile int i = 10;</code></pre><ul><li><p>volatile 关键字是一种类型修饰符，用它声明的类型变量表示可以被某些编译器未知的因素（操作系统、硬件、其它线程等）更改。所以使用 volatile 告诉编译器不应对这样的对象进行优化。</p></li><li><p>volatile 关键字声明的变量，每次访问时都必须从内存中取出值（没有被 volatile 修饰的变量，可能由于编译器的优化，从 CPU 寄存器中取值）</p></li><li><p>const 可以是 volatile （如只读的状态寄存器）</p></li><li><p>指针可以是 volatile</p><blockquote><p>volatile跟const类似可以跟指针，引用等组合</p></blockquote></li></ul><blockquote><p>带有volatile的成员函数只能被volatile的对象调用。</p></blockquote><ul><li>合成的拷贝对volatile对象无效<blockquote><p>如果没有定义复制构造函数，编译器会自动合成一个。与合成的默认构造函数不同，即使我们定义了其他构造函数，也会合成复制构造函数。合成复制构造函数会对成员逐个进行初始化，将新对象初始化为原对象的副本。</p></blockquote></li></ul><blockquote><p>合成的成员接受的形参类型是常量（非 volatile）引用，以此不能把一个非volatile引用绑定到一个volatile，因此需要自定义。</p></blockquote><pre><code class="lang-cpp">class Foo{public:    //从一个volatile对象进行拷贝    Foo(const volatile Foo&amp;);    //将一个volatile对象赋值给一个*非*Volatile对象    Foo&amp; operator=(volatile const Foo&amp;);    //将一个volatile对象赋值给一个volatile对象    //这个没问题volatile表示这个函数只能被volatile对象调用，而这是个符号重载，所以左值一定是volatile类型    Foo&amp; operator=(volatile const Foo&amp;) volatile;    //Foo类的其他部分//}</code></pre><ul><li><a href="https://zhuanlan.zhihu.com/p/33074506" target="_blank" rel="noopener">谈谈 C/C++ 中的 volatile</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++复习 inline内联函数</title>
+      <link href="/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20Inline/"/>
+      <url>/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20Inline/</url>
+      
+        <content type="html"><![CDATA[<h1 id="inline-内联函数"><a href="#inline-内联函数" class="headerlink" title="inline 内联函数"></a>inline 内联函数</h1><h2 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h2><ul><li>相当于把内联函数里面的内容写在调用内联函数处；//?</li><li>相当于不用执行进入函数的步骤，直接执行函数体；<blockquote><p>函数调用的时候，会在虚存中的栈区当前地址记录到帧指针寄存器，并生成该函数的上下文内容并执行相应的操作，调用结束后还会弹出该函数的数据，清理上下文信息。 </p></blockquote></li></ul><blockquote><p>感觉记得不准确，到时候重新看一下计算机系统中的函数调用过程</p><ul><li>相当于宏，却比宏多了类型检查，真正具有函数特性；</li><li>编译器一般不内联包含循环、递归、switch 等复杂操作的内联函数；</li><li>在类声明中定义的函数，除了虚函数的其他函数都会自动隐式地当成内联函数。</li></ul></blockquote><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>inline 使用</p><pre><code class="lang-cpp">// 内联的声明可以不加inline// 声明1（加 inline，建议使用）inline int functionName(int first, int second,...);// 声明2（不加 inline）int functionName(int first, int second,...);// 定义inline int functionName(int first, int second,...) {/****/};// 类内定义，隐式内联class A {    int doA() { return 0; }         // 隐式内联}// 类外定义，需要显式内联class A {    int doA();}inline int A::doA() { return 0; }   // 需要显式内联</code></pre><h2 id="编译器对-inline-函数的处理步骤"><a href="#编译器对-inline-函数的处理步骤" class="headerlink" title="编译器对 inline 函数的处理步骤"></a>编译器对 inline 函数的处理步骤</h2><ol><li>将 inline 函数体复制到 inline 函数调用点处； </li><li>为所用 inline 函数中的局部变量分配内存空间； </li><li>将 inline 函数的的输入参数和返回值映射到调用方法的局部变量空间中； </li><li>如果 inline 函数有多个返回点，将其转变为 inline 函数代码块末尾的分支（使用 GOTO）。</li></ol><h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>优点</p><ol><li>内联函数同宏函数一样将在被调用处进行代码展开，省去了参数压栈、栈帧开辟与回收，结果返回等，从而提高程序运行速度。</li><li>内联函数相比宏函数来说，在代码展开时，会做安全检查或自动类型转换（同普通函数），而宏定义则不会。 </li><li>在类中声明同时定义的成员函数，自动转化为内联函数，因此内联函数可以访问类的成员变量，宏定义则不能。</li><li>内联函数在运行时可调试，而宏定义不可以。</li></ol><p>缺点</p><ol><li>代码膨胀。内联是以代码膨胀（复制）为代价，消除函数调用带来的开销。如果执行函数体内代码的时间，相比于函数调用的开销较大，那么效率的收获会很少。另一方面，每一处内联函数的调用都要复制代码，将使程序的总代码量增大，消耗更多的内存空间。</li><li>inline 函数无法随着函数库升级而升级。inline函数的改变需要重新编译，不像 non-inline 可以直接链接。</li><li>是否内联，程序员不可控。内联函数只是对编译器的建议，是否对函数内联，决定权在于编译器。</li></ol><h2 id="虚函数（virtual）可以是内联函数（inline）吗？"><a href="#虚函数（virtual）可以是内联函数（inline）吗？" class="headerlink" title="虚函数（virtual）可以是内联函数（inline）吗？"></a>虚函数（virtual）可以是内联函数（inline）吗？</h2><blockquote><p><a href="http://www.cs.technion.ac.il/users/yechiel/c++-faq/inline-virtuals.html" target="_blank" rel="noopener">Are “inline virtual” member functions ever actually “inlined”?</a></p></blockquote><ul><li>虚函数可以是内联函数，内联是可以修饰虚函数的，但是当虚函数表现多态性的时候不能内联。</li><li>内联是在编译期建议编译器内联，而虚函数的多态性在运行期，编译器无法知道运行期调用哪个代码，因此虚函数表现为多态性时（运行期）不可以内联。</li><li><code>inline virtual</code> 唯一可以内联的时候是：编译器知道所调用的对象是哪个类（如 <code>Base::who()</code>），这只有在编译器具有实际对象而不是对象的指针或引用时才会发生。</li></ul><p>虚函数内联使用</p><pre><code class="lang-cpp">#include &lt;iostream&gt;  using namespace std;class Base{public:    inline virtual void who()    {        cout &lt;&lt; &quot;I am Base\n&quot;;    }    virtual ~Base() {}};class Derived : public Base{public:    inline void who()  // 不写inline时隐式内联    {        cout &lt;&lt; &quot;I am Derived\n&quot;;    }};int main(){    // 此处的虚函数 who()，是通过类（Base）的具体对象（b）来调用的，编译期间就能确定了，所以它可以是内联的，但最终是否内联取决于编译器。     Base b;    b.who();    // 此处的虚函数是通过指针调用的，呈现多态性，需要在运行时期间才能确定，所以不能为内联。      Base *ptr = new Derived();    ptr-&gt;who();    // 因为Base有虚析构函数（virtual ~Base() {}），所以 delete 时，会先调用派生类（Derived）析构函数，再调用基类（Base）析构函数，防止内存泄漏。    delete ptr;    ptr = nullptr;    system(&quot;pause&quot;);    return 0;}</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++复习 this指针</title>
       <link href="/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20this%E6%8C%87%E9%92%88/"/>
       <url>/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20this%E6%8C%87%E9%92%88/</url>
       
-        <content type="html"><![CDATA[<h1 id="this-指针"><a href="#this-指针" class="headerlink" title="this 指针"></a>this 指针</h1><ol><li><code>this</code> 指针是一个隐含于每一个非静态成员函数中的特殊指针。它指向调用该成员函数的那个对象。</li><li>当对一个对象调用成员函数时，编译程序先将对象的地址赋给 <code>this</code> 指针，然后调用成员函数，每次成员函数存取数据成员时，都隐式使用 <code>this</code> 指针。</li><li>当一个成员函数被调用时，自动向它传递一个隐含的参数，该参数是一个指向这个成员函数所在的对象的指针。</li><li><code>this</code> 指针被隐含地声明为: <code>ClassName *const this</code>，这意味着不能给 <code>this</code> 指针赋值；在 <code>ClassName</code> 类的 <code>const</code> 成员函数中，<code>this</code> 指针的类型为：<code>const ClassName* const</code>，这说明不能对 <code>this</code> 指针所指向的这种对象是不可修改的（即不能对这种对象的数据成员进行赋值操作）；</li><li><code>this</code> 并不是一个常规变量，而是个右值，所以不能取得 <code>this</code> 的地址（不能 <code>&amp;this</code>）。</li><li>在以下场景中，经常需要显式引用 <code>this</code> 指针：<ol><li>为实现对象的链式引用；</li><li>为避免对同一对象进行赋值操作；</li><li>在实现一些数据结构时，如 <code>list</code>。</li></ol></li></ol>]]></content>
+        <content type="html"><![CDATA[<h1 id="this-指针"><a href="#this-指针" class="headerlink" title="this 指针"></a>this 指针</h1><ol><li><code>this</code> 指针是一个隐含于每一个非静态成员函数中的特殊指针。它指向调用该成员函数的那个对象。</li><li>当对一个对象调用成员函数时，编译程序先将对象的地址赋给 <code>this</code> 指针，然后调用成员函数，每次成员函数存取数据成员时，都隐式使用 <code>this</code> 指针。</li><li>当一个成员函数被调用时，自动向它传递一个隐含的参数，该参数是一个指向这个成员函数所在的对象的指针。</li><li><code>this</code> 指针被隐含地声明为: <code>ClassName *const this</code>，这意味着不能给 <code>this</code> 指针赋值；在 <code>ClassName</code> 类的 <code>const</code> 成员函数中，<code>this</code> 指针的类型为：<code>const ClassName* const</code>，这说明不能对 <code>this</code> 指针所指向的这种对象是不可修改的（即不能对这种对象的数据成员进行赋值操作）；</li><li><code>this</code> 并不是一个常规变量，而是个右值，所以不能取得 <code>this</code> 的地址（不能 <code>&amp;this</code>）。</li><li>在以下场景中，经常需要显式引用 <code>this</code> 指针： //??<ol><li>为实现对象的链式引用；</li><li>为避免对同一对象进行赋值操作；</li><li>在实现一些数据结构时，如 <code>list</code>。</li></ol></li></ol>]]></content>
       
       
       <categories>
