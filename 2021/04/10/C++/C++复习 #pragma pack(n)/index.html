@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>虚幻4之Slate学习三 —— 创建Slate控件 | Blog</title>
-  <meta name="keywords" content=" ue4 , slate ">
-  <meta name="description" content="虚幻4之Slate学习三 —— 创建Slate控件 | Blog">
+  <title>C++复习 pragma pack(n) | Blog</title>
+  <meta name="keywords" content=" c++ , recruitment ">
+  <meta name="description" content="C++复习 pragma pack(n) | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
@@ -709,9 +709,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-CG/UE4/SlateWidget" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-C++/C++复习 #pragma pack(n)" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">虚幻4之Slate学习三 —— 创建Slate控件</h1>
+        <h1 class="article-title">C++复习 pragma pack(n)</h1>
     
     <div class="article-meta">
         
@@ -721,7 +721,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="UE4">UE4</a>
+            <a  data-rel="Recruitment">Recruitment</a>
             
         </span>
         
@@ -729,16 +729,16 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color4">ue4</a>
+            <a class="color4">c++</a>
             
-            <a class="color1">slate</a>
+            <a class="color2">recruitment</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-01-10 19:49:43'>2019-08-04 20:20</time>
+            Created At : <time class="date" title='Updated At: 2021-04-10 20:43:03'>2021-04-10 17:39</time>
         
     </div>
     <div class="article-meta">
@@ -760,7 +760,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本章简介"><span class="toc-text">本章简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用C-编写Slate控件"><span class="toc-text">用C++编写Slate控件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SOverlay"><span class="toc-text">SOverlay</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HAlign和VAlign"><span class="toc-text">HAlign和VAlign</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Padding"><span class="toc-text">Padding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FillWidth和FillHeight"><span class="toc-text">FillWidth和FillHeight</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SOverlay-Slot"><span class="toc-text">+SOverlay::Slot()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SImage"><span class="toc-text">SImage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SBox"><span class="toc-text">SBox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SBorder"><span class="toc-text">SBorder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#STextBlock"><span class="toc-text">STextBlock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVerticalBox"><span class="toc-text">SVerticalBox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SCheckBox"><span class="toc-text">SCheckBox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSlider"><span class="toc-text">SSlider</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义DPI"><span class="toc-text">自定义DPI</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相关链接"><span class="toc-text">相关链接</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#pragma-pack-n"><span class="toc-text">#pragma pack(n)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pragma-pack-n-使用"><span class="toc-text">pragma pack(n) 使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pragma-pack-n-作用：C编译器将按照n个字节对齐。"><span class="toc-text">pragma pack (n)            作用：C编译器将按照n个字节对齐。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pragma-pack-作用：取消自定义字节对齐方式。"><span class="toc-text">pragma pack ()             作用：取消自定义字节对齐方式。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pragma-pack-push-1-作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐"><span class="toc-text">pragma pack (push,1)       作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pragma-pack-pop-作用：恢复对齐状态"><span class="toc-text">pragma pack (pop)          作用：恢复对齐状态</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -776,81 +776,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="本章简介"><a href="#本章简介" class="headerlink" title="本章简介"></a>本章简介</h1><ul>
-<li>如何利用C++编写Slate控件</li>
-<li>介绍常用的Slate控件</li>
-<li>自定义DPI</li>
-</ul>
-<h1 id="用C-编写Slate控件"><a href="#用C-编写Slate控件" class="headerlink" title="用C++编写Slate控件"></a>用C++编写Slate控件</h1><pre><code class="lang-cpp">ChildSlot
-[
-    SNew(SImage)
-    .Image(&amp;MySlateStyle-&gt;BackGroupBrush)
+        <h1 id="pragma-pack-n"><a href="#pragma-pack-n" class="headerlink" title="#pragma pack(n)"></a>#pragma pack(n)</h1><p>设定结构体、联合体以及类成员变量以 n 字节方式对齐</p>
+<h1 id="pragma-pack-n-使用"><a href="#pragma-pack-n-使用" class="headerlink" title="pragma pack(n) 使用"></a>pragma pack(n) 使用</h1><pre><code class="lang-cpp">#pragma pack(push)  // 保存对齐状态
+#pragma pack(4)     // 设定为 4 字节对齐
 
-];
+struct test
+{
+    char m1;
+    double m4;
+    int m3;
+};
+
+#pragma pack(pop)   // 恢复对齐状态
 </code></pre>
-<p>只需要在ChildSlot中编写相关代码就可以创建控件。不同控件有不同的属性，下面将要介绍一些常用的控件,值得注意的是对于需要在游戏中动态控制的控件，需利用SAssignNew,再通过共享指针保存起来</p>
-<h2 id="SOverlay"><a href="#SOverlay" class="headerlink" title="SOverlay"></a>SOverlay</h2><ul>
-<li>用于实现重叠部件,可以创建任意个插件，即可以放任意个子控件</li>
+<ul>
+<li><p><a href="https://blog.csdn.net/aidem_brown/article/details/77540527" target="_blank" rel="noopener">补充</a></p>
+<ul>
+<li><h1 id="pragma-pack-n-作用：C编译器将按照n个字节对齐。"><a href="#pragma-pack-n-作用：C编译器将按照n个字节对齐。" class="headerlink" title="pragma pack (n)            作用：C编译器将按照n个字节对齐。"></a>pragma pack (n)            作用：C编译器将按照n个字节对齐。</h1></li>
+<li><h1 id="pragma-pack-作用：取消自定义字节对齐方式。"><a href="#pragma-pack-作用：取消自定义字节对齐方式。" class="headerlink" title="pragma pack ()             作用：取消自定义字节对齐方式。"></a>pragma pack ()             作用：取消自定义字节对齐方式。</h1></li>
+<li><h1 id="pragma-pack-push-1-作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐"><a href="#pragma-pack-push-1-作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐" class="headerlink" title="pragma pack (push,1)       作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐"></a>pragma pack (push,1)       作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐</h1></li>
+<li><h1 id="pragma-pack-pop-作用：恢复对齐状态"><a href="#pragma-pack-pop-作用：恢复对齐状态" class="headerlink" title="pragma pack (pop)          作用：恢复对齐状态"></a>pragma pack (pop)          作用：恢复对齐状态</h1></li>
 </ul>
-<h3 id="HAlign和VAlign"><a href="#HAlign和VAlign" class="headerlink" title="HAlign和VAlign"></a>HAlign和VAlign</h3><ul>
-<li>设计布局方式</li>
-</ul>
-<h3 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h3><ul>
-<li>设计边缘空隙</li>
-</ul>
-<h3 id="FillWidth和FillHeight"><a href="#FillWidth和FillHeight" class="headerlink" title="FillWidth和FillHeight"></a>FillWidth和FillHeight</h3><ul>
-<li>填充宽度和高度</li>
-</ul>
-<h3 id="SOverlay-Slot"><a href="#SOverlay-Slot" class="headerlink" title="+SOverlay::Slot()"></a>+SOverlay::Slot()</h3><ul>
-<li>+SOverlay::Slot()与SNew().AddSlot等价。增加的插槽下用于放子控件</li>
-</ul>
-<pre><code class="lang-cpp">SNew(SOverlay)
-+ SOverlay::Slot()
-//这些属性设计是应用于插槽
-.HAlign(HAlign_Fill)
-.VAlign(VAlign_Fill)
-[
-     SNew(SImage)
-     //image()用于添加笔刷
-     .Image(&amp;MySlateStyle-&gt;BackGroupBrush)
-]
-</code></pre>
-<p><img src="SOverlay.png" alt></p>
-<h2 id="SImage"><a href="#SImage" class="headerlink" title="SImage"></a>SImage</h2><ul>
-<li>Image()通过加笔刷来显示图片</li>
-<li>ColorAndOpacity()改变颜色和透明度</li>
-</ul>
-<h2 id="SBox"><a href="#SBox" class="headerlink" title="SBox"></a>SBox</h2><ul>
-<li>只能添加一个子组件</li>
-<li>WidthOverride和HeightOverride设置长宽</li>
-<li>对应UMG中的SizeBox</li>
-</ul>
-<h2 id="SBorder"><a href="#SBorder" class="headerlink" title="SBorder"></a>SBorder</h2><ul>
-<li>可放子控件，可显示图片</li>
-<li>用BorderImage添加图片</li>
-</ul>
-<h2 id="STextBlock"><a href="#STextBlock" class="headerlink" title="STextBlock"></a>STextBlock</h2><ul>
-<li>用于添加文字</li>
-<li>Font()设置字体（不是指针）</li>
-<li>Text()设置显示文字</li>
-</ul>
-<h2 id="SVerticalBox"><a href="#SVerticalBox" class="headerlink" title="SVerticalBox"></a>SVerticalBox</h2><ul>
-<li>垂直容器</li>
-<li>可以加插槽</li>
-<li>+SVerticalBox::Slot == AddSlot</li>
-</ul>
-<h2 id="SCheckBox"><a href="#SCheckBox" class="headerlink" title="SCheckBox"></a>SCheckBox</h2><ul>
-<li>OnCheckStateChanged：传入函数指针（委托），状态改变时调用</li>
-</ul>
-<h2 id="SSlider"><a href="#SSlider" class="headerlink" title="SSlider"></a>SSlider</h2><ul>
-<li>滑动条</li>
-<li>滑动条样式用 FSliderStyle</li>
-<li>OnValueChanged(Delegate) 此为SLATE_EVENT，里面应该传入一参数（滑动条value）委托，每次滑动条value改变时调用。</li>
-<li>SetValue()设置滑动位置，范围[0f,1f]</li>
-</ul>
-<h1 id="自定义DPI"><a href="#自定义DPI" class="headerlink" title="自定义DPI"></a>自定义DPI</h1><h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul>
-<li>下章链接<br><a href="https://sanctorum003.github.io/2019/08/06/DelegateAndMacro/" target="_blank" rel="noopener">虚幻4之Slate学习四 —— 委托与宏</a></li>
-<li>章节总览<br><a href="https://sanctorum003.github.io/2019/08/07/SlateMenu/" target="_blank" rel="noopener">虚幻4之Slate学习</a> </li>
+</li>
+<li><p>因此可见，加入push和pop可以使对齐恢复到原来状态，而不是编译器默认，可以说后者更优，但是很多时候两者差别不大</p>
+</li>
 </ul>
 
       
