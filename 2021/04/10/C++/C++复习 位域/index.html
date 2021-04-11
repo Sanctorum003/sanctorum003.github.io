@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>C++复习 inline内联函数 | Blog</title>
+  <title>C++复习 位域 | Blog</title>
   <meta name="keywords" content=" c++ , recruitment ">
-  <meta name="description" content="C++复习 inline内联函数 | Blog">
+  <meta name="description" content="C++复习 位域 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
@@ -725,9 +725,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-C++/C++复习 Inline" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-C++/C++复习 位域" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">C++复习 inline内联函数</h1>
+        <h1 class="article-title">C++复习 位域</h1>
     
     <div class="article-meta">
         
@@ -754,7 +754,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-04-09 19:33:47'>2021-04-09 19:13</time>
+            Created At : <time class="date" title='Updated At: 2021-04-10 20:57:39'>2021-04-10 20:44</time>
         
     </div>
     <div class="article-meta">
@@ -776,7 +776,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#inline-内联函数"><span class="toc-text">inline 内联函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#特征"><span class="toc-text">特征</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译器对-inline-函数的处理步骤"><span class="toc-text">编译器对 inline 函数的处理步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优缺点"><span class="toc-text">优缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#虚函数（virtual）可以是内联函数（inline）吗？"><span class="toc-text">虚函数（virtual）可以是内联函数（inline）吗？</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#不可移植性"><span class="toc-text">不可移植性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#位域"><span class="toc-text">位域</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -792,109 +792,36 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="inline-内联函数"><a href="#inline-内联函数" class="headerlink" title="inline 内联函数"></a>inline 内联函数</h1><h2 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h2><ul>
-<li>相当于把内联函数里面的内容写在调用内联函数处；//?</li>
-<li>相当于不用执行进入函数的步骤，直接执行函数体；<blockquote>
-<p>函数调用的时候，会在虚存中的栈区当前地址记录到帧指针寄存器，并生成该函数的上下文内容并执行相应的操作，调用结束后还会弹出该函数的数据，清理上下文信息。 </p>
+        <h1 id="不可移植性"><a href="#不可移植性" class="headerlink" title="不可移植性"></a>不可移植性</h1><ul>
+<li><p>不可移植性：程序从一台机器转移到另一台机器时，通常需要重新编写该程序。</p>
+<blockquote>
+<p>比如算术类型的大小在不同机器上不一样</p>
+</blockquote>
+</li>
+<li><p>相关概念</p>
+<blockquote>
+<p><a href>位域</a></p>
 </blockquote>
 </li>
 </ul>
 <blockquote>
-<p>感觉记得不准确，到时候重新看一下计算机系统中的函数调用过程</p>
-<ul>
-<li>相当于宏，却比宏多了类型检查，真正具有函数特性；</li>
-<li>编译器一般不内联包含循环、递归、switch 等复杂操作的内联函数；</li>
-<li>在类声明中定义的函数，除了虚函数的其他函数都会自动隐式地当成内联函数。</li>
-</ul>
+<p><a href>Volatile</a></p>
+<p><a href>链接指示:extern “C”</a></p>
 </blockquote>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>inline 使用</p>
-<pre><code class="lang-cpp">// 内联的声明可以不加inline
-// 声明1（加 inline，建议使用）
-inline int functionName(int first, int second,...);
-
-// 声明2（不加 inline）
-int functionName(int first, int second,...);
-
-// 定义
-inline int functionName(int first, int second,...) {/****/};
-
-// 类内定义，隐式内联
-class A {
-    int doA() { return 0; }         // 隐式内联
-}
-
-// 类外定义，需要显式内联
-class A {
-    int doA();
-}
-inline int A::doA() { return 0; }   // 需要显式内联
+<h1 id="位域"><a href="#位域" class="headerlink" title="位域"></a>位域</h1><pre><code class="lang-cpp">//位域的声明形式是在成员名字之后紧跟一个冒号以及一个常量表达式，用于指定成员所占的二进制位数;
+Bit mode: 2;    // mode 占 2 位
 </code></pre>
-<h2 id="编译器对-inline-函数的处理步骤"><a href="#编译器对-inline-函数的处理步骤" class="headerlink" title="编译器对 inline 函数的处理步骤"></a>编译器对 inline 函数的处理步骤</h2><ol>
-<li>将 inline 函数体复制到 inline 函数调用点处； </li>
-<li>为所用 inline 函数中的局部变量分配内存空间； </li>
-<li>将 inline 函数的的输入参数和返回值映射到调用方法的局部变量空间中； </li>
-<li>如果 inline 函数有多个返回点，将其转变为 inline 函数代码块末尾的分支（使用 GOTO）。</li>
-</ol>
-<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>优点</p>
-<ol>
-<li>内联函数同宏函数一样将在被调用处进行代码展开，省去了参数压栈、栈帧开辟与回收，结果返回等，从而提高程序运行速度。</li>
-<li>内联函数相比宏函数来说，在代码展开时，会做安全检查或自动类型转换（同普通函数），而宏定义则不会。 </li>
-<li>在类中声明同时定义的成员函数，自动转化为内联函数，因此内联函数可以访问类的成员变量，宏定义则不能。</li>
-<li>内联函数在运行时可调试，而宏定义不可以。</li>
-</ol>
-<p>缺点</p>
-<ol>
-<li>代码膨胀。内联是以代码膨胀（复制）为代价，消除函数调用带来的开销。如果执行函数体内代码的时间，相比于函数调用的开销较大，那么效率的收获会很少。另一方面，每一处内联函数的调用都要复制代码，将使程序的总代码量增大，消耗更多的内存空间。</li>
-<li>inline 函数无法随着函数库升级而升级。inline函数的改变需要重新编译，不像 non-inline 可以直接链接。</li>
-<li>是否内联，程序员不可控。内联函数只是对编译器的建议，是否对函数内联，决定权在于编译器。</li>
-</ol>
-<h2 id="虚函数（virtual）可以是内联函数（inline）吗？"><a href="#虚函数（virtual）可以是内联函数（inline）吗？" class="headerlink" title="虚函数（virtual）可以是内联函数（inline）吗？"></a>虚函数（virtual）可以是内联函数（inline）吗？</h2><blockquote>
-<p><a href="http://www.cs.technion.ac.il/users/yechiel/c++-faq/inline-virtuals.html" target="_blank" rel="noopener">Are “inline virtual” member functions ever actually “inlined”?</a></p>
-</blockquote>
+<p>类可以将其（非静态）数据成员定义为位域（bit-field），在一个位域中含有一定数量的二进制位。当一个程序需要向其他程序或硬件设备传递二进制数据时，通常会用到位域。</p>
 <ul>
-<li>虚函数可以是内联函数，内联是可以修饰虚函数的，但是当虚函数表现多态性的时候不能内联。</li>
-<li>内联是在编译期建议编译器内联，而虚函数的多态性在运行期，编译器无法知道运行期调用哪个代码，因此虚函数表现为多态性时（运行期）不可以内联。</li>
-<li><code>inline virtual</code> 唯一可以内联的时候是：编译器知道所调用的对象是哪个类（如 <code>Base::who()</code>），这只有在编译器具有实际对象而不是对象的指针或引用时才会发生。</li>
+<li>位域在内存中的布局是与机器有关的</li>
+<li>位域的类型必须是整型或枚举类型，<font color="red">因为</font>带符号类型中的位域的行为将因具体实现而定</li>
+<li><p>取地址运算符（&amp;）不能作用于位域，任何指针都无法指向类的位域</p>
+</li>
+<li><p>如果类内的连续定义的位域占用空间在同一个整数的相邻位，那么将会提供压缩，具体与机器相关</p>
+</li>
+<li><p>超过1位的位域通常使用内置的位运算符进行操作</p>
+</li>
 </ul>
-<p>虚函数内联使用</p>
-<pre><code class="lang-cpp">#include &lt;iostream&gt;  
-using namespace std;
-class Base
-{
-public:
-    inline virtual void who()
-    {
-        cout &lt;&lt; &quot;I am Base\n&quot;;
-    }
-    virtual ~Base() {}
-};
-class Derived : public Base
-{
-public:
-    inline void who()  // 不写inline时隐式内联
-    {
-        cout &lt;&lt; &quot;I am Derived\n&quot;;
-    }
-};
-
-int main()
-{
-    // 此处的虚函数 who()，是通过类（Base）的具体对象（b）来调用的，编译期间就能确定了，所以它可以是内联的，但最终是否内联取决于编译器。 
-    Base b;
-    b.who();
-
-    // 此处的虚函数是通过指针调用的，呈现多态性，需要在运行时期间才能确定，所以不能为内联。  
-    Base *ptr = new Derived();
-    ptr-&gt;who();
-
-    // 因为Base有虚析构函数（virtual ~Base() {}），所以 delete 时，会先调用派生类（Derived）析构函数，再调用基类（Base）析构函数，防止内存泄漏。
-    delete ptr;
-    ptr = nullptr;
-
-    system(&quot;pause&quot;);
-    return 0;
-}
-</code></pre>
 
       
        
