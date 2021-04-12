@@ -4,9 +4,9 @@
   
     
     <entry>
-      <title>C++复习 Class和Struct</title>
-      <link href="/2021/04/11/C++/C++%E5%A4%8D%E4%B9%A0%20Class%E5%92%8CStruct/"/>
-      <url>/2021/04/11/C++/C++%E5%A4%8D%E4%B9%A0%20Class%E5%92%8CStruct/</url>
+      <title>C++复习 class和struct</title>
+      <link href="/2021/04/11/C++/C++%E5%A4%8D%E4%B9%A0%20class%E5%92%8Cstruct/"/>
+      <url>/2021/04/11/C++/C++%E5%A4%8D%E4%B9%A0%20class%E5%92%8Cstruct/</url>
       
         <content type="html"><![CDATA[<h1 id="C-中-struct-和-class"><a href="#C-中-struct-和-class" class="headerlink" title="C++ 中 struct 和 class"></a>C++ 中 struct 和 class</h1><p>总的来说，struct 更适合看成是一个数据结构的实现体，class 更适合看成是一个对象的实现体。</p><h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><ul><li>最本质的一个区别就是默认的访问控制<ol><li>默认的继承访问权限。struct 是 public 的，class 是 private 的。  </li><li>struct 作为数据结构的实现体，它默认的数据访问控制是 public 的，而 class 作为对象的实现体，它默认的成员变量访问控制是 private 的。</li></ol></li></ul>]]></content>
       
@@ -85,33 +85,6 @@
     
     
     <entry>
-      <title>C++复习 Sizeof()</title>
-      <link href="/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20Sizeof()/"/>
-      <url>/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20Sizeof()/</url>
-      
-        <content type="html"><![CDATA[<h1 id="sizeof"><a href="#sizeof" class="headerlink" title="sizeof()"></a>sizeof()</h1><ul><li>sizeof 运算符返回一条表达式或一个类型名字所占的字节数。<blockquote><p>满足右结合律<br>sizeof <em>p = sizeof(</em>p);</p></blockquote></li></ul><blockquote><p>返回值：size_t类型的常量表达式</p></blockquote><pre><code class="lang-cpp">//使用方法sizeof (type)sizeof expr //返回表达式结果类型的大小，不实际计算运算对象的值</code></pre><ul><li>不实际计算运算对象，即使对象是空指针也可以运行</li></ul><h2 id="c-11"><a href="#c-11" class="headerlink" title="c++11"></a>c++11</h2><ul><li>可以通过 作用域 符号来获取成员的大小</li></ul><pre><code class="lang-cpp">sizeof ClassName::ClassMember;//ClassName的ClassMember成员对应类型的大小</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul><li>对char或者类型为char的表达式，结果为1</li><li>对引用类型，结果为被引用对象所占空间的大小</li><li>对指针类型，结果为指针本身所占空间的大小</li><li>对解引用指针类型，结果为指向的对象所占空间的大小，指针不需要有效</li><li>对数组，结果为数组所占空间的大小，等价于数组中所有元素所占空间之和。sizeof不把数组转换为指针进行处理</li><li>对string和vector等，返回该类型固定部分的大小，不会计算对象中的元素占用了多少空间</li></ul>]]></content>
-      
-      
-      <categories>
-          
-          <category> Recruitment </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> c++ </tag>
-            
-            <tag> recruitment </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>C++复习 pragma pack(n)</title>
       <link href="/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20#pragma%20pack(n)/"/>
       <url>/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20#pragma%20pack(n)/</url>
@@ -139,9 +112,36 @@
     
     
     <entry>
-      <title>C++复习 Assert</title>
-      <link href="/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20Assert/"/>
-      <url>/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20Assert/</url>
+      <title>C++复习 sizeof()</title>
+      <link href="/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20sizeof()/"/>
+      <url>/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20sizeof()/</url>
+      
+        <content type="html"><![CDATA[<h1 id="sizeof"><a href="#sizeof" class="headerlink" title="sizeof()"></a>sizeof()</h1><ul><li>sizeof 运算符返回一条表达式或一个类型名字所占的字节数。<blockquote><p>满足右结合律<br>sizeof <em>p = sizeof(</em>p);</p></blockquote></li></ul><blockquote><p>返回值：size_t类型的常量表达式</p></blockquote><pre><code class="lang-cpp">//使用方法sizeof (type)sizeof expr //返回表达式结果类型的大小，不实际计算运算对象的值</code></pre><ul><li>不实际计算运算对象，即使对象是空指针也可以运行</li></ul><h2 id="c-11"><a href="#c-11" class="headerlink" title="c++11"></a>c++11</h2><ul><li>可以通过 作用域 符号来获取成员的大小</li></ul><pre><code class="lang-cpp">sizeof ClassName::ClassMember;//ClassName的ClassMember成员对应类型的大小</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul><li>对char或者类型为char的表达式，结果为1</li><li>对引用类型，结果为被引用对象所占空间的大小</li><li>对指针类型，结果为指针本身所占空间的大小</li><li>对解引用指针类型，结果为指向的对象所占空间的大小，指针不需要有效</li><li>对数组，结果为数组所占空间的大小，等价于数组中所有元素所占空间之和。sizeof不把数组转换为指针进行处理</li><li>对string和vector等，返回该类型固定部分的大小，不会计算对象中的元素占用了多少空间</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++复习 sssert</title>
+      <link href="/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20assert/"/>
+      <url>/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20assert/</url>
       
         <content type="html"><![CDATA[<h1 id="assert预处理宏"><a href="#assert预处理宏" class="headerlink" title="assert预处理宏"></a>assert预处理宏</h1><ul><li><p>由预处理器管理，可以直接使用</p></li><li><p>断言，是宏，而非函数。assert 宏的原型定义在 <assert.h>（C）、<cassert>（C++）中，其作用是如果它的条件返回错误，则终止程序执行。可以通过定义 NDEBUG 来关闭 assert，但是需要在源代码的开头，include <assert.h> 之前。</assert.h></cassert></assert.h></p></li></ul><blockquote><p>无需std或using声明</p></blockquote><h1 id="NDEBUG预处理变量"><a href="#NDEBUG预处理变量" class="headerlink" title="NDEBUG预处理变量"></a>NDEBUG预处理变量</h1><ul><li>NDEBUG可以决定assert是否启用。但是注意要定义在assert声明之前。具体看以下连接</li></ul><blockquote><p><a href="https://www.zhihu.com/question/23075111" target="_blank" rel="noopener">https://www.zhihu.com/question/23075111</a>  </p></blockquote><ul><li>一些局部静态变量，可以用于调试</li></ul><p><img src="局部静态变量.png" alt></p><pre><code class="lang-cpp">//assert() 使用#define NDEBUG          // 加上这行，则 assert 不可用#include &lt;assert.h&gt;assert( p != NULL );    // assert 不可用</code></pre><h1 id="UE4-断言"><a href="#UE4-断言" class="headerlink" title="UE4 断言"></a>UE4 <a href="https://docs.unrealengine.com/zh-CN/ProgrammingAndScripting/ProgrammingWithCPP/Assertions/index.html" target="_blank" rel="noopener">断言</a></h1><ul><li>源码位置<blockquote><p>Engine/Source/Runtime/Core/Public/Misc/AssertionMacros.h</p></blockquote></li></ul><h2 id="check族"><a href="#check族" class="headerlink" title="check族"></a>check族</h2><ul><li><p>Check族系最接近基础 assert，因为当第一个参数得出的值为false时，此族系的成员会停止执行，且默认不会在发布版本中运行。</p></li><li><p>检查宏在调试（Debug）、开发（Development）、测试（Test）和发布编辑器（Shipping Editor）版本中运行（以”Slow”结尾的宏除外，其仅在调试（Debug）版本中运行）。定义 USE_CHECKS_IN_SHIPPING 以保留一个true值（通常为 1），使Check宏可在所有版本中运行。</p><blockquote><p>此法在以下情况中十分实用：怀疑Check宏中的代码正在修改值；发现了仅存在于在发布版本中且难以追踪的bug，但认为现有Check宏能找到这些bug。项目发布时应将 USE_CHECKS_IN_SHIPPING 设为默认值 0。</p></blockquote></li></ul><h2 id="verify族"><a href="#verify族" class="headerlink" title="verify族"></a>verify族</h2><ul><li><p>在大部分版本中，Verify族系的行为与Check族系相同。但即便在禁用Check宏的版本中，Verify宏也会计算其表达式的值。这意味着仅当该表达式需要独立于诊断检查之外运行时，才应使用Verify宏。</p></li><li><p>验证宏在调试（Debug）、开发（Development）、测试（Test）和发布编辑器（Shipping Editor）版本中完整运行（以”Slow”结尾的宏除外，其仅在调试（Debug）版本中运行）。定义 USE_CHECKS_IN_SHIPPING 来保留一个true值（通常为 1），从而覆盖此行为。</p></li><li><p><strong>在所有其他情况下，Verify宏将计算其表达式，但不会停止执行或将文本输出到日志。</strong></p></li></ul><h2 id="ensure族"><a href="#ensure族" class="headerlink" title="ensure族"></a>ensure族</h2><ul><li><p>Ensure族系类似于Verify族系，但可在出现非致命错误时使用。若Ensure宏的表达式计算得出的值为false，引擎将通知崩溃报告器，但仍会继续运行。</p></li><li><p>为避免崩溃报告器收到太多通知，Ensure宏在每次引擎或编辑器会话中仅报告一次。若实际情况需要Ensure宏在每次表达式计算得值为false时都报告一次，则使用”Always”版本的宏。</p></li><li><p>Ensure宏在所有版本中计算其表达式的值，但仅在调试（Debug）、开发（Development）、测试（Test）和发布编辑器（Shipping Editor）版本中联系崩溃报告器。</p></li></ul>]]></content>
       
@@ -194,8 +194,8 @@
     
     <entry>
       <title>C++复习 inline内联函数</title>
-      <link href="/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20Inline/"/>
-      <url>/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20Inline/</url>
+      <link href="/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20inline/"/>
+      <url>/2021/04/09/C++/C++%E5%A4%8D%E4%B9%A0%20inline/</url>
       
         <content type="html"><![CDATA[<h1 id="inline-内联函数"><a href="#inline-内联函数" class="headerlink" title="inline 内联函数"></a>inline 内联函数</h1><h2 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h2><ul><li>相当于把内联函数里面的内容写在调用内联函数处；//?</li><li>相当于不用执行进入函数的步骤，直接执行函数体；<blockquote><p>函数调用的时候，会在虚存中的栈区当前地址记录到帧指针寄存器，并生成该函数的上下文内容并执行相应的操作，调用结束后还会弹出该函数的数据，清理上下文信息。 </p></blockquote></li></ul><blockquote><p>感觉记得不准确，到时候重新看一下计算机系统中的函数调用过程</p><ul><li>相当于宏，却比宏多了类型检查，真正具有函数特性；</li><li>编译器一般不内联包含循环、递归、switch 等复杂操作的内联函数；</li><li>在类声明中定义的函数，除了虚函数的其他函数都会自动隐式地当成内联函数。</li></ul></blockquote><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>inline 使用</p><pre><code class="lang-cpp">// 内联的声明可以不加inline// 声明1（加 inline，建议使用）inline int functionName(int first, int second,...);// 声明2（不加 inline）int functionName(int first, int second,...);// 定义inline int functionName(int first, int second,...) {/****/};// 类内定义，隐式内联class A {    int doA() { return 0; }         // 隐式内联}// 类外定义，需要显式内联class A {    int doA();}inline int A::doA() { return 0; }   // 需要显式内联</code></pre><h2 id="编译器对-inline-函数的处理步骤"><a href="#编译器对-inline-函数的处理步骤" class="headerlink" title="编译器对 inline 函数的处理步骤"></a>编译器对 inline 函数的处理步骤</h2><ol><li>将 inline 函数体复制到 inline 函数调用点处； </li><li>为所用 inline 函数中的局部变量分配内存空间； </li><li>将 inline 函数的的输入参数和返回值映射到调用方法的局部变量空间中； </li><li>如果 inline 函数有多个返回点，将其转变为 inline 函数代码块末尾的分支（使用 GOTO）。</li></ol><h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>优点</p><ol><li>内联函数同宏函数一样将在被调用处进行代码展开，省去了参数压栈、栈帧开辟与回收，结果返回等，从而提高程序运行速度。</li><li>内联函数相比宏函数来说，在代码展开时，会做安全检查或自动类型转换（同普通函数），而宏定义则不会。 </li><li>在类中声明同时定义的成员函数，自动转化为内联函数，因此内联函数可以访问类的成员变量，宏定义则不能。</li><li>内联函数在运行时可调试，而宏定义不可以。</li></ol><p>缺点</p><ol><li>代码膨胀。内联是以代码膨胀（复制）为代价，消除函数调用带来的开销。如果执行函数体内代码的时间，相比于函数调用的开销较大，那么效率的收获会很少。另一方面，每一处内联函数的调用都要复制代码，将使程序的总代码量增大，消耗更多的内存空间。</li><li>inline 函数无法随着函数库升级而升级。inline函数的改变需要重新编译，不像 non-inline 可以直接链接。</li><li>是否内联，程序员不可控。内联函数只是对编译器的建议，是否对函数内联，决定权在于编译器。</li></ol><h2 id="虚函数（virtual）可以是内联函数（inline）吗？"><a href="#虚函数（virtual）可以是内联函数（inline）吗？" class="headerlink" title="虚函数（virtual）可以是内联函数（inline）吗？"></a>虚函数（virtual）可以是内联函数（inline）吗？</h2><blockquote><p><a href="http://www.cs.technion.ac.il/users/yechiel/c++-faq/inline-virtuals.html" target="_blank" rel="noopener">Are “inline virtual” member functions ever actually “inlined”?</a></p></blockquote><ul><li>虚函数可以是内联函数，内联是可以修饰虚函数的，但是当虚函数表现多态性的时候不能内联。</li><li>内联是在编译期建议编译器内联，而虚函数的多态性在运行期，编译器无法知道运行期调用哪个代码，因此虚函数表现为多态性时（运行期）不可以内联。</li><li><code>inline virtual</code> 唯一可以内联的时候是：编译器知道所调用的对象是哪个类（如 <code>Base::who()</code>），这只有在编译器具有实际对象而不是对象的指针或引用时才会发生。</li></ul><p>虚函数内联使用</p><pre><code class="lang-cpp">#include &lt;iostream&gt;  using namespace std;class Base{public:    inline virtual void who()    {        cout &lt;&lt; &quot;I am Base\n&quot;;    }    virtual ~Base() {}};class Derived : public Base{public:    inline void who()  // 不写inline时隐式内联    {        cout &lt;&lt; &quot;I am Derived\n&quot;;    }};int main(){    // 此处的虚函数 who()，是通过类（Base）的具体对象（b）来调用的，编译期间就能确定了，所以它可以是内联的，但最终是否内联取决于编译器。     Base b;    b.who();    // 此处的虚函数是通过指针调用的，呈现多态性，需要在运行时期间才能确定，所以不能为内联。      Base *ptr = new Derived();    ptr-&gt;who();    // 因为Base有虚析构函数（virtual ~Base() {}），所以 delete 时，会先调用派生类（Derived）析构函数，再调用基类（Base）析构函数，防止内存泄漏。    delete ptr;    ptr = nullptr;    system(&quot;pause&quot;);    return 0;}</code></pre>]]></content>
       
@@ -274,9 +274,9 @@
     
     
     <entry>
-      <title>C++复习 Const</title>
-      <link href="/2021/04/08/C++/C++%E5%A4%8D%E4%B9%A0%20Const/"/>
-      <url>/2021/04/08/C++/C++%E5%A4%8D%E4%B9%A0%20Const/</url>
+      <title>C++复习 const</title>
+      <link href="/2021/04/08/C++/C++%E5%A4%8D%E4%B9%A0%20const/"/>
+      <url>/2021/04/08/C++/C++%E5%A4%8D%E4%B9%A0%20const/</url>
       
         <content type="html"><![CDATA[<h1 id="Const"><a href="#Const" class="headerlink" title="Const"></a>Const</h1><ul><li>定义：<font color="red">const用于定义一个变量，它的值不能被改变</font></li></ul><h2 id="const对象必须初始化"><a href="#const对象必须初始化" class="headerlink" title="const对象必须初始化"></a>const对象必须初始化</h2><ul><li><p>然而并不是所有的const对象都必须初始化</p></li><li><p>顶层const必须初始化，因为本身不能改变，不初始化根本没法用。而底层const(常量指针)可以不初始化</p><blockquote><p>参考:<a href="https://blog.csdn.net/qq_21034239/article/details/70492318" target="_blank" rel="noopener">https://blog.csdn.net/qq_21034239/article/details/70492318</a></p></blockquote></li><li><p>其实没有那么简单,const对象必须初始化值对bulit-in类型和POD类行有效</p><ul><li>built-in类型是内置类型包括算术类型和空类型(void)</li><li>注意的是指针和引用是符合类型<blockquote><p>参考:<a href="https://stackoverflow.com/questions/8440381/why-do-const-variables-have-to-be-initialized-right-away" target="_blank" rel="noopener">https://stackoverflow.com/questions/8440381/why-do-const-variables-have-to-be-initialized-right-away</a><br>(翻译:<a href="https://www.it1352.com/465052.html" target="_blank" rel="noopener">https://www.it1352.com/465052.html</a>)</p></blockquote></li></ul></li></ul><h2 id="const对象仅对当前文件有效"><a href="#const对象仅对当前文件有效" class="headerlink" title="const对象仅对当前文件有效"></a>const对象仅对当前文件有效</h2><ul><li><p>在编译时会进行预处理，将代码中所有带const限定符的变量用初始化的常亮替代。</p></li><li><p>const对象被设定为仅在文件内有效。当多个文件中出现了同名的const变量时，其实等同在不同文件中分别定义了独立的变量。</p></li><li><p>如果要在多个文件中共享const对象，在需要声明变量的时候前面加extern</p></li></ul><h3 id="extern"><a href="#extern" class="headerlink" title="extern"></a>extern</h3><ul><li>用于声明<ul><li>变量只能被定义一次，但可以被多次声明。</li></ul></li></ul><h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><ul><li><a href="./">C/C++程序编译链接过程(还没写)</a></li></ul><h2 id="对const的引用"><a href="#对const的引用" class="headerlink" title="对const的引用"></a>对const的引用</h2><ul><li><p>别称<font color="red">常量引用</font></p></li><li><p>常量引用可以引用常量和非常量</p></li><li>非常量引用不能引用常量</li></ul><pre><code class="lang-cpp">const int a = 1;int d = 1;const int &amp;b = a;//trueconst int &amp;c = 1;//trueconst int &amp;d = d;//trueint &amp;e = a;//false;</code></pre><ul><li><font color="red">初始化常量引用的时候可以使用任意类型和任意表达式，只要可以转换成相应的引用类型。</font><blockquote><p>原因：因为在常量引用绑定初始值的时候，生成了一个临时变量。其事实上绑定的是临时变量。</p></blockquote></li></ul><blockquote><p>这样保证了const int&amp;绑定的是int型的表达式</p><p>还有值得注意的是一般情况下引用的类型必须与其所引用的对象的类型一致</p></blockquote><pre><code class="lang-cpp">double dval = 3.14;const int &amp;ri = dval;</code></pre><p>等价于</p><pre><code class="lang-cpp">double dval = 3.14;const int temp = dval;const int &amp;ri = temp;</code></pre><ul><li>根据上述也可以解释为什么非常量引用不能引用常量，因为这样初始化绑定的是临时量。<blockquote><p>非const变量引用const量，其实绑定了中间变量temp，因为是非const量所以可以改变这非const量，按引用来const量也应该改变，但其实改变的是中间量temp，const量不变，产生矛盾，c++把这种行为定义为非法。</p></blockquote></li></ul><h3 id="对const的引用可能引用一个并非const的对象"><a href="#对const的引用可能引用一个并非const的对象" class="headerlink" title="对const的引用可能引用一个并非const的对象"></a>对const的引用可能引用一个并非const的对象</h3><ul><li>const只约束当前绑定的对象的相关操作，而不管对象本身是不是常量。</li></ul><pre><code class="lang-cpp">int a  = 1;int &amp;b = a;const int &amp;c = a;b = 2;cout&lt;&lt;a&lt;&lt;&quot; &quot;&lt;&lt;b&lt;&lt;&quot; &quot;&lt;&lt;c&lt;&lt;endl;//2 2 2a = 3cout&lt;&lt;a&lt;&lt;&quot; &quot;&lt;&lt;b&lt;&lt;&quot; &quot;&lt;&lt;c&lt;&lt;endl;//2 2 2c = 4cout&lt;&lt;a&lt;&lt;&quot; &quot;&lt;&lt;b&lt;&lt;&quot; &quot;&lt;&lt;c&lt;&lt;endl;// error: assignment of read-only reference ‘c’</code></pre><h2 id="指针和const"><a href="#指针和const" class="headerlink" title="指针和const"></a>指针和const</h2><blockquote><p>对于指针常量和常量指针的定义C++ primer里定义的跟大多数教材不一样</p><h3 id="指针常量-pointer-to-const"><a href="#指针常量-pointer-to-const" class="headerlink" title="指针常量(pointer to const)"></a>指针常量(pointer to const)</h3><ul><li>从右往左读，它是一个指针，是一个指向常量类型的指针。说明不能改变他所指向对象的内容。但是可以改变它指向的对象。</li></ul></blockquote><pre><code class="lang-cpp">const int a = 1;const int b = 2;const int *c = &amp;a;*c = 1;//faslec = &amp;b;//true</code></pre><h3 id="常量指针-const-pointer"><a href="#常量指针-const-pointer" class="headerlink" title="常量指针(const pointer)"></a>常量指针(const pointer)</h3><ul><li>从右往左读，它是一个常量，说明指针的地址不能改变。但是可以改变它指向对象的内容。</li></ul><pre><code class="lang-cpp">int a = 1;int b = 2;int *const c = &amp;a; c= &amp;b;//falsec= 2;//true</code></pre><h2 id="顶层const和底层const"><a href="#顶层const和底层const" class="headerlink" title="顶层const和底层const"></a>顶层const和底层const</h2><ul><li>顶层const说明指针本身是个常量-常量指针(const pointer)</li><li>底层const说明指针指向的对象是个常量-指针常量(pointer to const)</li></ul><h3 id="const对拷贝的影响"><a href="#const对拷贝的影响" class="headerlink" title="const对拷贝的影响"></a>const对拷贝的影响</h3><ul><li>顶层const对拷贝无影响</li><li>底层const对拷贝有影像<blockquote><p>拷贝两者有相同的底层const的，或者被拷贝数据可以从非常量转变为常量,才无影响</p></blockquote></li></ul><pre><code class="lang-cpp">int main(){   // 顶层const对拷贝无影响    {        // const int -&gt; int  yes        const int b = 1;        int a = b;        // int -&gt; const int yes        int c = 1;        const int d = c;    }     // &amp;int(int*) -&gt; int *const/const int*/const int *const    int a = 1;    int *const b = &amp;a; //ok    const int *c = &amp;a; //ok    const int *const d = &amp;a; //ok    // &amp;(const int) -&gt; int *const/const int*/const int *const    const int e = 1;    int *const f = &amp;e; //error 没有相同的底层const    const int *g = &amp;e; //ok    const int *const h = &amp;e; //ok  &amp;e可以转换成const int *const    //(int cont*) -&gt; int *const/const int*/const int *const    int i = 1;    int *const  j= &amp;i;    int *const  k = j; //ok    const int*  l = j; //ok    const int *const m = j; //ok    return 0;}</code></pre><ul><li>总结(我自己有点绕晕了,总结一下)<blockquote><p>1) 对于非指针类型之间的拷贝,没有限制 const int &lt;-&gt; int</p></blockquote></li></ul><blockquote><p>2) 对于指针之间的拷贝。右值没有底层const,总合法;右值有底层const,则看左值有没有底层const,有则合法,没有则不合法。   </p><ul><li>常量对象不能赋值给非常量引用,常量对象不能赋值给非常量指针</li></ul><p>3) 对于指针和非指针之间，类型不同不合法;</p></blockquote><h2 id="constexpr和常量表达式-c-11"><a href="#constexpr和常量表达式-c-11" class="headerlink" title="constexpr和常量表达式[c++11]"></a>constexpr和常量表达式[c++11]</h2><ul><li>常量表达式(const expression)是指不会改变并且在编译过程就能得到计算结果的表达式<blockquote><p>数据类型是常量并且初始值是常量或字面值或两者混合的是常量表达式。</p></blockquote></li></ul><pre><code class="lang-cpp">const int a = 1; //trueconst int b = a+1; //trueint c = 1; //falseconst int d = get_d(); //false，该值在编译时才能获得，所以不是常量表达式</code></pre><h3 id="constexpr变量"><a href="#constexpr变量" class="headerlink" title="constexpr变量"></a>constexpr变量</h3><ul><li>constexpr定义的变量必须要用常量表达式初始化</li><li>constexpr是顶层const，即其本身为常量</li><li>对于字面量<blockquote><p>算术类型，引用和指针，字面值常量类，枚举都是字面值<br>自定义类，IO库，string类等不算字面值</p></blockquote></li></ul><h3 id="constexpr-指针"><a href="#constexpr-指针" class="headerlink" title="constexpr 指针"></a>constexpr 指针</h3><ul><li>constexpr指针只能指向地址固定的变量，比如全局变量，staitc变量</li></ul><pre><code class="lang-cpp">constexpr int *p1; //顶层constconst int *p2;  //底层constint *const p3;  //顶层constconstexpr const int *p4;//&lt;=&gt;const int *const p5;</code></pre><h2 id="const补充"><a href="#const补充" class="headerlink" title="const补充"></a>const补充</h2><p><a href="https://interview.huihut.com/#/?id=cc" target="_blank" rel="noopener">const 使用</a></p><pre><code class="lang-cpp">// 类class A{private:    const int a;                // 常对象成员，只能在初始化列表赋值public:    // 构造函数    A() : a(0) { };    A(int x) : a(x) { };        // 初始化列表    // const可用于对重载函数的区分    int getValue();             // 普通成员函数    int getValue() const;       // 常成员函数，不得修改类中的任何数据成员的值};void function(){    // 对象    A b;                        // 普通对象，可以调用全部成员函数、更新常成员变量    const A a;                  // 常对象，只能调用常成员函数    const A *p = &amp;a;            // 指针变量，指向常对象    const A &amp;q = a;             // 指向常对象的引用    // 指针    char greeting[] = &quot;Hello&quot;;    char* p1 = greeting;                // 指针变量，指向字符数组变量    const char* p2 = greeting;          // 指针变量，指向字符数组常量（const 后面是 char，说明指向的字符（char）不可改变）    char* const p3 = greeting;          // 自身是常量的指针，指向字符数组变量（const 后面是 p3，说明 p3 指针自身不可改变）    const char* const p4 = greeting;    // 自身是常量的指针，指向字符数组常量}// 函数void function1(const int Var);           // 传递过来的参数在函数内不可变void function2(const char* Var);         // 参数指针所指内容为常量void function3(char* const Var);         // 参数指针为常量void function4(const int&amp; Var);          // 引用参数在函数内为常量// 函数返回值const int function5();      // 返回一个常数const int* function6();     // 返回一个指向常量的指针变量，使用：const int *p = function6();int* const function7();     // 返回一个指向变量的常指针，使用：int* const p = function7();</code></pre>]]></content>
       
