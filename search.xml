@@ -4,6 +4,141 @@
   
     
     <entry>
+      <title>C++复习 decltype</title>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20decltype/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20decltype/</url>
+      
+        <content type="html"><![CDATA[<h1 id="decltype"><a href="#decltype" class="headerlink" title="decltype"></a>decltype</h1><ul><li>decltype 用于选择并返回操作数的数据类型</li></ul><blockquote><p>只推断类型，不计算表达式的值</p><p>decltype能返回包括顶层const和引用在内的类型</p></blockquote><pre><code class="lang-cpp">const int ci = 0,&amp;cj = ci;decltype(ci) x = 0; // x is const intdecltype(cj) y = x; // y is const int&amp;,并初始化绑定xdecltype(cj) z;     // wrong 引用必须初始化</code></pre><ul><li>decltype与引用</li></ul><pre><code class="lang-cpp">int i = 42,*p=&amp;i,&amp;r=i;decltype(r)  //int&amp;decltype(r+0) //intdecltype(*p) //int&amp;</code></pre><ul><li>decltype((variable))的结果(即带括号的表达式)永远是引用，而decltype(variable)的结果只有当variable本身就是一个引用的时候才是引用。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++复习 enum</title>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20enum/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20enum/</url>
+      
+        <content type="html"><![CDATA[<h1 id="enum枚举类型"><a href="#enum枚举类型" class="headerlink" title="enum枚举类型"></a>enum枚举类型</h1><pre><code class="lang-cpp">//限定作用域的枚举类型(c++11)enum class open_modes { input, output, append };//不限定作用域的枚举类型enum color { red, yellow, green };//不限定作用域的匿名枚举类型enum { floatPrec = 6, doublePrec = 10 };</code></pre><ul><li><p>匿名枚举类型用处</p><ul><li>在程序中需要<strong>数值的名字</strong>的时候使用<ul><li>宏定义的缺点:在预处理阶段只做简单替换不做安全检查</li><li>匿名的enum枚举:编译器会对其进行类型检查，若代码中其他地方有和该名字冲突的，会报错</li><li>静态变量: 作用域在本文件内,编译阶段检查，比匿名enum内存占用多<blockquote><p><a href="https://zhuanlan.zhihu.com/p/267401289" target="_blank" rel="noopener">c语言之枚举类型（enum）</a></p></blockquote></li></ul></li></ul></li><li><p>和类一样，每个枚举类型定义了一种新的类型。枚举属于字面值常量类型。</p></li><li>关键字是 enum class(等价enum struct)</li><li>限定作用域枚举类型，作用域外无法访问；不限定作用域的枚举类型，枚举成员的作用域和枚举类型本身的作用域一致</li></ul><pre><code class="lang-cpp">enum class /*struct*/ MyEnum { A = 0};        // 限定作用域的枚举enum class /*struct*/ MyEnum1 { A = 0 };    // 限定作用域的枚举可以有重复的名字，使用时也必须加上作用域enum MyEnum2 { B = 0 };                        // 不限定作用域的枚举enum MyEnum3 { B = 0 };                        // 不限定作用域的枚举不能有重复的名字enum {test = 0} t,t1;                        // 未命名的不限定作用域的枚举,只能在定义是就定义对象MyEnum::A;                                          //限定作用域的枚举要带上作用域B;                                                     //true</code></pre><ul><li><p>默认情况下，枚举值从0开始，依次加1，如果没有显示提供值，就在前一个枚举值的基础上加1。枚举成员是const的。</p></li><li><p>只要enum有名字，我们就能定义并初始化该类型的成员。想要初始化enum对象或者为enum对象赋值，必须使用该类型的一个枚举成员或者该类型的另一个对象。</p></li><li><p>一个不限定作用域的枚举类型的对象或枚举成员自动的转成整型</p></li><li><p>在C++11新标准中，我们可以在enum的名字后加上冒号以及我们想在该enum中使用的类型。对于不限定作用域的枚举类型来说，其枚举成员不存在默认类型，我们只知道成员的潜在类型足够大，肯定能容纳枚举值。如果我们指定了潜在类型，则一旦超出范围将引发错误。对于限定作用域的枚举成员，其缺省为int类型</p></li><li><p>在C++11 新标准中，我们可以提前声明enum。enum的前置声明必须指定其成员的大小。</p><pre><code class="lang-cpp">enum test : long;    // 不限定作用域的，必须指定成员类型enum class test1;    // 限定作用域的枚举类型可以使用默认成员类型int</code></pre></li><li><p>int值不可以做以enmu为形参的函数的实参。对与不限定作用域的enum做形参时，enum的值提升成int或更大的整型（注意只会提升成对应整型，不会隐式转换为unsigned char之类），实际提升的结果由枚举类型的潜在类型决定。</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++复习 范围解析运算符</title>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E8%8C%83%E5%9B%B4%E8%A7%A3%E6%9E%90%E8%BF%90%E7%AE%97%E7%AC%A6/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E8%8C%83%E5%9B%B4%E8%A7%A3%E6%9E%90%E8%BF%90%E7%AE%97%E7%AC%A6/</url>
+      
+        <content type="html"><![CDATA[<h1 id="范围解析运算符"><a href="#范围解析运算符" class="headerlink" title=":: 范围解析运算符"></a>:: 范围解析运算符</h1><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ol><li>全局作用域符（<code>::name</code>）：用于类型名称（类、类成员、成员函数、变量等）前，表示作用域为全局命名空间</li><li>类作用域符（<code>class::name</code>）：用于表示指定类型的作用域范围是具体某个类的</li><li>命名空间作用域符（<code>namespace::name</code>）:用于表示指定类型的作用域范围是具体某个命名空间的</li></ol><p>:: 使用</p><pre><code class="lang-cpp">int count = 11;         // 全局（::）的 countclass A {public:    static int count;   // 类 A 的 count（A::count）};int A::count = 21;void fun(){    int count = 31;     // 初始化局部的 count 为 31    count = 32;         // 设置局部的 count 的值为 32}int main() {    ::count = 12;       // 测试 1：设置全局的 count 的值为 12    A::count = 22;      // 测试 2：设置类 A 的 count 为 22    fun();                // 测试 3    return 0;}</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++复习 friend友元</title>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/</url>
+      
+        <content type="html"><![CDATA[<h1 id="using-声明"><a href="#using-声明" class="headerlink" title="using 声明"></a>using 声明</h1><p>一条 <code>using 声明</code> 语句一次只引入命名空间的一个成员。它使得我们可以清楚知道程序中所引用的到底是哪个名字。如：</p><pre><code class="lang-cpp">using namespace_name::name;</code></pre><h2 id="构造函数的-using-声明"><a href="#构造函数的-using-声明" class="headerlink" title="构造函数的 using 声明"></a>构造函数的 using 声明</h2><p>在 C++11 中，派生类能够重用其直接基类定义的构造函数。</p><pre><code class="lang-cpp">class Derived : Base {public:    using Base::Base;    /* ... */};</code></pre><p>如上 using 声明，对于基类的每个构造函数，编译器都生成一个与之对应（形参列表完全相同）的派生类构造函数。生成如下类型构造函数：</p><pre><code class="lang-cpp">Derived(parms) : Base(args) { }</code></pre><h2 id="using-指示"><a href="#using-指示" class="headerlink" title="using 指示"></a>using 指示</h2><p><code>using 指示</code> 使得某个特定命名空间中所有名字都可见，这样我们就无需再为它们添加任何前缀限定符了。如：</p><pre><code class="lang-cpp">using namespace_name name;</code></pre><h2 id="尽量少使用-using-指示-污染命名空间"><a href="#尽量少使用-using-指示-污染命名空间" class="headerlink" title="尽量少使用 using 指示 污染命名空间"></a>尽量少使用 <code>using 指示</code> 污染命名空间</h2><blockquote><p>一般说来，使用 using 命令比使用 using 编译命令更安全，这是由于它<strong>只导入了指定的名称</strong>。如果该名称与局部名称发生冲突，编译器将<strong>发出指示</strong>。using编译命令导入所有的名称，包括可能并不需要的名称。如果与局部名称发生冲突，则<strong>局部名称将覆盖名称空间版本</strong>，而编译器<strong>并不会发出警告</strong>。另外，名称空间的开放性意味着名称空间的名称可能分散在多个地方，这使得难以准确知道添加了哪些名称。</p></blockquote><p>using 使用</p><p>尽量少使用 <code>using 指示</code></p><pre><code class="lang-cpp">using namespace std;</code></pre><p>应该多使用 <code>using 声明</code></p><pre><code class="lang-cpp">int x;std::cin &gt;&gt; x ;std::cout &lt;&lt; x &lt;&lt; std::endl;</code></pre><p>或者</p><pre><code class="lang-cpp">using std::cin;using std::cout;using std::endl;int x;cin &gt;&gt; x;cout &lt;&lt; x &lt;&lt; endl;</code></pre><h1 id="using-类型别名"><a href="#using-类型别名" class="headerlink" title="using = (类型别名)"></a>using = (类型别名)</h1><h2 id="typedef"><a href="#typedef" class="headerlink" title="typedef"></a>typedef</h2><pre><code class="lang-cpp">typedef double wages; //wages是double的别名typedef wages base,*p;//base是double的别名,p是double*的别名</code></pre><h2 id="using"><a href="#using" class="headerlink" title="using"></a>using</h2><ul><li>c++11推荐用一下语法</li></ul><pre><code class="lang-cpp">using double = wages; //wages是double的别名//using 别名 = 类型</code></pre><h2 id="对于复合类型的别名的声明语句要小心"><a href="#对于复合类型的别名的声明语句要小心" class="headerlink" title="对于复合类型的别名的声明语句要小心"></a>对于复合类型的别名的声明语句要小心</h2><pre><code class="lang-cpp">typedef char *pstring;const pstring cstr = 0; // pstring是一个整体,是个指向char的指针。const修饰他。所以它本身是一个常量。所以它是常量指针(const pointer)const char *cstr; //而这里*修饰const char,所以它是指向char常量的指针,即指针常量(pointer to const)</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++复习 friend友元</title>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/</url>
+      
+        <content type="html"><![CDATA[<h1 id="friend-友元类和友元函数"><a href="#friend-友元类和友元函数" class="headerlink" title="friend 友元类和友元函数"></a>friend 友元类和友元函数</h1><ul><li>能访问私有成员  </li><li>破坏封装性</li><li>友元关系不可传递</li><li>友元关系的单向性</li><li>友元声明的形式及数量不受限制</li></ul><pre><code class="lang-cpp">//声明方式class CLASS_NAME{    friend //函数声明    friend //类声明    public:        //...    private:        //...}</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++复习 explicit关键字</title>
       <link href="/2021/04/16/C++/C++%E5%A4%8D%E4%B9%A0%20explicit%E5%85%B3%E9%94%AE%E5%AD%97/"/>
       <url>/2021/04/16/C++/C++%E5%A4%8D%E4%B9%A0%20explicit%E5%85%B3%E9%94%AE%E5%AD%97/</url>
@@ -411,7 +546,7 @@
       <link href="/2021/04/08/C++/C++%E5%A4%8D%E4%B9%A0%20const/"/>
       <url>/2021/04/08/C++/C++%E5%A4%8D%E4%B9%A0%20const/</url>
       
-        <content type="html"><![CDATA[<h1 id="Const"><a href="#Const" class="headerlink" title="Const"></a>Const</h1><ul><li>定义：<font color="red">const用于定义一个变量，它的值不能被改变</font></li></ul><h2 id="const对象必须初始化"><a href="#const对象必须初始化" class="headerlink" title="const对象必须初始化"></a>const对象必须初始化</h2><ul><li><p>然而并不是所有的const对象都必须初始化</p></li><li><p>顶层const必须初始化，因为本身不能改变，不初始化根本没法用。而底层const(常量指针)可以不初始化</p><blockquote><p>参考:<a href="https://blog.csdn.net/qq_21034239/article/details/70492318" target="_blank" rel="noopener">https://blog.csdn.net/qq_21034239/article/details/70492318</a></p></blockquote></li><li><p>其实没有那么简单,const对象必须初始化值对bulit-in类型和POD类行有效</p><ul><li>built-in类型是内置类型包括算术类型和空类型(void)</li><li>注意的是指针和引用是符合类型<blockquote><p>参考:<a href="https://stackoverflow.com/questions/8440381/why-do-const-variables-have-to-be-initialized-right-away" target="_blank" rel="noopener">https://stackoverflow.com/questions/8440381/why-do-const-variables-have-to-be-initialized-right-away</a><br>(翻译:<a href="https://www.it1352.com/465052.html" target="_blank" rel="noopener">https://www.it1352.com/465052.html</a>)</p></blockquote></li></ul></li></ul><h2 id="const对象仅对当前文件有效"><a href="#const对象仅对当前文件有效" class="headerlink" title="const对象仅对当前文件有效"></a>const对象仅对当前文件有效</h2><ul><li><p>在编译时会进行预处理，将代码中所有带const限定符的变量用初始化的常亮替代。</p></li><li><p>const对象被设定为仅在文件内有效。当多个文件中出现了同名的const变量时，其实等同在不同文件中分别定义了独立的变量。</p></li><li><p>如果要在多个文件中共享const对象，在需要声明变量的时候前面加extern</p></li></ul><h3 id="extern"><a href="#extern" class="headerlink" title="extern"></a>extern</h3><ul><li>用于声明<ul><li>变量只能被定义一次，但可以被多次声明。</li></ul></li></ul><h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><ul><li><a href="./">C/C++程序编译链接过程(还没写)</a></li></ul><h2 id="对const的引用"><a href="#对const的引用" class="headerlink" title="对const的引用"></a>对const的引用</h2><ul><li><p>别称<font color="red">常量引用</font></p></li><li><p>常量引用可以引用常量和非常量</p></li><li>非常量引用不能引用常量</li></ul><pre><code class="lang-cpp">const int a = 1;int d = 1;const int &amp;b = a;//trueconst int &amp;c = 1;//trueconst int &amp;d = d;//trueint &amp;e = a;//false;</code></pre><ul><li><font color="red">初始化常量引用的时候可以使用任意类型和任意表达式，只要可以转换成相应的引用类型。</font><blockquote><p>原因：因为在常量引用绑定初始值的时候，生成了一个临时变量。其事实上绑定的是临时变量。</p></blockquote></li></ul><blockquote><p>这样保证了const int&amp;绑定的是int型的表达式</p><p>还有值得注意的是一般情况下引用的类型必须与其所引用的对象的类型一致</p></blockquote><pre><code class="lang-cpp">double dval = 3.14;const int &amp;ri = dval;</code></pre><p>等价于</p><pre><code class="lang-cpp">double dval = 3.14;const int temp = dval;const int &amp;ri = temp;</code></pre><ul><li>根据上述也可以解释为什么非常量引用不能引用常量，因为这样初始化绑定的是临时量。<blockquote><p>非const变量引用const量，其实绑定了中间变量temp，因为是非const量所以可以改变这非const量，按引用来const量也应该改变，但其实改变的是中间量temp，const量不变，产生矛盾，c++把这种行为定义为非法。</p></blockquote></li></ul><h3 id="对const的引用可能引用一个并非const的对象"><a href="#对const的引用可能引用一个并非const的对象" class="headerlink" title="对const的引用可能引用一个并非const的对象"></a>对const的引用可能引用一个并非const的对象</h3><ul><li>const只约束当前绑定的对象的相关操作，而不管对象本身是不是常量。</li></ul><pre><code class="lang-cpp">int a  = 1;int &amp;b = a;const int &amp;c = a;b = 2;cout&lt;&lt;a&lt;&lt;&quot; &quot;&lt;&lt;b&lt;&lt;&quot; &quot;&lt;&lt;c&lt;&lt;endl;//2 2 2a = 3cout&lt;&lt;a&lt;&lt;&quot; &quot;&lt;&lt;b&lt;&lt;&quot; &quot;&lt;&lt;c&lt;&lt;endl;//2 2 2c = 4cout&lt;&lt;a&lt;&lt;&quot; &quot;&lt;&lt;b&lt;&lt;&quot; &quot;&lt;&lt;c&lt;&lt;endl;// error: assignment of read-only reference ‘c’</code></pre><h2 id="指针和const"><a href="#指针和const" class="headerlink" title="指针和const"></a>指针和const</h2><blockquote><p>对于指针常量和常量指针的定义C++ primer里定义的跟大多数教材不一样</p><h3 id="指针常量-pointer-to-const"><a href="#指针常量-pointer-to-const" class="headerlink" title="指针常量(pointer to const)"></a>指针常量(pointer to const)</h3><ul><li>从右往左读，它是一个指针，是一个指向常量类型的指针。说明不能改变他所指向对象的内容。但是可以改变它指向的对象。</li></ul></blockquote><pre><code class="lang-cpp">const int a = 1;const int b = 2;const int *c = &amp;a;*c = 1;//faslec = &amp;b;//true</code></pre><h3 id="常量指针-const-pointer"><a href="#常量指针-const-pointer" class="headerlink" title="常量指针(const pointer)"></a>常量指针(const pointer)</h3><ul><li>从右往左读，它是一个常量，说明指针的地址不能改变。但是可以改变它指向对象的内容。</li></ul><pre><code class="lang-cpp">int a = 1;int b = 2;int *const c = &amp;a; c= &amp;b;//falsec= 2;//true</code></pre><h2 id="顶层const和底层const"><a href="#顶层const和底层const" class="headerlink" title="顶层const和底层const"></a>顶层const和底层const</h2><ul><li>顶层const说明指针本身是个常量-常量指针(const pointer)</li><li>底层const说明指针指向的对象是个常量-指针常量(pointer to const)</li></ul><h3 id="const对拷贝的影响"><a href="#const对拷贝的影响" class="headerlink" title="const对拷贝的影响"></a>const对拷贝的影响</h3><ul><li>顶层const对拷贝无影响</li><li>底层const对拷贝有影像<blockquote><p>拷贝两者有相同的底层const的，或者被拷贝数据可以从非常量转变为常量,才无影响</p></blockquote></li></ul><pre><code class="lang-cpp">int main(){   // 顶层const对拷贝无影响    {        // const int -&gt; int  yes        const int b = 1;        int a = b;        // int -&gt; const int yes        int c = 1;        const int d = c;    }     // &amp;int(int*) -&gt; int *const/const int*/const int *const    int a = 1;    int *const b = &amp;a; //ok    const int *c = &amp;a; //ok    const int *const d = &amp;a; //ok    // &amp;(const int) -&gt; int *const/const int*/const int *const    const int e = 1;    int *const f = &amp;e; //error 没有相同的底层const    const int *g = &amp;e; //ok    const int *const h = &amp;e; //ok  &amp;e可以转换成const int *const    //(int cont*) -&gt; int *const/const int*/const int *const    int i = 1;    int *const  j= &amp;i;    int *const  k = j; //ok    const int*  l = j; //ok    const int *const m = j; //ok    return 0;}</code></pre><ul><li>总结(我自己有点绕晕了,总结一下)<blockquote><p>1) 对于非指针类型之间的拷贝,没有限制 const int &lt;-&gt; int</p></blockquote></li></ul><blockquote><p>2) 对于指针之间的拷贝。右值没有底层const,总合法;右值有底层const,则看左值有没有底层const,有则合法,没有则不合法。   </p><ul><li>常量对象不能赋值给非常量引用,常量对象不能赋值给非常量指针</li></ul><p>3) 对于指针和非指针之间，类型不同不合法;</p></blockquote><h2 id="constexpr和常量表达式-c-11"><a href="#constexpr和常量表达式-c-11" class="headerlink" title="constexpr和常量表达式[c++11]"></a>constexpr和常量表达式[c++11]</h2><ul><li>常量表达式(const expression)是指不会改变并且在编译过程就能得到计算结果的表达式<blockquote><p>数据类型是常量并且初始值是常量或字面值或两者混合的是常量表达式。</p></blockquote></li></ul><pre><code class="lang-cpp">const int a = 1; //trueconst int b = a+1; //trueint c = 1; //falseconst int d = get_d(); //false，该值在编译时才能获得，所以不是常量表达式</code></pre><h3 id="constexpr变量"><a href="#constexpr变量" class="headerlink" title="constexpr变量"></a>constexpr变量</h3><ul><li>constexpr定义的变量必须要用常量表达式初始化</li><li>constexpr是顶层const，即其本身为常量</li><li>对于字面量<blockquote><p>算术类型，引用和指针，字面值常量类，枚举都是字面值<br>自定义类，IO库，string类等不算字面值</p></blockquote></li></ul><h3 id="constexpr-指针"><a href="#constexpr-指针" class="headerlink" title="constexpr 指针"></a>constexpr 指针</h3><ul><li>constexpr指针只能指向地址固定的变量，比如全局变量，staitc变量</li></ul><pre><code class="lang-cpp">constexpr int *p1; //顶层constconst int *p2;  //底层constint *const p3;  //顶层constconstexpr const int *p4;//&lt;=&gt;const int *const p5;</code></pre><h2 id="const补充"><a href="#const补充" class="headerlink" title="const补充"></a>const补充</h2><p><a href="https://interview.huihut.com/#/?id=cc" target="_blank" rel="noopener">const 使用</a></p><pre><code class="lang-cpp">// 类class A{private:    const int a;                // 常对象成员，只能在初始化列表赋值public:    // 构造函数    A() : a(0) { };    A(int x) : a(x) { };        // 初始化列表    // const可用于对重载函数的区分    int getValue();             // 普通成员函数    int getValue() const;       // 常成员函数，不得修改类中的任何数据成员的值};void function(){    // 对象    A b;                        // 普通对象，可以调用全部成员函数、更新常成员变量    const A a;                  // 常对象，只能调用常成员函数    const A *p = &amp;a;            // 指针变量，指向常对象    const A &amp;q = a;             // 指向常对象的引用    // 指针    char greeting[] = &quot;Hello&quot;;    char* p1 = greeting;                // 指针变量，指向字符数组变量    const char* p2 = greeting;          // 指针变量，指向字符数组常量（const 后面是 char，说明指向的字符（char）不可改变）    char* const p3 = greeting;          // 自身是常量的指针，指向字符数组变量（const 后面是 p3，说明 p3 指针自身不可改变）    const char* const p4 = greeting;    // 自身是常量的指针，指向字符数组常量}// 函数void function1(const int Var);           // 传递过来的参数在函数内不可变void function2(const char* Var);         // 参数指针所指内容为常量void function3(char* const Var);         // 参数指针为常量void function4(const int&amp; Var);          // 引用参数在函数内为常量// 函数返回值const int function5();      // 返回一个常数const int* function6();     // 返回一个指向常量的指针变量，使用：const int *p = function6();int* const function7();     // 返回一个指向变量的常指针，使用：int* const p = function7();</code></pre>]]></content>
+        <content type="html"><![CDATA[<h1 id="Const"><a href="#Const" class="headerlink" title="Const"></a>Const</h1><ul><li>定义：<font color="red">const用于定义一个变量，它的值不能被改变</font></li></ul><h2 id="const对象必须初始化"><a href="#const对象必须初始化" class="headerlink" title="const对象必须初始化"></a>const对象必须初始化</h2><ul><li><p>然而并不是所有的const对象都必须初始化</p></li><li><p>顶层const必须初始化，因为本身不能改变，不初始化根本没法用。而底层const(常量指针)可以不初始化</p><blockquote><p>参考:<a href="https://blog.csdn.net/qq_21034239/article/details/70492318" target="_blank" rel="noopener">https://blog.csdn.net/qq_21034239/article/details/70492318</a></p></blockquote></li><li><p>其实没有那么简单,const对象必须初始化值对bulit-in类型和POD类行有效</p><ul><li>built-in类型是内置类型包括算术类型和空类型(void)</li><li>注意的是指针和引用是符合类型<blockquote><p>参考:<a href="https://stackoverflow.com/questions/8440381/why-do-const-variables-have-to-be-initialized-right-away" target="_blank" rel="noopener">https://stackoverflow.com/questions/8440381/why-do-const-variables-have-to-be-initialized-right-away</a><br>(翻译:<a href="https://www.it1352.com/465052.html" target="_blank" rel="noopener">https://www.it1352.com/465052.html</a>)</p></blockquote></li></ul></li></ul><h2 id="const对象仅对当前文件有效"><a href="#const对象仅对当前文件有效" class="headerlink" title="const对象仅对当前文件有效"></a>const对象仅对当前文件有效</h2><ul><li><p>在编译时会进行预处理，将代码中所有带const限定符的变量用初始化的常亮替代。</p></li><li><p>const对象被设定为仅在文件内有效。当多个文件中出现了同名的const变量时，其实等同在不同文件中分别定义了独立的变量。</p></li><li><p>如果要在多个文件中共享const对象，在需要声明变量的时候前面加extern</p></li></ul><h3 id="extern"><a href="#extern" class="headerlink" title="extern"></a>extern</h3><ul><li>用于声明<ul><li>变量只能被定义一次，但可以被多次声明。</li></ul></li></ul><h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><ul><li><a href="./">C/C++程序编译链接过程(还没写)</a></li></ul><h2 id="对const的引用"><a href="#对const的引用" class="headerlink" title="对const的引用"></a>对const的引用</h2><ul><li><p>别称<font color="red">常量引用</font></p></li><li><p>常量引用可以引用常量和非常量</p></li><li>非常量引用不能引用常量</li></ul><pre><code class="lang-cpp">const int a = 1;int d = 1;const int &amp;b = a;//trueconst int &amp;c = 1;//trueconst int &amp;d = d;//trueint &amp;e = a;//false;</code></pre><ul><li><font color="red">初始化常量引用的时候可以使用任意类型和任意表达式，只要可以转换成相应的引用类型。</font><blockquote><p>原因：因为在常量引用绑定初始值的时候，生成了一个临时变量。其事实上绑定的是临时变量。</p></blockquote></li></ul><blockquote><p>这样保证了const int&amp;绑定的是int型的表达式</p><p>还有值得注意的是一般情况下引用的类型必须与其所引用的对象的类型一致</p></blockquote><pre><code class="lang-cpp">double dval = 3.14;const int &amp;ri = dval;</code></pre><p>等价于</p><pre><code class="lang-cpp">double dval = 3.14;const int temp = dval;const int &amp;ri = temp;</code></pre><ul><li>根据上述也可以解释为什么非常量引用不能引用常量，因为这样初始化绑定的是临时量。<blockquote><p>非const变量引用const量，其实绑定了中间变量temp，因为是非const量所以可以改变这非const量，按引用来const量也应该改变，但其实改变的是中间量temp，const量不变，产生矛盾，c++把这种行为定义为非法。</p></blockquote></li></ul><h3 id="对const的引用可能引用一个并非const的对象"><a href="#对const的引用可能引用一个并非const的对象" class="headerlink" title="对const的引用可能引用一个并非const的对象"></a>对const的引用可能引用一个并非const的对象</h3><ul><li>const只约束当前绑定的对象的相关操作，而不管对象本身是不是常量。</li></ul><pre><code class="lang-cpp">int a  = 1;int &amp;b = a;const int &amp;c = a;b = 2;cout&lt;&lt;a&lt;&lt;&quot; &quot;&lt;&lt;b&lt;&lt;&quot; &quot;&lt;&lt;c&lt;&lt;endl;//2 2 2a = 3cout&lt;&lt;a&lt;&lt;&quot; &quot;&lt;&lt;b&lt;&lt;&quot; &quot;&lt;&lt;c&lt;&lt;endl;//2 2 2c = 4cout&lt;&lt;a&lt;&lt;&quot; &quot;&lt;&lt;b&lt;&lt;&quot; &quot;&lt;&lt;c&lt;&lt;endl;// error: assignment of read-only reference ‘c’</code></pre><h2 id="指针和const"><a href="#指针和const" class="headerlink" title="指针和const"></a>指针和const</h2><blockquote><p>对于指针常量和常量指针的定义C++ primer里定义的跟大多数教材不一样</p><h3 id="指针常量-pointer-to-const"><a href="#指针常量-pointer-to-const" class="headerlink" title="指针常量(pointer to const)"></a>指针常量(pointer to const)</h3><ul><li>从右往左读，它是一个指针，是一个指向常量类型的指针。说明不能改变他所指向对象的内容。但是可以改变它指向的对象。</li></ul></blockquote><pre><code class="lang-cpp">const int a = 1;const int b = 2;const int *c = &amp;a;*c = 1;//faslec = &amp;b;//true</code></pre><h3 id="常量指针-const-pointer"><a href="#常量指针-const-pointer" class="headerlink" title="常量指针(const pointer)"></a>常量指针(const pointer)</h3><ul><li>从右往左读，它是一个常量，说明指针的地址不能改变。但是可以改变它指向对象的内容。</li></ul><pre><code class="lang-cpp">int a = 1;int b = 2;int *const c = &amp;a; c= &amp;b;//falsec= 2;//true</code></pre><h2 id="顶层const和底层const"><a href="#顶层const和底层const" class="headerlink" title="顶层const和底层const"></a>顶层const和底层const</h2><ul><li>顶层const说明指针本身是个常量-常量指针(const pointer)</li><li>底层const说明指针指向的对象是个常量-指针常量(pointer to const)</li></ul><h3 id="const对拷贝的影响"><a href="#const对拷贝的影响" class="headerlink" title="const对拷贝的影响"></a>const对拷贝的影响</h3><ul><li>顶层const对拷贝无影响</li><li>底层const对拷贝有影像<blockquote><p>拷贝两者有相同的底层const的，或者被拷贝数据可以从非常量转变为常量,才无影响</p></blockquote></li></ul><pre><code class="lang-cpp">int main(){   // 顶层const对拷贝无影响    {        // const int -&gt; int  yes        const int b = 1;        int a = b;        // int -&gt; const int yes        int c = 1;        const int d = c;    }     // &amp;int(int*) -&gt; int *const/const int*/const int *const    int a = 1;    int *const b = &amp;a; //ok    const int *c = &amp;a; //ok    const int *const d = &amp;a; //ok    // &amp;(const int) -&gt; int *const/const int*/const int *const    const int e = 1;    int *const f = &amp;e; //error 没有相同的底层const    const int *g = &amp;e; //ok    const int *const h = &amp;e; //ok  &amp;e可以转换成const int *const    //(int cont*) -&gt; int *const/const int*/const int *const    int i = 1;    int *const  j= &amp;i;    int *const  k = j; //ok    const int*  l = j; //ok    const int *const m = j; //ok    return 0;}</code></pre><ul><li>总结(我自己有点绕晕了,总结一下)<blockquote><p>1) 对于非指针类型之间的拷贝,没有限制 const int &lt;-&gt; int</p></blockquote></li></ul><blockquote><p>2) 对于指针之间的拷贝。右值没有底层const,总合法;右值有底层const,则看左值有没有底层const,有则合法,没有则不合法。   </p><ul><li>常量对象不能赋值给非常量引用,常量对象不能赋值给非常量指针</li></ul><p>3) 对于指针和非指针之间，类型不同不合法;</p></blockquote><h2 id="constexpr和常量表达式-c-11"><a href="#constexpr和常量表达式-c-11" class="headerlink" title="constexpr和常量表达式[c++11]"></a>constexpr和常量表达式[c++11]</h2><ul><li>常量表达式(const expression)是指不会改变并且在编译过程就能得到计算结果的表达式<blockquote><p>数据类型是常量并且初始值是常量或字面值或两者混合的是常量表达式。</p></blockquote></li></ul><pre><code class="lang-cpp">const int a = 1; //trueconst int b = a+1; //trueint c = 1; //falseconst int d = get_d(); //false，该值在编译时才能获得，所以不是常量表达式</code></pre><h3 id="constexpr变量"><a href="#constexpr变量" class="headerlink" title="constexpr变量"></a>constexpr变量</h3><ul><li>constexpr定义的变量必须要用常量表达式初始化</li><li>constexpr是顶层const，即其本身为常量</li><li>对于字面量<blockquote><p>算术类型，引用和指针，字面值常量类（包括枚举类型），枚举都是字面值<br>自定义类，IO库，string类等不算字面值</p></blockquote></li></ul><h3 id="constexpr-指针"><a href="#constexpr-指针" class="headerlink" title="constexpr 指针"></a>constexpr 指针</h3><ul><li>constexpr指针只能指向地址固定的变量，比如全局变量，staitc变量</li></ul><pre><code class="lang-cpp">constexpr int *p1; //顶层constconst int *p2;  //底层constint *const p3;  //顶层constconstexpr const int *p4;//&lt;=&gt;const int *const p5;</code></pre><h2 id="const补充"><a href="#const补充" class="headerlink" title="const补充"></a>const补充</h2><p><a href="https://interview.huihut.com/#/?id=cc" target="_blank" rel="noopener">const 使用</a></p><pre><code class="lang-cpp">// 类class A{private:    const int a;                // 常对象成员，只能在初始化列表赋值public:    // 构造函数    A() : a(0) { };    A(int x) : a(x) { };        // 初始化列表    // const可用于对重载函数的区分    int getValue();             // 普通成员函数    int getValue() const;       // 常成员函数，不得修改类中的任何数据成员的值};void function(){    // 对象    A b;                        // 普通对象，可以调用全部成员函数、更新常成员变量    const A a;                  // 常对象，只能调用常成员函数    const A *p = &amp;a;            // 指针变量，指向常对象    const A &amp;q = a;             // 指向常对象的引用    // 指针    char greeting[] = &quot;Hello&quot;;    char* p1 = greeting;                // 指针变量，指向字符数组变量    const char* p2 = greeting;          // 指针变量，指向字符数组常量（const 后面是 char，说明指向的字符（char）不可改变）    char* const p3 = greeting;          // 自身是常量的指针，指向字符数组变量（const 后面是 p3，说明 p3 指针自身不可改变）    const char* const p4 = greeting;    // 自身是常量的指针，指向字符数组常量}// 函数void function1(const int Var);           // 传递过来的参数在函数内不可变void function2(const char* Var);         // 参数指针所指内容为常量void function3(char* const Var);         // 参数指针为常量void function4(const int&amp; Var);          // 引用参数在函数内为常量// 函数返回值const int function5();      // 返回一个常数const int* function6();     // 返回一个指向常量的指针变量，使用：const int *p = function6();int* const function7();     // 返回一个指向变量的常指针，使用：int* const p = function7();</code></pre>]]></content>
       
       
       <categories>
