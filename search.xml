@@ -58,6 +58,33 @@
     
     
     <entry>
+      <title>C++复习 面向对象 -- 封装、继承、多态</title>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
+      
+        <content type="html"><![CDATA[<h1 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h1><p>面向对象程序设计（Object-oriented programming，OOP）是种具有对象概念的程序编程典范，同时也是一种程序开发的抽象方针。</p><p><img src="https://gitee.com/huihut/interview/raw/master/images/面向对象基本特征.png" alt="面向对象特征"></p><p>面向对象三大特征 —— 封装、继承、多态</p><h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>把客观事物封装成抽象的类，并且类可以把自己的数据和方法只让可信的类或者对象操作，对不可信的进行信息隐藏。关键字：public, protected, private。不写默认为 private。</p><ul><li><code>public</code> 成员：可以被任意实体访问</li><li><code>protected</code> 成员：只允许被子类及本类的成员函数访问</li><li><code>private</code> 成员：只允许被本类的成员函数、友元类或友元函数访问</li></ul><h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><ul><li>基类（父类）——&gt; 派生类（子类）</li></ul><h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++复习 成员初始化列表</title>
       <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/"/>
       <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/</url>
@@ -244,10 +271,10 @@
     
     <entry>
       <title>C++复习 friend友元</title>
-      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/"/>
-      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/</url>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/</url>
       
-        <content type="html"><![CDATA[<h1 id="friend-友元类和友元函数"><a href="#friend-友元类和友元函数" class="headerlink" title="friend 友元类和友元函数"></a>friend 友元类和友元函数</h1><ul><li>能访问私有成员  </li><li>破坏封装性</li><li>友元关系不可传递</li><li>友元关系的单向性</li><li>友元声明的形式及数量不受限制</li></ul><pre><code class="lang-cpp">//声明方式class CLASS_NAME{    friend //函数声明    friend //类声明    public:        //...    private:        //...}</code></pre>]]></content>
+        <content type="html"><![CDATA[<h1 id="using-声明"><a href="#using-声明" class="headerlink" title="using 声明"></a>using 声明</h1><p>一条 <code>using 声明</code> 语句一次只引入命名空间的一个成员。它使得我们可以清楚知道程序中所引用的到底是哪个名字。如：</p><pre><code class="lang-cpp">using namespace_name::name;</code></pre><h2 id="构造函数的-using-声明"><a href="#构造函数的-using-声明" class="headerlink" title="构造函数的 using 声明"></a>构造函数的 using 声明</h2><p>在 C++11 中，派生类能够重用其直接基类定义的构造函数。</p><pre><code class="lang-cpp">class Derived : Base {public:    using Base::Base;    /* ... */};</code></pre><p>如上 using 声明，对于基类的每个构造函数，编译器都生成一个与之对应（形参列表完全相同）的派生类构造函数。生成如下类型构造函数：</p><pre><code class="lang-cpp">Derived(parms) : Base(args) { }</code></pre><h2 id="using-指示"><a href="#using-指示" class="headerlink" title="using 指示"></a>using 指示</h2><p><code>using 指示</code> 使得某个特定命名空间中所有名字都可见，这样我们就无需再为它们添加任何前缀限定符了。如：</p><pre><code class="lang-cpp">using namespace_name name;</code></pre><h2 id="尽量少使用-using-指示-污染命名空间"><a href="#尽量少使用-using-指示-污染命名空间" class="headerlink" title="尽量少使用 using 指示 污染命名空间"></a>尽量少使用 <code>using 指示</code> 污染命名空间</h2><blockquote><p>一般说来，使用 using 命令比使用 using 编译命令更安全，这是由于它<strong>只导入了指定的名称</strong>。如果该名称与局部名称发生冲突，编译器将<strong>发出指示</strong>。using编译命令导入所有的名称，包括可能并不需要的名称。如果与局部名称发生冲突，则<strong>局部名称将覆盖名称空间版本</strong>，而编译器<strong>并不会发出警告</strong>。另外，名称空间的开放性意味着名称空间的名称可能分散在多个地方，这使得难以准确知道添加了哪些名称。</p></blockquote><p>using 使用</p><p>尽量少使用 <code>using 指示</code></p><pre><code class="lang-cpp">using namespace std;</code></pre><p>应该多使用 <code>using 声明</code></p><pre><code class="lang-cpp">int x;std::cin &gt;&gt; x ;std::cout &lt;&lt; x &lt;&lt; std::endl;</code></pre><p>或者</p><pre><code class="lang-cpp">using std::cin;using std::cout;using std::endl;int x;cin &gt;&gt; x;cout &lt;&lt; x &lt;&lt; endl;</code></pre><h1 id="using-类型别名"><a href="#using-类型别名" class="headerlink" title="using = (类型别名)"></a>using = (类型别名)</h1><h2 id="typedef"><a href="#typedef" class="headerlink" title="typedef"></a>typedef</h2><pre><code class="lang-cpp">typedef double wages; //wages是double的别名typedef wages base,*p;//base是double的别名,p是double*的别名</code></pre><h2 id="using"><a href="#using" class="headerlink" title="using"></a>using</h2><ul><li>c++11推荐用一下语法</li></ul><pre><code class="lang-cpp">using double = wages; //wages是double的别名//using 别名 = 类型</code></pre><h2 id="对于复合类型的别名的声明语句要小心"><a href="#对于复合类型的别名的声明语句要小心" class="headerlink" title="对于复合类型的别名的声明语句要小心"></a>对于复合类型的别名的声明语句要小心</h2><pre><code class="lang-cpp">typedef char *pstring;const pstring cstr = 0; // pstring是一个整体,是个指向char的指针。const修饰他。所以它本身是一个常量。所以它是常量指针(const pointer)const char *cstr; //而这里*修饰const char,所以它是指向char常量的指针,即指针常量(pointer to const)</code></pre>]]></content>
       
       
       <categories>
@@ -271,10 +298,10 @@
     
     <entry>
       <title>C++复习 friend友元</title>
-      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/"/>
-      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/</url>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/</url>
       
-        <content type="html"><![CDATA[<h1 id="using-声明"><a href="#using-声明" class="headerlink" title="using 声明"></a>using 声明</h1><p>一条 <code>using 声明</code> 语句一次只引入命名空间的一个成员。它使得我们可以清楚知道程序中所引用的到底是哪个名字。如：</p><pre><code class="lang-cpp">using namespace_name::name;</code></pre><h2 id="构造函数的-using-声明"><a href="#构造函数的-using-声明" class="headerlink" title="构造函数的 using 声明"></a>构造函数的 using 声明</h2><p>在 C++11 中，派生类能够重用其直接基类定义的构造函数。</p><pre><code class="lang-cpp">class Derived : Base {public:    using Base::Base;    /* ... */};</code></pre><p>如上 using 声明，对于基类的每个构造函数，编译器都生成一个与之对应（形参列表完全相同）的派生类构造函数。生成如下类型构造函数：</p><pre><code class="lang-cpp">Derived(parms) : Base(args) { }</code></pre><h2 id="using-指示"><a href="#using-指示" class="headerlink" title="using 指示"></a>using 指示</h2><p><code>using 指示</code> 使得某个特定命名空间中所有名字都可见，这样我们就无需再为它们添加任何前缀限定符了。如：</p><pre><code class="lang-cpp">using namespace_name name;</code></pre><h2 id="尽量少使用-using-指示-污染命名空间"><a href="#尽量少使用-using-指示-污染命名空间" class="headerlink" title="尽量少使用 using 指示 污染命名空间"></a>尽量少使用 <code>using 指示</code> 污染命名空间</h2><blockquote><p>一般说来，使用 using 命令比使用 using 编译命令更安全，这是由于它<strong>只导入了指定的名称</strong>。如果该名称与局部名称发生冲突，编译器将<strong>发出指示</strong>。using编译命令导入所有的名称，包括可能并不需要的名称。如果与局部名称发生冲突，则<strong>局部名称将覆盖名称空间版本</strong>，而编译器<strong>并不会发出警告</strong>。另外，名称空间的开放性意味着名称空间的名称可能分散在多个地方，这使得难以准确知道添加了哪些名称。</p></blockquote><p>using 使用</p><p>尽量少使用 <code>using 指示</code></p><pre><code class="lang-cpp">using namespace std;</code></pre><p>应该多使用 <code>using 声明</code></p><pre><code class="lang-cpp">int x;std::cin &gt;&gt; x ;std::cout &lt;&lt; x &lt;&lt; std::endl;</code></pre><p>或者</p><pre><code class="lang-cpp">using std::cin;using std::cout;using std::endl;int x;cin &gt;&gt; x;cout &lt;&lt; x &lt;&lt; endl;</code></pre><h1 id="using-类型别名"><a href="#using-类型别名" class="headerlink" title="using = (类型别名)"></a>using = (类型别名)</h1><h2 id="typedef"><a href="#typedef" class="headerlink" title="typedef"></a>typedef</h2><pre><code class="lang-cpp">typedef double wages; //wages是double的别名typedef wages base,*p;//base是double的别名,p是double*的别名</code></pre><h2 id="using"><a href="#using" class="headerlink" title="using"></a>using</h2><ul><li>c++11推荐用一下语法</li></ul><pre><code class="lang-cpp">using double = wages; //wages是double的别名//using 别名 = 类型</code></pre><h2 id="对于复合类型的别名的声明语句要小心"><a href="#对于复合类型的别名的声明语句要小心" class="headerlink" title="对于复合类型的别名的声明语句要小心"></a>对于复合类型的别名的声明语句要小心</h2><pre><code class="lang-cpp">typedef char *pstring;const pstring cstr = 0; // pstring是一个整体,是个指向char的指针。const修饰他。所以它本身是一个常量。所以它是常量指针(const pointer)const char *cstr; //而这里*修饰const char,所以它是指向char常量的指针,即指针常量(pointer to const)</code></pre>]]></content>
+        <content type="html"><![CDATA[<h1 id="friend-友元类和友元函数"><a href="#friend-友元类和友元函数" class="headerlink" title="friend 友元类和友元函数"></a>friend 友元类和友元函数</h1><ul><li>能访问私有成员  </li><li>破坏封装性</li><li>友元关系不可传递</li><li>友元关系的单向性</li><li>友元声明的形式及数量不受限制</li></ul><pre><code class="lang-cpp">//声明方式class CLASS_NAME{    friend //函数声明    friend //类声明    public:        //...    private:        //...}</code></pre>]]></content>
       
       
       <categories>
