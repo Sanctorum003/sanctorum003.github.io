@@ -4,6 +4,164 @@
   
     
     <entry>
+      <title>C++复习 宏</title>
+      <link href="/2021/04/19/C++/C++%E5%A4%8D%E4%B9%A0%20%E5%AE%8F/"/>
+      <url>/2021/04/19/C++/C++%E5%A4%8D%E4%B9%A0%20%E5%AE%8F/</url>
+      
+        <content type="html"><![CDATA[<ul><li>宏定义可以实现类似于函数的功能，但是它终归不是函数，而宏定义中括弧中的“参数”也不是真的参数，在宏展开的时候对 “参数” 进行的是一对一的替换。</li><li>不做类型检查，在预编译阶段制作一对一替换</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++复习 引用</title>
+      <link href="/2021/04/19/C++/C++%E5%A4%8D%E4%B9%A0%20%E5%BC%95%E7%94%A8/"/>
+      <url>/2021/04/19/C++/C++%E5%A4%8D%E4%B9%A0%20%E5%BC%95%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<h1 id="左值和右值"><a href="#左值和右值" class="headerlink" title="左值和右值"></a>左值和右值</h1><ul><li>左值和右值<ul><li>辣鸡的C++ PRIMER解释<ul><li>左值(lvalue) : 是那些求值结果为对象或者函数的表达式，一个表示对象的非常量左值可以作为赋值运算符的左侧运算对象。</li><li>右值(rvalue) : 是指一种表达式,其结果是值而非值所在的位置。 </li></ul></li><li>参考博客:<a href="https://blog.csdn.net/xuwqiang1994/article/details/79924310" target="_blank" rel="noopener">https://blog.csdn.net/xuwqiang1994/article/details/79924310</a><ul><li>左值(lvalue) : lvalue（locator value）代表一个在内存中占有确定位置的对象（换句话说就是有一个地址）。</li><li>右值(rvalue) : rvalue通过排他性来定义，每个表达式不是lvalue就是rvalue。因此从上面的lvalue的定义，rvalue是不在内存中占有确定位置的表达式。</li></ul></li><li>参考博客:<a href="https://blog.csdn.net/qq_24964575/article/details/52202989" target="_blank" rel="noopener">https://blog.csdn.net/qq_24964575/article/details/52202989</a><ul><li>左值可以当作右值使用,右值不能当左值用.</li><li>左值可以出现在=的任何一方,</li><li>出现在=右方的左值,是把左值当作右值使用,这是非常正常的.</li><li>右值,不能当作左值使用.</li><li>能够(单独)出现在=左方的是左值(实际是左右值,左值总是可以当作右值使用)</li><li>只能够出现在=右方的,是右值(纯粹的右值),不能当作左值使用.</li><li>左值代表地址单元,右值代表数据本身.</li><li>地址单元里的数据,是左值变量的右值的含义.</li><li>右值包括,纯数据,比如常数100,字符串常量”12345”等</li><li>以及地址单元中存储的数据.比如x ,这是左值当作右值使用代表的意义.</li><li>以及一些常变量(有确切地址的常量,可以象变量一样有个名字,其实就是变量,只是右值化了,不能当左值使用了)的含义.</li><li>左值代表存储器的一个单元.</li><li>这是一个物理概念,不仅仅是个地址(地址不过是个编号,是个数值而已),是个实实在在的东西.</li><li>右值代表数据,一个数值而已.</li></ul></li><li>参考博客:<a href="https://www.zhihu.com/question/382300648" target="_blank" rel="noopener">https://www.zhihu.com/question/382300648</a><ul><li>取地址符取到的是一个地址，没有实际存储在哪，所以是右值</li><li>如果是寄存器变量也没有地址，所以是右值</li></ul></li></ul></li></ul><blockquote><p>使用decltype时,左值返回引用类型，右值不返回引用类型。</p></blockquote><ul><li>对于自增自减（++i,i++）<ul><li>++i将对象本身作为左值返回</li><li>i++将对象原始值作为右值返回</li></ul></li></ul><h1 id="右值引用-c"><a href="#右值引用-c" class="headerlink" title="右值引用(c++)"></a>右值引用(c++)</h1><ul><li>定义 &amp;&amp;</li><li><p>右值引用只能引用到右值，不能引用到左值(const 例外)</p><blockquote><p>附加 <a href="https://www.zhihu.com/question/310966840" target="_blank" rel="noopener">为什么C++里const左值引用可以引用右值，这样做的考虑是什么？</a></p></blockquote></li><li><p>左值持久</p></li><li><p>右值短暂</p><ul><li>字面常量、临时对象</li><li>所引用的对象将要被销毁</li><li>该对象没有其他用户</li></ul></li><li><p>引用右值的变量则是左值，不能再被右值引用</p></li></ul><pre><code class="lang-cpp">int &amp;&amp;rr1 = 42;//trueint &amp;&amp;rr2 = rr1;//error</code></pre><ul><li>move函数：获得绑定在左值上的右值引用<ul><li>调用move后，原变量除赋值和销毁外，不能再使用他</li></ul></li></ul><h2 id="左值引用作用"><a href="#左值引用作用" class="headerlink" title="左值引用作用"></a>左值引用作用</h2><ul><li>右值引用可实现转移语义（Move Sementics）和精确传递（Perfect Forwarding），它的主要目的有两个方面：<ul><li>消除两个对象交互时不必要的对象拷贝，节省运算存储资源，提高效率。</li><li>能够更简洁明确地定义泛型函数。</li></ul></li></ul><h1 id="引用折叠"><a href="#引用折叠" class="headerlink" title="引用折叠"></a>引用折叠</h1><p><a href="https://blog.csdn.net/zhangxiao93/article/details/74974546" target="_blank" rel="noopener">C++引用折叠</a></p><ul><li>X&amp; &amp;、X&amp; &amp;&amp;、X&amp;&amp; &amp; 可折叠成 X&amp;</li><li>X&amp;&amp; &amp;&amp; 可折叠成 X&amp;&amp;</li><li></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++复习 成员初始化列表</title>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/</url>
+      
+        <content type="html"><![CDATA[<p>好处</p><ul><li>更高效：少了一次调用默认构造函数的过程。</li><li>有些场合必须要用初始化列表：<ol><li>常量成员，因为常量只能初始化不能赋值，所以必须放在初始化列表里面</li><li>引用类型，引用必须在定义的时候初始化，并且不能重新赋值，所以也要写在初始化列表里面</li><li>没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化</li></ol></li></ul><p>形式</p><pre><code class="lang-cpp">class test{public:    test(int _a,int _b):a(_a),b(_b);private:    int a;    int b;};</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++复习 initializer_list初始化</title>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20initializer_list%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20initializer_list%E5%88%9D%E5%A7%8B%E5%8C%96/</url>
+      
+        <content type="html"><![CDATA[<h1 id="含有可变（数量）形参的函数"><a href="#含有可变（数量）形参的函数" class="headerlink" title="含有可变（数量）形参的函数"></a>含有可变（数量）形参的函数</h1><ul><li><p><a href="https://blog.csdn.net/Clark_Sev/article/details/89500808?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param" target="_blank" rel="noopener">使用方法</a> </p></li><li><p>initializer_list 标准库类型</p><ul><li>成员永远是常量 </li><li>传递参数的时候用花括号括起来</li></ul></li><li><p>可变参模板</p><ul><li>用花括号初始化器列表初始化一个对象，其中对应构造函数接受一个 <code>std::initializer_list</code> 参数.</li></ul></li></ul><p>initializer_list 使用</p><pre><code class="lang-cpp">#include &lt;iostream&gt;#include &lt;vector&gt;#include &lt;initializer_list&gt;template &lt;class T&gt;struct S {    std::vector&lt;T&gt; v;    S(std::initializer_list&lt;T&gt; l) : v(l) {         std::cout &lt;&lt; &quot;constructed with a &quot; &lt;&lt; l.size() &lt;&lt; &quot;-element list\n&quot;;    }    void append(std::initializer_list&lt;T&gt; l) {        v.insert(v.end(), l.begin(), l.end());    }    std::pair&lt;const T*, std::size_t&gt; c_arr() const {        return {&amp;v[0], v.size()};  // 在 return 语句中复制列表初始化                                   // 这不使用 std::initializer_list    }};template &lt;typename T&gt;void templated_fn(T) {}int main(){    S&lt;int&gt; s = {1, 2, 3, 4, 5}; // 复制初始化    s.append({6, 7, 8});      // 函数调用中的列表初始化    std::cout &lt;&lt; &quot;The vector size is now &quot; &lt;&lt; s.c_arr().second &lt;&lt; &quot; ints:\n&quot;;    for (auto n : s.v)        std::cout &lt;&lt; n &lt;&lt; &#39; &#39;;    std::cout &lt;&lt; &#39;\n&#39;;    std::cout &lt;&lt; &quot;Range-for over brace-init-list: \n&quot;;    for (int x : {-1, -2, -3}) // auto 的规则令此带范围 for 工作        std::cout &lt;&lt; x &lt;&lt; &#39; &#39;;    std::cout &lt;&lt; &#39;\n&#39;;    auto al = {10, 11, 12};   // auto 的特殊规则    std::cout &lt;&lt; &quot;The list bound to auto has size() = &quot; &lt;&lt; al.size() &lt;&lt; &#39;\n&#39;;//    templated_fn({1, 2, 3}); // 编译错误！“ {1, 2, 3} ”不是表达式，                             // 它无类型，故 T 无法推导    templated_fn&lt;std::initializer_list&lt;int&gt;&gt;({1, 2, 3}); // OK    templated_fn&lt;std::vector&lt;int&gt;&gt;({1, 2, 3});           // 也 OK}</code></pre><ul><li>省略符形参<ul><li>应该只用在c和c++通用的类型，不适用于大多数类类型</li></ul></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>UE4面经</title>
+      <link href="/2021/04/17/Recruitment/UE4%E9%9D%A2%E7%BB%8F/"/>
+      <url>/2021/04/17/Recruitment/UE4%E9%9D%A2%E7%BB%8F/</url>
+      
+        <content type="html"><![CDATA[<h1 id="ai寻路怎么确保不跟其他ai撞等"><a href="#ai寻路怎么确保不跟其他ai撞等" class="headerlink" title="ai寻路怎么确保不跟其他ai撞等"></a>ai寻路怎么确保不跟其他ai撞等</h1><h1 id="抛物线模拟实现"><a href="#抛物线模拟实现" class="headerlink" title="抛物线模拟实现"></a>抛物线模拟实现</h1><h1 id="AI系统"><a href="#AI系统" class="headerlink" title="AI系统"></a>AI系统</h1><h2 id="UE4-NavMesh原理"><a href="#UE4-NavMesh原理" class="headerlink" title="UE4 NavMesh原理"></a>UE4 NavMesh原理</h2><ul><li><p>参考文章</p><blockquote><p><a href="https://zhuanlan.zhihu.com/p/74537236" target="_blank" rel="noopener">UE4 Navmesh寻路（一）Recast基础</a><br><a href="https://zhuanlan.zhihu.com/p/78873379" target="_blank" rel="noopener">UE4 Navmesh寻路（二）Detour寻路</a></p></blockquote></li><li><p>目前生成Navmesh数据主要有两种方式：多边形裁剪和体素化。</p><ul><li>多边形裁剪是直接对地形的多边形网格数据进行裁剪及合并，从而生成导航网格。方法比较直观，但难度更高，目前havok引擎使用了此方法。</li><li>体素化是对地形多边形网格进行栅格化，然后用这些“格子”重新生成导航网格，方法更复杂，但难度更低，Recast使用了此方案，而UE4使用了Recast。</li></ul></li></ul><h3 id="Recast"><a href="#Recast" class="headerlink" title="Recast"></a>Recast</h3><ul><li>Recast:将场景网格模型生成用于寻路的导航网格</li><li>Detour：利用导航网格进行寻路</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>数据库整理</title>
+      <link href="/2021/04/17/Recruitment/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B4%E7%90%86/"/>
+      <url>/2021/04/17/Recruitment/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B4%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<h1 id="AVL树-B-树-B-树-红黑树"><a href="#AVL树-B-树-B-树-红黑树" class="headerlink" title="AVL树/B-树/B+树/红黑树"></a>AVL树/B-树/B+树/红黑树</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++复习 decltype</title>
       <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20decltype/"/>
       <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20decltype/</url>
@@ -86,10 +244,10 @@
     
     <entry>
       <title>C++复习 friend友元</title>
-      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/"/>
-      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/</url>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/</url>
       
-        <content type="html"><![CDATA[<h1 id="using-声明"><a href="#using-声明" class="headerlink" title="using 声明"></a>using 声明</h1><p>一条 <code>using 声明</code> 语句一次只引入命名空间的一个成员。它使得我们可以清楚知道程序中所引用的到底是哪个名字。如：</p><pre><code class="lang-cpp">using namespace_name::name;</code></pre><h2 id="构造函数的-using-声明"><a href="#构造函数的-using-声明" class="headerlink" title="构造函数的 using 声明"></a>构造函数的 using 声明</h2><p>在 C++11 中，派生类能够重用其直接基类定义的构造函数。</p><pre><code class="lang-cpp">class Derived : Base {public:    using Base::Base;    /* ... */};</code></pre><p>如上 using 声明，对于基类的每个构造函数，编译器都生成一个与之对应（形参列表完全相同）的派生类构造函数。生成如下类型构造函数：</p><pre><code class="lang-cpp">Derived(parms) : Base(args) { }</code></pre><h2 id="using-指示"><a href="#using-指示" class="headerlink" title="using 指示"></a>using 指示</h2><p><code>using 指示</code> 使得某个特定命名空间中所有名字都可见，这样我们就无需再为它们添加任何前缀限定符了。如：</p><pre><code class="lang-cpp">using namespace_name name;</code></pre><h2 id="尽量少使用-using-指示-污染命名空间"><a href="#尽量少使用-using-指示-污染命名空间" class="headerlink" title="尽量少使用 using 指示 污染命名空间"></a>尽量少使用 <code>using 指示</code> 污染命名空间</h2><blockquote><p>一般说来，使用 using 命令比使用 using 编译命令更安全，这是由于它<strong>只导入了指定的名称</strong>。如果该名称与局部名称发生冲突，编译器将<strong>发出指示</strong>。using编译命令导入所有的名称，包括可能并不需要的名称。如果与局部名称发生冲突，则<strong>局部名称将覆盖名称空间版本</strong>，而编译器<strong>并不会发出警告</strong>。另外，名称空间的开放性意味着名称空间的名称可能分散在多个地方，这使得难以准确知道添加了哪些名称。</p></blockquote><p>using 使用</p><p>尽量少使用 <code>using 指示</code></p><pre><code class="lang-cpp">using namespace std;</code></pre><p>应该多使用 <code>using 声明</code></p><pre><code class="lang-cpp">int x;std::cin &gt;&gt; x ;std::cout &lt;&lt; x &lt;&lt; std::endl;</code></pre><p>或者</p><pre><code class="lang-cpp">using std::cin;using std::cout;using std::endl;int x;cin &gt;&gt; x;cout &lt;&lt; x &lt;&lt; endl;</code></pre><h1 id="using-类型别名"><a href="#using-类型别名" class="headerlink" title="using = (类型别名)"></a>using = (类型别名)</h1><h2 id="typedef"><a href="#typedef" class="headerlink" title="typedef"></a>typedef</h2><pre><code class="lang-cpp">typedef double wages; //wages是double的别名typedef wages base,*p;//base是double的别名,p是double*的别名</code></pre><h2 id="using"><a href="#using" class="headerlink" title="using"></a>using</h2><ul><li>c++11推荐用一下语法</li></ul><pre><code class="lang-cpp">using double = wages; //wages是double的别名//using 别名 = 类型</code></pre><h2 id="对于复合类型的别名的声明语句要小心"><a href="#对于复合类型的别名的声明语句要小心" class="headerlink" title="对于复合类型的别名的声明语句要小心"></a>对于复合类型的别名的声明语句要小心</h2><pre><code class="lang-cpp">typedef char *pstring;const pstring cstr = 0; // pstring是一个整体,是个指向char的指针。const修饰他。所以它本身是一个常量。所以它是常量指针(const pointer)const char *cstr; //而这里*修饰const char,所以它是指向char常量的指针,即指针常量(pointer to const)</code></pre>]]></content>
+        <content type="html"><![CDATA[<h1 id="friend-友元类和友元函数"><a href="#friend-友元类和友元函数" class="headerlink" title="friend 友元类和友元函数"></a>friend 友元类和友元函数</h1><ul><li>能访问私有成员  </li><li>破坏封装性</li><li>友元关系不可传递</li><li>友元关系的单向性</li><li>友元声明的形式及数量不受限制</li></ul><pre><code class="lang-cpp">//声明方式class CLASS_NAME{    friend //函数声明    friend //类声明    public:        //...    private:        //...}</code></pre>]]></content>
       
       
       <categories>
@@ -113,10 +271,10 @@
     
     <entry>
       <title>C++复习 friend友元</title>
-      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/"/>
-      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/</url>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/</url>
       
-        <content type="html"><![CDATA[<h1 id="friend-友元类和友元函数"><a href="#friend-友元类和友元函数" class="headerlink" title="friend 友元类和友元函数"></a>friend 友元类和友元函数</h1><ul><li>能访问私有成员  </li><li>破坏封装性</li><li>友元关系不可传递</li><li>友元关系的单向性</li><li>友元声明的形式及数量不受限制</li></ul><pre><code class="lang-cpp">//声明方式class CLASS_NAME{    friend //函数声明    friend //类声明    public:        //...    private:        //...}</code></pre>]]></content>
+        <content type="html"><![CDATA[<h1 id="using-声明"><a href="#using-声明" class="headerlink" title="using 声明"></a>using 声明</h1><p>一条 <code>using 声明</code> 语句一次只引入命名空间的一个成员。它使得我们可以清楚知道程序中所引用的到底是哪个名字。如：</p><pre><code class="lang-cpp">using namespace_name::name;</code></pre><h2 id="构造函数的-using-声明"><a href="#构造函数的-using-声明" class="headerlink" title="构造函数的 using 声明"></a>构造函数的 using 声明</h2><p>在 C++11 中，派生类能够重用其直接基类定义的构造函数。</p><pre><code class="lang-cpp">class Derived : Base {public:    using Base::Base;    /* ... */};</code></pre><p>如上 using 声明，对于基类的每个构造函数，编译器都生成一个与之对应（形参列表完全相同）的派生类构造函数。生成如下类型构造函数：</p><pre><code class="lang-cpp">Derived(parms) : Base(args) { }</code></pre><h2 id="using-指示"><a href="#using-指示" class="headerlink" title="using 指示"></a>using 指示</h2><p><code>using 指示</code> 使得某个特定命名空间中所有名字都可见，这样我们就无需再为它们添加任何前缀限定符了。如：</p><pre><code class="lang-cpp">using namespace_name name;</code></pre><h2 id="尽量少使用-using-指示-污染命名空间"><a href="#尽量少使用-using-指示-污染命名空间" class="headerlink" title="尽量少使用 using 指示 污染命名空间"></a>尽量少使用 <code>using 指示</code> 污染命名空间</h2><blockquote><p>一般说来，使用 using 命令比使用 using 编译命令更安全，这是由于它<strong>只导入了指定的名称</strong>。如果该名称与局部名称发生冲突，编译器将<strong>发出指示</strong>。using编译命令导入所有的名称，包括可能并不需要的名称。如果与局部名称发生冲突，则<strong>局部名称将覆盖名称空间版本</strong>，而编译器<strong>并不会发出警告</strong>。另外，名称空间的开放性意味着名称空间的名称可能分散在多个地方，这使得难以准确知道添加了哪些名称。</p></blockquote><p>using 使用</p><p>尽量少使用 <code>using 指示</code></p><pre><code class="lang-cpp">using namespace std;</code></pre><p>应该多使用 <code>using 声明</code></p><pre><code class="lang-cpp">int x;std::cin &gt;&gt; x ;std::cout &lt;&lt; x &lt;&lt; std::endl;</code></pre><p>或者</p><pre><code class="lang-cpp">using std::cin;using std::cout;using std::endl;int x;cin &gt;&gt; x;cout &lt;&lt; x &lt;&lt; endl;</code></pre><h1 id="using-类型别名"><a href="#using-类型别名" class="headerlink" title="using = (类型别名)"></a>using = (类型别名)</h1><h2 id="typedef"><a href="#typedef" class="headerlink" title="typedef"></a>typedef</h2><pre><code class="lang-cpp">typedef double wages; //wages是double的别名typedef wages base,*p;//base是double的别名,p是double*的别名</code></pre><h2 id="using"><a href="#using" class="headerlink" title="using"></a>using</h2><ul><li>c++11推荐用一下语法</li></ul><pre><code class="lang-cpp">using double = wages; //wages是double的别名//using 别名 = 类型</code></pre><h2 id="对于复合类型的别名的声明语句要小心"><a href="#对于复合类型的别名的声明语句要小心" class="headerlink" title="对于复合类型的别名的声明语句要小心"></a>对于复合类型的别名的声明语句要小心</h2><pre><code class="lang-cpp">typedef char *pstring;const pstring cstr = 0; // pstring是一个整体,是个指向char的指针。const修饰他。所以它本身是一个常量。所以它是常量指针(const pointer)const char *cstr; //而这里*修饰const char,所以它是指向char常量的指针,即指针常量(pointer to const)</code></pre>]]></content>
       
       
       <categories>
