@@ -424,11 +424,11 @@
     
     
     <entry>
-      <title>C++复习 initializer_list初始化</title>
-      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20initializer_list%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
-      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20initializer_list%E5%88%9D%E5%A7%8B%E5%8C%96/</url>
+      <title>C++复习 成员初始化列表</title>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/</url>
       
-        <content type="html"><![CDATA[<h1 id="含有可变（数量）形参的函数"><a href="#含有可变（数量）形参的函数" class="headerlink" title="含有可变（数量）形参的函数"></a>含有可变（数量）形参的函数</h1><ul><li><p><a href="https://blog.csdn.net/Clark_Sev/article/details/89500808?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param" target="_blank" rel="noopener">使用方法</a> </p></li><li><p>initializer_list 标准库类型</p><ul><li>成员永远是常量 </li><li>传递参数的时候用花括号括起来</li></ul></li><li><p>可变参模板</p><ul><li>用花括号初始化器列表初始化一个对象，其中对应构造函数接受一个 <code>std::initializer_list</code> 参数.</li></ul></li></ul><p>initializer_list 使用</p><pre><code class="lang-cpp">#include &lt;iostream&gt;#include &lt;vector&gt;#include &lt;initializer_list&gt;template &lt;class T&gt;struct S {    std::vector&lt;T&gt; v;    S(std::initializer_list&lt;T&gt; l) : v(l) {         std::cout &lt;&lt; &quot;constructed with a &quot; &lt;&lt; l.size() &lt;&lt; &quot;-element list\n&quot;;    }    void append(std::initializer_list&lt;T&gt; l) {        v.insert(v.end(), l.begin(), l.end());    }    std::pair&lt;const T*, std::size_t&gt; c_arr() const {        return {&amp;v[0], v.size()};  // 在 return 语句中复制列表初始化                                   // 这不使用 std::initializer_list    }};template &lt;typename T&gt;void templated_fn(T) {}int main(){    S&lt;int&gt; s = {1, 2, 3, 4, 5}; // 复制初始化    s.append({6, 7, 8});      // 函数调用中的列表初始化    std::cout &lt;&lt; &quot;The vector size is now &quot; &lt;&lt; s.c_arr().second &lt;&lt; &quot; ints:\n&quot;;    for (auto n : s.v)        std::cout &lt;&lt; n &lt;&lt; &#39; &#39;;    std::cout &lt;&lt; &#39;\n&#39;;    std::cout &lt;&lt; &quot;Range-for over brace-init-list: \n&quot;;    for (int x : {-1, -2, -3}) // auto 的规则令此带范围 for 工作        std::cout &lt;&lt; x &lt;&lt; &#39; &#39;;    std::cout &lt;&lt; &#39;\n&#39;;    auto al = {10, 11, 12};   // auto 的特殊规则    std::cout &lt;&lt; &quot;The list bound to auto has size() = &quot; &lt;&lt; al.size() &lt;&lt; &#39;\n&#39;;//    templated_fn({1, 2, 3}); // 编译错误！“ {1, 2, 3} ”不是表达式，                             // 它无类型，故 T 无法推导    templated_fn&lt;std::initializer_list&lt;int&gt;&gt;({1, 2, 3}); // OK    templated_fn&lt;std::vector&lt;int&gt;&gt;({1, 2, 3});           // 也 OK}</code></pre><ul><li>省略符形参<ul><li>应该只用在c和c++通用的类型，不适用于大多数类类型</li></ul></li></ul>]]></content>
+        <content type="html"><![CDATA[<p>好处</p><ul><li>更高效：少了一次调用默认构造函数的过程。</li><li>有些场合必须要用初始化列表：<ol><li>常量成员，因为常量只能初始化不能赋值，所以必须放在初始化列表里面</li><li>引用类型，引用必须在定义的时候初始化，并且不能重新赋值，所以也要写在初始化列表里面</li><li>没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化</li></ol></li></ul><p>形式</p><pre><code class="lang-cpp">class test{public:    test(int _a,int _b):a(_a),b(_b);private:    int a;    int b;};</code></pre>]]></content>
       
       
       <categories>
@@ -451,11 +451,11 @@
     
     
     <entry>
-      <title>C++复习 成员初始化列表</title>
-      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/"/>
-      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/</url>
+      <title>C++复习 initializer_list初始化</title>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20initializer_list%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20initializer_list%E5%88%9D%E5%A7%8B%E5%8C%96/</url>
       
-        <content type="html"><![CDATA[<p>好处</p><ul><li>更高效：少了一次调用默认构造函数的过程。</li><li>有些场合必须要用初始化列表：<ol><li>常量成员，因为常量只能初始化不能赋值，所以必须放在初始化列表里面</li><li>引用类型，引用必须在定义的时候初始化，并且不能重新赋值，所以也要写在初始化列表里面</li><li>没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化</li></ol></li></ul><p>形式</p><pre><code class="lang-cpp">class test{public:    test(int _a,int _b):a(_a),b(_b);private:    int a;    int b;};</code></pre>]]></content>
+        <content type="html"><![CDATA[<h1 id="含有可变（数量）形参的函数"><a href="#含有可变（数量）形参的函数" class="headerlink" title="含有可变（数量）形参的函数"></a>含有可变（数量）形参的函数</h1><ul><li><p><a href="https://blog.csdn.net/Clark_Sev/article/details/89500808?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param" target="_blank" rel="noopener">使用方法</a> </p></li><li><p>initializer_list 标准库类型</p><ul><li>成员永远是常量 </li><li>传递参数的时候用花括号括起来</li></ul></li><li><p>可变参模板</p><ul><li>用花括号初始化器列表初始化一个对象，其中对应构造函数接受一个 <code>std::initializer_list</code> 参数.</li></ul></li></ul><p>initializer_list 使用</p><pre><code class="lang-cpp">#include &lt;iostream&gt;#include &lt;vector&gt;#include &lt;initializer_list&gt;template &lt;class T&gt;struct S {    std::vector&lt;T&gt; v;    S(std::initializer_list&lt;T&gt; l) : v(l) {         std::cout &lt;&lt; &quot;constructed with a &quot; &lt;&lt; l.size() &lt;&lt; &quot;-element list\n&quot;;    }    void append(std::initializer_list&lt;T&gt; l) {        v.insert(v.end(), l.begin(), l.end());    }    std::pair&lt;const T*, std::size_t&gt; c_arr() const {        return {&amp;v[0], v.size()};  // 在 return 语句中复制列表初始化                                   // 这不使用 std::initializer_list    }};template &lt;typename T&gt;void templated_fn(T) {}int main(){    S&lt;int&gt; s = {1, 2, 3, 4, 5}; // 复制初始化    s.append({6, 7, 8});      // 函数调用中的列表初始化    std::cout &lt;&lt; &quot;The vector size is now &quot; &lt;&lt; s.c_arr().second &lt;&lt; &quot; ints:\n&quot;;    for (auto n : s.v)        std::cout &lt;&lt; n &lt;&lt; &#39; &#39;;    std::cout &lt;&lt; &#39;\n&#39;;    std::cout &lt;&lt; &quot;Range-for over brace-init-list: \n&quot;;    for (int x : {-1, -2, -3}) // auto 的规则令此带范围 for 工作        std::cout &lt;&lt; x &lt;&lt; &#39; &#39;;    std::cout &lt;&lt; &#39;\n&#39;;    auto al = {10, 11, 12};   // auto 的特殊规则    std::cout &lt;&lt; &quot;The list bound to auto has size() = &quot; &lt;&lt; al.size() &lt;&lt; &#39;\n&#39;;//    templated_fn({1, 2, 3}); // 编译错误！“ {1, 2, 3} ”不是表达式，                             // 它无类型，故 T 无法推导    templated_fn&lt;std::initializer_list&lt;int&gt;&gt;({1, 2, 3}); // OK    templated_fn&lt;std::vector&lt;int&gt;&gt;({1, 2, 3});           // 也 OK}</code></pre><ul><li>省略符形参<ul><li>应该只用在c和c++通用的类型，不适用于大多数类类型</li></ul></li></ul>]]></content>
       
       
       <categories>
@@ -1219,11 +1219,11 @@
       
         <tags>
             
+            <tag> menu </tag>
+            
             <tag> LeetCode </tag>
             
             <tag> 剑指Offer </tag>
-            
-            <tag> menu </tag>
             
         </tags>
       
@@ -1370,9 +1370,9 @@
             
             <tag> LeetCode </tag>
             
-            <tag> Array </tag>
-            
             <tag> 剑指Offer </tag>
+            
+            <tag> Array </tag>
             
             <tag> 双指针 </tag>
             
@@ -1401,11 +1401,11 @@
             
             <tag> LeetCode </tag>
             
+            <tag> 剑指Offer </tag>
+            
             <tag> Array </tag>
             
             <tag> HashMap </tag>
-            
-            <tag> 剑指Offer </tag>
             
         </tags>
       
