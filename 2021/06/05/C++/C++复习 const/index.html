@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>剑指Offer 04.二维数组中的查找 | Blog</title>
-  <meta name="keywords" content=" LeetCode , 剑指Offer , Array , 双指针 ">
-  <meta name="description" content="剑指Offer 04.二维数组中的查找 | Blog">
+  <title>C++复习 const | Blog</title>
+  <meta name="keywords" content=" c++ , recruitment ">
+  <meta name="description" content="C++复习 const | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
@@ -993,9 +993,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-LeetCode/[剑指Offer] 04.二维数组中的查找" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-C++/C++复习 const" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">剑指Offer 04.二维数组中的查找</h1>
+        <h1 class="article-title">C++复习 const</h1>
     
     <div class="article-meta">
         
@@ -1005,7 +1005,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="LeetCode">LeetCode</a>
+            <a  data-rel="Recruitment">Recruitment</a>
             
         </span>
         
@@ -1013,20 +1013,16 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color4">LeetCode</a>
+            <a class="color4">c++</a>
             
-            <a class="color3">剑指Offer</a>
-            
-            <a class="color1">Array</a>
-            
-            <a class="color4">双指针</a>
+            <a class="color2">recruitment</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-03-01 11:25:02'>2021-02-26 14:45</time>
+            Created At : <time class="date" title='Updated At: 2021-06-05 16:49:06'>2021-06-05 16:48</time>
         
     </div>
     <div class="article-meta">
@@ -1048,7 +1044,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#题目"><span class="toc-text">题目</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#暴力"><span class="toc-text">暴力</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#线性查找"><span class="toc-text">线性查找</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Const"><span class="toc-text">Const</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#const对象必须初始化"><span class="toc-text">const对象必须初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#const对象仅对当前文件有效"><span class="toc-text">const对象仅对当前文件有效</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#extern"><span class="toc-text">extern</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#链接"><span class="toc-text">链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对const的引用"><span class="toc-text">对const的引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#对const的引用可能引用一个并非const的对象"><span class="toc-text">对const的引用可能引用一个并非const的对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指针和const"><span class="toc-text">指针和const</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指针常量-pointer-to-const"><span class="toc-text">指针常量(pointer to const)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常量指针-const-pointer"><span class="toc-text">常量指针(const pointer)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#顶层const和底层const"><span class="toc-text">顶层const和底层const</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#const对拷贝的影响"><span class="toc-text">const对拷贝的影响</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#constexpr和常量表达式-c-11"><span class="toc-text">constexpr和常量表达式[c++11]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#constexpr变量"><span class="toc-text">constexpr变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#constexpr-指针"><span class="toc-text">constexpr 指针</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#const补充"><span class="toc-text">const补充</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1064,37 +1060,262 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><ul>
-<li><a href="https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/</a></li>
+        <h1 id="Const"><a href="#Const" class="headerlink" title="Const"></a>Const</h1><ul>
+<li>定义：const用于定义一个变量，它的值不能被改变</li>
 </ul>
-<h1 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h1><ul>
-<li>时间复杂度:O(MN)</li>
-<li>空间复杂度:O(1)</li>
+<h2 id="const对象必须初始化"><a href="#const对象必须初始化" class="headerlink" title="const对象必须初始化"></a>const对象必须初始化</h2><ul>
+<li><p>然而并不是所有的const对象都必须初始化</p>
+</li>
+<li><p>顶层const必须初始化，因为本身不能改变，不初始化根本没法用。而底层const(常量指针)可以不初始化</p>
+<blockquote>
+<p>参考:<a href="https://blog.csdn.net/qq_21034239/article/details/70492318" target="_blank" rel="noopener">https://blog.csdn.net/qq_21034239/article/details/70492318</a></p>
+</blockquote>
+</li>
+<li><p>其实没有那么简单,const对象必须初始化值对bulit-in类型和POD类行有效</p>
+<ul>
+<li>built-in类型是内置类型包括算术类型和空类型(void)</li>
+<li>注意的是指针和引用是符合类型<blockquote>
+<p>参考:<a href="https://stackoverflow.com/questions/8440381/why-do-const-variables-have-to-be-initialized-right-away" target="_blank" rel="noopener">https://stackoverflow.com/questions/8440381/why-do-const-variables-have-to-be-initialized-right-away</a><br>(翻译:<a href="https://www.it1352.com/465052.html" target="_blank" rel="noopener">https://www.it1352.com/465052.html</a>)</p>
+</blockquote>
+</li>
 </ul>
-<h1 id="线性查找"><a href="#线性查找" class="headerlink" title="线性查找"></a>线性查找</h1><ul>
-<li>解题思路推荐看这个:<a href="https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/solution/mian-shi-ti-04-er-wei-shu-zu-zhong-de-cha-zhao-zuo/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/solution/mian-shi-ti-04-er-wei-shu-zu-zhong-de-cha-zhao-zuo/</a></li>
+</li>
 </ul>
-<pre><code class="lang-cpp">class Solution {
-public:
-    bool findNumberIn2DArray(vector&lt;vector&lt;int&gt;&gt;&amp; matrix, int target) {
-        int i = matrix.size()-1,j = 0;
-        while(i &gt;= 0 &amp;&amp; j&lt; matrix[0].size())
-        {
-            if(matrix[i][j] &gt; target)
-                i--;
-            else if(matrix[i][j] &lt; target)
-                j++;
-            else 
-                return true;
-        }
-        return false;
-    }
-};
+<h2 id="const对象仅对当前文件有效"><a href="#const对象仅对当前文件有效" class="headerlink" title="const对象仅对当前文件有效"></a>const对象仅对当前文件有效</h2><ul>
+<li><p>在编译时会进行预处理，将代码中所有带const限定符的变量用初始化的常亮替代。</p>
+</li>
+<li><p>const对象被设定为仅在文件内有效。当多个文件中出现了同名的const变量时，其实等同在不同文件中分别定义了独立的变量。</p>
+</li>
+<li><p>如果要在多个文件中共享const对象，在需要声明变量的时候前面加extern</p>
+</li>
+</ul>
+<h3 id="extern"><a href="#extern" class="headerlink" title="extern"></a>extern</h3><ul>
+<li>用于声明<ul>
+<li>变量只能被定义一次，但可以被多次声明。</li>
+</ul>
+</li>
+</ul>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><ul>
+<li>C/C++程序编译链接过程(还没写)</li>
+</ul>
+<h2 id="对const的引用"><a href="#对const的引用" class="headerlink" title="对const的引用"></a>对const的引用</h2><ul>
+<li><p>别称: 常量引用</p>
+</li>
+<li><p>常量引用可以引用常量和非常量</p>
+</li>
+<li>非常量引用不能引用常量</li>
+</ul>
+<pre><code class="lang-cpp">const int a = 1;
+int d = 1;
+
+const int &amp;b = a;//true
+const int &amp;c = 1;//true
+const int &amp;d = d;//true
+int &amp;e = a;//false;
 </code></pre>
 <ul>
-<li>时间复杂度:O(m+n)</li>
-<li>空间复杂度:O(1)</li>
+<li>初始化常量引用的时候可以使用任意类型和任意表达式，只要可以转换成相应的引用类型。<blockquote>
+<p>原因：因为在常量引用绑定初始值的时候，生成了一个临时变量。其事实上绑定的是临时变量。</p>
+</blockquote>
+</li>
 </ul>
+<blockquote>
+<p>这样保证了const int&amp;绑定的是int型的表达式</p>
+<p>还有值得注意的是一般情况下引用的类型必须与其所引用的对象的类型一致</p>
+</blockquote>
+<pre><code class="lang-cpp">double dval = 3.14;
+const int &amp;ri = dval;
+</code></pre>
+<p>等价于</p>
+<pre><code class="lang-cpp">double dval = 3.14;
+const int temp = dval;
+const int &amp;ri = temp;
+</code></pre>
+<ul>
+<li>根据上述也可以解释为什么非常量引用不能引用常量，因为这样初始化绑定的是临时量。<blockquote>
+<p>非const变量引用const量，其实绑定了中间变量temp，因为是非const量所以可以改变这非const量，按引用来const量也应该改变，但其实改变的是中间量temp，const量不变，产生矛盾，c++把这种行为定义为非法。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="对const的引用可能引用一个并非const的对象"><a href="#对const的引用可能引用一个并非const的对象" class="headerlink" title="对const的引用可能引用一个并非const的对象"></a>对const的引用可能引用一个并非const的对象</h3><ul>
+<li>const只约束当前绑定的对象的相关操作，而不管对象本身是不是常量。</li>
+</ul>
+<pre><code class="lang-cpp">int a  = 1;
+int &amp;b = a;
+const int &amp;c = a;
+
+b = 2;
+cout&lt;&lt;a&lt;&lt;&quot; &quot;&lt;&lt;b&lt;&lt;&quot; &quot;&lt;&lt;c&lt;&lt;endl;
+//2 2 2
+
+a = 3
+cout&lt;&lt;a&lt;&lt;&quot; &quot;&lt;&lt;b&lt;&lt;&quot; &quot;&lt;&lt;c&lt;&lt;endl;
+//2 2 2
+
+c = 4
+cout&lt;&lt;a&lt;&lt;&quot; &quot;&lt;&lt;b&lt;&lt;&quot; &quot;&lt;&lt;c&lt;&lt;endl;
+// error: assignment of read-only reference ‘c’
+</code></pre>
+<h2 id="指针和const"><a href="#指针和const" class="headerlink" title="指针和const"></a>指针和const</h2><blockquote>
+<p>对于指针常量和常量指针的定义C++ primer里定义的跟大多数教材不一样</p>
+<h3 id="指针常量-pointer-to-const"><a href="#指针常量-pointer-to-const" class="headerlink" title="指针常量(pointer to const)"></a>指针常量(pointer to const)</h3><ul>
+<li>从右往左读，它是一个指针，是一个指向常量类型的指针。说明不能改变他所指向对象的内容。但是可以改变它指向的对象。</li>
+</ul>
+</blockquote>
+<pre><code class="lang-cpp">const int a = 1;
+const int b = 2;
+const int *c = &amp;a;
+*c = 1;//fasle
+c = &amp;b;//true
+</code></pre>
+<h3 id="常量指针-const-pointer"><a href="#常量指针-const-pointer" class="headerlink" title="常量指针(const pointer)"></a>常量指针(const pointer)</h3><ul>
+<li>从右往左读，它是一个常量，说明指针的地址不能改变。但是可以改变它指向对象的内容。</li>
+</ul>
+<pre><code class="lang-cpp">int a = 1;
+int b = 2;
+int *const c = &amp;a; 
+c= &amp;b;//false
+c= 2;//true
+</code></pre>
+<h2 id="顶层const和底层const"><a href="#顶层const和底层const" class="headerlink" title="顶层const和底层const"></a>顶层const和底层const</h2><ul>
+<li>顶层const说明指针本身是个常量-常量指针(const pointer)</li>
+<li>底层const说明指针指向的对象是个常量-指针常量(pointer to const)</li>
+</ul>
+<h3 id="const对拷贝的影响"><a href="#const对拷贝的影响" class="headerlink" title="const对拷贝的影响"></a>const对拷贝的影响</h3><ul>
+<li>顶层const对拷贝无影响</li>
+<li>底层const对拷贝有影像<blockquote>
+<p>拷贝两者有相同的底层const的，或者被拷贝数据可以从非常量转变为常量,才无影响</p>
+</blockquote>
+</li>
+</ul>
+<pre><code class="lang-cpp">int main()
+{   
+// 顶层const对拷贝无影响
+    {
+        // const int -&gt; int  yes
+        const int b = 1;
+        int a = b;
+
+        // int -&gt; const int yes
+        int c = 1;
+        const int d = c;
+    } 
+
+    // &amp;int(int*) -&gt; int *const/const int*/const int *const
+    int a = 1;
+    int *const b = &amp;a; //ok
+    const int *c = &amp;a; //ok
+    const int *const d = &amp;a; //ok
+
+    // &amp;(const int) -&gt; int *const/const int*/const int *const
+    const int e = 1;
+    int *const f = &amp;e; //error 没有相同的底层const
+    const int *g = &amp;e; //ok
+    const int *const h = &amp;e; //ok  &amp;e可以转换成const int *const
+
+    //(int cont*) -&gt; int *const/const int*/const int *const
+    int i = 1;
+    int *const  j= &amp;i;
+    int *const  k = j; //ok
+    const int*  l = j; //ok
+    const int *const m = j; //ok
+
+    return 0;
+}
+</code></pre>
+<ul>
+<li>总结(我自己有点绕晕了,总结一下)<blockquote>
+<p>1) 对于非指针类型之间的拷贝,没有限制 const int &lt;-&gt; int</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>2) 对于指针之间的拷贝。右值没有底层const,总合法;右值有底层const,则看左值有没有底层const,有则合法,没有则不合法。   </p>
+<ul>
+<li>常量对象不能赋值给非常量引用,常量对象不能赋值给非常量指针</li>
+</ul>
+<p>3) 对于指针和非指针之间，类型不同不合法;</p>
+</blockquote>
+<h2 id="constexpr和常量表达式-c-11"><a href="#constexpr和常量表达式-c-11" class="headerlink" title="constexpr和常量表达式[c++11]"></a>constexpr和常量表达式[c++11]</h2><ul>
+<li>常量表达式(const expression)是指不会改变并且在编译过程就能得到计算结果的表达式<blockquote>
+<p>数据类型是常量并且初始值是常量或字面值或两者混合的是常量表达式。</p>
+</blockquote>
+</li>
+</ul>
+<pre><code class="lang-cpp">const int a = 1; //true
+const int b = a+1; //true
+int c = 1; //false
+const int d = get_d(); //false，该值在编译时才能获得，所以不是常量表达式
+</code></pre>
+<h3 id="constexpr变量"><a href="#constexpr变量" class="headerlink" title="constexpr变量"></a>constexpr变量</h3><ul>
+<li>constexpr定义的变量必须要用常量表达式初始化</li>
+<li>constexpr是顶层const，即其本身为常量</li>
+<li>对于字面量<blockquote>
+<p>算术类型，引用和指针，字面值常量类（包括枚举类型），枚举都是字面值<br>自定义类，IO库，string类等不算字面值</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="constexpr-指针"><a href="#constexpr-指针" class="headerlink" title="constexpr 指针"></a>constexpr 指针</h3><ul>
+<li>constexpr指针只能指向地址固定的变量，比如全局变量，staitc变量</li>
+</ul>
+<pre><code class="lang-cpp">constexpr int *p1; //顶层const
+const int *p2;  //底层const
+int *const p3;  //顶层const
+
+constexpr const int *p4;
+//&lt;=&gt;
+const int *const p5;
+</code></pre>
+<h2 id="const补充"><a href="#const补充" class="headerlink" title="const补充"></a>const补充</h2><p><a href="https://interview.huihut.com/#/?id=cc" target="_blank" rel="noopener">const 使用</a></p>
+<ul>
+<li>修饰变量，说明该变量不可以被改变；</li>
+<li>修饰指针，分为指向常量的指针（pointer to const）和自身是常量的指针（常量指针，const pointer）；</li>
+<li>修饰引用，指向常量的引用（reference to const），用于形参类型，即避免了拷贝，又避免了函数对值的修改；</li>
+<li>修饰成员函数，说明该成员函数内不能修改成员变量。</li>
+</ul>
+<pre><code class="lang-cpp">// 类
+class A
+{
+private:
+    const int a;                // 常对象成员，只能在初始化列表赋值
+
+public:
+    // 构造函数
+    A() : a(0) { };
+    A(int x) : a(x) { };        // 初始化列表
+
+    // const可用于对重载函数的区分
+    int getValue();             // 普通成员函数
+    int getValue() const;       // 常成员函数，不得修改类中的任何数据成员的值
+};
+
+void function()
+{
+    // 对象
+    A b;                        // 普通对象，可以调用全部成员函数、更新常成员变量
+    const A a;                  // 常对象，只能调用常成员函数
+    const A *p = &amp;a;            // 指针变量，指向常对象
+    const A &amp;q = a;             // 指向常对象的引用
+
+    // 指针
+    char greeting[] = &quot;Hello&quot;;
+    char* p1 = greeting;                // 指针变量，指向字符数组变量
+    const char* p2 = greeting;          // 指针变量，指向字符数组常量（const 后面是 char，说明指向的字符（char）不可改变）
+    char* const p3 = greeting;          // 自身是常量的指针，指向字符数组变量（const 后面是 p3，说明 p3 指针自身不可改变）
+    const char* const p4 = greeting;    // 自身是常量的指针，指向字符数组常量
+}
+
+// 函数
+void function1(const int Var);           // 传递过来的参数在函数内不可变
+void function2(const char* Var);         // 参数指针所指内容为常量
+void function3(char* const Var);         // 参数指针为常量
+void function4(const int&amp; Var);          // 引用参数在函数内为常量
+
+// 函数返回值
+const int function5();      // 返回一个常数
+const int* function6();     // 返回一个指向常量的指针变量，使用：const int *p = function6();
+int* const function7();     // 返回一个指向变量的常指针，使用：int* const p = function7();
+</code></pre>
 
       
        
