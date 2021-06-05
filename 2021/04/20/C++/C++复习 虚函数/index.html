@@ -101,11 +101,11 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="All">All<small>(75)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(77)</small></div></li>
     
         
             
-            <li><div data-rel="Algorithm">Algorithm<small>(1)</small></div>
+            <li><div data-rel="Algorithm">Algorithm<small>(2)</small></div>
                 
             </li>
             
@@ -141,7 +141,7 @@
                             
                         </li>
                             
-                        <li><div data-rel="Menu<--->Recruitment">Recruitment<small>(1)</small></div>
+                        <li><div data-rel="Menu<--->Recruitment">Recruitment<small>(0)</small></div>
                             
                         </li>
                             
@@ -157,7 +157,7 @@
     
         
             
-            <li><div data-rel="Recruitment">Recruitment<small>(41)</small></div>
+            <li><div data-rel="Recruitment">Recruitment<small>(42)</small></div>
                 
             </li>
             
@@ -189,7 +189,7 @@
     </div>
     <div><a  class="friends">Friends</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="75">
+<input type="hidden" id="yelog_site_posts_number" value="77">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -247,6 +247,10 @@
         
             <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>c++</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>C++</a>
             </li>
         
             <li class="article-tag-list-item">
@@ -355,6 +359,22 @@
     </div>
     
     <nav id="title-list-nav">
+        
+        <a  class="All Menu "
+           href="/2021/06/05/Menu/C++复习总览/"
+           data-tag="menu,C++"
+           data-author="" >
+            <span class="post-title" title="C++复习总览">C++复习总览</span>
+            <span class="post-date" title="2021-06-05 16:19:52">2021/06/05</span>
+        </a>
+        
+        <a  class="All Algorithm "
+           href="/2021/06/03/Algorithm/A_Star/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="A*">A*</span>
+            <span class="post-date" title="2021-06-03 21:05:03">2021/06/03</span>
+        </a>
         
         <a  class="All Recruitment "
            href="/2021/04/29/Recruitment/计算机网络整理/"
@@ -613,18 +633,18 @@
         </a>
         
         <a  class="All Recruitment "
-           href="/2021/04/10/C++/C++复习 #pragma pack(n)/"
-           data-tag="c++,recruitment"
-           data-author="" >
-            <span class="post-title" title="C++复习 pragma pack(n)">C++复习 pragma pack(n)</span>
-            <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
-        </a>
-        
-        <a  class="All Recruitment "
            href="/2021/04/10/C++/C++复习 sizeof()/"
            data-tag="c++,recruitment"
            data-author="" >
             <span class="post-title" title="C++复习 sizeof()">C++复习 sizeof()</span>
+            <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
+        </a>
+        
+        <a  class="All Recruitment "
+           href="/2021/04/10/C++/C++复习 #pragma pack(n)/"
+           data-tag="c++,recruitment"
+           data-author="" >
+            <span class="post-title" title="C++复习 pragma pack(n)">C++复习 pragma pack(n)</span>
             <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
         </a>
         
@@ -684,9 +704,9 @@
             <span class="post-date" title="2021-04-08 21:46:10">2021/04/08</span>
         </a>
         
-        <a  class="All Menu Recruitment "
+        <a  class="All Recruitment "
            href="/2021/03/01/Recruitment/C++整理/"
-           data-tag="menu,c++,recruitment"
+           data-tag="recruitment"
            data-author="" >
             <span class="post-title" title="C++整理">C++整理</span>
             <span class="post-date" title="2021-03-01 21:17:10">2021/03/01</span>
@@ -1002,7 +1022,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-04-20 18:01:11'>2021-04-20 17:22</time>
+            Created At : <time class="date" title='Updated At: 2021-06-05 16:15:05'>2021-04-20 17:22</time>
         
     </div>
     <div class="article-meta">
@@ -1100,6 +1120,22 @@ int main()
 <blockquote>
 <p><a href="https://blog.twofei.com/496/" target="_blank" rel="noopener">C++中的虚函数(表)实现机制以及用C语言对其进行的模拟实现</a></p>
 </blockquote>
+<ul>
+<li>虚函数 C++对象的内存布局<ul>
+<li>只有数据成员的对象</li>
+<li>没有虚函数的对象</li>
+<li>拥有仅一个虚函数的类对象</li>
+<li>拥有多个虚函数的类对象</li>
+<li>单继承且本身不存在虚函数的继承类的内存布局</li>
+<li>本身不存在虚函数(不严谨)但存在基类虚函数覆盖的单继承类的内存布局</li>
+<li>定义了基类没有的虚函数的单继承的类对象布局</li>
+<li>多继承且存在虚函数覆盖同时又存在自身定义的虚函数的类对象布局</li>
+<li>如果第1个直接基类没有虚函数(表)</li>
+<li>What if 两个基类都没有虚函数表</li>
+<li>如果有三个基类: 虚函数表分别是有, 没有, 有!</li>
+</ul>
+</li>
+</ul>
 <h1 id="虚继承"><a href="#虚继承" class="headerlink" title="虚继承"></a>虚继承</h1><p>原因:虚继承用于解决多继承条件下的菱形继承问题（浪费存储空间、存在二义性）。<br>目的：令某个类做出声明，承诺愿意共享它的基类<br>形式:</p>
 <pre><code class="lang-cpp">//关键字public virtual的顺序随意
 class A:public virtual B;
@@ -1139,7 +1175,7 @@ class C:virtual public B;
 <li>所有成员都是 public</li>
 <li>没有定义任何构造函数</li>
 <li>没有类内初始化</li>
-<li>没有基类，也没有 virtual 函数</li>
+<li>没有基类，也没有 virtual 函数·</li>
 </ul>
 </li>
 </ul>

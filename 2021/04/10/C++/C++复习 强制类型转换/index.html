@@ -101,11 +101,11 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="All">All<small>(75)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(77)</small></div></li>
     
         
             
-            <li><div data-rel="Algorithm">Algorithm<small>(1)</small></div>
+            <li><div data-rel="Algorithm">Algorithm<small>(2)</small></div>
                 
             </li>
             
@@ -141,7 +141,7 @@
                             
                         </li>
                             
-                        <li><div data-rel="Menu<--->Recruitment">Recruitment<small>(1)</small></div>
+                        <li><div data-rel="Menu<--->Recruitment">Recruitment<small>(0)</small></div>
                             
                         </li>
                             
@@ -157,7 +157,7 @@
     
         
             
-            <li><div data-rel="Recruitment">Recruitment<small>(41)</small></div>
+            <li><div data-rel="Recruitment">Recruitment<small>(42)</small></div>
                 
             </li>
             
@@ -189,7 +189,7 @@
     </div>
     <div><a  class="friends">Friends</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="75">
+<input type="hidden" id="yelog_site_posts_number" value="77">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -247,6 +247,10 @@
         
             <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>c++</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>C++</a>
             </li>
         
             <li class="article-tag-list-item">
@@ -355,6 +359,22 @@
     </div>
     
     <nav id="title-list-nav">
+        
+        <a  class="All Menu "
+           href="/2021/06/05/Menu/C++复习总览/"
+           data-tag="menu,C++"
+           data-author="" >
+            <span class="post-title" title="C++复习总览">C++复习总览</span>
+            <span class="post-date" title="2021-06-05 16:19:52">2021/06/05</span>
+        </a>
+        
+        <a  class="All Algorithm "
+           href="/2021/06/03/Algorithm/A_Star/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="A*">A*</span>
+            <span class="post-date" title="2021-06-03 21:05:03">2021/06/03</span>
+        </a>
         
         <a  class="All Recruitment "
            href="/2021/04/29/Recruitment/计算机网络整理/"
@@ -613,18 +633,18 @@
         </a>
         
         <a  class="All Recruitment "
-           href="/2021/04/10/C++/C++复习 #pragma pack(n)/"
-           data-tag="c++,recruitment"
-           data-author="" >
-            <span class="post-title" title="C++复习 pragma pack(n)">C++复习 pragma pack(n)</span>
-            <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
-        </a>
-        
-        <a  class="All Recruitment "
            href="/2021/04/10/C++/C++复习 sizeof()/"
            data-tag="c++,recruitment"
            data-author="" >
             <span class="post-title" title="C++复习 sizeof()">C++复习 sizeof()</span>
+            <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
+        </a>
+        
+        <a  class="All Recruitment "
+           href="/2021/04/10/C++/C++复习 #pragma pack(n)/"
+           data-tag="c++,recruitment"
+           data-author="" >
+            <span class="post-title" title="C++复习 pragma pack(n)">C++复习 pragma pack(n)</span>
             <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
         </a>
         
@@ -684,9 +704,9 @@
             <span class="post-date" title="2021-04-08 21:46:10">2021/04/08</span>
         </a>
         
-        <a  class="All Menu Recruitment "
+        <a  class="All Recruitment "
            href="/2021/03/01/Recruitment/C++整理/"
-           data-tag="menu,c++,recruitment"
+           data-tag="recruitment"
            data-author="" >
             <span class="post-title" title="C++整理">C++整理</span>
             <span class="post-date" title="2021-03-01 21:17:10">2021/03/01</span>
@@ -1002,7 +1022,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-04-21 16:57:18'>2021-04-10 16:57</time>
+            Created At : <time class="date" title='Updated At: 2021-04-30 01:06:40'>2021-04-10 16:57</time>
         
     </div>
     <div class="article-meta">
@@ -1047,7 +1067,13 @@
 <li>用于非多态类型的转换</li>
 <li>不执行运行时类型检查（转换安全性不如 dynamic_cast）</li>
 <li>通常用于转换数值数据类型（如 float -&gt; int）</li>
-<li>可以在整个类层次结构中移动指针，子类转化为父类安全（向上转换），父类转化为子类不安全（因为子类可能有不在父类的字段或方法）</li>
+<li>把空指针转换成目标类型的空指针。</li>
+<li>把任何类型的表达式转换成void类型。</li>
+<li>用于类层次结构中基类（父类）和派生类（子类）之间指针或引用的转换。<ul>
+<li>进行上行转换（把派生类的指针或引用转换成基类表示）是安全的；</li>
+<li>进行下行转换（把基类指针或引用转换成派生类表示）时，由于没有动态类型检查，所以是不安</li>
+</ul>
+</li>
 </ul>
 <blockquote>
 <p>向上转换是一种隐式转换。</p>
@@ -1060,7 +1086,7 @@
 <li>可以在整个类层次结构中移动指针，包括向上转换、向下转换</li>
 </ul>
 <h2 id="const-cast"><a href="#const-cast" class="headerlink" title="const_cast"></a>const_cast</h2><ul>
-<li>用于删除 const、volatile 和 __unaligned 特性（如将 const int 类型转换为 int 类型 ）</li>
+<li>用于删除 const、volatile([ˈvɒlətaɪl]) 和 __unaligned 特性（如将 const int 类型转换为 int 类型 ）</li>
 </ul>
 <h2 id="reinterpret-cast"><a href="#reinterpret-cast" class="headerlink" title="reinterpret_cast"></a>reinterpret_cast</h2><ul>
 <li>用于位的简单重新解释</li>

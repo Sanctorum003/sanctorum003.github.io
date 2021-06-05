@@ -101,11 +101,11 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="All">All<small>(75)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(77)</small></div></li>
     
         
             
-            <li><div data-rel="Algorithm">Algorithm<small>(1)</small></div>
+            <li><div data-rel="Algorithm">Algorithm<small>(2)</small></div>
                 
             </li>
             
@@ -141,7 +141,7 @@
                             
                         </li>
                             
-                        <li><div data-rel="Menu<--->Recruitment">Recruitment<small>(1)</small></div>
+                        <li><div data-rel="Menu<--->Recruitment">Recruitment<small>(0)</small></div>
                             
                         </li>
                             
@@ -157,7 +157,7 @@
     
         
             
-            <li><div data-rel="Recruitment">Recruitment<small>(41)</small></div>
+            <li><div data-rel="Recruitment">Recruitment<small>(42)</small></div>
                 
             </li>
             
@@ -189,7 +189,7 @@
     </div>
     <div><a  class="friends">Friends</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="75">
+<input type="hidden" id="yelog_site_posts_number" value="77">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -247,6 +247,10 @@
         
             <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>c++</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>C++</a>
             </li>
         
             <li class="article-tag-list-item">
@@ -355,6 +359,22 @@
     </div>
     
     <nav id="title-list-nav">
+        
+        <a  class="All Menu "
+           href="/2021/06/05/Menu/C++复习总览/"
+           data-tag="menu,C++"
+           data-author="" >
+            <span class="post-title" title="C++复习总览">C++复习总览</span>
+            <span class="post-date" title="2021-06-05 16:19:52">2021/06/05</span>
+        </a>
+        
+        <a  class="All Algorithm "
+           href="/2021/06/03/Algorithm/A_Star/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="A*">A*</span>
+            <span class="post-date" title="2021-06-03 21:05:03">2021/06/03</span>
+        </a>
         
         <a  class="All Recruitment "
            href="/2021/04/29/Recruitment/计算机网络整理/"
@@ -613,18 +633,18 @@
         </a>
         
         <a  class="All Recruitment "
-           href="/2021/04/10/C++/C++复习 #pragma pack(n)/"
-           data-tag="c++,recruitment"
-           data-author="" >
-            <span class="post-title" title="C++复习 pragma pack(n)">C++复习 pragma pack(n)</span>
-            <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
-        </a>
-        
-        <a  class="All Recruitment "
            href="/2021/04/10/C++/C++复习 sizeof()/"
            data-tag="c++,recruitment"
            data-author="" >
             <span class="post-title" title="C++复习 sizeof()">C++复习 sizeof()</span>
+            <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
+        </a>
+        
+        <a  class="All Recruitment "
+           href="/2021/04/10/C++/C++复习 #pragma pack(n)/"
+           data-tag="c++,recruitment"
+           data-author="" >
+            <span class="post-title" title="C++复习 pragma pack(n)">C++复习 pragma pack(n)</span>
             <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
         </a>
         
@@ -684,9 +704,9 @@
             <span class="post-date" title="2021-04-08 21:46:10">2021/04/08</span>
         </a>
         
-        <a  class="All Menu Recruitment "
+        <a  class="All Recruitment "
            href="/2021/03/01/Recruitment/C++整理/"
-           data-tag="menu,c++,recruitment"
+           data-tag="recruitment"
            data-author="" >
             <span class="post-title" title="C++整理">C++整理</span>
             <span class="post-date" title="2021-03-01 21:17:10">2021/03/01</span>
@@ -1002,7 +1022,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-04-21 16:55:04'>2021-04-21 18:49</time>
+            Created At : <time class="date" title='Updated At: 2021-04-30 10:33:32'>2021-04-21 18:49</time>
         
     </div>
     <div class="article-meta">
@@ -1054,15 +1074,24 @@
 <li>Class shared_ptr 实现共享式拥有（shared ownership）概念。多个智能指针指向相同对象，该对象和其相关资源会在 “最后一个 reference 被销毁” 时被释放。为了在结构较复杂的情景中执行上述工作，标准库提供 weak_ptr、bad_weak_ptr 和 enable_shared_from_this 等辅助类。</li>
 <li>Class unique_ptr 实现独占式拥有（exclusive ownership）或严格拥有（strict ownership）概念，保证同一时间内只有一个智能指针可以指向该对象。你可以移交拥有权。它对于避免内存泄漏（resource leak）——如 new 后忘记 delete ——特别有用。</li>
 </ul>
-<h3 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h3><p>多个智能指针可以共享同一个对象，对象的最末一个拥有着有责任销毁对象，并清理与该对象相关的所有资源。</p>
+<h3 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h3><ul>
+<li>共享资源所有权的指针。</li>
+</ul>
+<p>多个智能指针可以共享同一个对象，对象的最末一个拥有着有责任销毁对象，并清理与该对象相关的所有资源。</p>
 <ul>
 <li>支持定制型删除器（custom deleter），可防范 Cross-DLL 问题（对象在动态链接库（DLL）中被 new 创建，却在另一个 DLL 内被 delete 销毁）、自动解除互斥锁</li>
 </ul>
-<h3 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h3><p>weak_ptr 允许你共享但不拥有某对象，一旦最末一个拥有该对象的智能指针失去了所有权，任何 weak_ptr 都会自动成空（empty）。因此，在 default 和 copy 构造函数之外，weak_ptr 只提供 “接受一个 shared_ptr” 的构造函数。</p>
+<h3 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h3><ul>
+<li>共享资源的观察者，需要和 std::shared_ptr 一起使用，不影响资源的生命周期。</li>
+</ul>
+<p>weak_ptr 允许你共享但不拥有某对象，一旦最末一个拥有该对象的智能指针失去了所有权，任何 weak_ptr 都会自动成空（empty）。因此，在 default 和 copy 构造函数之外，weak_ptr 只提供 “接受一个 shared_ptr” 的构造函数。</p>
 <ul>
 <li>可打破环状引用（cycles of references，两个其实已经没有被使用的对象彼此互指，使之看似还在 “被使用” 的状态）的问题</li>
 </ul>
-<h3 id="unique-ptr"><a href="#unique-ptr" class="headerlink" title="unique_ptr"></a>unique_ptr</h3><p>unique_ptr 是 C++11 才开始提供的类型，是一种在异常时可以帮助避免资源泄漏的智能指针。采用独占式拥有，意味着可以确保一个对象和其相应的资源同一时间只被一个 pointer 拥有。一旦拥有着被销毁或编程 empty，或开始拥有另一个对象，先前拥有的那个对象就会被销毁，其任何相应资源亦会被释放。</p>
+<h3 id="unique-ptr"><a href="#unique-ptr" class="headerlink" title="unique_ptr"></a>unique_ptr</h3><ul>
+<li>独占资源所有权的指针。</li>
+</ul>
+<p>unique_ptr 是 C++11 才开始提供的类型，是一种在异常时可以帮助避免资源泄漏的智能指针。采用独占式拥有，意味着可以确保一个对象和其相应的资源同一时间只被一个 pointer 拥有。一旦拥有着被销毁或编程 empty，或开始拥有另一个对象，先前拥有的那个对象就会被销毁，其任何相应资源亦会被释放。</p>
 <ul>
 <li>unique_ptr 用于取代 auto_ptr</li>
 </ul>

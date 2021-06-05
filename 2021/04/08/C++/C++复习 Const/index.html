@@ -101,11 +101,11 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="All">All<small>(75)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(77)</small></div></li>
     
         
             
-            <li><div data-rel="Algorithm">Algorithm<small>(1)</small></div>
+            <li><div data-rel="Algorithm">Algorithm<small>(2)</small></div>
                 
             </li>
             
@@ -141,7 +141,7 @@
                             
                         </li>
                             
-                        <li><div data-rel="Menu<--->Recruitment">Recruitment<small>(1)</small></div>
+                        <li><div data-rel="Menu<--->Recruitment">Recruitment<small>(0)</small></div>
                             
                         </li>
                             
@@ -157,7 +157,7 @@
     
         
             
-            <li><div data-rel="Recruitment">Recruitment<small>(41)</small></div>
+            <li><div data-rel="Recruitment">Recruitment<small>(42)</small></div>
                 
             </li>
             
@@ -189,7 +189,7 @@
     </div>
     <div><a  class="friends">Friends</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="75">
+<input type="hidden" id="yelog_site_posts_number" value="77">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -247,6 +247,10 @@
         
             <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>c++</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>C++</a>
             </li>
         
             <li class="article-tag-list-item">
@@ -355,6 +359,22 @@
     </div>
     
     <nav id="title-list-nav">
+        
+        <a  class="All Menu "
+           href="/2021/06/05/Menu/C++复习总览/"
+           data-tag="menu,C++"
+           data-author="" >
+            <span class="post-title" title="C++复习总览">C++复习总览</span>
+            <span class="post-date" title="2021-06-05 16:19:52">2021/06/05</span>
+        </a>
+        
+        <a  class="All Algorithm "
+           href="/2021/06/03/Algorithm/A_Star/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="A*">A*</span>
+            <span class="post-date" title="2021-06-03 21:05:03">2021/06/03</span>
+        </a>
         
         <a  class="All Recruitment "
            href="/2021/04/29/Recruitment/计算机网络整理/"
@@ -613,18 +633,18 @@
         </a>
         
         <a  class="All Recruitment "
-           href="/2021/04/10/C++/C++复习 #pragma pack(n)/"
-           data-tag="c++,recruitment"
-           data-author="" >
-            <span class="post-title" title="C++复习 pragma pack(n)">C++复习 pragma pack(n)</span>
-            <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
-        </a>
-        
-        <a  class="All Recruitment "
            href="/2021/04/10/C++/C++复习 sizeof()/"
            data-tag="c++,recruitment"
            data-author="" >
             <span class="post-title" title="C++复习 sizeof()">C++复习 sizeof()</span>
+            <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
+        </a>
+        
+        <a  class="All Recruitment "
+           href="/2021/04/10/C++/C++复习 #pragma pack(n)/"
+           data-tag="c++,recruitment"
+           data-author="" >
+            <span class="post-title" title="C++复习 pragma pack(n)">C++复习 pragma pack(n)</span>
             <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
         </a>
         
@@ -684,9 +704,9 @@
             <span class="post-date" title="2021-04-08 21:46:10">2021/04/08</span>
         </a>
         
-        <a  class="All Menu Recruitment "
+        <a  class="All Recruitment "
            href="/2021/03/01/Recruitment/C++整理/"
-           data-tag="menu,c++,recruitment"
+           data-tag="recruitment"
            data-author="" >
             <span class="post-title" title="C++整理">C++整理</span>
             <span class="post-date" title="2021-03-01 21:17:10">2021/03/01</span>
@@ -1002,7 +1022,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-04-17 16:14:02'>2021-04-08 21:46</time>
+            Created At : <time class="date" title='Updated At: 2021-04-30 10:52:39'>2021-04-08 21:46</time>
         
     </div>
     <div class="article-meta">
@@ -1247,6 +1267,12 @@ constexpr const int *p4;
 const int *const p5;
 </code></pre>
 <h2 id="const补充"><a href="#const补充" class="headerlink" title="const补充"></a>const补充</h2><p><a href="https://interview.huihut.com/#/?id=cc" target="_blank" rel="noopener">const 使用</a></p>
+<ul>
+<li>修饰变量，说明该变量不可以被改变；</li>
+<li>修饰指针，分为指向常量的指针（pointer to const）和自身是常量的指针（常量指针，const pointer）；</li>
+<li>修饰引用，指向常量的引用（reference to const），用于形参类型，即避免了拷贝，又避免了函数对值的修改；</li>
+<li>修饰成员函数，说明该成员函数内不能修改成员变量。</li>
+</ul>
 <pre><code class="lang-cpp">// 类
 class A
 {

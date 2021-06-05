@@ -101,11 +101,11 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="All">All<small>(75)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(77)</small></div></li>
     
         
             
-            <li><div data-rel="Algorithm">Algorithm<small>(1)</small></div>
+            <li><div data-rel="Algorithm">Algorithm<small>(2)</small></div>
                 
             </li>
             
@@ -141,7 +141,7 @@
                             
                         </li>
                             
-                        <li><div data-rel="Menu<--->Recruitment">Recruitment<small>(1)</small></div>
+                        <li><div data-rel="Menu<--->Recruitment">Recruitment<small>(0)</small></div>
                             
                         </li>
                             
@@ -157,7 +157,7 @@
     
         
             
-            <li><div data-rel="Recruitment">Recruitment<small>(41)</small></div>
+            <li><div data-rel="Recruitment">Recruitment<small>(42)</small></div>
                 
             </li>
             
@@ -189,7 +189,7 @@
     </div>
     <div><a  class="friends">Friends</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="75">
+<input type="hidden" id="yelog_site_posts_number" value="77">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -247,6 +247,10 @@
         
             <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>c++</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>C++</a>
             </li>
         
             <li class="article-tag-list-item">
@@ -355,6 +359,22 @@
     </div>
     
     <nav id="title-list-nav">
+        
+        <a  class="All Menu "
+           href="/2021/06/05/Menu/C++复习总览/"
+           data-tag="menu,C++"
+           data-author="" >
+            <span class="post-title" title="C++复习总览">C++复习总览</span>
+            <span class="post-date" title="2021-06-05 16:19:52">2021/06/05</span>
+        </a>
+        
+        <a  class="All Algorithm "
+           href="/2021/06/03/Algorithm/A_Star/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="A*">A*</span>
+            <span class="post-date" title="2021-06-03 21:05:03">2021/06/03</span>
+        </a>
         
         <a  class="All Recruitment "
            href="/2021/04/29/Recruitment/计算机网络整理/"
@@ -613,18 +633,18 @@
         </a>
         
         <a  class="All Recruitment "
-           href="/2021/04/10/C++/C++复习 #pragma pack(n)/"
-           data-tag="c++,recruitment"
-           data-author="" >
-            <span class="post-title" title="C++复习 pragma pack(n)">C++复习 pragma pack(n)</span>
-            <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
-        </a>
-        
-        <a  class="All Recruitment "
            href="/2021/04/10/C++/C++复习 sizeof()/"
            data-tag="c++,recruitment"
            data-author="" >
             <span class="post-title" title="C++复习 sizeof()">C++复习 sizeof()</span>
+            <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
+        </a>
+        
+        <a  class="All Recruitment "
+           href="/2021/04/10/C++/C++复习 #pragma pack(n)/"
+           data-tag="c++,recruitment"
+           data-author="" >
+            <span class="post-title" title="C++复习 pragma pack(n)">C++复习 pragma pack(n)</span>
             <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
         </a>
         
@@ -684,9 +704,9 @@
             <span class="post-date" title="2021-04-08 21:46:10">2021/04/08</span>
         </a>
         
-        <a  class="All Menu Recruitment "
+        <a  class="All Recruitment "
            href="/2021/03/01/Recruitment/C++整理/"
-           data-tag="menu,c++,recruitment"
+           data-tag="recruitment"
            data-author="" >
             <span class="post-title" title="C++整理">C++整理</span>
             <span class="post-date" title="2021-03-01 21:17:10">2021/03/01</span>
@@ -1000,7 +1020,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-04-29 20:50:36'>2021-04-21 22:00</time>
+            Created At : <time class="date" title='Updated At: 2021-04-30 16:19:51'>2021-04-21 22:00</time>
         
     </div>
     <div class="article-meta">
@@ -1170,7 +1190,7 @@
 <h2 id="怎么判断一个点在矩形内，园内，三角形内"><a href="#怎么判断一个点在矩形内，园内，三角形内" class="headerlink" title="怎么判断一个点在矩形内，园内，三角形内"></a>怎么判断一个点在矩形内，园内，三角形内</h2><ul>
 <li>通过叉乘判断是否这个点都在这个形状的一侧，如果都在一侧就是在内部，不然都在外部</li>
 </ul>
-<h1 id="Phong和blinnphong的区别"><a href="#Phong和blinnphong的区别" class="headerlink" title="Phong和blinnphong的区别"></a>Phong和blinnphong的区别</h1><p>phong = 环境光+漫反射+高光<br>blinnphong在phong的高光部分进行修改，用法线和半角向量</p>
+<h1 id="Phong和blinnphong的区别"><a href="#Phong和blinnphong的区别" class="headerlink" title="Phong和blinnphong的区别"></a>Phong和blinnphong的区别</h1><p>phong = 环境光+漫反射+镜面反射<br>blinnphong在phong的高光部分进行修改，用法线和半角向量</p>
 <h2 id="blinnphong的优缺点"><a href="#blinnphong的优缺点" class="headerlink" title="blinnphong的优缺点"></a>blinnphong的优缺点</h2><ul>
 <li>运算效率高在Phong模型中，必须计算反射光线R，但是在BlinnPhong模型中，用N·H的值来取代V·R。</li>
 <li>2.高光更加柔和、真实感没Phong模型强BlinnPhong 引入了 法线直接计算高光。在phong中，法线只是用于计算入射光线的反射光线，结果要比Phong更加柔和。</li>
