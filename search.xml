@@ -397,33 +397,6 @@
     
     
     <entry>
-      <title>C++复习 成员初始化列表</title>
-      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/"/>
-      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/</url>
-      
-        <content type="html"><![CDATA[<p>好处</p><ul><li>更高效：少了一次调用默认构造函数的过程。</li><li>有些场合必须要用初始化列表：<ol><li>常量成员，因为常量只能初始化不能赋值，所以必须放在初始化列表里面</li><li>引用类型，引用必须在定义的时候初始化，并且不能重新赋值，所以也要写在初始化列表里面</li><li>没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化</li></ol></li></ul><p>形式</p><pre><code class="lang-cpp">class test{public:    test(int _a,int _b):a(_a),b(_b);private:    int a;    int b;};</code></pre>]]></content>
-      
-      
-      <categories>
-          
-          <category> Recruitment </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> c++ </tag>
-            
-            <tag> recruitment </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>C++复习 面向对象 -- 封装、继承、多态</title>
       <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
       <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
@@ -456,6 +429,33 @@
       <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20initializer_list%E5%88%9D%E5%A7%8B%E5%8C%96/</url>
       
         <content type="html"><![CDATA[<h1 id="含有可变（数量）形参的函数"><a href="#含有可变（数量）形参的函数" class="headerlink" title="含有可变（数量）形参的函数"></a>含有可变（数量）形参的函数</h1><ul><li><p><a href="https://blog.csdn.net/Clark_Sev/article/details/89500808?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param" target="_blank" rel="noopener">使用方法</a> </p></li><li><p>initializer_list 标准库类型</p><ul><li>成员永远是常量 </li><li>传递参数的时候用花括号括起来</li></ul></li><li><p>可变参模板</p><ul><li>用花括号初始化器列表初始化一个对象，其中对应构造函数接受一个 <code>std::initializer_list</code> 参数.</li></ul></li></ul><p>initializer_list 使用</p><pre><code class="lang-cpp">#include &lt;iostream&gt;#include &lt;vector&gt;#include &lt;initializer_list&gt;template &lt;class T&gt;struct S {    std::vector&lt;T&gt; v;    S(std::initializer_list&lt;T&gt; l) : v(l) {         std::cout &lt;&lt; &quot;constructed with a &quot; &lt;&lt; l.size() &lt;&lt; &quot;-element list\n&quot;;    }    void append(std::initializer_list&lt;T&gt; l) {        v.insert(v.end(), l.begin(), l.end());    }    std::pair&lt;const T*, std::size_t&gt; c_arr() const {        return {&amp;v[0], v.size()};  // 在 return 语句中复制列表初始化                                   // 这不使用 std::initializer_list    }};template &lt;typename T&gt;void templated_fn(T) {}int main(){    S&lt;int&gt; s = {1, 2, 3, 4, 5}; // 复制初始化    s.append({6, 7, 8});      // 函数调用中的列表初始化    std::cout &lt;&lt; &quot;The vector size is now &quot; &lt;&lt; s.c_arr().second &lt;&lt; &quot; ints:\n&quot;;    for (auto n : s.v)        std::cout &lt;&lt; n &lt;&lt; &#39; &#39;;    std::cout &lt;&lt; &#39;\n&#39;;    std::cout &lt;&lt; &quot;Range-for over brace-init-list: \n&quot;;    for (int x : {-1, -2, -3}) // auto 的规则令此带范围 for 工作        std::cout &lt;&lt; x &lt;&lt; &#39; &#39;;    std::cout &lt;&lt; &#39;\n&#39;;    auto al = {10, 11, 12};   // auto 的特殊规则    std::cout &lt;&lt; &quot;The list bound to auto has size() = &quot; &lt;&lt; al.size() &lt;&lt; &#39;\n&#39;;//    templated_fn({1, 2, 3}); // 编译错误！“ {1, 2, 3} ”不是表达式，                             // 它无类型，故 T 无法推导    templated_fn&lt;std::initializer_list&lt;int&gt;&gt;({1, 2, 3}); // OK    templated_fn&lt;std::vector&lt;int&gt;&gt;({1, 2, 3});           // 也 OK}</code></pre><ul><li>省略符形参<ul><li>应该只用在c和c++通用的类型，不适用于大多数类类型</li></ul></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Recruitment </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+            <tag> recruitment </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++复习 成员初始化列表</title>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/</url>
+      
+        <content type="html"><![CDATA[<p>好处</p><ul><li>更高效：少了一次调用默认构造函数的过程。</li><li>有些场合必须要用初始化列表：<ol><li>常量成员，因为常量只能初始化不能赋值，所以必须放在初始化列表里面</li><li>引用类型，引用必须在定义的时候初始化，并且不能重新赋值，所以也要写在初始化列表里面</li><li>没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化</li></ol></li></ul><p>形式</p><pre><code class="lang-cpp">class test{public:    test(int _a,int _b):a(_a),b(_b);private:    int a;    int b;};</code></pre>]]></content>
       
       
       <categories>
@@ -609,11 +609,11 @@
     
     
     <entry>
-      <title>C++复习 using</title>
-      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/"/>
-      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/</url>
+      <title>C++复习 friend友元</title>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/</url>
       
-        <content type="html"><![CDATA[<h1 id="using-声明"><a href="#using-声明" class="headerlink" title="using 声明"></a>using 声明</h1><p>一条 <code>using 声明</code> 语句一次只引入命名空间的一个成员。它使得我们可以清楚知道程序中所引用的到底是哪个名字。如：</p><pre><code class="lang-cpp">using namespace_name::name;</code></pre><h2 id="构造函数的-using-声明"><a href="#构造函数的-using-声明" class="headerlink" title="构造函数的 using 声明"></a>构造函数的 using 声明</h2><p>在 C++11 中，派生类能够重用其直接基类定义的构造函数。</p><pre><code class="lang-cpp">class Derived : Base {public:    using Base::Base;    /* ... */};</code></pre><p>如上 using 声明，对于基类的每个构造函数，编译器都生成一个与之对应（形参列表完全相同）的派生类构造函数。生成如下类型构造函数：</p><pre><code class="lang-cpp">Derived(parms) : Base(args) { }</code></pre><h2 id="using-指示"><a href="#using-指示" class="headerlink" title="using 指示"></a>using 指示</h2><p><code>using 指示</code> 使得某个特定命名空间中所有名字都可见，这样我们就无需再为它们添加任何前缀限定符了。如：</p><pre><code class="lang-cpp">using namespace_name name;</code></pre><h2 id="尽量少使用-using-指示-污染命名空间"><a href="#尽量少使用-using-指示-污染命名空间" class="headerlink" title="尽量少使用 using 指示 污染命名空间"></a>尽量少使用 <code>using 指示</code> 污染命名空间</h2><blockquote><p>一般说来，使用 using 命令比使用 using 编译命令更安全，这是由于它<strong>只导入了指定的名称</strong>。如果该名称与局部名称发生冲突，编译器将<strong>发出指示</strong>。using编译命令导入所有的名称，包括可能并不需要的名称。如果与局部名称发生冲突，则<strong>局部名称将覆盖名称空间版本</strong>，而编译器<strong>并不会发出警告</strong>。另外，名称空间的开放性意味着名称空间的名称可能分散在多个地方，这使得难以准确知道添加了哪些名称。</p></blockquote><p>using 使用</p><p>尽量少使用 <code>using 指示</code></p><pre><code class="lang-cpp">using namespace std;</code></pre><p>应该多使用 <code>using 声明</code></p><pre><code class="lang-cpp">int x;std::cin &gt;&gt; x ;std::cout &lt;&lt; x &lt;&lt; std::endl;</code></pre><p>或者</p><pre><code class="lang-cpp">using std::cin;using std::cout;using std::endl;int x;cin &gt;&gt; x;cout &lt;&lt; x &lt;&lt; endl;</code></pre><h1 id="using-类型别名"><a href="#using-类型别名" class="headerlink" title="using = (类型别名)"></a>using = (类型别名)</h1><h2 id="typedef"><a href="#typedef" class="headerlink" title="typedef"></a>typedef</h2><pre><code class="lang-cpp">typedef double wages; //wages是double的别名typedef wages base,*p;//base是double的别名,p是double*的别名</code></pre><h2 id="using"><a href="#using" class="headerlink" title="using"></a>using</h2><ul><li>c++11推荐用一下语法</li></ul><pre><code class="lang-cpp">using double = wages; //wages是double的别名//using 别名 = 类型</code></pre><h2 id="对于复合类型的别名的声明语句要小心"><a href="#对于复合类型的别名的声明语句要小心" class="headerlink" title="对于复合类型的别名的声明语句要小心"></a>对于复合类型的别名的声明语句要小心</h2><pre><code class="lang-cpp">typedef char *pstring;const pstring cstr = 0; // pstring是一个整体,是个指向char的指针。const修饰他。所以它本身是一个常量。所以它是常量指针(const pointer)const char *cstr; //而这里*修饰const char,所以它是指向char常量的指针,即指针常量(pointer to const)</code></pre>]]></content>
+        <content type="html"><![CDATA[<h1 id="friend-友元类和友元函数"><a href="#friend-友元类和友元函数" class="headerlink" title="friend 友元类和友元函数"></a>friend 友元类和友元函数</h1><ul><li>能访问私有成员  </li><li>破坏封装性</li><li>友元关系不可传递</li><li>友元关系的单向性</li><li>友元声明的形式及数量不受限制</li></ul><pre><code class="lang-cpp">//声明方式class CLASS_NAME{    friend //函数声明    friend //类声明    public:        //...    private:        //...}</code></pre><h1 id="相同class的各个objects互为友元"><a href="#相同class的各个objects互为友元" class="headerlink" title="相同class的各个objects互为友元"></a>相同class的各个objects互为友元</h1><pre><code class="lang-cpp">class complex{public:    complex (double r = 0,double i = 0):re(r),ri(i){}    //相同class的各个objects互为友元    int func(const complex&amp; param){return param.re + param.ri;}private:    double re,im;}</code></pre>]]></content>
       
       
       <categories>
@@ -636,11 +636,11 @@
     
     
     <entry>
-      <title>C++复习 friend友元</title>
-      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/"/>
-      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20friend%E5%8F%8B%E5%85%83/</url>
+      <title>C++复习 using</title>
+      <link href="/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/"/>
+      <url>/2021/04/17/C++/C++%E5%A4%8D%E4%B9%A0%20using/</url>
       
-        <content type="html"><![CDATA[<h1 id="friend-友元类和友元函数"><a href="#friend-友元类和友元函数" class="headerlink" title="friend 友元类和友元函数"></a>friend 友元类和友元函数</h1><ul><li>能访问私有成员  </li><li>破坏封装性</li><li>友元关系不可传递</li><li>友元关系的单向性</li><li>友元声明的形式及数量不受限制</li></ul><pre><code class="lang-cpp">//声明方式class CLASS_NAME{    friend //函数声明    friend //类声明    public:        //...    private:        //...}</code></pre><h1 id="相同class的各个objects互为友元"><a href="#相同class的各个objects互为友元" class="headerlink" title="相同class的各个objects互为友元"></a>相同class的各个objects互为友元</h1><pre><code class="lang-cpp">class complex{public:    complex (double r = 0,double i = 0):re(r),ri(i){}    //相同class的各个objects互为友元    int func(const complex&amp; param){return param.re + param.ri;}private:    double re,im;}</code></pre>]]></content>
+        <content type="html"><![CDATA[<h1 id="using-声明"><a href="#using-声明" class="headerlink" title="using 声明"></a>using 声明</h1><p>一条 <code>using 声明</code> 语句一次只引入命名空间的一个成员。它使得我们可以清楚知道程序中所引用的到底是哪个名字。如：</p><pre><code class="lang-cpp">using namespace_name::name;</code></pre><h2 id="构造函数的-using-声明"><a href="#构造函数的-using-声明" class="headerlink" title="构造函数的 using 声明"></a>构造函数的 using 声明</h2><p>在 C++11 中，派生类能够重用其直接基类定义的构造函数。</p><pre><code class="lang-cpp">class Derived : Base {public:    using Base::Base;    /* ... */};</code></pre><p>如上 using 声明，对于基类的每个构造函数，编译器都生成一个与之对应（形参列表完全相同）的派生类构造函数。生成如下类型构造函数：</p><pre><code class="lang-cpp">Derived(parms) : Base(args) { }</code></pre><h2 id="using-指示"><a href="#using-指示" class="headerlink" title="using 指示"></a>using 指示</h2><p><code>using 指示</code> 使得某个特定命名空间中所有名字都可见，这样我们就无需再为它们添加任何前缀限定符了。如：</p><pre><code class="lang-cpp">using namespace_name name;</code></pre><h2 id="尽量少使用-using-指示-污染命名空间"><a href="#尽量少使用-using-指示-污染命名空间" class="headerlink" title="尽量少使用 using 指示 污染命名空间"></a>尽量少使用 <code>using 指示</code> 污染命名空间</h2><blockquote><p>一般说来，使用 using 命令比使用 using 编译命令更安全，这是由于它<strong>只导入了指定的名称</strong>。如果该名称与局部名称发生冲突，编译器将<strong>发出指示</strong>。using编译命令导入所有的名称，包括可能并不需要的名称。如果与局部名称发生冲突，则<strong>局部名称将覆盖名称空间版本</strong>，而编译器<strong>并不会发出警告</strong>。另外，名称空间的开放性意味着名称空间的名称可能分散在多个地方，这使得难以准确知道添加了哪些名称。</p></blockquote><p>using 使用</p><p>尽量少使用 <code>using 指示</code></p><pre><code class="lang-cpp">using namespace std;</code></pre><p>应该多使用 <code>using 声明</code></p><pre><code class="lang-cpp">int x;std::cin &gt;&gt; x ;std::cout &lt;&lt; x &lt;&lt; std::endl;</code></pre><p>或者</p><pre><code class="lang-cpp">using std::cin;using std::cout;using std::endl;int x;cin &gt;&gt; x;cout &lt;&lt; x &lt;&lt; endl;</code></pre><h1 id="using-类型别名"><a href="#using-类型别名" class="headerlink" title="using = (类型别名)"></a>using = (类型别名)</h1><h2 id="typedef"><a href="#typedef" class="headerlink" title="typedef"></a>typedef</h2><pre><code class="lang-cpp">typedef double wages; //wages是double的别名typedef wages base,*p;//base是double的别名,p是double*的别名</code></pre><h2 id="using"><a href="#using" class="headerlink" title="using"></a>using</h2><ul><li>c++11推荐用一下语法</li></ul><pre><code class="lang-cpp">using double = wages; //wages是double的别名//using 别名 = 类型</code></pre><h2 id="对于复合类型的别名的声明语句要小心"><a href="#对于复合类型的别名的声明语句要小心" class="headerlink" title="对于复合类型的别名的声明语句要小心"></a>对于复合类型的别名的声明语句要小心</h2><pre><code class="lang-cpp">typedef char *pstring;const pstring cstr = 0; // pstring是一个整体,是个指向char的指针。const修饰他。所以它本身是一个常量。所以它是常量指针(const pointer)const char *cstr; //而这里*修饰const char,所以它是指向char常量的指针,即指针常量(pointer to const)</code></pre>]]></content>
       
       
       <categories>
@@ -904,11 +904,11 @@
     
     
     <entry>
-      <title>C++复习 sizeof()</title>
-      <link href="/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20sizeof()/"/>
-      <url>/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20sizeof()/</url>
+      <title>C++复习 pragma pack(n)</title>
+      <link href="/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20#pragma%20pack(n)/"/>
+      <url>/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20#pragma%20pack(n)/</url>
       
-        <content type="html"><![CDATA[<h1 id="sizeof"><a href="#sizeof" class="headerlink" title="sizeof()"></a>sizeof()</h1><ul><li>sizeof 运算符返回一条表达式或一个类型名字所占的字节数。<blockquote><p>满足右结合律<br>sizeof <em>p = sizeof(</em>p);</p></blockquote></li></ul><blockquote><p>返回值：size_t类型的常量表达式</p></blockquote><pre><code class="lang-cpp">//使用方法sizeof (type)sizeof expr //返回表达式结果类型的大小，不实际计算运算对象的值</code></pre><ul><li>不实际计算运算对象，即使对象是空指针也可以运行</li></ul><h2 id="c-11"><a href="#c-11" class="headerlink" title="c++11"></a>c++11</h2><ul><li>可以通过 作用域 符号来获取成员的大小</li></ul><pre><code class="lang-cpp">sizeof ClassName::ClassMember;//ClassName的ClassMember成员对应类型的大小</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul><li>对char或者类型为char的表达式，结果为1</li><li>对引用类型，结果为被引用对象所占空间的大小</li><li>对指针类型，结果为指针本身所占空间的大小</li><li>对解引用指针类型，结果为指向的对象所占空间的大小，指针不需要有效</li><li>对数组，结果为数组所占空间的大小，等价于数组中所有元素所占空间之和。sizeof不把数组转换为指针进行处理</li><li>对string和vector等，返回该类型固定部分的大小，不会计算对象中的元素占用了多少空间</li></ul><h1 id="offsetof"><a href="#offsetof" class="headerlink" title="offsetof"></a>offsetof</h1><ul><li>这个宏会返回一个结构体成员相对于结构体开头的字节偏移量（<strong>经过结构对齐之后</strong>）<ul><li>type 结构体名称</li><li>结构体成员名称</li></ul></li><li>这个宏非常有用，由于结构体对齐的问题，整个结构体的大小并不是所有成员大小之和，往往要比他们的和大，（当然我们也可以执行结构体按一个字节进行对其），所以利用这个宏可以很好计算出每个结构体成员相对于结构体开头偏移的字节数。</li></ul><pre><code class="lang-cpp">#include &lt;stddef.h&gt;#include &lt;stdio.h&gt;struct struct_test{    float fild1;    double fild2;    int fild3;    short fild4;    long long fild5;};int main(void){    printf(&quot;struct_test size is %lu \nfild1 offset %lu\nfild2 offset %lu \nfild3 offset %lu \nfild4 offset %lu \nfild5 offset %lu\n&quot;,                        sizeof(struct struct_test),                        offsetof(struct struct_test,fild1),                        offsetof(struct struct_test,fild2),                        offsetof(struct struct_test,fild3),                        offsetof(struct struct_test,fild4),                        offsetof(struct struct_test,fild5));    return 0;}/*struct_test size is 32 fild1 offset 0fild2 offset 8 fild3 offset 16 fild4 offset 20 fild5 offset 24*/</code></pre>]]></content>
+        <content type="html"><![CDATA[<h1 id="pragma-pack-n"><a href="#pragma-pack-n" class="headerlink" title="#pragma pack(n)"></a>#pragma pack(n)</h1><p>设定结构体、联合体以及类成员变量以 n 字节方式对齐</p><p><a href="https://blog.csdn.net/fuzhongmin05/article/details/59112081/" target="_blank" rel="noopener">C++成员函数在内存中的存储方式</a></p><ul><li>类成员函数和非成员函数代码存放在代码区</li></ul><h1 id="pragma-pack-n-使用"><a href="#pragma-pack-n-使用" class="headerlink" title="pragma pack(n) 使用"></a>pragma pack(n) 使用</h1><pre><code class="lang-cpp">#pragma pack(push)  // 保存对齐状态#pragma pack(4)     // 设定为 4 字节对齐struct test{    char m1;    double m4;    int m3;};#pragma pack(pop)   // 恢复对齐状态</code></pre><ul><li><p><a href="https://blog.csdn.net/aidem_brown/article/details/77540527" target="_blank" rel="noopener">补充</a></p><ul><li><h1 id="pragma-pack-n-作用：C编译器将按照n个字节对齐。"><a href="#pragma-pack-n-作用：C编译器将按照n个字节对齐。" class="headerlink" title="pragma pack (n)            作用：C编译器将按照n个字节对齐。"></a>pragma pack (n)            作用：C编译器将按照n个字节对齐。</h1></li><li><h1 id="pragma-pack-作用：取消自定义字节对齐方式。"><a href="#pragma-pack-作用：取消自定义字节对齐方式。" class="headerlink" title="pragma pack ()             作用：取消自定义字节对齐方式。"></a>pragma pack ()             作用：取消自定义字节对齐方式。</h1></li><li><h1 id="pragma-pack-push-1-作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐"><a href="#pragma-pack-push-1-作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐" class="headerlink" title="pragma pack (push,1)       作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐"></a>pragma pack (push,1)       作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐</h1></li><li><h1 id="pragma-pack-pop-作用：恢复对齐状态"><a href="#pragma-pack-pop-作用：恢复对齐状态" class="headerlink" title="pragma pack (pop)          作用：恢复对齐状态"></a>pragma pack (pop)          作用：恢复对齐状态</h1></li></ul></li><li><p>因此可见，加入push和pop可以使对齐恢复到原来状态，而不是编译器默认，可以说后者更优，但是很多时候两者差别不大</p></li></ul>]]></content>
       
       
       <categories>
@@ -931,11 +931,11 @@
     
     
     <entry>
-      <title>C++复习 pragma pack(n)</title>
-      <link href="/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20#pragma%20pack(n)/"/>
-      <url>/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20#pragma%20pack(n)/</url>
+      <title>C++复习 sizeof()</title>
+      <link href="/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20sizeof()/"/>
+      <url>/2021/04/10/C++/C++%E5%A4%8D%E4%B9%A0%20sizeof()/</url>
       
-        <content type="html"><![CDATA[<h1 id="pragma-pack-n"><a href="#pragma-pack-n" class="headerlink" title="#pragma pack(n)"></a>#pragma pack(n)</h1><p>设定结构体、联合体以及类成员变量以 n 字节方式对齐</p><p><a href="https://blog.csdn.net/fuzhongmin05/article/details/59112081/" target="_blank" rel="noopener">C++成员函数在内存中的存储方式</a></p><ul><li>类成员函数和非成员函数代码存放在代码区</li></ul><h1 id="pragma-pack-n-使用"><a href="#pragma-pack-n-使用" class="headerlink" title="pragma pack(n) 使用"></a>pragma pack(n) 使用</h1><pre><code class="lang-cpp">#pragma pack(push)  // 保存对齐状态#pragma pack(4)     // 设定为 4 字节对齐struct test{    char m1;    double m4;    int m3;};#pragma pack(pop)   // 恢复对齐状态</code></pre><ul><li><p><a href="https://blog.csdn.net/aidem_brown/article/details/77540527" target="_blank" rel="noopener">补充</a></p><ul><li><h1 id="pragma-pack-n-作用：C编译器将按照n个字节对齐。"><a href="#pragma-pack-n-作用：C编译器将按照n个字节对齐。" class="headerlink" title="pragma pack (n)            作用：C编译器将按照n个字节对齐。"></a>pragma pack (n)            作用：C编译器将按照n个字节对齐。</h1></li><li><h1 id="pragma-pack-作用：取消自定义字节对齐方式。"><a href="#pragma-pack-作用：取消自定义字节对齐方式。" class="headerlink" title="pragma pack ()             作用：取消自定义字节对齐方式。"></a>pragma pack ()             作用：取消自定义字节对齐方式。</h1></li><li><h1 id="pragma-pack-push-1-作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐"><a href="#pragma-pack-push-1-作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐" class="headerlink" title="pragma pack (push,1)       作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐"></a>pragma pack (push,1)       作用：是指把原来对齐方式设置压栈，并设新的对齐方式设置为1个字节对齐</h1></li><li><h1 id="pragma-pack-pop-作用：恢复对齐状态"><a href="#pragma-pack-pop-作用：恢复对齐状态" class="headerlink" title="pragma pack (pop)          作用：恢复对齐状态"></a>pragma pack (pop)          作用：恢复对齐状态</h1></li></ul></li><li><p>因此可见，加入push和pop可以使对齐恢复到原来状态，而不是编译器默认，可以说后者更优，但是很多时候两者差别不大</p></li></ul>]]></content>
+        <content type="html"><![CDATA[<h1 id="sizeof"><a href="#sizeof" class="headerlink" title="sizeof()"></a>sizeof()</h1><ul><li>sizeof 运算符返回一条表达式或一个类型名字所占的字节数。<blockquote><p>满足右结合律<br>sizeof <em>p = sizeof(</em>p);</p></blockquote></li></ul><blockquote><p>返回值：size_t类型的常量表达式</p></blockquote><pre><code class="lang-cpp">//使用方法sizeof (type)sizeof expr //返回表达式结果类型的大小，不实际计算运算对象的值</code></pre><ul><li>不实际计算运算对象，即使对象是空指针也可以运行</li></ul><h2 id="c-11"><a href="#c-11" class="headerlink" title="c++11"></a>c++11</h2><ul><li>可以通过 作用域 符号来获取成员的大小</li></ul><pre><code class="lang-cpp">sizeof ClassName::ClassMember;//ClassName的ClassMember成员对应类型的大小</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul><li>对char或者类型为char的表达式，结果为1</li><li>对引用类型，结果为被引用对象所占空间的大小</li><li>对指针类型，结果为指针本身所占空间的大小</li><li>对解引用指针类型，结果为指向的对象所占空间的大小，指针不需要有效</li><li>对数组，结果为数组所占空间的大小，等价于数组中所有元素所占空间之和。sizeof不把数组转换为指针进行处理</li><li>对string和vector等，返回该类型固定部分的大小，不会计算对象中的元素占用了多少空间</li></ul><h1 id="offsetof"><a href="#offsetof" class="headerlink" title="offsetof"></a>offsetof</h1><ul><li>这个宏会返回一个结构体成员相对于结构体开头的字节偏移量（<strong>经过结构对齐之后</strong>）<ul><li>type 结构体名称</li><li>结构体成员名称</li></ul></li><li>这个宏非常有用，由于结构体对齐的问题，整个结构体的大小并不是所有成员大小之和，往往要比他们的和大，（当然我们也可以执行结构体按一个字节进行对其），所以利用这个宏可以很好计算出每个结构体成员相对于结构体开头偏移的字节数。</li></ul><pre><code class="lang-cpp">#include &lt;stddef.h&gt;#include &lt;stdio.h&gt;struct struct_test{    float fild1;    double fild2;    int fild3;    short fild4;    long long fild5;};int main(void){    printf(&quot;struct_test size is %lu \nfild1 offset %lu\nfild2 offset %lu \nfild3 offset %lu \nfild4 offset %lu \nfild5 offset %lu\n&quot;,                        sizeof(struct struct_test),                        offsetof(struct struct_test,fild1),                        offsetof(struct struct_test,fild2),                        offsetof(struct struct_test,fild3),                        offsetof(struct struct_test,fild4),                        offsetof(struct struct_test,fild5));    return 0;}/*struct_test size is 32 fild1 offset 0fild2 offset 8 fild3 offset 16 fild4 offset 20 fild5 offset 24*/</code></pre>]]></content>
       
       
       <categories>
@@ -1219,11 +1219,11 @@
       
         <tags>
             
-            <tag> menu </tag>
-            
             <tag> LeetCode </tag>
             
             <tag> 剑指Offer </tag>
+            
+            <tag> menu </tag>
             
         </tags>
       
@@ -1341,9 +1341,9 @@
             
             <tag> 剑指Offer </tag>
             
-            <tag> string </tag>
-            
             <tag> 双指针 </tag>
+            
+            <tag> string </tag>
             
         </tags>
       
@@ -1370,9 +1370,9 @@
             
             <tag> LeetCode </tag>
             
-            <tag> 剑指Offer </tag>
-            
             <tag> Array </tag>
+            
+            <tag> 剑指Offer </tag>
             
             <tag> 双指针 </tag>
             
@@ -1401,11 +1401,11 @@
             
             <tag> LeetCode </tag>
             
-            <tag> 剑指Offer </tag>
+            <tag> Array </tag>
             
             <tag> HashMap </tag>
             
-            <tag> Array </tag>
+            <tag> 剑指Offer </tag>
             
         </tags>
       
@@ -1505,9 +1505,9 @@
             
             <tag> LeetCode </tag>
             
-            <tag> HashMap </tag>
-            
             <tag> Array </tag>
+            
+            <tag> HashMap </tag>
             
         </tags>
       
