@@ -6,14 +6,22 @@
   <meta name="keywords" content=" algorithm ">
   <meta name="description" content="排序 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="单一职责模式 在软件组件的设计中,如果责任划分的不清晰,使用继承得到的结果往往是随着需求的变化,子类急剧膨胀,同时充斥着重复代码,这时候的关键是划清责任.  典型模式  Decorator Bridge    动机 过渡地使用继承来扩展对象的功能,由于继承为类型引入的静态特质(各种子类定死的调用方式,组合中的多态就是非静态特质),使得这种扩展方式缺乏灵活性,并且随着子类的增多(扩展功能的增多),各">
+<meta name="keywords" content="DesignPatterns">
+<meta property="og:type" content="article">
+<meta property="og:title" content="装饰器模式">
+<meta property="og:url" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="单一职责模式 在软件组件的设计中,如果责任划分的不清晰,使用继承得到的结果往往是随着需求的变化,子类急剧膨胀,同时充斥着重复代码,这时候的关键是划清责任.  典型模式  Decorator Bridge    动机 过渡地使用继承来扩展对象的功能,由于继承为类型引入的静态特质(各种子类定死的调用方式,组合中的多态就是非静态特质),使得这种扩展方式缺乏灵活性,并且随着子类的增多(扩展功能的增多),各">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:image" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/Decroator_Structure.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/Decroator_1.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/Decroator_2.jpg">
+<meta property="og:updated_time" content="2021-06-26T13:15:22.413Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="装饰器模式">
+<meta name="twitter:description" content="单一职责模式 在软件组件的设计中,如果责任划分的不清晰,使用继承得到的结果往往是随着需求的变化,子类急剧膨胀,同时充斥着重复代码,这时候的关键是划清责任.  典型模式  Decorator Bridge    动机 过渡地使用继承来扩展对象的功能,由于继承为类型引入的静态特质(各种子类定死的调用方式,组合中的多态就是非静态特质),使得这种扩展方式缺乏灵活性,并且随着子类的增多(扩展功能的增多),各">
+<meta name="twitter:image" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/Decroator_Structure.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -1068,7 +1076,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-07-02 17:35:02'>2021-06-15 20:52</time>
+            Created At : <time class="date" title='Updated At: 2021-07-03 21:34:01'>2021-06-15 20:52</time>
         
     </div>
     <div class="article-meta">
@@ -2449,9 +2457,63 @@ ListNode* sortList(ListNode* head) {
 </ul>
 <hr>
 <ul>
-<li>解决方法啊:败者树</li>
+<li>解决方法啊:败者树<ul>
+<li>败者树是一种树形选择结构<ul>
+<li>它是一种完全二叉树</li>
+<li>有序归并段放在叶子结点上,每次把用各个归并段的第一个结点进行比较</li>
+<li>分支结点用于记录左右孩子中的失败者</li>
+<li>最后根结点结果为胜利者(最小数)</li>
 </ul>
-<h2 id="置换选择排序"><a href="#置换选择排序" class="headerlink" title="置换选择排序"></a>置换选择排序</h2><h2 id="最佳归并树"><a href="#最佳归并树" class="headerlink" title="最佳归并树"></a>最佳归并树</h2>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="败者树.jpg" alt></p>
+<ul>
+<li>对于k陆归并的败者树深度为$\lceil log_{2}{k} \rceil$,因此k个记录中选择最小关键字,最多需要$\lceil log_{2}{k} \rceil$次比较.</li>
+<li>所以使用败者树后的总的比较次数为<ul>
+<li>$S(n-1) \lceil log_{2}{k} \rceil = \lceil log_{k}{r}(n-1)\lceil log_{2}{k} \rceil = (n-1)\lceil log_{2}{r} \rceil$</li>
+</ul>
+</li>
+<li>所以利用败者树进行比较的话,内部归并与归并路数k无关.只要内存空间允许,增大归并路数k将有效地减少归并树的高度,从而减少I/O次数,提高外部排序的速度.</li>
+<li>在内存空间一定的时候,增加归并的路数会导致平均每个归并缓存区变小,所以导致I/O交换的次数会变多,导致性能下降.</li>
+</ul>
+<h2 id="置换选择排序"><a href="#置换选择排序" class="headerlink" title="置换选择排序"></a>置换选择排序</h2><ul>
+<li>目的: 生成初始归并段,用于增大归并段长度来减少归并段个数</li>
+<li>减少归并段的原因: 由$S(n-1)(k-1) = (n-1)\lceil log_{2}{r} \rceil$可知减少初试归并段的个数也能减少归并趟数S</li>
+<li>使用置换选择排序的原因:生成归并串依赖可用内存区的大小下,生成尽可量长的初试归并段</li>
+</ul>
+<hr>
+<ul>
+<li><p>方法伪代码:<br><img src="置换选择排序.jpg" alt></p>
+</li>
+<li><p>例子</p>
+<ul>
+<li>设待排文件FI = {17,21,05,44,10,12,56,32,29},WA的容量为3.排序过程如下表</li>
+</ul>
+</li>
+</ul>
+<p><img src="置换选择排序例子.jpg" alt></p>
+<h2 id="最佳归并树"><a href="#最佳归并树" class="headerlink" title="最佳归并树"></a>最佳归并树</h2><ul>
+<li>WPL(带权路径长度):树中所有叶结点的带权路径长度之和称为该树的带权路径长度.</li>
+<li>目的:由长度不相等的归并段,进行多路平衡归并,不同归并的选择会导致I/O次数的不同.<ul>
+<li>如下图左边的I/O次数为484次,右边的I/O次数为466次</li>
+</ul>
+</li>
+</ul>
+<p><img src="不同归并树对IO次数的影响.jpg" alt></p>
+<hr>
+<ul>
+<li>最佳归并树的构成方法(哈夫曼树扩展)<ul>
+<li>若初试归并段不足以构成一棵阉割k叉树时,需要添加长度为0的虚段(放置最远)</li>
+</ul>
+</li>
+</ul>
+<p><img src="Sort/计算最佳归并树的虚段数目.jpg" alt></p>
+<ul>
+<li>关于完全k叉树性质: $n_{0} = (k-1)n_{k} + 1$的证明<script type="math/tex; mode=display">n_{0} := 度为0的结点(叶子结点)</script><script type="math/tex; mode=display">n_{k} := 度为k的结点(分支结点)</script><script type="math/tex; mode=display">n := 树中的总结点个数</script><script type="math/tex; mode=display">B := 分支个数</script><script type="math/tex; mode=display">n = n_{0} + n_{k}</script><script type="math/tex; mode=display">n = B+1(结点个数等于分支个数+1)</script><script type="math/tex; mode=display">B = k * n_{k}(分支个数等于非叶子结点的总度数)</script><script type="math/tex; mode=display">n_{0} + n_{k} = k * n_{k} + 1</script><script type="math/tex; mode=display">n_{0} = (k-1)n_{k} + 1</script></li>
+</ul>
+
       
        
     </div>

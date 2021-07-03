@@ -6,14 +6,22 @@
   <meta name="keywords" content=" DesignPatterns ">
   <meta name="description" content="桥模式 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="单一职责模式 在软件组件的设计中,如果责任划分的不清晰,使用继承得到的结果往往是随着需求的变化,子类急剧膨胀,同时充斥着重复代码,这时候的关键是划清责任.  典型模式  Decorator Bridge    动机 过渡地使用继承来扩展对象的功能,由于继承为类型引入的静态特质(各种子类定死的调用方式,组合中的多态就是非静态特质),使得这种扩展方式缺乏灵活性,并且随着子类的增多(扩展功能的增多),各">
+<meta name="keywords" content="DesignPatterns">
+<meta property="og:type" content="article">
+<meta property="og:title" content="装饰器模式">
+<meta property="og:url" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="单一职责模式 在软件组件的设计中,如果责任划分的不清晰,使用继承得到的结果往往是随着需求的变化,子类急剧膨胀,同时充斥着重复代码,这时候的关键是划清责任.  典型模式  Decorator Bridge    动机 过渡地使用继承来扩展对象的功能,由于继承为类型引入的静态特质(各种子类定死的调用方式,组合中的多态就是非静态特质),使得这种扩展方式缺乏灵活性,并且随着子类的增多(扩展功能的增多),各">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:image" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/Decroator_Structure.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/Decroator_1.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/Decroator_2.jpg">
+<meta property="og:updated_time" content="2021-06-26T13:15:22.413Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="装饰器模式">
+<meta name="twitter:description" content="单一职责模式 在软件组件的设计中,如果责任划分的不清晰,使用继承得到的结果往往是随着需求的变化,子类急剧膨胀,同时充斥着重复代码,这时候的关键是划清责任.  典型模式  Decorator Bridge    动机 过渡地使用继承来扩展对象的功能,由于继承为类型引入的静态特质(各种子类定死的调用方式,组合中的多态就是非静态特质),使得这种扩展方式缺乏灵活性,并且随着子类的增多(扩展功能的增多),各">
+<meta name="twitter:image" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/Decroator_Structure.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -1068,7 +1076,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-07-03 14:30:59'>2021-06-26 20:04</time>
+            Created At : <time class="date" title='Updated At: 2021-07-03 14:49:08'>2021-06-26 20:04</time>
         
     </div>
     <div class="article-meta">
@@ -1257,7 +1265,14 @@ void Process(){
     Messager *m =new MessagerLite(mImp);
 }
 </code></pre>
-<h1 id="桥接模式与装饰器模式的区别"><a href="#桥接模式与装饰器模式的区别" class="headerlink" title="桥接模式与装饰器模式的区别"></a>桥接模式与装饰器模式的区别</h1>
+<h1 id="桥接模式与装饰器模式的区别"><a href="#桥接模式与装饰器模式的区别" class="headerlink" title="桥接模式与装饰器模式的区别"></a>桥接模式与装饰器模式的区别</h1><ul>
+<li>主要区别需要通过UML图来说明.<ul>
+<li>可以看到对于桥接模式来说,它是将抽象类(接口)的功能划分为两个(多个)维度,分为absraction和implmentor,absraction通过组合的方式拥有implmentor.两个分别进行继承,生成具体的类.通过运行时多态和参数传递(构造函数)的方法来实现多个功能的组合.</li>
+<li>装饰模式中的装饰器类是一个单独的类,他即包含Component(即抽象接口)的指针(has-a)又继承自Component(is-a),其中is-a的部分是让具体的实现继承自装饰器并且保证抽象接口函数的结构统一.而has-a的部分是Compoent的变化维度,用于实现多个功能的组合.可以看出装饰器模式是不进行抽象维度划分的.</li>
+</ul>
+</li>
+</ul>
+
       
        
     </div>
