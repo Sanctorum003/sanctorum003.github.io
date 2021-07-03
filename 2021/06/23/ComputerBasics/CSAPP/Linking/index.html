@@ -101,7 +101,7 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="All">All<small>(79)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(81)</small></div></li>
     
         
             
@@ -121,7 +121,7 @@
     
         
             
-            <li><div data-rel="ComputerBasics">ComputerBasics<small>(3)</small></div>
+            <li><div data-rel="ComputerBasics">ComputerBasics<small>(5)</small></div>
                 
             </li>
             
@@ -189,7 +189,7 @@
     </div>
     <div><a  class="friends">Friends</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="79">
+<input type="hidden" id="yelog_site_posts_number" value="81">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -376,6 +376,22 @@
     
     <nav id="title-list-nav">
         
+        <a  class="All ComputerBasics "
+           href="/2021/06/26/ComputerBasics/DesignPatterns/Decorator/"
+           data-tag="DesignPatterns"
+           data-author="" >
+            <span class="post-title" title="装饰器模式">装饰器模式</span>
+            <span class="post-date" title="2021-06-26 20:04:13">2021/06/26</span>
+        </a>
+        
+        <a  class="All ComputerBasics "
+           href="/2021/06/26/ComputerBasics/DesignPatterns/Bridge/"
+           data-tag="DesignPatterns"
+           data-author="" >
+            <span class="post-title" title="桥模式">桥模式</span>
+            <span class="post-date" title="2021-06-26 20:04:13">2021/06/26</span>
+        </a>
+        
         <a  class="All Algorithm "
            href="/2021/06/24/Algorithm/UnionFind/"
            data-tag="data structure"
@@ -553,14 +569,6 @@
         </a>
         
         <a  class="All Recruitment "
-           href="/2021/04/17/C++/C++复习 initializer_list初始化/"
-           data-tag="c++,recruitment"
-           data-author="" >
-            <span class="post-title" title="C++复习 initializer_list初始化">C++复习 initializer_list初始化</span>
-            <span class="post-date" title="2021-04-17 21:40:08">2021/04/17</span>
-        </a>
-        
-        <a  class="All Recruitment "
            href="/2021/04/17/C++/C++复习 面向对象/"
            data-tag="c++,recruitment"
            data-author="" >
@@ -573,6 +581,14 @@
            data-tag="c++,recruitment"
            data-author="" >
             <span class="post-title" title="C++复习 成员初始化列表">C++复习 成员初始化列表</span>
+            <span class="post-date" title="2021-04-17 21:40:08">2021/04/17</span>
+        </a>
+        
+        <a  class="All Recruitment "
+           href="/2021/04/17/C++/C++复习 initializer_list初始化/"
+           data-tag="c++,recruitment"
+           data-author="" >
+            <span class="post-title" title="C++复习 initializer_list初始化">C++复习 initializer_list初始化</span>
             <span class="post-date" title="2021-04-17 21:40:08">2021/04/17</span>
         </a>
         
@@ -1052,7 +1068,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-06-23 21:52:58'>2021-06-23 21:52</time>
+            Created At : <time class="date" title='Updated At: 2021-06-24 22:35:55'>2021-06-23 21:52</time>
         
     </div>
     <div class="article-meta">
@@ -1074,7 +1090,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#链接简介"><span class="toc-text">链接简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是链接"><span class="toc-text">什么是链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链接的时期"><span class="toc-text">链接的时期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接器"><span class="toc-text">连接器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编译器驱动程序-程序编译过程"><span class="toc-text">编译器驱动程序(程序编译过程)</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1090,7 +1106,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="链接简介"><a href="#链接简介" class="headerlink" title="链接简介"></a>链接简介</h1><h2 id="什么是链接"><a href="#什么是链接" class="headerlink" title="什么是链接"></a>什么是链接</h2><ul>
+<li><strong>链接</strong>是将各种代码和数据片段收集并组合称为一个单一文件的过程,这个文件可被加载(复制)到内存并执行.</li>
+</ul>
+<h2 id="链接的时期"><a href="#链接的时期" class="headerlink" title="链接的时期"></a>链接的时期</h2><ul>
+<li>链接可以执行于<strong>编译时</strong>(源代码被翻译成机器代码时),<strong>加载时</strong>(程序被加载器加载到内存并执行时),<strong>运行时</strong>(程序运行的时候)</li>
+</ul>
+<h2 id="连接器"><a href="#连接器" class="headerlink" title="连接器"></a>连接器</h2><ul>
+<li>现代操作系统中,链接由连接器自动执行.</li>
+<li>连接器使得程序可以<strong>分离编译</strong><ul>
+<li>将大型程序分成一个个模块,单独编译,并进行链接.当需要修改某一模块时,只需重新编译某一模板并重新链接即可</li>
+</ul>
+</li>
+</ul>
+<h1 id="编译器驱动程序-程序编译过程"><a href="#编译器驱动程序-程序编译过程" class="headerlink" title="编译器驱动程序(程序编译过程)"></a>编译器驱动程序(程序编译过程)</h1>
       
        
     </div>

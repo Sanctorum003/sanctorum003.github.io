@@ -101,7 +101,7 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="All">All<small>(79)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(81)</small></div></li>
     
         
             
@@ -121,7 +121,7 @@
     
         
             
-            <li><div data-rel="ComputerBasics">ComputerBasics<small>(3)</small></div>
+            <li><div data-rel="ComputerBasics">ComputerBasics<small>(5)</small></div>
                 
             </li>
             
@@ -189,7 +189,7 @@
     </div>
     <div><a  class="friends">Friends</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="79">
+<input type="hidden" id="yelog_site_posts_number" value="81">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -376,6 +376,22 @@
     
     <nav id="title-list-nav">
         
+        <a  class="All ComputerBasics "
+           href="/2021/06/26/ComputerBasics/DesignPatterns/Decorator/"
+           data-tag="DesignPatterns"
+           data-author="" >
+            <span class="post-title" title="装饰器模式">装饰器模式</span>
+            <span class="post-date" title="2021-06-26 20:04:13">2021/06/26</span>
+        </a>
+        
+        <a  class="All ComputerBasics "
+           href="/2021/06/26/ComputerBasics/DesignPatterns/Bridge/"
+           data-tag="DesignPatterns"
+           data-author="" >
+            <span class="post-title" title="桥模式">桥模式</span>
+            <span class="post-date" title="2021-06-26 20:04:13">2021/06/26</span>
+        </a>
+        
         <a  class="All Algorithm "
            href="/2021/06/24/Algorithm/UnionFind/"
            data-tag="data structure"
@@ -553,14 +569,6 @@
         </a>
         
         <a  class="All Recruitment "
-           href="/2021/04/17/C++/C++复习 initializer_list初始化/"
-           data-tag="c++,recruitment"
-           data-author="" >
-            <span class="post-title" title="C++复习 initializer_list初始化">C++复习 initializer_list初始化</span>
-            <span class="post-date" title="2021-04-17 21:40:08">2021/04/17</span>
-        </a>
-        
-        <a  class="All Recruitment "
            href="/2021/04/17/C++/C++复习 面向对象/"
            data-tag="c++,recruitment"
            data-author="" >
@@ -573,6 +581,14 @@
            data-tag="c++,recruitment"
            data-author="" >
             <span class="post-title" title="C++复习 成员初始化列表">C++复习 成员初始化列表</span>
+            <span class="post-date" title="2021-04-17 21:40:08">2021/04/17</span>
+        </a>
+        
+        <a  class="All Recruitment "
+           href="/2021/04/17/C++/C++复习 initializer_list初始化/"
+           data-tag="c++,recruitment"
+           data-author="" >
+            <span class="post-title" title="C++复习 initializer_list初始化">C++复习 initializer_list初始化</span>
             <span class="post-date" title="2021-04-17 21:40:08">2021/04/17</span>
         </a>
         
@@ -1052,7 +1068,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-06-24 21:17:52'>2021-06-23 20:04</time>
+            Created At : <time class="date" title='Updated At: 2021-06-24 22:06:15'>2021-06-23 20:04</time>
         
     </div>
     <div class="article-meta">
@@ -1074,7 +1090,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#组件协作模式"><span class="toc-text">组件协作模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#动机"><span class="toc-text">动机</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#组件协作模式"><span class="toc-text">组件协作模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#动机"><span class="toc-text">动机</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定义"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结构"><span class="toc-text">结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码"><span class="toc-text">代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#要点总结"><span class="toc-text">要点总结</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1099,8 +1115,7 @@
 </li>
 </ul>
 <h1 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h1><ul>
-<li><p>在软件构建过程中,我们需要为某些对象建立一种”通知依赖关系”(类似回调)</p>
-<ul>
+<li>在软件构建过程中,我们需要为某些对象建立一种”通知依赖关系”(类似回调)<ul>
 <li>一个对象(目标对象)的状态发生改变,所有的依赖对象(观察者对象)都将得到通知.</li>
 <li>如果这样的依赖关系过于紧密，软件将不能很好的抵御变化<ul>
 <li>通过面向对象,弱化依赖关系,达到软件的松耦合</li>
@@ -1108,10 +1123,69 @@
 </li>
 </ul>
 </li>
-<li><p>结构</p>
-</li>
 </ul>
-<p><img src="观察者模式UML图.jpg" alt></p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><ul>
+<li>定义对象间一种一对多(变化)的依赖关系,以便当一个对象(Subject)的状态发生改变时,所有依赖于它的对象都得到通知并自动更新.</li>
+</ul>
+<h1 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h1><p><img src="观察者模式UML图.jpg" alt></p>
+<ul>
+<li>其中Subject和Observer是系统中不变的部分</li>
+<li>ConcreteSubject和ConcreteObserver是系统是变化的部分</li>
+</ul>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><ul>
+<li>用进度调更新来举例<br>```cpp<br>//IProgress是一个接口(纯虚类)相当于类图里的Observer<br>class IProgress{<br>public:<br>  virtual void DoProgress(float value)=0;<br>  virtual ~IProgress(){}<br>};</li>
+</ul>
+<p>// ConsoleNotifier是一个观察者,里面有实现的适用于自己的DoProgress.其一定要继承IProgress<br>class ConsoleNotifier : public IProgress {<br>public:<br>    virtual void DoProgress(float value){<br>        cout &lt;&lt; “.”;<br>    }<br>};</p>
+<p>// MainForm是另一个观察者,里面有实现的适用于自己的DoProgress,也是创建Subjct的地方.<br>class MainForm : public Form, public IProgress<br>{<br>    ProgressBar* progressBar;</p>
+<p>public:<br>    void Button1_Click(){<br>        string filePath = txtFilePath-&gt;getText();<br>        int number = atoi(txtFileNumber-&gt;getText().c_str());</p>
+<pre><code>    //ConsoleNotifier观察者的对象
+    ConsoleNotifier cn;
+
+    //构建Subject并把观察者加入进去
+    FileSplitter splitter(filePath, number);
+    splitter.addIProgress(this); 
+    splitter.addIProgress(&amp;cn);
+
+    //切分文本的功能,里面会调用进度条更新
+    splitter.split();
+
+    //移除观察者
+    splitter.removeIProgress(this);
+
+}
+
+virtual void DoProgress(float value){
+    progressBar-&gt;setValue(value);
+}
+</code></pre><p>};</p>
+<p>// 对应类图里的Subject,用于实现对象中不变的部分<br>class Subject<br>{<br>private:<br>    List<iprogress*>  m_iprogressList; // 抽象通知机制，支持多个观察者<br>public:<br>    void addIProgress(IProgress* iprogress){<br>        m_iprogressList.push_back(iprogress);<br>    }</iprogress*></p>
+<pre><code>void removeIProgress(IProgress* iprogress){
+    m_iprogressList.remove(iprogress);
+}
+</code></pre><p>protected:<br>    virtual void onProgress(float value){<br>        List<iprogress*>::iterator itor=m_iprogressList.begin();<br>        while (itor != m_iprogressList.end() )<br>            (*itor)-&gt;DoProgress(value); //更新进度条<br>            itor++;<br>        }<br>    }<br>};</iprogress*></p>
+<p>class FileSplitter : public Subject<br>{<br>private:<br>    string m_filePath;<br>    int m_fileNumber;<br>public:<br>    FileSplitter(const string&amp; filePath, int fileNumber) :<br>        m_filePath(filePath),<br>        m_fileNumber(fileNumber)<br>        {}<br>    }</p>
+<pre><code>void split(){
+
+    //1.读取大文件
+
+    //2.分批次向小文件中写入
+    for (int i = 0; i &lt; m_fileNumber; i++){
+        //...
+
+        float progressValue = m_fileNumber;
+        progressValue = (i + 1) / progressValue;
+        onProgress(progressValue);//发送通知
+    }
+
+}
+</code></pre><p>};</p>
+<p>```</p>
+<h1 id="要点总结"><a href="#要点总结" class="headerlink" title="要点总结"></a>要点总结</h1><ul>
+<li>使用面向对象的抽象,Observer模式使得我们可以独立地改变目标与观察者,从而使两者之间的依赖关系达到松耦合</li>
+<li>目标发送通知时,无需指定观察者,通知(可以携带通知信息作为参数)会自动传播.</li>
+<li>观察这自己决定是否订阅通知,目标对象对此一无所知</li>
+<li>Observer模式是基于时间的UI框架中非常常用的设计模式,也是MVC模式的一个重要组成部分.</li>
+</ul>
 
       
        
