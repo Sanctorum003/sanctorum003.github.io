@@ -6,22 +6,14 @@
   <meta name="keywords" content=" c++ , recruitment ">
   <meta name="description" content="C++复习 sizeof() | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="单一职责模式 在软件组件的设计中,如果责任划分的不清晰,使用继承得到的结果往往是随着需求的变化,子类急剧膨胀,同时充斥着重复代码,这时候的关键是划清责任.  典型模式  Decorator Bridge    动机 过渡地使用继承来扩展对象的功能,由于继承为类型引入的静态特质(各种子类定死的调用方式,组合中的多态就是非静态特质),使得这种扩展方式缺乏灵活性,并且随着子类的增多(扩展功能的增多),各">
-<meta name="keywords" content="DesignPatterns">
-<meta property="og:type" content="article">
-<meta property="og:title" content="装饰器模式">
-<meta property="og:url" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="about">
+<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="单一职责模式 在软件组件的设计中,如果责任划分的不清晰,使用继承得到的结果往往是随着需求的变化,子类急剧膨胀,同时充斥着重复代码,这时候的关键是划清责任.  典型模式  Decorator Bridge    动机 过渡地使用继承来扩展对象的功能,由于继承为类型引入的静态特质(各种子类定死的调用方式,组合中的多态就是非静态特质),使得这种扩展方式缺乏灵活性,并且随着子类的增多(扩展功能的增多),各">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/Decroator_Structure.jpg">
-<meta property="og:image" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/Decroator_1.jpg">
-<meta property="og:image" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/Decroator_2.jpg">
-<meta property="og:updated_time" content="2021-06-26T13:15:22.413Z">
+<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="装饰器模式">
-<meta name="twitter:description" content="单一职责模式 在软件组件的设计中,如果责任划分的不清晰,使用继承得到的结果往往是随着需求的变化,子类急剧膨胀,同时充斥着重复代码,这时候的关键是划清责任.  典型模式  Decorator Bridge    动机 过渡地使用继承来扩展对象的功能,由于继承为类型引入的静态特质(各种子类定死的调用方式,组合中的多态就是非静态特质),使得这种扩展方式缺乏灵活性,并且随着子类的增多(扩展功能的增多),各">
-<meta name="twitter:image" content="https://sanctorum.github.io/2021/06/26/ComputerBasics/DesignPatterns/Decorator/Decroator_Structure.jpg">
+<meta name="twitter:title" content="about">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -109,11 +101,11 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="All">All<small>(81)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(89)</small></div></li>
     
         
             
-            <li><div data-rel="Algorithm">Algorithm<small>(4)</small></div>
+            <li><div data-rel="Algorithm">Algorithm<small>(6)</small></div>
                 
             </li>
             
@@ -129,7 +121,15 @@
     
         
             
-            <li><div data-rel="ComputerBasics">ComputerBasics<small>(5)</small></div>
+            <li><div data-rel="ComputerBasics"><i class="fold iconfont icon-right"></i>ComputerBasics<small>(11)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="ComputerBasics<--->STL">STL<small>(3)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
                 
             </li>
             
@@ -181,6 +181,10 @@
     
         
             
+        
+    
+        
+            
             <li><div data-rel="UE4">UE4<small>(9)</small></div>
                 
             </li>
@@ -197,7 +201,7 @@
     </div>
     <div><a  class="friends">Friends</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="81">
+<input type="hidden" id="yelog_site_posts_number" value="89">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -342,6 +346,10 @@
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>STL</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>string</a>
             </li>
         
@@ -384,12 +392,60 @@
     
     <nav id="title-list-nav">
         
+        <a  class="All ComputerBasics STL "
+           href="/2021/07/13/ComputerBasics/CPP/STL/vector/"
+           data-tag="STL"
+           data-author="" >
+            <span class="post-title" title="vector深入探索">vector深入探索</span>
+            <span class="post-date" title="2021-07-13 10:33:38">2021/07/13</span>
+        </a>
+        
+        <a  class="All ComputerBasics STL "
+           href="/2021/07/12/ComputerBasics/CPP/STL/Iterator_Traits/"
+           data-tag="STL"
+           data-author="" >
+            <span class="post-title" title="List深入探索">List深入探索</span>
+            <span class="post-date" title="2021-07-12 15:29:34">2021/07/12</span>
+        </a>
+        
+        <a  class="All Algorithm "
+           href="/2021/07/05/Algorithm/String/"
+           data-tag="data structure"
+           data-author="" >
+            <span class="post-title" title="串">串</span>
+            <span class="post-date" title="2021-07-05 15:49:03">2021/07/05</span>
+        </a>
+        
+        <a  class="All Algorithm "
+           href="/2021/07/04/Algorithm/Search/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="查找">查找</span>
+            <span class="post-date" title="2021-07-04 21:00:03">2021/07/04</span>
+        </a>
+        
         <a  class="All ComputerBasics "
-           href="/2021/06/26/ComputerBasics/DesignPatterns/Decorator/"
+           href="/2021/07/04/ComputerBasics/DesignPatterns/AbstactFactory/"
            data-tag="DesignPatterns"
            data-author="" >
-            <span class="post-title" title="装饰器模式">装饰器模式</span>
-            <span class="post-date" title="2021-06-26 20:04:13">2021/06/26</span>
+            <span class="post-title" title="抽象工厂">抽象工厂</span>
+            <span class="post-date" title="2021-07-04 17:21:13">2021/07/04</span>
+        </a>
+        
+        <a  class="All ComputerBasics "
+           href="/2021/07/04/ComputerBasics/DesignPatterns/设计模式六大原则/"
+           data-tag="DesignPatterns"
+           data-author="" >
+            <span class="post-title" title="设计模式六大原则">设计模式六大原则</span>
+            <span class="post-date" title="2021-07-04 16:40:13">2021/07/04</span>
+        </a>
+        
+        <a  class="All ComputerBasics "
+           href="/2021/07/04/ComputerBasics/DesignPatterns/Factory/"
+           data-tag="DesignPatterns"
+           data-author="" >
+            <span class="post-title" title="工厂方法">工厂方法</span>
+            <span class="post-date" title="2021-07-04 16:28:13">2021/07/04</span>
         </a>
         
         <a  class="All ComputerBasics "
@@ -397,6 +453,14 @@
            data-tag="DesignPatterns"
            data-author="" >
             <span class="post-title" title="桥模式">桥模式</span>
+            <span class="post-date" title="2021-06-26 20:04:13">2021/06/26</span>
+        </a>
+        
+        <a  class="All ComputerBasics "
+           href="/2021/06/26/ComputerBasics/DesignPatterns/Decorator/"
+           data-tag="DesignPatterns"
+           data-author="" >
+            <span class="post-title" title="装饰器模式">装饰器模式</span>
             <span class="post-date" title="2021-06-26 20:04:13">2021/06/26</span>
         </a>
         
@@ -438,6 +502,14 @@
            data-author="" >
             <span class="post-title" title="排序">排序</span>
             <span class="post-date" title="2021-06-15 20:52:03">2021/06/15</span>
+        </a>
+        
+        <a  class="All ComputerBasics STL "
+           href="/2021/06/05/ComputerBasics/CPP/STL/List/"
+           data-tag="STL"
+           data-author="" >
+            <span class="post-title" title="List深入探索">List深入探索</span>
+            <span class="post-date" title="2021-06-05 19:59:52">2021/06/05</span>
         </a>
         
         <a  class="All CG "
@@ -641,18 +713,18 @@
         </a>
         
         <a  class="All Recruitment "
-           href="/2021/04/17/C++/C++复习 using/"
-           data-tag="c++,recruitment"
-           data-author="" >
-            <span class="post-title" title="C++复习 using">C++复习 using</span>
-            <span class="post-date" title="2021-04-17 16:02:10">2021/04/17</span>
-        </a>
-        
-        <a  class="All Recruitment "
            href="/2021/04/17/C++/C++复习 friend友元/"
            data-tag="c++,recruitment"
            data-author="" >
             <span class="post-title" title="C++复习 friend友元">C++复习 friend友元</span>
+            <span class="post-date" title="2021-04-17 16:02:10">2021/04/17</span>
+        </a>
+        
+        <a  class="All Recruitment "
+           href="/2021/04/17/C++/C++复习 using/"
+           data-tag="c++,recruitment"
+           data-author="" >
+            <span class="post-title" title="C++复习 using">C++复习 using</span>
             <span class="post-date" title="2021-04-17 16:02:10">2021/04/17</span>
         </a>
         
