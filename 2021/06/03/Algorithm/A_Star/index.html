@@ -6,14 +6,21 @@
   <meta name="keywords" content=" algorithm ">
   <meta name="description" content="A* | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="Iterator需要遵循的原则 iterator是算法和容器之间的桥梁 iterator必须有能力回答algorithm的提问 总共有5中iterator的相关类型: iterator_category,value_type,pointer,reference,difference_type    iterator的相关类型 traits 迭代器的5个关联类型在类中均有定义,但是指针类型的关联类型">
+<meta name="keywords" content="STL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Iterator_Traits">
+<meta property="og:url" content="https://sanctorum.github.io/2021/07/12/ComputerBasics/CPP/STL/Iterator_Traits/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Iterator需要遵循的原则 iterator是算法和容器之间的桥梁 iterator必须有能力回答algorithm的提问 总共有5中iterator的相关类型: iterator_category,value_type,pointer,reference,difference_type    iterator的相关类型 traits 迭代器的5个关联类型在类中均有定义,但是指针类型的关联类型">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/12/ComputerBasics/CPP/STL/Iterator_Traits/iterator_associated_types.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/12/ComputerBasics/CPP/STL/Iterator_Traits/iterator_traits.jpg">
+<meta property="og:updated_time" content="2021-07-14T12:34:23.298Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="Iterator_Traits">
+<meta name="twitter:description" content="Iterator需要遵循的原则 iterator是算法和容器之间的桥梁 iterator必须有能力回答algorithm的提问 总共有5中iterator的相关类型: iterator_category,value_type,pointer,reference,difference_type    iterator的相关类型 traits 迭代器的5个关联类型在类中均有定义,但是指针类型的关联类型">
+<meta name="twitter:image" content="https://sanctorum.github.io/2021/07/12/ComputerBasics/CPP/STL/Iterator_Traits/iterator_associated_types.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -1160,7 +1167,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-07-14 20:30:14'>2021-06-03 21:05</time>
+            Created At : <time class="date" title='Updated At: 2021-07-14 20:47:05'>2021-06-03 21:05</time>
         
     </div>
     <div class="article-meta">
@@ -1432,7 +1439,7 @@ std::vector&lt;Location&gt; reconstruct_path(
 }
 </code></pre>
 <h2 id="Heuristic-search-启发式搜索"><a href="#Heuristic-search-启发式搜索" class="headerlink" title="Heuristic search(启发式搜索)"></a>Heuristic search(启发式搜索)</h2><h3 id="什么是启发式算法"><a href="#什么是启发式算法" class="headerlink" title="什么是启发式算法"></a>什么是启发式算法</h3><ul>
-<li>参考:<img src="https://www.cnblogs.com/sddai/p/5644011.html" alt="启发式算法（Heuristic Algorithm）"></li>
+<li>参考:<a href="https://www.cnblogs.com/sddai/p/5644011.html" target="_blank" rel="noopener">启发式算法（Heuristic Algorithm）</a></li>
 </ul>
 <hr>
 <ul>
