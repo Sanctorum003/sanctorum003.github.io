@@ -6,21 +6,20 @@
   <meta name="keywords" content=" c++ , recruitment ">
   <meta name="description" content="C++复习 虚函数 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="Iterator需要遵循的原则 iterator是算法和容器之间的桥梁 iterator必须有能力回答algorithm的提问 总共有5中iterator的相关类型: iterator_category,value_type,pointer,reference,difference_type    iterator的相关类型 traits 迭代器的5个关联类型在类中均有定义,但是指针类型的关联类型">
+<meta name="description" content="容器vector的代码如下: sizeof(vector) = 12Byte(32位下3个4字节的指针)    template&amp;lt;class T, class Alloc= alloc&amp;gt; class vector { public:     typedef T value_type;     typedef value_type* iterator;     typedef valu">
 <meta name="keywords" content="STL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Iterator_Traits">
-<meta property="og:url" content="https://sanctorum.github.io/2021/07/12/ComputerBasics/CPP/STL/Iterator_Traits/index.html">
+<meta property="og:title" content="vector深入探索">
+<meta property="og:url" content="https://sanctorum.github.io/2021/07/13/ComputerBasics/CPP/STL/vector/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="Iterator需要遵循的原则 iterator是算法和容器之间的桥梁 iterator必须有能力回答algorithm的提问 总共有5中iterator的相关类型: iterator_category,value_type,pointer,reference,difference_type    iterator的相关类型 traits 迭代器的5个关联类型在类中均有定义,但是指针类型的关联类型">
+<meta property="og:description" content="容器vector的代码如下: sizeof(vector) = 12Byte(32位下3个4字节的指针)    template&amp;lt;class T, class Alloc= alloc&amp;gt; class vector { public:     typedef T value_type;     typedef value_type* iterator;     typedef valu">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://sanctorum.github.io/2021/07/12/ComputerBasics/CPP/STL/Iterator_Traits/iterator_associated_types.jpg">
-<meta property="og:image" content="https://sanctorum.github.io/2021/07/12/ComputerBasics/CPP/STL/Iterator_Traits/iterator_traits.jpg">
-<meta property="og:updated_time" content="2021-07-14T12:34:23.298Z">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/13/ComputerBasics/CPP/STL/vector/vector_memory.png">
+<meta property="og:updated_time" content="2021-07-13T04:09:38.659Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Iterator_Traits">
-<meta name="twitter:description" content="Iterator需要遵循的原则 iterator是算法和容器之间的桥梁 iterator必须有能力回答algorithm的提问 总共有5中iterator的相关类型: iterator_category,value_type,pointer,reference,difference_type    iterator的相关类型 traits 迭代器的5个关联类型在类中均有定义,但是指针类型的关联类型">
-<meta name="twitter:image" content="https://sanctorum.github.io/2021/07/12/ComputerBasics/CPP/STL/Iterator_Traits/iterator_associated_types.jpg">
+<meta name="twitter:title" content="vector深入探索">
+<meta name="twitter:description" content="容器vector的代码如下: sizeof(vector) = 12Byte(32位下3个4字节的指针)    template&amp;lt;class T, class Alloc= alloc&amp;gt; class vector { public:     typedef T value_type;     typedef value_type* iterator;     typedef valu">
+<meta name="twitter:image" content="https://sanctorum.github.io/2021/07/13/ComputerBasics/CPP/STL/vector/vector_memory.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">

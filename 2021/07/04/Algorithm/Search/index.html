@@ -6,21 +6,20 @@
   <meta name="keywords" content=" algorithm ">
   <meta name="description" content="查找 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="Iterator需要遵循的原则 iterator是算法和容器之间的桥梁 iterator必须有能力回答algorithm的提问 总共有5中iterator的相关类型: iterator_category,value_type,pointer,reference,difference_type    iterator的相关类型 traits 迭代器的5个关联类型在类中均有定义,但是指针类型的关联类型">
+<meta name="description" content="容器vector的代码如下: sizeof(vector) = 12Byte(32位下3个4字节的指针)    template&amp;lt;class T, class Alloc= alloc&amp;gt; class vector { public:     typedef T value_type;     typedef value_type* iterator;     typedef valu">
 <meta name="keywords" content="STL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Iterator_Traits">
-<meta property="og:url" content="https://sanctorum.github.io/2021/07/12/ComputerBasics/CPP/STL/Iterator_Traits/index.html">
+<meta property="og:title" content="vector深入探索">
+<meta property="og:url" content="https://sanctorum.github.io/2021/07/13/ComputerBasics/CPP/STL/vector/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="Iterator需要遵循的原则 iterator是算法和容器之间的桥梁 iterator必须有能力回答algorithm的提问 总共有5中iterator的相关类型: iterator_category,value_type,pointer,reference,difference_type    iterator的相关类型 traits 迭代器的5个关联类型在类中均有定义,但是指针类型的关联类型">
+<meta property="og:description" content="容器vector的代码如下: sizeof(vector) = 12Byte(32位下3个4字节的指针)    template&amp;lt;class T, class Alloc= alloc&amp;gt; class vector { public:     typedef T value_type;     typedef value_type* iterator;     typedef valu">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://sanctorum.github.io/2021/07/12/ComputerBasics/CPP/STL/Iterator_Traits/iterator_associated_types.jpg">
-<meta property="og:image" content="https://sanctorum.github.io/2021/07/12/ComputerBasics/CPP/STL/Iterator_Traits/iterator_traits.jpg">
-<meta property="og:updated_time" content="2021-07-14T12:34:23.298Z">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/13/ComputerBasics/CPP/STL/vector/vector_memory.png">
+<meta property="og:updated_time" content="2021-07-13T04:09:38.659Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Iterator_Traits">
-<meta name="twitter:description" content="Iterator需要遵循的原则 iterator是算法和容器之间的桥梁 iterator必须有能力回答algorithm的提问 总共有5中iterator的相关类型: iterator_category,value_type,pointer,reference,difference_type    iterator的相关类型 traits 迭代器的5个关联类型在类中均有定义,但是指针类型的关联类型">
-<meta name="twitter:image" content="https://sanctorum.github.io/2021/07/12/ComputerBasics/CPP/STL/Iterator_Traits/iterator_associated_types.jpg">
+<meta name="twitter:title" content="vector深入探索">
+<meta name="twitter:description" content="容器vector的代码如下: sizeof(vector) = 12Byte(32位下3个4字节的指针)    template&amp;lt;class T, class Alloc= alloc&amp;gt; class vector { public:     typedef T value_type;     typedef value_type* iterator;     typedef valu">
+<meta name="twitter:image" content="https://sanctorum.github.io/2021/07/13/ComputerBasics/CPP/STL/vector/vector_memory.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -1163,7 +1162,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-07-14 20:29:34'>2021-07-04 21:00</time>
+            Created At : <time class="date" title='Updated At: 2021-07-14 20:38:47'>2021-07-04 21:00</time>
         
     </div>
     <div class="article-meta">
@@ -1213,13 +1212,14 @@
 </ul>
 </blockquote>
 <ul>
-<li><p>蛮力实现:每个版本独立保存,各版本入口自成一个搜索结构.<br><img src="Persistent_Structure_1.jpg" alt></p>
+<li>蛮力实现:每个版本独立保存,各版本入口自成一个搜索结构.</li>
+</ul>
+<p><img src="Persistent_Structure_1.jpg" alt></p>
 <blockquote>
 <p>单次操作o(logh + logn),累计o(hn)时间和空间,累计空间复杂度是o(hn)是因为每次都要保存前一个版本的结点 // h = |history|</p>
 </blockquote>
-</li>
-<li><p>O(1)重构:对树形结构的拓扑而言,相邻版本之间的差异不能超过O(1)</p>
 <ul>
+<li>O(1)重构:对树形结构的拓扑而言,相邻版本之间的差异不能超过O(1)<ul>
 <li>任何一次动态操作引发的结构变化量不超过O(1)<h2 id="红黑树概念"><a href="#红黑树概念" class="headerlink" title="红黑树概念"></a>红黑树概念</h2></li>
 </ul>
 </li>
@@ -1265,15 +1265,22 @@ protected:
 <h3 id="情况2-插入结点不为根结点"><a href="#情况2-插入结点不为根结点" class="headerlink" title="情况2:插入结点不为根结点"></a>情况2:插入结点不为根结点</h3><h4 id="情况2-1-插入结点的父亲结点p为黑色"><a href="#情况2-1-插入结点的父亲结点p为黑色" class="headerlink" title="情况2.1:插入结点的父亲结点p为黑色."></a>情况2.1:插入结点的父亲结点p为黑色.</h4><ul>
 <li>此时满足条件3,保持为红色<h4 id="情况2-2-插入结点的父亲结点p为红色"><a href="#情况2-2-插入结点的父亲结点p为红色" class="headerlink" title="情况2.2:插入结点的父亲结点p为红色."></a>情况2.2:插入结点的父亲结点p为红色.</h4></li>
 <li>此时不满足条件3:产生双红缺陷<ul>
-<li>此时需要考虑该节点的叔叔结点(祖先结点的另一个孩子)<br><img src="双红缺陷.jpg" alt></li>
+<li>此时需要考虑该节点的叔叔结点(祖先结点的另一个孩子)</li>
 </ul>
 </li>
 </ul>
+<p><img src="双红缺陷.jpg" alt></p>
 <h5 id="情况2-2-1-叔叔结点为黑色-包括叔叔结点为外部（也是黑色）结点"><a href="#情况2-2-1-叔叔结点为黑色-包括叔叔结点为外部（也是黑色）结点" class="headerlink" title="情况2.2.1:叔叔结点为黑色(包括叔叔结点为外部（也是黑色）结点)"></a>情况2.2.1:叔叔结点为黑色(包括叔叔结点为外部（也是黑色）结点)</h5><h6 id="情况2-2-1-1-插入结点为父亲结点的左孩子-并且父亲结点是爷爷结点的左孩子-LL-插入结点为父亲结点的右孩子-并且父亲结点是爷爷结点的右孩子-RR"><a href="#情况2-2-1-1-插入结点为父亲结点的左孩子-并且父亲结点是爷爷结点的左孩子-LL-插入结点为父亲结点的右孩子-并且父亲结点是爷爷结点的右孩子-RR" class="headerlink" title="情况2.2.1.1:插入结点为父亲结点的左孩子,并且父亲结点是爷爷结点的左孩子(LL) || 插入结点为父亲结点的右孩子,并且父亲结点是爷爷结点的右孩子(RR)"></a>情况2.2.1.1:插入结点为父亲结点的左孩子,并且父亲结点是爷爷结点的左孩子(LL) || 插入结点为父亲结点的右孩子,并且父亲结点是爷爷结点的右孩子(RR)</h6><ul>
 <li>以LL为例,将红色结点都向上提升,形成(a’)的4阶b树,可以看到.按照规则,含有3个关键字的四阶b树,其关键字如果含有2个红色结点,必然为<code>RBR</code>结构.</li>
-<li>所以只需要按照图中结构,让p变为黑,g变为红即可.<br><img src="RRBLL.jpg" alt><h6 id="情况2-2-1-2-插入结点为父亲结点的左孩子-并且父亲结点是爷爷结点的右孩子-LR-插入结点为父亲结点的右孩子-并且父亲结点是爷爷结点的左孩子-RL"><a href="#情况2-2-1-2-插入结点为父亲结点的左孩子-并且父亲结点是爷爷结点的右孩子-LR-插入结点为父亲结点的右孩子-并且父亲结点是爷爷结点的左孩子-RL" class="headerlink" title="情况2.2.1.2:插入结点为父亲结点的左孩子,并且父亲结点是爷爷结点的右孩子(LR) || 插入结点为父亲结点的右孩子,并且父亲结点是爷爷结点的左孩子(RL)"></a>情况2.2.1.2:插入结点为父亲结点的左孩子,并且父亲结点是爷爷结点的右孩子(LR) || 插入结点为父亲结点的右孩子,并且父亲结点是爷爷结点的左孩子(RL)</h6></li>
+<li>所以只需要按照图中结构,让p变为黑,g变为红即可.</li>
+</ul>
+<p><img src="RRBLL.jpg" alt></p>
+<h6 id="情况2-2-1-2-插入结点为父亲结点的左孩子-并且父亲结点是爷爷结点的右孩子-LR-插入结点为父亲结点的右孩子-并且父亲结点是爷爷结点的左孩子-RL"><a href="#情况2-2-1-2-插入结点为父亲结点的左孩子-并且父亲结点是爷爷结点的右孩子-LR-插入结点为父亲结点的右孩子-并且父亲结点是爷爷结点的左孩子-RL" class="headerlink" title="情况2.2.1.2:插入结点为父亲结点的左孩子,并且父亲结点是爷爷结点的右孩子(LR) || 插入结点为父亲结点的右孩子,并且父亲结点是爷爷结点的左孩子(RL)"></a>情况2.2.1.2:插入结点为父亲结点的左孩子,并且父亲结点是爷爷结点的右孩子(LR) || 插入结点为父亲结点的右孩子,并且父亲结点是爷爷结点的左孩子(RL)</h6><ul>
 <li>以RL为例,将红色结点都向上提升,形成(B’)的4阶b树按照规则,含有3个关键字的四阶b树,其关键字如果含有2个红色结点,必然为<code>RBR</code>结构.<br><img src="RRBRL.jpg" alt></li>
-<li>并且要求该子结构为如图c和c’的类型.<br><img src="RRBStandard.jpg" alt></li>
+<li>并且要求该子结构为如图c和c’的类型.</li>
+</ul>
+<p><img src="RRBStandard.jpg" alt></p>
+<ul>
 <li>一次需要先对x结点做左旋操作,然后再按照(a’)方式进行染色.（即x为黑,g为红）</li>
 </ul>
 <hr>
@@ -1287,13 +1294,20 @@ protected:
 </li>
 </ul>
 <h5 id="情况2-2-2-叔叔结点为红色"><a href="#情况2-2-2-叔叔结点为红色" class="headerlink" title="情况2.2.2:叔叔结点为红色"></a>情况2.2.2:叔叔结点为红色</h5><h6 id="情况2-2-2-1-插入结点为父亲结点的左孩子-并且父亲结点是爷爷结点的左孩子-LL-插入结点为父亲结点的右孩子-并且父亲结点是爷爷结点的右孩子-RR"><a href="#情况2-2-2-1-插入结点为父亲结点的左孩子-并且父亲结点是爷爷结点的左孩子-LL-插入结点为父亲结点的右孩子-并且父亲结点是爷爷结点的右孩子-RR" class="headerlink" title="情况2.2.2.1:插入结点为父亲结点的左孩子,并且父亲结点是爷爷结点的左孩子(LL) || 插入结点为父亲结点的右孩子,并且父亲结点是爷爷结点的右孩子(RR)"></a>情况2.2.2.1:插入结点为父亲结点的左孩子,并且父亲结点是爷爷结点的左孩子(LL) || 插入结点为父亲结点的右孩子,并且父亲结点是爷爷结点的右孩子(RR)</h6><ul>
-<li>以LL为例,将红色结点向上提升,形成(a’)的b书,可以看到该4阶b树发生了上溢,需要按照b树的规则对其进行分裂.所以将红黑树中的双红缺陷转换为了b树中的上溢缺陷.<br><img src="RRRLL.jpg" alt></li>
-<li>对a对应的b树做分裂操作,如图(c’),将中间结点(即染为红色)提升,剩下的左右子孩子,将中间关键字染为红色,周围关键字染为黑色.<br><img src="RRRLL_Btree.jpg" alt></li>
+<li>以LL为例,将红色结点向上提升,形成(a’)的b书,可以看到该4阶b树发生了上溢,需要按照b树的规则对其进行分裂.所以将红黑树中的双红缺陷转换为了b树中的上溢缺陷.</li>
+</ul>
+<p><img src="RRRLL.jpg" alt></p>
+<ul>
+<li>对a对应的b树做分裂操作,如图(c’),将中间结点(即染为红色)提升,剩下的左右子孩子,将中间关键字染为红色,周围关键字染为黑色.</li>
+</ul>
+<p><img src="RRRLL_Btree.jpg" alt></p>
+<ul>
 <li>同样,将g结点提升之后需要考虑g的父亲结点是否会产生双红缺陷.重复考虑类似的插入操作.</li>
 </ul>
 <h6 id="情况2-2-2-2-插入结点为父亲结点的左孩子-并且父亲结点是爷爷结点的右孩子-LR-插入结点为父亲结点的右孩子-并且父亲结点是爷爷结点的左孩子-RL"><a href="#情况2-2-2-2-插入结点为父亲结点的左孩子-并且父亲结点是爷爷结点的右孩子-LR-插入结点为父亲结点的右孩子-并且父亲结点是爷爷结点的左孩子-RL" class="headerlink" title="情况2.2.2.2:插入结点为父亲结点的左孩子,并且父亲结点是爷爷结点的右孩子(LR) || 插入结点为父亲结点的右孩子,并且父亲结点是爷爷结点的左孩子(RL)"></a>情况2.2.2.2:插入结点为父亲结点的左孩子,并且父亲结点是爷爷结点的右孩子(LR) || 插入结点为父亲结点的右孩子,并且父亲结点是爷爷结点的左孩子(RL)</h6><ul>
-<li>以RL为例,类似于情况2.2.2.1.<br><img src="RRRRL.jpg" alt></li>
+<li>以RL为例,类似于情况2.2.2.1.</li>
 </ul>
+<p><img src="RRRRL.jpg" alt></p>
 <hr>
 <ul>
 <li>总结<ul>
@@ -1330,8 +1344,9 @@ protected:
 </table>
 </div>
 <ul>
-<li>流程图<br><img src="RBTreeInsert.png" alt></li>
+<li>流程图</li>
 </ul>
+<p><img src="RBTreeInsert.png" alt></p>
 <h1 id="散列表-哈希表"><a href="#散列表-哈希表" class="headerlink" title="散列表(哈希表)"></a>散列表(哈希表)</h1><ul>
 <li>散列函数:一个把查找表中的关键字映射成该关键字对应的地址的函数,记为<ul>
 <li>Hash(key) = Addr</li>
