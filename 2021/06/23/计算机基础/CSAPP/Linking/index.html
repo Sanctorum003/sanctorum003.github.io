@@ -6,14 +6,38 @@
   <meta name="keywords" content=" DesignPatterns ">
   <meta name="description" content="链接 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="计算机图形学概述 Course Topics (mainly 4 parts) Rasterization Curves and Meshes Ray Tracing Animation / Simulation    向量与线性代数Dot Product in GraphicsFind angle between two vectors 余弦定理  Find projection of one">
+<meta name="keywords" content="Computer Graphics">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Games101 Rasterization">
+<meta property="og:url" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="计算机图形学概述 Course Topics (mainly 4 parts) Rasterization Curves and Meshes Ray Tracing Animation / Simulation    向量与线性代数Dot Product in GraphicsFind angle between two vectors 余弦定理  Find projection of one">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Dot%20Product%20for%20Projection.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Decompose%20a%20vector.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/Determine%20forward%20or%20backward.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/Determine%20left%20or%20right.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/Determine%20inside%20or%20outside.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/3D%20Rotation.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/camera%20setup.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/transform%20camera.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/orthographic%20projection.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/frustum.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/viewport%20transform.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/Sampling%20=%20Repeating%20Frequency%20Contents.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/Aliasing%20=%20Mixed%20Frequency%20Contents.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/Aliasing%20=%20Mixed%20Frequency%20Contents.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/self%20occulsion.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Lambert_Shading.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/specular.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/Graphics%20Pipline.png">
+<meta property="og:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Games101/BarycentricCoordiante.png">
+<meta property="og:updated_time" content="2021-07-18T08:59:03.385Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="Games101 Rasterization">
+<meta name="twitter:description" content="计算机图形学概述 Course Topics (mainly 4 parts) Rasterization Curves and Meshes Ray Tracing Animation / Simulation    向量与线性代数Dot Product in GraphicsFind angle between two vectors 余弦定理  Find projection of one">
+<meta name="twitter:image" content="https://sanctorum.github.io/2021/07/18/CG/Games/Rasterization/Dot%20Product%20for%20Projection.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -113,7 +137,15 @@
     
         
             
-            <li><div data-rel="CG">CG<small>(11)</small></div>
+            <li><div data-rel="CG"><i class="fold iconfont icon-right"></i>CG<small>(15)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="CG<--->Games">Games<small>(4)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
                 
             </li>
             
@@ -144,6 +176,10 @@
             <li><div data-rel="LeetCode">LeetCode<small>(6)</small></div>
                 
             </li>
+            
+        
+    
+        
             
         
     
@@ -282,6 +318,10 @@
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Computer Graphics</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>data structure</a>
             </li>
         
@@ -392,36 +432,36 @@
     
     <nav id="title-list-nav">
         
-        <a  class="All "
+        <a  class="All CG Games "
            href="/2021/07/18/CG/Games/Light_Transport/"
-           data-tag=""
+           data-tag="Computer Graphics"
            data-author="" >
-            <span class="post-title" title=""></span>
-            <span class="post-date" title="2021-07-18 16:49:09">2021/07/18</span>
+            <span class="post-title" title="Games101 Light Transport">Games101 Light Transport</span>
+            <span class="post-date" title="2021-07-18 17:00:00">2021/07/18</span>
         </a>
         
-        <a  class="All "
-           href="/2021/07/18/CG/Games/Geometry/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title=""></span>
-            <span class="post-date" title="2021-07-18 16:49:09">2021/07/18</span>
-        </a>
-        
-        <a  class="All "
-           href="/2021/07/18/CG/Games/Animation_Simulation/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title=""></span>
-            <span class="post-date" title="2021-07-18 16:49:09">2021/07/18</span>
-        </a>
-        
-        <a  class="All "
+        <a  class="All CG Games "
            href="/2021/07/18/CG/Games/Rasterization/"
-           data-tag=""
+           data-tag="Computer Graphics"
            data-author="" >
-            <span class="post-title" title=""></span>
-            <span class="post-date" title="2021-07-18 16:49:09">2021/07/18</span>
+            <span class="post-title" title="Games101 Rasterization">Games101 Rasterization</span>
+            <span class="post-date" title="2021-07-18 17:00:00">2021/07/18</span>
+        </a>
+        
+        <a  class="All CG Games "
+           href="/2021/07/18/CG/Games/Animation_Simulation/"
+           data-tag="Computer Graphics"
+           data-author="" >
+            <span class="post-title" title="Games101 Animation_Simulation">Games101 Animation_Simulation</span>
+            <span class="post-date" title="2021-07-18 17:00:00">2021/07/18</span>
+        </a>
+        
+        <a  class="All CG Games "
+           href="/2021/07/18/CG/Games/Geometry/"
+           data-tag="Computer Graphics"
+           data-author="" >
+            <span class="post-title" title="Games101 Geometry">Games101 Geometry</span>
+            <span class="post-date" title="2021-07-18 17:00:00">2021/07/18</span>
         </a>
         
         <a  class="All Recruitment "
