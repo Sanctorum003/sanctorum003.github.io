@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>虚幻4之JSON学习 | Blog</title>
-  <meta name="keywords" content=" ue4 , json ">
-  <meta name="description" content="虚幻4之JSON学习 | Blog">
+  <title>虚幻4之Slate学习三 —— 创建Slate控件 | Blog</title>
+  <meta name="keywords" content=" ue4 , slate ">
+  <meta name="description" content="虚幻4之Slate学习三 —— 创建Slate控件 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
@@ -101,11 +101,11 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="All">All<small>(99)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(105)</small></div></li>
     
         
             
-            <li><div data-rel="Algorithm">Algorithm<small>(7)</small></div>
+            <li><div data-rel="Algorithm">Algorithm<small>(8)</small></div>
                 
             </li>
             
@@ -113,7 +113,7 @@
     
         
             
-            <li><div data-rel="CG"><i class="fold iconfont icon-right"></i>CG<small>(15)</small></div>
+            <li><div data-rel="CG"><i class="fold iconfont icon-right"></i>CG<small>(16)</small></div>
                 
                     <ul class="sub hide">
                         
@@ -129,7 +129,7 @@
     
         
             
-            <li><div data-rel="ComputerBasics"><i class="fold iconfont icon-right"></i>ComputerBasics<small>(13)</small></div>
+            <li><div data-rel="ComputerBasics"><i class="fold iconfont icon-right"></i>ComputerBasics<small>(14)</small></div>
                 
                     <ul class="sub hide">
                         
@@ -181,7 +181,7 @@
     
         
             
-            <li><div data-rel="Project">Project<small>(2)</small></div>
+            <li><div data-rel="Project">Project<small>(3)</small></div>
                 
             </li>
             
@@ -205,7 +205,7 @@
     
         
             
-            <li><div data-rel="UE4">UE4<small>(9)</small></div>
+            <li><div data-rel="UE4">UE4<small>(10)</small></div>
                 
             </li>
             
@@ -221,7 +221,7 @@
     </div>
     <div><a  class="friends">Friends</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="99">
+<input type="hidden" id="yelog_site_posts_number" value="105">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -342,6 +342,10 @@
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Navmesh</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>opengl</a>
             </li>
         
@@ -408,19 +412,51 @@
     
     <nav id="title-list-nav">
         
+        <a  class="All UE4 "
+           href="/2021/07/29/CG/UE4/Navmesh/UE4_Navmesh/"
+           data-tag="ue4,Navmesh"
+           data-author="" >
+            <span class="post-title" title="UE4 Navmesh剖析">UE4 Navmesh剖析</span>
+            <span class="post-date" title="2021-07-29 16:51:00">2021/07/29</span>
+        </a>
+        
+        <a  class="All Algorithm "
+           href="/2021/07/27/Algorithm/Tree/"
+           data-tag="algorithm"
+           data-author="" >
+            <span class="post-title" title="树算法">树算法</span>
+            <span class="post-date" title="2021-07-27 11:32:03">2021/07/27</span>
+        </a>
+        
+        <a  class="All Project "
+           href="/2021/07/19/Project/TinyRenderer/Hidden_faces_removal_z_buffer/"
+           data-tag="tinyrenderer"
+           data-author="" >
+            <span class="post-title" title="Lesson 3 Hidden_faces_removal_z_buffer">Lesson 3 Hidden_faces_removal_z_buffer</span>
+            <span class="post-date" title="2021-07-19 16:53:52">2021/07/19</span>
+        </a>
+        
+        <a  class="All CG "
+           href="/2021/07/19/CG/CG/背面剔除/"
+           data-tag="computer graphics"
+           data-author="" >
+            <span class="post-title" title="背面剔除">背面剔除</span>
+            <span class="post-date" title="2021-07-19 16:26:08">2021/07/19</span>
+        </a>
+        
+        <a  class="All CG Games "
+           href="/2021/07/18/CG/Games/Geometry/"
+           data-tag="Computer Graphics"
+           data-author="" >
+            <span class="post-title" title="Games101 Geometry">Games101 Geometry</span>
+            <span class="post-date" title="2021-07-18 17:00:00">2021/07/18</span>
+        </a>
+        
         <a  class="All CG Games "
            href="/2021/07/18/CG/Games/Light_Transport/"
            data-tag="Computer Graphics"
            data-author="" >
             <span class="post-title" title="Games101 Light Transport">Games101 Light Transport</span>
-            <span class="post-date" title="2021-07-18 17:00:00">2021/07/18</span>
-        </a>
-        
-        <a  class="All CG Games "
-           href="/2021/07/18/CG/Games/Rasterization/"
-           data-tag="Computer Graphics"
-           data-author="" >
-            <span class="post-title" title="Games101 Rasterization">Games101 Rasterization</span>
             <span class="post-date" title="2021-07-18 17:00:00">2021/07/18</span>
         </a>
         
@@ -433,10 +469,10 @@
         </a>
         
         <a  class="All CG Games "
-           href="/2021/07/18/CG/Games/Geometry/"
+           href="/2021/07/18/CG/Games/Rasterization/"
            data-tag="Computer Graphics"
            data-author="" >
-            <span class="post-title" title="Games101 Geometry">Games101 Geometry</span>
+            <span class="post-title" title="Games101 Rasterization">Games101 Rasterization</span>
             <span class="post-date" title="2021-07-18 17:00:00">2021/07/18</span>
         </a>
         
@@ -465,18 +501,18 @@
         </a>
         
         <a  class="All ComputerBasics STL "
-           href="/2021/07/12/计算机基础/CPP/STL/array/"
-           data-tag="STL"
-           data-author="" >
-            <span class="post-title" title="Array">Array</span>
-            <span class="post-date" title="2021-07-12 15:29:34">2021/07/12</span>
-        </a>
-        
-        <a  class="All ComputerBasics STL "
            href="/2021/07/12/计算机基础/CPP/STL/Iterator_Traits/"
            data-tag="STL"
            data-author="" >
             <span class="post-title" title="Iterator_Traits">Iterator_Traits</span>
+            <span class="post-date" title="2021-07-12 15:29:34">2021/07/12</span>
+        </a>
+        
+        <a  class="All ComputerBasics STL "
+           href="/2021/07/12/计算机基础/CPP/STL/array/"
+           data-tag="STL"
+           data-author="" >
+            <span class="post-title" title="Array">Array</span>
             <span class="post-date" title="2021-07-12 15:29:34">2021/07/12</span>
         </a>
         
@@ -513,6 +549,14 @@
         </a>
         
         <a  class="All ComputerBasics "
+           href="/2021/07/04/计算机基础/OperationSystem/StartOS/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="操作系统入门">操作系统入门</span>
+            <span class="post-date" title="2021-07-04 16:40:13">2021/07/04</span>
+        </a>
+        
+        <a  class="All ComputerBasics "
            href="/2021/07/04/计算机基础/DesignPatterns/设计模式六大原则/"
            data-tag="DesignPatterns"
            data-author="" >
@@ -521,10 +565,10 @@
         </a>
         
         <a  class="All ComputerBasics "
-           href="/2021/07/04/计算机基础/OperationSystem/StartOS/"
+           href="/2021/07/04/计算机基础/OperationSystem/ProcessManagement/"
            data-tag="OS"
            data-author="" >
-            <span class="post-title" title="操作系统入门">操作系统入门</span>
+            <span class="post-title" title="进程管理">进程管理</span>
             <span class="post-date" title="2021-07-04 16:40:13">2021/07/04</span>
         </a>
         
@@ -537,18 +581,18 @@
         </a>
         
         <a  class="All ComputerBasics "
-           href="/2021/06/26/计算机基础/DesignPatterns/Bridge/"
-           data-tag="DesignPatterns"
-           data-author="" >
-            <span class="post-title" title="桥模式">桥模式</span>
-            <span class="post-date" title="2021-06-26 20:04:13">2021/06/26</span>
-        </a>
-        
-        <a  class="All ComputerBasics "
            href="/2021/06/26/计算机基础/DesignPatterns/Decorator/"
            data-tag="DesignPatterns"
            data-author="" >
             <span class="post-title" title="装饰器模式">装饰器模式</span>
+            <span class="post-date" title="2021-06-26 20:04:13">2021/06/26</span>
+        </a>
+        
+        <a  class="All ComputerBasics "
+           href="/2021/06/26/计算机基础/DesignPatterns/Bridge/"
+           data-tag="DesignPatterns"
+           data-author="" >
+            <span class="post-title" title="桥模式">桥模式</span>
             <span class="post-date" title="2021-06-26 20:04:13">2021/06/26</span>
         </a>
         
@@ -569,18 +613,18 @@
         </a>
         
         <a  class="All ComputerBasics "
-           href="/2021/06/23/计算机基础/DesignPatterns/Observer/"
-           data-tag="DesignPatterns"
-           data-author="" >
-            <span class="post-title" title="观察者模式">观察者模式</span>
-            <span class="post-date" title="2021-06-23 20:04:13">2021/06/23</span>
-        </a>
-        
-        <a  class="All ComputerBasics "
            href="/2021/06/23/计算机基础/DesignPatterns/Singleton/"
            data-tag="DesignPatterns"
            data-author="" >
             <span class="post-title" title="单例模式">单例模式</span>
+            <span class="post-date" title="2021-06-23 20:04:13">2021/06/23</span>
+        </a>
+        
+        <a  class="All ComputerBasics "
+           href="/2021/06/23/计算机基础/DesignPatterns/Observer/"
+           data-tag="DesignPatterns"
+           data-author="" >
+            <span class="post-title" title="观察者模式">观察者模式</span>
             <span class="post-date" title="2021-06-23 20:04:13">2021/06/23</span>
         </a>
         
@@ -745,6 +789,14 @@
         </a>
         
         <a  class="All Recruitment "
+           href="/2021/04/17/C++/C++复习 成员初始化列表/"
+           data-tag="c++,recruitment"
+           data-author="" >
+            <span class="post-title" title="C++复习 成员初始化列表">C++复习 成员初始化列表</span>
+            <span class="post-date" title="2021-04-17 21:40:08">2021/04/17</span>
+        </a>
+        
+        <a  class="All Recruitment "
            href="/2021/04/17/C++/C++复习 面向对象/"
            data-tag="c++,recruitment"
            data-author="" >
@@ -757,14 +809,6 @@
            data-tag="c++,recruitment"
            data-author="" >
             <span class="post-title" title="C++复习 initializer_list初始化">C++复习 initializer_list初始化</span>
-            <span class="post-date" title="2021-04-17 21:40:08">2021/04/17</span>
-        </a>
-        
-        <a  class="All Recruitment "
-           href="/2021/04/17/C++/C++复习 成员初始化列表/"
-           data-tag="c++,recruitment"
-           data-author="" >
-            <span class="post-title" title="C++复习 成员初始化列表">C++复习 成员初始化列表</span>
             <span class="post-date" title="2021-04-17 21:40:08">2021/04/17</span>
         </a>
         
@@ -809,18 +853,18 @@
         </a>
         
         <a  class="All Recruitment "
-           href="/2021/04/17/C++/C++复习 friend友元/"
-           data-tag="c++,recruitment"
-           data-author="" >
-            <span class="post-title" title="C++复习 friend友元">C++复习 friend友元</span>
-            <span class="post-date" title="2021-04-17 16:02:10">2021/04/17</span>
-        </a>
-        
-        <a  class="All Recruitment "
            href="/2021/04/17/C++/C++复习 using/"
            data-tag="c++,recruitment"
            data-author="" >
             <span class="post-title" title="C++复习 using">C++复习 using</span>
+            <span class="post-date" title="2021-04-17 16:02:10">2021/04/17</span>
+        </a>
+        
+        <a  class="All Recruitment "
+           href="/2021/04/17/C++/C++复习 friend友元/"
+           data-tag="c++,recruitment"
+           data-author="" >
+            <span class="post-title" title="C++复习 friend友元">C++复习 friend友元</span>
             <span class="post-date" title="2021-04-17 16:02:10">2021/04/17</span>
         </a>
         
@@ -897,18 +941,18 @@
         </a>
         
         <a  class="All Recruitment "
-           href="/2021/04/10/C++/C++复习 #pragma pack(n)/"
-           data-tag="c++,recruitment"
-           data-author="" >
-            <span class="post-title" title="C++复习 pragma pack(n)">C++复习 pragma pack(n)</span>
-            <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
-        </a>
-        
-        <a  class="All Recruitment "
            href="/2021/04/10/C++/C++复习 sizeof()/"
            data-tag="c++,recruitment"
            data-author="" >
             <span class="post-title" title="C++复习 sizeof()">C++复习 sizeof()</span>
+            <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
+        </a>
+        
+        <a  class="All Recruitment "
+           href="/2021/04/10/C++/C++复习 #pragma pack(n)/"
+           data-tag="c++,recruitment"
+           data-author="" >
+            <span class="post-title" title="C++复习 pragma pack(n)">C++复习 pragma pack(n)</span>
             <span class="post-date" title="2021-04-10 17:39:08">2021/04/10</span>
         </a>
         
@@ -1073,7 +1117,7 @@
         </a>
         
         <a  class="All UE4 "
-           href="/2019/10/08/CG/UE4/UE4Live-RenderProcess/"
+           href="/2019/10/08/CG/UE4/Old/UE4Live-RenderProcess/"
            data-tag=""
            data-author="" >
             <span class="post-title" title="UE4Live_RenderProcess">UE4Live_RenderProcess</span>
@@ -1089,7 +1133,7 @@
         </a>
         
         <a  class="All UE4 "
-           href="/2019/10/07/CG/UE4/UE4Render-ResourceOperation/"
+           href="/2019/10/07/CG/UE4/Old/UE4Render-ResourceOperation/"
            data-tag=""
            data-author="" >
             <span class="post-title" title="虚幻4渲染编程 - 资源操作">虚幻4渲染编程 - 资源操作</span>
@@ -1097,7 +1141,7 @@
         </a>
         
         <a  class="All UE4 "
-           href="/2019/10/06/CG/UE4/UE4Render-addParams/"
+           href="/2019/10/06/CG/UE4/Old/UE4Render-addParams/"
            data-tag="ue4,render,shader"
            data-author="" >
             <span class="post-title" title="在shader文件中添加第二个颜色变量">在shader文件中添加第二个颜色变量</span>
@@ -1129,7 +1173,7 @@
         </a>
         
         <a  class="All UE4 "
-           href="/2019/09/05/CG/UE4/UE4RenderModule/"
+           href="/2019/09/05/CG/UE4/Old/UE4RenderModule/"
            data-tag="ue4,render"
            data-author="" >
             <span class="post-title" title="虚幻4渲染模块">虚幻4渲染模块</span>
@@ -1145,7 +1189,7 @@
         </a>
         
         <a  class="All UE4 "
-           href="/2019/08/07/CG/UE4/JSON/"
+           href="/2019/08/07/CG/UE4/Old/JSON/"
            data-tag="ue4,json"
            data-author="" >
             <span class="post-title" title="虚幻4之JSON学习">虚幻4之JSON学习</span>
@@ -1160,8 +1204,16 @@
             <span class="post-date" title="2019-08-07 16:58:06">2019/08/07</span>
         </a>
         
-        <a  class="All UE4 "
+        <a  class="All "
            href="/2019/08/06/CG/UE4/DelegateAndMacro/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="虚幻4之Slate学习四 —— 委托与宏">虚幻4之Slate学习四 —— 委托与宏</span>
+            <span class="post-date" title="2019-08-06 14:47:37">2019/08/06</span>
+        </a>
+        
+        <a  class="All UE4 "
+           href="/2019/08/06/CG/UE4/Old/DelegateAndMacro/"
            data-tag="ue4,slate"
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习四 —— 委托与宏">虚幻4之Slate学习四 —— 委托与宏</span>
@@ -1169,7 +1221,7 @@
         </a>
         
         <a  class="All UE4 "
-           href="/2019/08/04/CG/UE4/SlateWidget/"
+           href="/2019/08/04/CG/UE4/Old/SlateWidget/"
            data-tag="ue4,slate"
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习三 —— 创建Slate控件">虚幻4之Slate学习三 —— 创建Slate控件</span>
@@ -1177,7 +1229,7 @@
         </a>
         
         <a  class="All UE4 "
-           href="/2019/08/03/CG/UE4/WidgetStyle/"
+           href="/2019/08/03/CG/UE4/Old/WidgetStyle/"
            data-tag="ue4,slate"
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习二 —— Slate控件样式">虚幻4之Slate学习二 —— Slate控件样式</span>
@@ -1185,7 +1237,7 @@
         </a>
         
         <a  class="All UE4 "
-           href="/2019/08/02/CG/UE4/HUD/"
+           href="/2019/08/02/CG/UE4/Old/HUD/"
            data-tag="ue4,slate"
            data-author="" >
             <span class="post-title" title="虚幻4之Slate学习一 —— HUD">虚幻4之Slate学习一 —— HUD</span>
@@ -1217,9 +1269,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-CG/UE4/JSON" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-CG/UE4/Old/SlateWidget" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">虚幻4之JSON学习</h1>
+        <h1 class="article-title">虚幻4之Slate学习三 —— 创建Slate控件</h1>
     
     <div class="article-meta">
         
@@ -1239,14 +1291,14 @@
             
             <a class="color4">ue4</a>
             
-            <a class="color5">json</a>
+            <a class="color1">slate</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-01-10 19:49:43'>2019-08-07 20:07</time>
+            Created At : <time class="date" title='Updated At: 2020-01-10 19:49:43'>2019-08-04 20:20</time>
         
     </div>
     <div class="article-meta">
@@ -1268,7 +1320,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本章简介"><span class="toc-text">本章简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JSON格式"><span class="toc-text">JSON格式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解析JSON文件"><span class="toc-text">解析JSON文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修改JSON文件"><span class="toc-text">修改JSON文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#设置单个属性"><span class="toc-text">设置单个属性</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本章简介"><span class="toc-text">本章简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用C-编写Slate控件"><span class="toc-text">用C++编写Slate控件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SOverlay"><span class="toc-text">SOverlay</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HAlign和VAlign"><span class="toc-text">HAlign和VAlign</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Padding"><span class="toc-text">Padding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FillWidth和FillHeight"><span class="toc-text">FillWidth和FillHeight</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SOverlay-Slot"><span class="toc-text">+SOverlay::Slot()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SImage"><span class="toc-text">SImage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SBox"><span class="toc-text">SBox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SBorder"><span class="toc-text">SBorder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#STextBlock"><span class="toc-text">STextBlock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVerticalBox"><span class="toc-text">SVerticalBox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SCheckBox"><span class="toc-text">SCheckBox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSlider"><span class="toc-text">SSlider</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义DPI"><span class="toc-text">自定义DPI</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相关链接"><span class="toc-text">相关链接</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1285,127 +1337,80 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="本章简介"><a href="#本章简介" class="headerlink" title="本章简介"></a>本章简介</h1><ul>
-<li>JSON格式</li>
-<li>解析JSON文件</li>
-<li>修改JSON文件</li>
+<li>如何利用C++编写Slate控件</li>
+<li>介绍常用的Slate控件</li>
+<li>自定义DPI</li>
 </ul>
-<h1 id="JSON格式"><a href="#JSON格式" class="headerlink" title="JSON格式"></a>JSON格式</h1><ul>
-<li><a href="https://zhuanlan.zhihu.com/p/29119549" target="_blank" rel="noopener">十分钟搞定JSON和JSON对象</a></li>
-</ul>
-<p>想要使用JSO相关工具，必须在<strong>ProjectName.Build.cs</strong>，在其中添加</p>
-<pre><code class="lang-cs">PublicDependencyModuleNames.AddRange
-(
-    new string[] 
-    {
-         &quot;Core&quot;, 
-         &quot;CoreUObject&quot;, 
-         &quot;Engine&quot;, 
-         &quot;InputCore&quot;,
-         &quot;Slate&quot;,
-         &quot;SlateCore&quot;,
-         &quot;Json&quot;,
-         &quot;JsonUtilities&quot;
-    }
-);
-</code></pre>
-<h1 id="解析JSON文件"><a href="#解析JSON文件" class="headerlink" title="解析JSON文件"></a>解析JSON文件</h1><ul>
-<li>我们在 \Content\Res\Data.json中天下如下测试例子</li>
-</ul>
-<pre><code class="lang-json">/** Data.json **/
+<h1 id="用C-编写Slate控件"><a href="#用C-编写Slate控件" class="headerlink" title="用C++编写Slate控件"></a>用C++编写Slate控件</h1><pre><code class="lang-cpp">ChildSlot
 [
-    {
-        &quot;1-1&quot;:&quot;1-1&quot;,
-        &quot;1-2&quot;:&quot;1-2&quot;
-    },
-    {
-        &quot;2-1&quot;:&quot;2-1&quot;
-    },
-    {
-        &quot;3-1&quot;:
-        [
-            {
-                &quot;1&quot;:&quot;3-1-1&quot;
-            },
-            {
-                &quot;2&quot;:&quot;3-1-2&quot;
-            }
-        ]
-    }
+    SNew(SImage)
+    .Image(&amp;MySlateStyle-&gt;BackGroupBrush)
+
+];
+</code></pre>
+<p>只需要在ChildSlot中编写相关代码就可以创建控件。不同控件有不同的属性，下面将要介绍一些常用的控件,值得注意的是对于需要在游戏中动态控制的控件，需利用SAssignNew,再通过共享指针保存起来</p>
+<h2 id="SOverlay"><a href="#SOverlay" class="headerlink" title="SOverlay"></a>SOverlay</h2><ul>
+<li>用于实现重叠部件,可以创建任意个插件，即可以放任意个子控件</li>
+</ul>
+<h3 id="HAlign和VAlign"><a href="#HAlign和VAlign" class="headerlink" title="HAlign和VAlign"></a>HAlign和VAlign</h3><ul>
+<li>设计布局方式</li>
+</ul>
+<h3 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a>Padding</h3><ul>
+<li>设计边缘空隙</li>
+</ul>
+<h3 id="FillWidth和FillHeight"><a href="#FillWidth和FillHeight" class="headerlink" title="FillWidth和FillHeight"></a>FillWidth和FillHeight</h3><ul>
+<li>填充宽度和高度</li>
+</ul>
+<h3 id="SOverlay-Slot"><a href="#SOverlay-Slot" class="headerlink" title="+SOverlay::Slot()"></a>+SOverlay::Slot()</h3><ul>
+<li>+SOverlay::Slot()与SNew().AddSlot等价。增加的插槽下用于放子控件</li>
+</ul>
+<pre><code class="lang-cpp">SNew(SOverlay)
++ SOverlay::Slot()
+//这些属性设计是应用于插槽
+.HAlign(HAlign_Fill)
+.VAlign(VAlign_Fill)
+[
+     SNew(SImage)
+     //image()用于添加笔刷
+     .Image(&amp;MySlateStyle-&gt;BackGroupBrush)
 ]
 </code></pre>
-<ul>
-<li>我们要首先得将他以字符串的形式读入<blockquote>
-<p>FPaths::GameContentDir() 能获取 */Content/ 的位置<br>FFileHelper::LoadFileToString() Load a text file to an FString.</p>
-</blockquote>
-</li>
+<p><img src="SOverlay.png" alt></p>
+<h2 id="SImage"><a href="#SImage" class="headerlink" title="SImage"></a>SImage</h2><ul>
+<li>Image()通过加笔刷来显示图片</li>
+<li>ColorAndOpacity()改变颜色和透明度</li>
 </ul>
-<pre><code class="lang-cpp">
-bool MyJsonHandle::LoadStringFromFile(FString &amp; RelativePathName, FString &amp; FileName, FString &amp; ResultString)
-{
-    if (!FileName.IsEmpty())
-    {
-        FString AbsloutePathName = FPaths::GameContentDir() + RelativePathName + FileName;
-        if (FPaths::FileExists(AbsloutePathName))
-        {
-            if (FFileHelper::LoadFileToString(ResultString, *AbsloutePathName))
-            {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-`
-</code></pre>
-<ul>
-<li>接下来我们来解析我们所获取到的FString</li>
+<h2 id="SBox"><a href="#SBox" class="headerlink" title="SBox"></a>SBox</h2><ul>
+<li>只能添加一个子组件</li>
+<li>WidthOverride和HeightOverride设置长宽</li>
+<li>对应UMG中的SizeBox</li>
 </ul>
-<pre><code class="lang-cpp">/** MyJsonHandle.cpp **/
-bool MyJsonHandle::RecordDataJsonRead()
-{
-    FString result;
-    //这是我们上面自定义的函数
-    LoadStringFromFile(RelativePathName, DataFileName, result);
-
-    TArray&lt;TSharedPtr&lt;FJsonValue&gt;&gt; JsonParse;
-    TSharedRef&lt;TJsonReader&lt;TCHAR&gt;&gt; JsonReader = TJsonReaderFactory&lt;TCHAR&gt;::Create(result);
-
-    if (FJsonSerializer::Deserialize(JsonReader, JsonParse))
-    { //这样解析后的节点全部存在JsonParse中
-        UE_LOG(LogTemp, Warning, TEXT(&quot;%s&quot;), *JsonParse[0]-&gt;AsObject()-&gt;GetStringField(FString(&quot;1-1&quot;)));
-        UE_LOG(LogTemp, Warning, TEXT(&quot;%s&quot;), *JsonParse[0]-&gt;AsObject()-&gt;GetStringField(FString(&quot;1-2&quot;)));
-        UE_LOG(LogTemp, Warning, TEXT(&quot;%s&quot;), *JsonParse[1]-&gt;AsObject()-&gt;GetStringField(FString(&quot;2-1&quot;)));
-        //如果对象是嵌套的，则需要再声明一次TArray&lt;TSharedPtr&lt;FJsonValue&gt;&gt;来获取
-        TArray&lt;TSharedPtr&lt;FJsonValue&gt;&gt; JsonParse3 = JsonParse[2]-&gt;AsObject()-&gt;GetArrayField(FString(&quot;3-1&quot;));
-        if (JsonParse3.IsValidIndex(0))
-        {
-            for (int cnt = 1; cnt &lt;= JsonParse3.Num(); ++cnt)
-            {
-                UE_LOG(LogTemp, Warning, TEXT(&quot;%s&quot;), *JsonParse3[cnt-1]-&gt;AsObject()-&gt;GetStringField(FString::FromInt(cnt)));
-            }
-        }
-        else
-        {
-            UE_LOG(LogTemp, Warning, TEXT(&quot;error JsonParse3&quot;));
-        }
-
-        return true;
-    }
-
-    return false;
-}
-</code></pre>
-<h1 id="修改JSON文件"><a href="#修改JSON文件" class="headerlink" title="修改JSON文件"></a>修改JSON文件</h1><h2 id="设置单个属性"><a href="#设置单个属性" class="headerlink" title="设置单个属性"></a>设置单个属性</h2><ul>
-<li>通过下面的代码生成一个<pre><code class="lang-cpp">/**
-* A Json Object is a structure holding an unordered set of name/value pairs.
-* In a Json file, it is represented by everything between curly braces {}.
-*/
-TSharedPtr&lt;FJsonObject&gt; Object1 = MakeShareable(new FJsonObject);
-Object1-&gt;SetStringField(&quot;1-1&quot;, &quot;1--1&quot;);
-Object1-&gt;SetStringField(&quot;1-2&quot;, &quot;1--2&quot;);
-TSharedPtr&lt;FJsonValueObject&gt; CultureValue = MakeShareable(new FJsonValueObject(CultureObject));
-</code></pre>
-</li>
+<h2 id="SBorder"><a href="#SBorder" class="headerlink" title="SBorder"></a>SBorder</h2><ul>
+<li>可放子控件，可显示图片</li>
+<li>用BorderImage添加图片</li>
+</ul>
+<h2 id="STextBlock"><a href="#STextBlock" class="headerlink" title="STextBlock"></a>STextBlock</h2><ul>
+<li>用于添加文字</li>
+<li>Font()设置字体（不是指针）</li>
+<li>Text()设置显示文字</li>
+</ul>
+<h2 id="SVerticalBox"><a href="#SVerticalBox" class="headerlink" title="SVerticalBox"></a>SVerticalBox</h2><ul>
+<li>垂直容器</li>
+<li>可以加插槽</li>
+<li>+SVerticalBox::Slot == AddSlot</li>
+</ul>
+<h2 id="SCheckBox"><a href="#SCheckBox" class="headerlink" title="SCheckBox"></a>SCheckBox</h2><ul>
+<li>OnCheckStateChanged：传入函数指针（委托），状态改变时调用</li>
+</ul>
+<h2 id="SSlider"><a href="#SSlider" class="headerlink" title="SSlider"></a>SSlider</h2><ul>
+<li>滑动条</li>
+<li>滑动条样式用 FSliderStyle</li>
+<li>OnValueChanged(Delegate) 此为SLATE_EVENT，里面应该传入一参数（滑动条value）委托，每次滑动条value改变时调用。</li>
+<li>SetValue()设置滑动位置，范围[0f,1f]</li>
+</ul>
+<h1 id="自定义DPI"><a href="#自定义DPI" class="headerlink" title="自定义DPI"></a>自定义DPI</h1><h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul>
+<li>下章链接<br><a href="https://sanctorum003.github.io/2019/08/06/DelegateAndMacro/" target="_blank" rel="noopener">虚幻4之Slate学习四 —— 委托与宏</a></li>
+<li>章节总览<br><a href="https://sanctorum003.github.io/2019/08/07/SlateMenu/" target="_blank" rel="noopener">虚幻4之Slate学习</a> </li>
 </ul>
 
       
