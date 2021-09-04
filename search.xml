@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>UE4 反射机制</title>
+      <link href="/2021/09/04/CG/UE4/EngineBottom/UE4_ReflectionMechanism/"/>
+      <url>/2021/09/04/CG/UE4/EngineBottom/UE4_ReflectionMechanism/</url>
+      
+        <content type="html"><![CDATA[<ul><li>参考<ul><li><a href="https://zhuanlan.zhihu.com/p/60622181" target="_blank" rel="noopener">UE4反射机制</a></li><li><a href="https://zhuanlan.zhihu.com/p/24319968" target="_blank" rel="noopener">《InsideUE4》UObject（一）开篇</a></li><li><a href="https://zhuanlan.zhihu.com/p/24445322" target="_blank" rel="noopener">《InsideUE4》UObject（二）类型系统概述</a></li><li><a href="https://www.jianshu.com/p/1f2de6ea383c" target="_blank" rel="noopener">UE4对象系统_UObject&amp;UClass</a></li><li><a href="https://zhuanlan.zhihu.com/p/400473355" target="_blank" rel="noopener">UE — UBT、UHT与反射基本理解</a></li></ul></li></ul><h1 id="什么是反射"><a href="#什么是反射" class="headerlink" title="什么是反射"></a>什么是反射</h1><h2 id="Java反射"><a href="#Java反射" class="headerlink" title="Java反射"></a>Java反射</h2><ul><li>Java反射机制：是指在运行时去获取一个类的变量和方法信息。然后通过获取到的信息来创建对象，调用方法的一种机制。由于这种动态性，可以极大的增强程序的灵活性，程序不用在编译期就完成确定，在运行期仍可扩展。<blockquote><p>java加载类的时候是将.class加载到内存并生成相关内存映像，在内存中的.class内存映像中含有类的各种数据，之后生成对象都是用内存中相应的.class，因此通过修改该信息还能动态改变类的数据。</p></blockquote></li></ul><h2 id="U4反射"><a href="#U4反射" class="headerlink" title="U4反射"></a>U4反射</h2><ul><li>反射用于在是在程序运行时动态加载类以及获取类的信息，反射数据描述了类在运行时的内容</li><li>这些数据所存储的信息包括类的名称、类中的数据成员、每个数据成员的类型、每个成员位于对象内存映像的偏移（offset），此外，它也包含类的所有成员函数信息。</li></ul><h3 id="类型系统"><a href="#类型系统" class="headerlink" title="类型系统"></a>类型系统</h3><ul><li>指的是程序运行空间内构建出来的类型信息树组织</li></ul><h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><ul><li>描述运行时得到类型的功能，通过类型信息反过来创建对象，读取修改属性，调用方法的功能行为</li></ul><h1 id="反射有什么用"><a href="#反射有什么用" class="headerlink" title="反射有什么用"></a>反射有什么用</h1><ul><li>实现序列化</li><li>实现editor的details panel</li><li>垃圾回收</li><li>网络复制</li><li>蓝图/C++通信和相互调用</li></ul><h1 id="U4如何实现反射机制"><a href="#U4如何实现反射机制" class="headerlink" title="U4如何实现反射机制"></a>U4如何实现反射机制</h1><h2 id="C-RTTI"><a href="#C-RTTI" class="headerlink" title="C++ RTTI"></a>C++ RTTI</h2><p>C++中的运行时类型系统功能太弱，无法支持反射系统的功能</p><ul><li>typeid/typeinfo<blockquote><p>这个关键字的主要作用就是用于让用户知道是什么类型，并提供一些基本对比和name方法，作用也顶多只是让用户判断从属于不同的类型，所以其实说起来type_info的应用并不广泛，一般来说也只是把它当作编译器提供的一个唯一类型Id。</p></blockquote></li><li>dynamic_cast<blockquote><p>dynamic_cast内部机制其实也是利用虚函数表里的类型信息来判断一个基类指针是否指向一个派生类对象。其目的更多是用于在运行时判断对象指针是否为特定一个子类的对象。</p></blockquote></li></ul><h2 id="UE4反射"><a href="#UE4反射" class="headerlink" title="UE4反射"></a>UE4反射</h2><ul><li><p>UE4反射系统主要依靠2个工具,UHT和UBT，还需要UObject和UClass的支持.</p><blockquote><p>UObject是所有支持反射的对象的基类，有类的StaticClass()或者实例的GetClass()来获取反射信息<br>UClass（相当于是元数据）继承自UStrcut-&gt;UField，用于存储反射数据。</p></blockquote></li><li><p>UE4 中的反射大概的流程是在编译前利用 UnrealHeaderTool 对代码文件内容进行处理，生成 .generated.h/.gen.cpp 文件，在生成的代码中加入反射信息，并和自己编写的代码一起编译，在运行时动态地将这些反射信息收集起来使用。</p></li></ul><h3 id="UBT"><a href="#UBT" class="headerlink" title="UBT"></a>UBT</h3><h4 id="主要工作"><a href="#主要工作" class="headerlink" title="主要工作"></a>主要工作</h4><ul><li>是一个自定义工具，负责管理通过各种编译配置来编译虚幻引擎4（UE4）源代码的过程。<ul><li>该工具处理所有复杂的项目编译工作，编译UE4的逐个模块并处理依赖等<ul><li>Target.cs，Build.cs</li></ul></li></ul></li></ul><h3 id="UHT"><a href="#UHT" class="headerlink" title="UHT"></a>UHT</h3><h4 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h4><ul><li>用于生成C++的反射代码<h4 id="简单流程"><a href="#简单流程" class="headerlink" title="简单流程"></a>简单流程</h4></li><li>UHT被编译成exe文件，通过命令行参数调用</li><li>UE4的反射系统并不是把所有的信息都纳入，而是需要程序员标记才会被反射系统纳入</li><li>UHT会扫描文件，如果其中有<code>#include &quot;file.generated.h&quot;</code>,就是告知UHT该头文件需要被纳入反射系统之中.然后UHT会根本相关的宏标记，<code>UCLASS()</code>,<code>UFUNCTION</code>，<code>GENERATED_BODY()</code>来解析头文件中的定义，，最终生成<code>#include &quot;file.generated.h&quot;</code>和<code>#include &quot;file.generated.cpp&quot;</code>两个文件，其中包含了用于实现反射的相关代码。其中主要做的工作是将C++类中的真实数据成员和UClass（用于存储反射数据的类）中的UPorperty等数据类型绑定起来。</li></ul><h3 id="UE4完整编译流程"><a href="#UE4完整编译流程" class="headerlink" title="UE4完整编译流程"></a>UE4完整编译流程</h3><blockquote><p>参考:<a href="https://zhuanlan.zhihu.com/p/400473355" target="_blank" rel="noopener">UE — UBT、UHT与反射基本理解</a></p><ul><li>UBT搜集目录中的.cs文件</li><li>然后UBT调用UHT分析需要分析的.h .cpp文件（典型根据文件是否含有#include”FileName.generated.h”，是否有UCLASS()、UPROPERTY等宏）生成generated.h和gen.cpp文件</li><li>最后UBT调用MSBuild，将.h.cpp和generated.h gen.cpp结合到一起然后编译</li></ul><hr><ul><li>UBT通过扫描头文件时，记录所有包含反射类型的modules（模块），当其中有头文件改变时，就会用UHT更新反射数据。UHT解析头文件，扫描标记，生成用于支持反射的C++代码</li></ul></blockquote><h3 id="使用反射系统"><a href="#使用反射系统" class="headerlink" title="使用反射系统"></a>使用反射系统</h3><ul><li>你可以通过使用UTypeName::StaticClass()或者FTypeName::StaticStruct()来获取反射类型对应的UClass以及UScriptStruct，你也通过 一个UObject的实例通过Instance-&gt;GetClass()来获取类型（不能通过一个结构体实例的获取类型，因为结构体没有一个通用的基类或者需要的存储空间）。</li></ul><h3 id="为什么用c-代码存储反射数据"><a href="#为什么用c-代码存储反射数据" class="headerlink" title="为什么用c++代码存储反射数据"></a>为什么用c++代码存储反射数据</h3><ul><li>用生成的C++代码来存储反射数据的一个最大好处就是，它可以保证跟二进制做到同步。你永远也不会加载陈旧或者过时的反射数据，因为它是跟引擎的其它代码同时编译的.</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> UE4 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ue4 </tag>
+            
+            <tag> EngineBottom </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>环形链表</title>
       <link href="/2021/08/26/LeetCode/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/"/>
       <url>/2021/08/26/LeetCode/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/</url>
@@ -73,33 +100,6 @@
         <tags>
             
             <tag> Linking </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>UE4 反射机制</title>
-      <link href="/2021/07/29/CG/UE4/EngineBottom/UE4_ReflectionMechanism/"/>
-      <url>/2021/07/29/CG/UE4/EngineBottom/UE4_ReflectionMechanism/</url>
-      
-        <content type="html"><![CDATA[<ul><li>参考<ul><li><a href="https://zhuanlan.zhihu.com/p/60622181" target="_blank" rel="noopener">UE4反射机制</a></li><li><a href="https://zhuanlan.zhihu.com/p/24319968" target="_blank" rel="noopener">《InsideUE4》UObject（一）开篇</a></li><li><a href="https://zhuanlan.zhihu.com/p/24445322" target="_blank" rel="noopener">《InsideUE4》UObject（二）类型系统概述</a></li><li><a href="https://www.jianshu.com/p/1f2de6ea383c" target="_blank" rel="noopener">UE4对象系统_UObject&amp;UClass</a></li><li><a href="https://zhuanlan.zhihu.com/p/400473355" target="_blank" rel="noopener">UE — UBT、UHT与反射基本理解</a></li></ul></li></ul><h1 id="什么是反射"><a href="#什么是反射" class="headerlink" title="什么是反射"></a>什么是反射</h1><h2 id="Java反射"><a href="#Java反射" class="headerlink" title="Java反射"></a>Java反射</h2><ul><li>Java反射机制：是指在运行时去获取一个类的变量和方法信息。然后通过获取到的信息来创建对象，调用方法的一种机制。由于这种动态性，可以极大的增强程序的灵活性，程序不用在编译期就完成确定，在运行期仍可扩展。<blockquote><p>java加载类的时候是将.class加载到内存并生成相关内存映像，在内存中的.class内存映像中含有类的各种数据，之后生成对象都是用内存中相应的.class，因此通过修改该信息还能动态改变类的数据。</p></blockquote></li></ul><h2 id="U4反射"><a href="#U4反射" class="headerlink" title="U4反射"></a>U4反射</h2><ul><li>反射用于在是在程序运行时动态加载类以及获取类的信息，反射数据描述了类在运行时的内容</li><li>这些数据所存储的信息包括类的名称、类中的数据成员、每个数据成员的类型、每个成员位于对象内存映像的偏移（offset），此外，它也包含类的所有成员函数信息。</li></ul><h3 id="类型系统"><a href="#类型系统" class="headerlink" title="类型系统"></a>类型系统</h3><ul><li>指的是程序运行空间内构建出来的类型信息树组织</li></ul><h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><ul><li>描述运行时得到类型的功能，通过类型信息反过来创建对象，读取修改属性，调用方法的功能行为</li></ul><h1 id="反射有什么用"><a href="#反射有什么用" class="headerlink" title="反射有什么用"></a>反射有什么用</h1><ul><li>实现序列化</li><li>实现editor的details panel</li><li>垃圾回收</li><li>网络复制</li><li>蓝图/C++通信和相互调用</li></ul><h1 id="U4如何实现反射机制"><a href="#U4如何实现反射机制" class="headerlink" title="U4如何实现反射机制"></a>U4如何实现反射机制</h1><h2 id="C-RTTI"><a href="#C-RTTI" class="headerlink" title="C++ RTTI"></a>C++ RTTI</h2><p>C++中的运行时类型系统功能太弱，无法支持反射系统的功能</p><ul><li>typeid/typeinfo<blockquote><p>这个关键字的主要作用就是用于让用户知道是什么类型，并提供一些基本对比和name方法，作用也顶多只是让用户判断从属于不同的类型，所以其实说起来type_info的应用并不广泛，一般来说也只是把它当作编译器提供的一个唯一类型Id。</p></blockquote></li><li>dynamic_cast<blockquote><p>dynamic_cast内部机制其实也是利用虚函数表里的类型信息来判断一个基类指针是否指向一个派生类对象。其目的更多是用于在运行时判断对象指针是否为特定一个子类的对象。</p></blockquote></li></ul><h2 id="UE4反射"><a href="#UE4反射" class="headerlink" title="UE4反射"></a>UE4反射</h2><ul><li><p>UE4反射系统主要依靠2个工具,UHT和UBT，还需要UObject和UClass的支持.</p><blockquote><p>UObject是所有支持反射的对象的基类，有类的StaticClass()或者实例的GetClass()来获取反射信息<br>UClass（相当于是元数据）继承自UStrcut-&gt;UField，用于存储反射数据。</p></blockquote></li><li><p>UE4 中的反射大概的流程是在编译前利用 UnrealHeaderTool 对代码文件内容进行处理，生成 .generated.h/.gen.cpp 文件，在生成的代码中加入反射信息，并和自己编写的代码一起编译，在运行时动态地将这些反射信息收集起来使用。</p></li></ul><h3 id="UBT"><a href="#UBT" class="headerlink" title="UBT"></a>UBT</h3><h4 id="主要工作"><a href="#主要工作" class="headerlink" title="主要工作"></a>主要工作</h4><ul><li>是一个自定义工具，负责管理通过各种编译配置来编译虚幻引擎4（UE4）源代码的过程。<ul><li>该工具处理所有复杂的项目编译工作，编译UE4的逐个模块并处理依赖等<ul><li>Target.cs，Build.cs</li></ul></li></ul></li></ul><h3 id="UHT"><a href="#UHT" class="headerlink" title="UHT"></a>UHT</h3><h4 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h4><ul><li>用于生成C++的反射代码<h4 id="简单流程"><a href="#简单流程" class="headerlink" title="简单流程"></a>简单流程</h4></li><li>UHT被编译成exe文件，通过命令行参数调用</li><li>UE4的反射系统并不是把所有的信息都纳入，而是需要程序员标记才会被反射系统纳入</li><li>UHT会扫描文件，如果其中有<code>#include &quot;file.generated.h&quot;</code>,就是告知UHT该头文件需要被纳入反射系统之中.然后UHT会根本相关的宏标记，<code>UCLASS()</code>,<code>UFUNCTION</code>，<code>GENERATED_BODY()</code>来解析头文件中的定义，，最终生成<code>#include &quot;file.generated.h&quot;</code>和<code>#include &quot;file.generated.cpp&quot;</code>两个文件，其中包含了用于实现反射的相关代码。其中主要做的工作是将C++类中的真实数据成员和UClass（用于存储反射数据的类）中的UPorperty等数据类型绑定起来。</li></ul><h3 id="UE4完整编译流程"><a href="#UE4完整编译流程" class="headerlink" title="UE4完整编译流程"></a>UE4完整编译流程</h3><blockquote><p>参考:<a href="https://zhuanlan.zhihu.com/p/400473355" target="_blank" rel="noopener">UE — UBT、UHT与反射基本理解</a></p><ul><li>UBT搜集目录中的.cs文件</li><li>然后UBT调用UHT分析需要分析的.h .cpp文件（典型根据文件是否含有#include”FileName.generated.h”，是否有UCLASS()、UPROPERTY等宏）生成generated.h和gen.cpp文件</li><li>最后UBT调用MSBuild，将.h.cpp和generated.h gen.cpp结合到一起然后编译</li></ul><hr><ul><li>UBT通过扫描头文件时，记录所有包含反射类型的modules（模块），当其中有头文件改变时，就会用UHT更新反射数据。UHT解析头文件，扫描标记，生成用于支持反射的C++代码</li></ul></blockquote><h3 id="使用反射系统"><a href="#使用反射系统" class="headerlink" title="使用反射系统"></a>使用反射系统</h3><ul><li>你可以通过使用UTypeName::StaticClass()或者FTypeName::StaticStruct()来获取反射类型对应的UClass以及UScriptStruct，你也通过 一个UObject的实例通过Instance-&gt;GetClass()来获取类型（不能通过一个结构体实例的获取类型，因为结构体没有一个通用的基类或者需要的存储空间）。</li></ul><h3 id="为什么用c-代码存储反射数据"><a href="#为什么用c-代码存储反射数据" class="headerlink" title="为什么用c++代码存储反射数据"></a>为什么用c++代码存储反射数据</h3><ul><li>用生成的C++代码来存储反射数据的一个最大好处就是，它可以保证跟二进制做到同步。你永远也不会加载陈旧或者过时的反射数据，因为它是跟引擎的其它代码同时编译的.</li></ul>]]></content>
-      
-      
-      <categories>
-          
-          <category> UE4 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> ue4 </tag>
-            
-            <tag> EngineBottom </tag>
             
         </tags>
       
