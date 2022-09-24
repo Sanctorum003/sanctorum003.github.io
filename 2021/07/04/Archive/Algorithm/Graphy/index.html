@@ -6,14 +6,22 @@
   <meta name="keywords" content=" algorithm ">
   <meta name="description" content="图算法 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="堆自由存储区和堆区 new 和 delete 操作的区域是 free store,malloc 和 free 操作的区域是 heap 但 new 和 delete 通常底层使用 malloc 和 free 来实现  内存管理的相关操作 1.分配一个某个大小的内存块  2.释放一个之前分配的内存块  空闲块的合并   3.进行垃圾收集操作，寻找不再使用的内存块并予以释放   内存泄露 如果动态申请的">
+<meta name="keywords" content="c++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01 | 堆、栈、RAII：C++里该如何管理资源？">
+<meta property="og:url" content="https://sanctorum.github.io/2021/09/21/Archive/计算机基础/CPP/现代C++/堆、栈、RAII/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="堆自由存储区和堆区 new 和 delete 操作的区域是 free store,malloc 和 free 操作的区域是 heap 但 new 和 delete 通常底层使用 malloc 和 free 来实现  内存管理的相关操作 1.分配一个某个大小的内存块  2.释放一个之前分配的内存块  空闲块的合并   3.进行垃圾收集操作，寻找不再使用的内存块并予以释放   内存泄露 如果动态申请的">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:image" content="https://sanctorum.github.io/2021/09/21/Archive/计算机基础/CPP/现代C++/堆、栈、RAII/过程调用的机器级表示.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2021/09/21/Archive/计算机基础/CPP/现代C++/堆、栈、RAII/栈帧的变化.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2021/09/21/Archive/计算机基础/CPP/现代C++/堆、栈、RAII/C过程的结构.jpg">
+<meta property="og:updated_time" content="2021-09-21T09:37:16.249Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="01 | 堆、栈、RAII：C++里该如何管理资源？">
+<meta name="twitter:description" content="堆自由存储区和堆区 new 和 delete 操作的区域是 free store,malloc 和 free 操作的区域是 heap 但 new 和 delete 通常底层使用 malloc 和 free 来实现  内存管理的相关操作 1.分配一个某个大小的内存块  2.释放一个之前分配的内存块  空闲块的合并   3.进行垃圾收集操作，寻找不再使用的内存块并予以释放   内存泄露 如果动态申请的">
+<meta name="twitter:image" content="https://sanctorum.github.io/2021/09/21/Archive/计算机基础/CPP/现代C++/堆、栈、RAII/过程调用的机器级表示.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -1548,7 +1556,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-09-23 22:01:52'>2021-07-04 21:00</time>
+            Created At : <time class="date" title='Updated At: 2022-09-24 22:12:38'>2021-07-04 21:00</time>
         
     </div>
     <div class="article-meta">
@@ -1618,10 +1626,10 @@
 <p><img src="Prim.jpg" alt></p>
 <h1 id="最短路径"><a href="#最短路径" class="headerlink" title="最短路径"></a>最短路径</h1><h2 id="DFS-BFS"><a href="#DFS-BFS" class="headerlink" title="DFS/BFS"></a>DFS/BFS</h2><h2 id="djikstra"><a href="#djikstra" class="headerlink" title="djikstra"></a>djikstra</h2><h3 id="算法概述"><a href="#算法概述" class="headerlink" title="算法概述"></a>算法概述</h3><ul>
 <li>Dijikstra设置一个集合S记录已求得的最短路径的定点，初始时把源点$v_{0}$放入S.每次求出从集合S出发到S-V中定点的最短距离，选取距离最近的一个并入S，然后修改源点$v_{0}$到集合V-S中定点当前的最短路径长度值。<h3 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h3></li>
-<li>使用邻接表或者邻接矩阵<br><img src="Graphy/dijkstra_structure.jpg" alt></li>
+<li>使用邻接表或者邻接矩阵<br><img src="dijkstra_structure.jpg" alt></li>
 </ul>
-<p><img src="Graphy/dijkstra_algorithm.jpg" alt></p>
-<h3 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h3><p><img src="Graphy/Dijkstra.svg" alt></p>
+<p><img src="dijkstra_algorithm.jpg" alt></p>
+<h3 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h3><p>![]Dijkstra.svg)</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><h2 id="Bellman-ford"><a href="#Bellman-ford" class="headerlink" title="Bellman_ford"></a>Bellman_ford</h2><h2 id="spfa"><a href="#spfa" class="headerlink" title="spfa"></a>spfa</h2><h2 id="floyed"><a href="#floyed" class="headerlink" title="floyed"></a>floyed</h2><h2 id="A"><a href="#A" class="headerlink" title="A*"></a>A*</h2><h2 id="JPS"><a href="#JPS" class="headerlink" title="JPS"></a>JPS</h2><h1 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h1><h1 id="关键路径"><a href="#关键路径" class="headerlink" title="关键路径"></a>关键路径</h1>
       
        

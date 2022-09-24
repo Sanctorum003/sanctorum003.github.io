@@ -6,14 +6,22 @@
   <meta name="keywords" content=" recruitment , c++ ">
   <meta name="description" content="C++复习 friend友元 | Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://sanctorum.github.io/about/index.html">
+<meta name="description" content="堆自由存储区和堆区 new 和 delete 操作的区域是 free store,malloc 和 free 操作的区域是 heap 但 new 和 delete 通常底层使用 malloc 和 free 来实现  内存管理的相关操作 1.分配一个某个大小的内存块  2.释放一个之前分配的内存块  空闲块的合并   3.进行垃圾收集操作，寻找不再使用的内存块并予以释放   内存泄露 如果动态申请的">
+<meta name="keywords" content="c++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01 | 堆、栈、RAII：C++里该如何管理资源？">
+<meta property="og:url" content="https://sanctorum.github.io/2021/09/21/Archive/计算机基础/CPP/现代C++/堆、栈、RAII/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="堆自由存储区和堆区 new 和 delete 操作的区域是 free store,malloc 和 free 操作的区域是 heap 但 new 和 delete 通常底层使用 malloc 和 free 来实现  内存管理的相关操作 1.分配一个某个大小的内存块  2.释放一个之前分配的内存块  空闲块的合并   3.进行垃圾收集操作，寻找不再使用的内存块并予以释放   内存泄露 如果动态申请的">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T07:11:34.254Z">
+<meta property="og:image" content="https://sanctorum.github.io/2021/09/21/Archive/计算机基础/CPP/现代C++/堆、栈、RAII/过程调用的机器级表示.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2021/09/21/Archive/计算机基础/CPP/现代C++/堆、栈、RAII/栈帧的变化.jpg">
+<meta property="og:image" content="https://sanctorum.github.io/2021/09/21/Archive/计算机基础/CPP/现代C++/堆、栈、RAII/C过程的结构.jpg">
+<meta property="og:updated_time" content="2021-09-21T09:37:16.249Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="01 | 堆、栈、RAII：C++里该如何管理资源？">
+<meta name="twitter:description" content="堆自由存储区和堆区 new 和 delete 操作的区域是 free store,malloc 和 free 操作的区域是 heap 但 new 和 delete 通常底层使用 malloc 和 free 来实现  内存管理的相关操作 1.分配一个某个大小的内存块  2.释放一个之前分配的内存块  空闲块的合并   3.进行垃圾收集操作，寻找不再使用的内存块并予以释放   内存泄露 如果动态申请的">
+<meta name="twitter:image" content="https://sanctorum.github.io/2021/09/21/Archive/计算机基础/CPP/现代C++/堆、栈、RAII/过程调用的机器级表示.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
